@@ -39,7 +39,7 @@ public class FacturaController {
     }
 
     @PostMapping
-    public ResponseEntity<FacturaEntity> createIngreso(@RequestBody FacturaEntity factura){
+    public ResponseEntity<FacturaEntity> createFactura(@RequestBody FacturaEntity factura){
         FacturaEntity facturaGuardada = facturaService.guardarFactura(factura);
         return ResponseEntity.ok().body(facturaGuardada);
     }
