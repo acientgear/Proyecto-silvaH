@@ -12,17 +12,17 @@ import com.app.silvahnosbe.repositories.FacturaRepository;
 public class FacturaService {
     
     @Autowired
-    IngresoRepository facturaRepository;
+    FacturaRepository facturaRepository;
 
-    public ArrayList<FacturaEntity> obtenerIngresos(){
+    public ArrayList<FacturaEntity> obtenerFactura(){
         return (ArrayList<FacturaEntity>) facturaRepository.findAll();
     }
 
-    public FacturaEntity obtenerIngresoPorId(Long id){
+    public FacturaEntity obtenerFacturaPorId(Long id){
         return facturaRepository.findById(id).orElse(null);
     }
 
-    public FacturaEntity guardarIngreso(FacturaEntity factura){
+    public FacturaEntity guardarFactura(FacturaEntity factura){
         return facturaRepository.save(factura);
     }
 }
