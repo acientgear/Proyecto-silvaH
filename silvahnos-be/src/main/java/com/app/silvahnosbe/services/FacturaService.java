@@ -14,7 +14,7 @@ public class FacturaService {
     @Autowired
     FacturaRepository facturaRepository;
 
-    public ArrayList<FacturaEntity> obtenerFactura(){
+    public ArrayList<FacturaEntity> obtenerFacturas(){
         return (ArrayList<FacturaEntity>) facturaRepository.findAll();
     }
 
