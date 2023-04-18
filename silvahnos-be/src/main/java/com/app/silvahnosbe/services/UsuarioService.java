@@ -3,10 +3,12 @@ package com.app.silvahnosbe.services;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.UsuarioRepository;
 
+@Service
 public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
