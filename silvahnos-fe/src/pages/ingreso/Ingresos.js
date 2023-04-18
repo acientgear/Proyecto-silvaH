@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 
 const Ingresos = () => {
