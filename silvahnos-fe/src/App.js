@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import './App.css';
 import Home from './pages/Home';
 import Layout from "./Layout";
-import Egreso from './pages/Egreso';
+import Egreso from './pages/egreso/Egreso';
 import Ingresos from './pages/ingreso/Ingresos';
 
 function App() {

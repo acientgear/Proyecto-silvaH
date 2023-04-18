@@ -4,16 +4,7 @@ import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
 
 const Egreso = () => {
 
-    const [egresos, setEgresos] = useState({
-        id: null,
-        monto: "",
-        patente: "",
-        descripcion: "",
-        borrado: false,
-        fechaBorrado: "",
-        fechaCreacion: "",
-        fechaModificacion: ""
-    });
+    const [egresos, setEgresos] = useState([]);
 
     const getEgresos = async () => {
         try {
@@ -26,6 +17,8 @@ const Egreso = () => {
             console.log(error);
         }
     }
+
+    console.log(egresos)
 
     useEffect(() => {
         getEgresos();

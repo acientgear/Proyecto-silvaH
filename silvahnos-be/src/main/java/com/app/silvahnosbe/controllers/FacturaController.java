@@ -15,7 +15,7 @@ import com.app.silvahnosbe.entities.FacturaEntity;
 import com.app.silvahnosbe.services.FacturaService;
 
 @RestController
-@RequestMapping("/Facturas")
+@RequestMapping("/facturas")
 public class FacturaController {
     @Autowired
     FacturaService facturaService;
