@@ -22,13 +22,13 @@ function BasicExample() {
                 marginLeft="5px"
               />
             </a>
-            <Nav.Link href="/#ingresos">
+            <Nav.Link href="/ingresos">
               Ingresos{" "}
             </Nav.Link>
-            <Nav.Link href="/#egresos">
+            <Nav.Link href="/egresos">
               Egresos{" "}
             </Nav.Link>
-            <Nav.Link href="/#facturas">
+            <Nav.Link href="/facturas">
               Facturas{" "}
             </Nav.Link>
             <Nav.Link href="/#logout" style={{position:"absolute", right:"80px"}}>
