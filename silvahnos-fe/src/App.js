@@ -6,6 +6,7 @@ import Layout from "./Layout";
 import Egreso from './pages/egreso/Egreso';
 import CrearEgreso from './pages/egreso/CrearEgreso';
 import Ingresos from './pages/ingreso/Ingresos';
+import CrearIngreso from './pages/ingreso/CrearIngreso';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/egresos" element={<Egreso />} />
           <Route path="/ingresos" element={<Ingresos />} />
           <Route path="/crearEgreso" element={<CrearEgreso />} />
+          <Route path="/crearIngreso" element={<CrearIngreso />} />
         </Routes>
       </Container>
     </Layout>
