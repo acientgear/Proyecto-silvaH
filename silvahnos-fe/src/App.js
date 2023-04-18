@@ -4,6 +4,7 @@ import './App.css';
 import Home from './pages/Home';
 import Layout from "./Layout";
 import Egreso from './pages/egreso/Egreso';
+import CrearEgreso from './pages/egreso/CrearEgreso';
 import Ingresos from './pages/ingreso/Ingresos';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/egresos" element={<Egreso />} />
           <Route path="/ingresos" element={<Ingresos />} />
+          <Route path="/crearEgreso" element={<CrearEgreso />} />
         </Routes>
       </Container>
     </Layout>
