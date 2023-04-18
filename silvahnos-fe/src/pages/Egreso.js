@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
 
 const Egreso = () => {
 
-    const [egreso, setEgreso] = useState({
+    const [egresos, setEgresos] = useState({
         id: null,
         monto: "",
         patente: "",
@@ -19,8 +19,8 @@ const Egreso = () => {
         try {
             let url = "http://localhost:8090/egresos";
             let response = await axios.get(url);
-            if (response.statur === 200) {
-                setEgreso(response.data);
+            if (response.status === 200) {
+                setEgresos(response.data);
             }
         } catch (error) {
             console.log(error);
@@ -50,7 +50,7 @@ const Egreso = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {egreso.map((egreso) => (
+                            {egresos.map((egreso) => (
                                 <tr key={egreso.id}>
                                     <td>{egreso.monto}</td>
                                     <td>{egreso.patente}</td>
@@ -67,3 +67,5 @@ const Egreso = () => {
         </Container>
     );
 }
+
+export default Egreso;

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import './App.css';
 import Home from './pages/Home';
 import Layout from "./Layout";
+import Egreso from './pages/Egreso';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Container style={{ marginTop: "100px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/egresos" element={<Egreso />} />
         </Routes>
       </Container>
     </Layout>
