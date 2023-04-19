@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 
 const Egresos = () => {
     const [egresos, setEgresos] = useState([]);
@@ -25,6 +25,7 @@ const Egresos = () => {
         <Container>
             <Row>
                 <Col><h1>Egresos</h1></Col>
+                <Col><Button variant='primary' href='/crearEgreso' style={{ marginRight: 3 }}>Registrar egreso</Button></Col>
             </Row>
             <Row>
                 <Col>
