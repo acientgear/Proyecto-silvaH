@@ -2,6 +2,9 @@ package com.app.silvahnosbe.entities;
 
 import java.sql.Timestamp;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +25,10 @@ public class IngresoEntity {
     private String patente;
     private String descripcion;
     private boolean borrado;
+
+    @CreationTimestamp
     private Timestamp fecha_creacion;
+    @UpdateTimestamp
     private Timestamp fecha_modificacion;
     private Timestamp fecha_borrado;
 }
