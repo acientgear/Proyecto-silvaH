@@ -23,8 +23,10 @@ public class FacturaEntity {
     private Timestamp fecha_pago;
     private String observaciones;
     private boolean borrado;
+    
+    @CreationTimestamp
     private Timestamp fecha_creacion;
     private Timestamp fecha_modificacion;
     private Timestamp fecha_borrado;
-    private int numero_factiura;
+    private int numero_factura;
 }
