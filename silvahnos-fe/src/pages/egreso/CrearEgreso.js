@@ -1,68 +1,70 @@
 import axios from 'axios';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
 
 function CrearEgreso() {
-
-    const [egresos, setEgresos] = useState([]);
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const [nuevoEgreso, setNuevoEgreso] = useState({
+    const [egreso, setEgreso] = useState({
         id: null,
-        monto: null,
-        patente: null,
-        descripcion: null,
+        borrado: false,
         fecha_creacion: null,
         fecha_modificacion: null,
         fecha_borrado: null,
-        borrado: false
+        monto: '',
+        patente: '',
+        descripcion: '',
     });
 
-
     const handleChange = (e) => {
-        setNuevoEgreso({
-            ...nuevoEgreso,
+        setEgreso({
+            ...egreso,
             [e.target.name]: e.target.value
         });
     };
 
-    const crearEgreso = async () => {
+    const createEgreso = async () => {
         try {
-            const fechaActual = new Date();
-            const fechaCreacion = fechaActual.getFullYear() + "-" + (fechaActual.getMonth() + 1) + "-" + fechaActual.getDate() + " " + fechaActual.getHours() + ":" + fechaActual.getMinutes() + ":" + fechaActual.getSeconds() + "." + fechaActual.getMilliseconds();
-            console.log(fechaCreacion);
-            //nuevoEgreso.fecha_creacion = fechaCreacion;
             let url = "http://localhost:8090/egresos";
-            let response = await axios.post(url, nuevoEgreso);
+            let response = await axios.post(url, egreso);
             if (response.status === 200) {
-                setEgresos(response.data);
+                window.location.href = "/egresos";
             }
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.log(err);
         }
     }
 
     return (
-        <Form>
-            <Form.Group className="mb-3" controlId="formEgreso">
-                <Form.Label>Descripcion</Form.Label>
-                <Form.Control as="textarea" rows={3} name="descripcion" type="textarea" placeholder="Ingrese descripcion" onChange={handleChange} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formEgreso">
-                <Form.Label>Monto</Form.Label>
-                <Form.Control name="monto" type="text" placeholder="Ingrese monto" onChange={handleChange} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formEgreso">
-                <Form.Label>Patente</Form.Label>
-                <Form.Control name="patente" type="text" placeholder="Ingrese patente" onChange={handleChange} />
-            </Form.Group>
-            <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
-            <Button variant="primary" onClick={crearEgreso}>Crear</Button>
-        </Form>
+        <Container>
+            <Row>
+                <Col>
+                    <h1>Crear Egreso</h1>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formEgreso">
+                            <Form.Label>Patente</Form.Label>
+                            <Form.Control name="patente" type="text" placeholder="Ingrese patente" onChange={handleChange} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formEgreso">
+                            <Form.Label>Monto</Form.Label>
+                            <Form.Control name="monto" type="text" placeholder="Ingrese monto" onChange={handleChange} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formEgreso">
+                            <Form.Label>Descripcion</Form.Label>
+                            <Form.Control as="textarea" row={3} name="descripcion" type="textarea" placeholder="Ingrese descripción" onChange={handleChange} />
+                        </Form.Group>
+                    </Form>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
+                    <Button variant='success' onClick={createEgreso}>Guardar</Button>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

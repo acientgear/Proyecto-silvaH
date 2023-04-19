@@ -1,9 +1,8 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Col, Container, Row, Table } from 'react-bootstrap';
 
-const Egreso = () => {
-
+const Egresos = () => {
     const [egresos, setEgresos] = useState([]);
 
     const getEgresos = async () => {
@@ -18,8 +17,6 @@ const Egreso = () => {
         }
     }
 
-    console.log(egresos)
-
     useEffect(() => {
         getEgresos();
     }, []);
@@ -31,26 +28,24 @@ const Egreso = () => {
             </Row>
             <Row>
                 <Col>
-                    <Table striped className='mt-4'>
+                    <Table striped hover>
                         <thead>
                             <tr>
+                                <th>Id</th>
+                                <th>Fecha</th>
                                 <th>Monto</th>
-                                <th>Patente</th>
-                                <th>Descripcion</th>
-                                <th>Fecha Creacion</th>
-                                <th>Fecha Modificacion</th>
-                                <th>Fecha Borrado</th>
+                                <th>Motivo</th>
+                                <th>Descripción</th>
                             </tr>
                         </thead>
                         <tbody>
                             {egresos.map((egreso) => (
                                 <tr key={egreso.id}>
+                                    <td>{egreso.id}</td>
+                                    <td>{egreso.fechaCreacion}</td>
                                     <td>{egreso.monto}</td>
                                     <td>{egreso.patente}</td>
                                     <td>{egreso.descripcion}</td>
-                                    <td>{egreso.fechaCreacion}</td>
-                                    <td>{egreso.fechaModificacion}</td>
-                                    <td>{egreso.fechaBorrado}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -61,4 +56,4 @@ const Egreso = () => {
     );
 }
 
-export default Egreso;
+export default Egresos;
