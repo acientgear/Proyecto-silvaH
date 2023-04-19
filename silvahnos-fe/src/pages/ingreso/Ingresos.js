@@ -30,7 +30,7 @@ const Ingresos = () => {
             </Row>
             <Row>
                 <Col>
-                    <Table striped bordered hover>
+                    <Table striped hover>
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -44,7 +44,7 @@ const Ingresos = () => {
                             {ingresos.map((ingreso) => (
                                 <tr key={ingreso.id}>
                                     <td>{ingreso.id}</td>
-                                    <td>{ingreso.fecha}</td>
+                                    <td>{ingreso.fecha_creacion}</td>
                                     <td>{ingreso.monto}</td>
                                     <td>{ingreso.patente}</td>
                                     <td>{ingreso.descripcion}</td>
