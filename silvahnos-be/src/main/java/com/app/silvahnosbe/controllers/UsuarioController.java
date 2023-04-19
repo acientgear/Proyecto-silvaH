@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.services.UsuarioService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -40,5 +44,10 @@ public class UsuarioController {
         return ResponseEntity.ok().body(nuevoUsuario);
     }
     
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> borrarUsuario(@PathVariable("id") Long id){
+        usuarioService.borrar(id);
+        return ResponseEntity.ok().body(null);
+    }
     
 }

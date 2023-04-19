@@ -20,4 +20,8 @@ public class UsuarioService {
     public UsuarioEntity guardarUsuario(UsuarioEntity usuario){
         return usuarioRepository.save(usuario);
     }
+    public void borrar(Long id){
+        usuarioRepository.deleteById(id);
+    }
+   
 }
