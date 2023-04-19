@@ -26,7 +26,7 @@ const CrearIngreso = () => {
             let url = "http://localhost:8090/ingresos";
             let response = await axios.post(url, ingreso);
             if (response.status === 200) {
-                window.location.href = "/";
+                window.location.href = "/ingresos";
             }
         } catch (err) {
             console.log(err.message);

@@ -19,7 +19,6 @@ function BasicExample() {
                 alt="Logo"
                 width="100"
                 height="50"
-                marginLeft="5px"
               />
             </a>
             <Nav.Link href="/ingresos">
