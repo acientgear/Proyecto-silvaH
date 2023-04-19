@@ -16,9 +16,9 @@ function CrearEgreso() {
         monto: null,
         patente: null,
         descripcion: null,
-        fechaCreacion: null,
-        fechaModificacion: null,
-        fechaBorrado: null,
+        fecha_creacion: null,
+        fecha_modificacion: null,
+        fecha_borrado: null,
         borrado: false
     });
 
@@ -32,6 +32,10 @@ function CrearEgreso() {
 
     const crearEgreso = async () => {
         try {
+            const fechaActual = new Date();
+            const fechaCreacion = fechaActual.getFullYear() + "-" + (fechaActual.getMonth() + 1) + "-" + fechaActual.getDate() + " " + fechaActual.getHours() + ":" + fechaActual.getMinutes() + ":" + fechaActual.getSeconds() + "." + fechaActual.getMilliseconds();
+            console.log(fechaCreacion);
+            //nuevoEgreso.fecha_creacion = fechaCreacion;
             let url = "http://localhost:8090/egresos";
             let response = await axios.post(url, nuevoEgreso);
             if (response.status === 200) {
@@ -46,7 +50,7 @@ function CrearEgreso() {
         <Form>
             <Form.Group className="mb-3" controlId="formEgreso">
                 <Form.Label>Descripcion</Form.Label>
-                <Form.Control name="descripcion" type="text" placeholder="Ingrese descripcion" onChange={handleChange} />
+                <Form.Control as="textarea" rows={3} name="descripcion" type="textarea" placeholder="Ingrese descripcion" onChange={handleChange} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formEgreso">
                 <Form.Label>Monto</Form.Label>

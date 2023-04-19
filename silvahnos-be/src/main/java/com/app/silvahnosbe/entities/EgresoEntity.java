@@ -1,6 +1,11 @@
 package com.app.silvahnosbe.entities;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +27,10 @@ public class EgresoEntity {
     private String patente;
     private String descripcion;
     private Boolean borrado;
-    private Timestamp fecha_creacion;
+
+    @CreationTimestamp
+    private Date fecha_creacion;
+    
     private Timestamp fecha_modificacion;
     private Timestamp fecha_borrado;
 }
