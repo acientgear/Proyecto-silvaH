@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.app.silvahnosbe.entities.FacturaEntity;
 import com.app.silvahnosbe.services.FacturaService;
@@ -46,4 +47,11 @@ public class FacturaController {
         FacturaEntity facturaGuardada = facturaService.guardarFactura(factura);
         return ResponseEntity.ok().body(facturaGuardada);
     }
+
+    @DeleteMapping
+    public ResponseEntity<FacturaEntity> deleteFactura(@PathVariable("id") Long id){
+        facturaService.borrarFactura(id);
+        return ResponseEntity.ok().body(null);
+    }
+
 }

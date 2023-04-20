@@ -25,4 +25,8 @@ public class FacturaService {
     public FacturaEntity guardarFactura(FacturaEntity factura){
         return facturaRepository.save(factura);
     }
+
+    public void borrarFactura(Long id){
+        facturaRepository.deleteById(id);
+    }
 }
