@@ -6,6 +6,7 @@ import org.hibernate.annotations.ConverterRegistrations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,5 +46,15 @@ public class EgresoController {
     public ResponseEntity<EgresoEntity> createEgreso(@RequestBody EgresoEntity egreso){
         EgresoEntity egresoGuardado = egresoService.guardarEgreso(egreso);
         return ResponseEntity.ok().body(egresoGuardado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<EgresoEntity> deleteEgreso(@PathVariable("id") Long id){
+        EgresoEntity egreso = egresoService.obtenerEgresoPorId(id);
+        if(egreso == null){
+            return ResponseEntity.notFound().build();
+        }
+        egresoService.eliminarEgreso(egreso);
+        return ResponseEntity.ok().build();
     }
 }

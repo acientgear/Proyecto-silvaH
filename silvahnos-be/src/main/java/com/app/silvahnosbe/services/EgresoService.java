@@ -25,4 +25,8 @@ public class EgresoService {
     public EgresoEntity guardarEgreso(EgresoEntity egreso){
         return egresoRepository.save((egreso));
     }
+
+    public void eliminarEgreso(EgresoEntity egreso){
+        egreso.setBorrado(true);
+    }
 }
