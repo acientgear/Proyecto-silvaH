@@ -124,7 +124,7 @@ const Egresos = () => {
                                 <tr>
                                     <th>Fecha</th>
                                     <th>Monto</th>
-                                    <th>Motivo</th>
+                                    <th>Patente</th>
                                     <th>Descripción</th>
                                     <th>Acciones</th>
                                 </tr>

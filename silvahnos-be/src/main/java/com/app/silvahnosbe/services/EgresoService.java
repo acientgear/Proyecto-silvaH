@@ -15,7 +15,7 @@ public class EgresoService {
     EgresoRepository egresoRepository;
 
     public ArrayList<EgresoEntity> obtenerEgresos(){
-        return (ArrayList<EgresoEntity>) egresoRepository.findAll();
+        return (ArrayList<EgresoEntity>) egresoRepository.obtenerEgresos();
     }
 
     public EgresoEntity obtenerEgresoPorId(Long id){
