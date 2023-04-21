@@ -15,7 +15,7 @@ public class IngresoService {
     IngresoRepository ingresoRepository;
 
     public ArrayList<IngresoEntity> obtenerIngresos(){
-        return (ArrayList<IngresoEntity>) ingresoRepository.findAll();
+        return (ArrayList<IngresoEntity>) ingresoRepository.obtenerIngresos();
     }
 
     public IngresoEntity obtenerIngresoPorId(Long id){
