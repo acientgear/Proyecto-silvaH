@@ -123,7 +123,7 @@ const Egresos = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <Table striped hover>
+                        <Table responsive>
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
