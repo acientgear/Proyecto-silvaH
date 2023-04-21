@@ -1,56 +1,46 @@
-import { Col, Container, Row, Card, Button, Carousel } from "react-bootstrap";
+import { Col, Row, Card, Button, Container } from "react-bootstrap";
 import Ingresos from "../components/images/ingresos.png";
 import Egresos from "../components/images/egresos.png";
+import Silvahnos from "../components/images/silvahnos.jpg";
 
 const Home = () => {
   return (
-    <Container style={{ textAlign: "center" }}>
-      <Row>
+    <Container>
+      <Row xs={1} sm={2} md={3}>
         <Col>
-        <Button style={{ backgroundColor: "#77E079", border: "none" }} href="/#flujo">Visualizar flujo de caja</Button>
-        </Col>
-      </Row>
-      <Row>
-        
-        <Col>
-          <Card style={{ width: '18rem', border: "none" }}>
-
+          <Card className="text-center">
             <Card.Body>
-              <Card.Title>Ingresos de este mes</Card.Title>
+              <Card.Title style={{fontSize:"30px"}}>Ingresos</Card.Title>
               <Card.Text>
-                $ 4.000.000
+                <img className="img-fluid" src={Ingresos} alt="Ingresos" />
               </Card.Text>
+              <Button variant="success" href="/crearIngreso">Registrar un ingreso</Button>
             </Card.Body>
-
-            <p></p>
-            <Button style={{ backgroundColor: "#77E079", border: "none" }} href="/crearIngreso">Registrar ingreso</Button>
           </Card>
         </Col>
-        
         <Col>
-          <Card style={{ width: '18rem', border: "none" }}>
-
+        <Card className="text-center">
             <Card.Body>
-              <Card.Title>Egresos de este mes</Card.Title>
+              <Card.Title style={{fontSize:"30px"}}>Egresos</Card.Title>
               <Card.Text>
-                $ 2.000.000
+                <img className="img-fluid" src={Egresos} alt="Egresos" />
               </Card.Text>
+              <Button variant="danger" href="/crearEgreso">Registrar un egreso</Button>
             </Card.Body>
-
-            <p></p>
-            <Button style={{ backgroundColor: "#E08C77", border: "none" }} href="/crearEgreso">Registrar egreso</Button>
           </Card>
         </Col>
-        
         <Col>
-          <Card style={{ width: '18rem', border: "none" }}>
-
+        <Card className="text-center">
             <Card.Body>
-              <Card.Title>$ 2.000.000</Card.Title>
+              <Card.Title style={{fontSize:"30px"}}>Facturas</Card.Title>
+              <Card.Text>
+                <img className="img-fluid" src={Silvahnos} alt="Egresos" />
+              </Card.Text>
+              <Button variant="primary" href="/crearFactura">Registrar una factura</Button>
             </Card.Body>
           </Card>
+          
         </Col>
-        
       </Row>
     </Container>
   );
