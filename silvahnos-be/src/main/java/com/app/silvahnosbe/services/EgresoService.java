@@ -29,4 +29,8 @@ public class EgresoService {
     public void eliminarEgreso(EgresoEntity egreso){
         egreso.setBorrado(true);
     }
+
+    public ArrayList<EgresoEntity> obtenerEgresoPorAnioAndMes(int anio, int mes){
+        return (ArrayList<EgresoEntity>) egresoRepository.obtenerEgresosPorAnioAndMes(anio, mes);
+    }
 }

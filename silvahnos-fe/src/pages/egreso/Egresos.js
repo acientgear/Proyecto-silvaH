@@ -88,9 +88,13 @@ const Egresos = () => {
         descripcion: '',
     }
 
+    let fechaAcual = new Date();
+    let anio =fechaAcual.getFullYear();
+    let mes = fechaAcual.getMonth()+1;
+
     const getEgresos = async () => {
         try {
-            let url = 'http://localhost:8090/egresos';
+            let url = 'http://localhost:8090/egresos/'+anio+'/'+mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setEgresos(response.data);

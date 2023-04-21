@@ -42,6 +42,15 @@ public class EgresoController {
         return ResponseEntity.ok().body(egreso);
     }
 
+    @GetMapping("/{anio}/{mes}")
+    public ResponseEntity<ArrayList<EgresoEntity>> getEgresoByAnioAndMes(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        ArrayList<EgresoEntity> egresos = egresoService.obtenerEgresoPorAnioAndMes(anio, mes);
+        if(egresos == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(egresos);
+    }
+
     @PostMapping
     public ResponseEntity<EgresoEntity> createEgreso(@RequestBody EgresoEntity egreso){
         EgresoEntity egresoGuardado = egresoService.guardarEgreso(egreso);
