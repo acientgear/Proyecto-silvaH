@@ -13,7 +13,7 @@ import CrearFactura from "./pages/factura/CrearFactura"
 function App() {
   return (
     <Layout>
-      <Container style={{ marginTop: "100px" }}>
+      <Container style={{ marginTop: "20px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/egresos" element={<Egreso />} />

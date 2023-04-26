@@ -89,8 +89,8 @@ const Egresos = () => {
     }
 
     let fechaAcual = new Date();
-    let anio =fechaAcual.getFullYear();
-    let mes = fechaAcual.getMonth()+1;
+    let anio = fechaAcual.getFullYear();
+    let mes  = fechaAcual.getMonth()+1;
 
     const getEgresos = async () => {
         try {
@@ -110,6 +110,17 @@ const Egresos = () => {
         return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
     };
 
+    const formatoMonto = (monto) => {
+        const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+        return montoFormateado;
+    };
+
+    let total = 0;
+    egresos.forEach((egreso) => {
+        total += egreso.monto;
+        console.log(total);
+    });
+
     useEffect(() => {
         getEgresos();
     }, []);
@@ -119,17 +130,17 @@ const Egresos = () => {
             <Container>
                 <Row>
                     <Col><h1>Egresos</h1></Col>
-                    <Col><Button variant='primary' href='/crearEgreso' style={{ marginRight: 3 }}>Registrar egreso</Button></Col>
+                    <Col><h1>Total egresos: {formatoMonto(total)}</h1></Col>
                 </Row>
                 <Row>
                     <Col>
-                        <Table responsive>
+                        <Table responsive striped >
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
-                                    <th>Monto</th>
-                                    <th>Patente</th>
                                     <th>Descripción</th>
+                                    <th>Patente</th>
+                                    <th>Monto</th>                                 
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -137,9 +148,9 @@ const Egresos = () => {
                                 {egresos.map((egreso) => (
                                     <tr key={egreso.id}>
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
-                                        <td>{egreso.monto}</td>
-                                        <td>{egreso.patente}</td>
                                         <td>{egreso.descripcion}</td>
+                                        <td>{egreso.patente}</td>
+                                        <td>{formatoMonto(egreso.monto)}</td>          
                                         <td>
                                             <Button variant='primary' onClick={() => handleShowEdit(egreso)} style={{ marginRight: 2 }}>Editar</Button>
                                             <Button variant='danger' onClick={() => handleShowDelete(egreso)}>Eliminar</Button>
