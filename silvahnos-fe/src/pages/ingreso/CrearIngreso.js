@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 
 const CrearIngreso = () => {
+    const [validated, setValidated] = useState(false);
+
     const [ingreso, setIngreso] = useState({
         id: null,
         borrado: false,
@@ -19,7 +21,20 @@ const CrearIngreso = () => {
             ...ingreso,
             [e.target.name]: e.target.value,
         });
+        setValidated(false);
     };
+
+    const handleSumbit = (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            createIngreso();
+            setValidated(true);
+        }
+    };
+
 
     const createIngreso = async () => {
         try {
@@ -42,14 +57,18 @@ const CrearIngreso = () => {
             </Row>
             <Row>
                 <Col>
-                    <Form>
+                    <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Patente</Form.Label>
                             <Form.Control name="patente" 
                                 required
                                 isValid={255 > ingreso.patente.length && ingreso.patente.length > 0} 
                                 isInvalid={ingreso.patente.length > 255 || ingreso.patente.length === 0}
-                                type="text" placeholder="Ingrese patente" onChange={handleChange} />
+                                type="text" placeholder="Ingrese patente" onChange={handleChange} 
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Ingrese una patente valida
+                                </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Monto</Form.Label>
@@ -59,6 +78,9 @@ const CrearIngreso = () => {
                                 min={1}
                                 max={1000000000}
                                 type="number" placeholder="Ingrese monto" onChange={handleChange} />
+                                <Form.Control.Feedback type="invalid">
+                                    Ingrese un monto entre $1 y $1.000.000.000
+                                </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Descripción</Form.Label>
@@ -67,14 +89,13 @@ const CrearIngreso = () => {
                                 isValid={255 > ingreso.descripcion.length && ingreso.descripcion.length > 0} 
                                 isInvalid={ingreso.descripcion.length > 255 || ingreso.descripcion.length === 0}
                                 as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange} />
+                                <Form.Control.Feedback type="invalid">
+                                    Ingrese una descripción valida
+                                </Form.Control.Feedback>
                         </Form.Group>
+                        <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
+                        <Button variant='success' type='sumbit'>Guardar</Button>
                     </Form>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
-                    <Button variant='success' onClick={createIngreso}>Guardar</Button>
                 </Col>
             </Row>
         </Container>
