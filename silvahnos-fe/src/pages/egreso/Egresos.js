@@ -166,8 +166,8 @@ const Egresos = () => {
                                         <td>{egreso.patente}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
-                                            <Button variant='primary' onClick={() => handleShowEdit(egreso)} style={{ marginRight: 2 }}>Editar</Button>
-                                            <Button variant='danger' onClick={() => handleShowDelete(egreso)}>Eliminar</Button>
+                                            <Button variant='primary' onClick={() => handleShowEdit(egreso)} style={{ marginRight: 2, width:"88px"}}>Editar</Button>
+                                            <Button variant='danger' onClick={() => handleShowDelete(egreso)} style={{ width:"88px"}}>Eliminar</Button>
                                         </td>
                                     </tr>
 
