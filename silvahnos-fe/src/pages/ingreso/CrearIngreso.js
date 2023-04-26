@@ -96,6 +96,7 @@ const CrearIngreso = () => {
                         <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
                         <Button variant='success' type='sumbit'>Guardar</Button>
                     </Form>
+                    
                 </Col>
             </Row>
         </Container>

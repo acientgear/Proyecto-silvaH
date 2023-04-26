@@ -7,16 +7,17 @@ const Ingresos = () => {
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [validated, setValidated] = useState(false);
 
-    const handleCloseDelete = () =>{
+    const handleCloseDelete = () => {
         setEditedItem(defaultItem);
         setShowDelete(false);
     }
 
-    const handleShowDelete = (ingreso) =>{
+    const handleShowDelete = (ingreso) => {
         setEditedItem(ingreso);
         setShowDelete(true);
-    } 
+    }
 
     const handleCloseEdit = () => {
         setEditedItem(defaultItem);
@@ -26,6 +27,7 @@ const Ingresos = () => {
     const handleShowEdit = (ingreso) => {
         setEditedItem(ingreso);
         setShowEdit(true);
+        setValidated(false);
     };
 
     const handleChange = (e) => {
@@ -33,6 +35,17 @@ const Ingresos = () => {
             ...editedItem,
             [e.target.name]: e.target.value,
         });
+    };
+
+    const handleSumbit = (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            updateIngreso();
+            setValidated(true);
+        }
     };
 
     const updateIngreso = async () => {
@@ -62,7 +75,7 @@ const Ingresos = () => {
                 getIngresos();
             }
         } catch (err) {
-            console.log(err.message);  
+            console.log(err.message);
         }
     };
 
@@ -123,7 +136,7 @@ const Ingresos = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <Table striped hover>
+                        <Table striped responsive="sm" hover>
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
@@ -158,25 +171,49 @@ const Ingresos = () => {
                     <Modal.Title>Editar Ingreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group className='mb-3' controlId='formPatente'>
                             <Form.Label>Patente</Form.Label>
-                            <Form.Control name="patente" type='text' value={editedItem.patente} onChange={handleChange}/>
+                            <Form.Control name="patente"
+                                required
+                                isValid={255 > editedItem.patente.length && editedItem.patente.length > 0} 
+                                isInvalid={editedItem.patente.length > 255 || editedItem.patente.length === 0}
+                                type='text' value={editedItem.patente} onChange={handleChange} />
+                                <Form.Control.Feedback type="invalid">
+                                    Ingrese una patente valida
+                                </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formMonto'>
                             <Form.Label>Monto</Form.Label>
-                            <Form.Control name="monto" type='number' value={editedItem.monto} onChange={handleChange}/>
+                            <Form.Control name="monto"
+                                required
+                                isValid={1000000000 > editedItem.monto && editedItem.monto > 0}
+                                isInvalid={editedItem.monto <= 0 || editedItem.monto > 1000000000}
+                                min={1}
+                                max={1000000000}
+                                type='number' value={editedItem.monto} onChange={handleChange} />
+                                <Form.Control.Feedback type="invalid">
+                                    Ingrese un monto entre $1 y $1.000.000.000
+                                </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formDescripcion'>
                             <Form.Label>Descripción</Form.Label>
-                            <Form.Control name="descripcion" as='textarea' row={3} value={editedItem.descripcion} onChange={handleChange}/>
+                            <Form.Control name="descripcion"
+                                required
+                                isValid={255 > editedItem.descripcion.length && editedItem.descripcion.length > 0} 
+                                isInvalid={editedItem.descripcion.length > 255 || editedItem.descripcion.length === 0}
+                                as='textarea' row={3} value={editedItem.descripcion} onChange={handleChange} />
+                                <Form.Control.Feedback type="invalid">
+                                    Ingrese una descripción valida
+                                </Form.Control.Feedback>
                         </Form.Group>
+                        <hr></hr>
+                        <div style={{display:"flex", justifyContent: "end"}}>
+                            <Button variant='secondary' style={{marginRight: 2}} onClick={handleCloseEdit}>Cerrar</Button>
+                            <Button variant='primary' type='sumbit'>Guardar</Button>
+                        </div>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant='secondary' onClick={handleCloseEdit}>Cerrar</Button>
-                    <Button variant='primary' onClick={updateIngreso}>Guardar</Button>
-                </Modal.Footer>
             </Modal>
 
             {/*Modal para eliminar*/}
