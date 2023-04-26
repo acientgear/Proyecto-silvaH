@@ -10,7 +10,7 @@ const CrearIngreso = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
-        monto: '',
+        monto: 0,
         descripcion: '',
     });
 
@@ -33,7 +33,7 @@ const CrearIngreso = () => {
         }
     };
 
-    return(
+    return (
         <Container>
             <Row>
                 <Col>
@@ -45,22 +45,35 @@ const CrearIngreso = () => {
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Patente</Form.Label>
-                            <Form.Control name="patente" type="text" placeholder="Ingrese patente" onChange={handleChange} />
+                            <Form.Control name="patente" 
+                                required
+                                isValid={255 > ingreso.patente.length && ingreso.patente.length > 0} 
+                                isInvalid={ingreso.patente.length > 255 || ingreso.patente.length === 0}
+                                type="text" placeholder="Ingrese patente" onChange={handleChange} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Monto</Form.Label>
-                            <Form.Control name="monto" type="number" placeholder="Ingrese monto" onChange={handleChange}/>
+                            <Form.Control name="monto" required
+                                isValid={1000000000 > ingreso.monto && ingreso.monto > 0}
+                                isInvalid={ingreso.monto <= 0 || ingreso.monto > 1000000000}
+                                min={1}
+                                max={1000000000}
+                                type="number" placeholder="Ingrese monto" onChange={handleChange} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Descripción</Form.Label>
-                            <Form.Control name="descripcion" as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange}/>
+                            <Form.Control name="descripcion"
+                                required
+                                isValid={255 > ingreso.descripcion.length && ingreso.descripcion.length > 0} 
+                                isInvalid={ingreso.descripcion.length > 255 || ingreso.descripcion.length === 0}
+                                as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange} />
                         </Form.Group>
                     </Form>
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <Button variant='primary' href='/' style={{marginRight: 2}}>Atras</Button>
+                    <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
                     <Button variant='success' onClick={createIngreso}>Guardar</Button>
                 </Col>
             </Row>
