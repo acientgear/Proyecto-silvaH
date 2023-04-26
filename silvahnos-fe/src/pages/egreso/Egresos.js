@@ -8,15 +8,15 @@ const Egresos = () => {
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
 
-    const handleCloseDelete = () =>{
+    const handleCloseDelete = () => {
         setEditedItem(defaultItem);
         setShowDelete(false);
     }
 
-    const handleShowDelete = (egreso) =>{
+    const handleShowDelete = (egreso) => {
         setEditedItem(egreso);
         setShowDelete(true);
-    } 
+    }
 
     const handleCloseEdit = () => {
         setEditedItem(defaultItem);
@@ -24,6 +24,7 @@ const Egresos = () => {
     };
 
     const handleShowEdit = (egreso) => {
+        setValidated(false);
         setEditedItem(egreso);
         setShowEdit(true);
     };
@@ -62,7 +63,7 @@ const Egresos = () => {
                 getEgresos();
             }
         } catch (err) {
-            console.log(err.message);  
+            console.log(err.message);
         }
     };
 
@@ -90,11 +91,11 @@ const Egresos = () => {
 
     let fechaAcual = new Date();
     let anio = fechaAcual.getFullYear();
-    let mes  = fechaAcual.getMonth()+1;
+    let mes = fechaAcual.getMonth() + 1;
 
     const getEgresos = async () => {
         try {
-            let url = 'http://localhost:8090/egresos/'+anio+'/'+mes;
+            let url = 'http://localhost:8090/egresos/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setEgresos(response.data);
@@ -121,6 +122,20 @@ const Egresos = () => {
         console.log(total);
     });
 
+    const handleSumbit = (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            updateEgreso();
+            setValidated(true);
+        }
+    };
+
+    const [validated, setValidated] = useState(false);
+    console.log(validated);
+
     useEffect(() => {
         getEgresos();
     }, []);
@@ -130,7 +145,6 @@ const Egresos = () => {
             <Container>
                 <Row>
                     <Col><h1>Egresos</h1></Col>
-                    <Col><h1>Total egresos: {formatoMonto(total)}</h1></Col>
                 </Row>
                 <Row>
                     <Col>
@@ -140,7 +154,7 @@ const Egresos = () => {
                                     <th>Fecha</th>
                                     <th>Descripción</th>
                                     <th>Patente</th>
-                                    <th>Monto</th>                                 
+                                    <th>Monto</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -150,15 +164,17 @@ const Egresos = () => {
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
                                         <td>{egreso.descripcion}</td>
                                         <td>{egreso.patente}</td>
-                                        <td>{formatoMonto(egreso.monto)}</td>          
+                                        <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
                                             <Button variant='primary' onClick={() => handleShowEdit(egreso)} style={{ marginRight: 2 }}>Editar</Button>
                                             <Button variant='danger' onClick={() => handleShowDelete(egreso)}>Eliminar</Button>
                                         </td>
                                     </tr>
+
                                 ))}
                             </tbody>
                         </Table>
+                        <h1 style={{ textAlign: "center" }}>Total: {formatoMonto(total)}</h1>
                     </Col>
                 </Row>
             </Container>
@@ -169,25 +185,46 @@ const Egresos = () => {
                     <Modal.Title>Editar Egreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
-                        <Form.Group className='mb-3' controlId='formPatente'>
+                    <Form noValidate validated={validated} onSubmit={handleSumbit}>
+                        <Form.Group className="mb-3" controlId="formEgreso">
                             <Form.Label>Patente</Form.Label>
-                            <Form.Control name="patente" type='text' value={editedItem.patente} onChange={handleChange}/>
+                            <Form.Control name="patente"
+                                required
+                                isValid={255 > editedItem.patente.length && editedItem.patente.length > 0}
+                                isInvalid={editedItem.patente.length > 255 || editedItem.patente.length === 0}
+                                type="text" placeholder="Ingrese patente" onChange={handleChange}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese una patente valida
+                            </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group className='mb-3' controlId='formMonto'>
+                        <Form.Group className="mb-3" controlId="formEgreso">
                             <Form.Label>Monto</Form.Label>
-                            <Form.Control name="monto" type='number' value={editedItem.monto} onChange={handleChange}/>
+                            <Form.Control name="monto" required
+                                isValid={1000000000 > editedItem.monto && editedItem.monto > 0}
+                                isInvalid={editedItem.monto <= 0 || editedItem.monto > 1000000000}
+                                min={1}
+                                max={1000000000}
+                                type="number" placeholder="Ingrese monto" onChange={handleChange} />
+                            <Form.Control.Feedback type="invalid">
+                                El monto debe ser mayor a $ 0 y menor a $ 1.000.000.000
+                            </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group className='mb-3' controlId='formDescripcion'>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Descripción</Form.Label>
-                            <Form.Control name="descripcion" as='textarea' row={3} value={editedItem.descripcion} onChange={handleChange}/>
+                            <Form.Control name="descripcion"
+                                required
+                                isValid={255 > editedItem.descripcion.length && editedItem.descripcion.length > 0}
+                                isInvalid={editedItem.descripcion.length > 255 || editedItem.descripcion.length === 0}
+                                as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange} />
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese una descripción valida
+                            </Form.Control.Feedback>
                         </Form.Group>
+                        <Button variant='secondary' onClick={handleCloseEdit}>Cerrar</Button>
+                        <Button type="submit">Guardar</Button>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant='secondary' onClick={handleCloseEdit}>Cerrar</Button>
-                    <Button variant='primary' onClick={updateEgreso}>Guardar</Button>
-                </Modal.Footer>
             </Modal>
 
             {/*Modal para eliminar*/}
