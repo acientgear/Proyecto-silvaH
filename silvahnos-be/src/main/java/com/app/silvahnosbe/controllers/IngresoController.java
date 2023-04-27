@@ -22,9 +22,9 @@ public class IngresoController {
     @Autowired
     IngresoService ingresoService;
 
-    @GetMapping
-    public ResponseEntity<ArrayList<IngresoEntity>> getAllIngresos(){
-        ArrayList<IngresoEntity> ingresos= ingresoService.obtenerIngresos();
+    @GetMapping("/{anio}/{mes}")
+    public ResponseEntity<ArrayList<IngresoEntity>> getAllIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        ArrayList<IngresoEntity> ingresos= ingresoService.obtenerIngresos(anio, mes);
         if(ingresos == null){
             return ResponseEntity.notFound().build();
         }

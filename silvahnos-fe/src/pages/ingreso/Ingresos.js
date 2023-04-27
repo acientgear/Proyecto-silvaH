@@ -4,9 +4,11 @@ import { Button, Col, Container, Form, Modal, Pagination, Row, Table } from 'rea
 
 const Ingresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const pageSize = 6;
 
     const [ingresos, setIngresos] = useState([]);
+    const [mes, setMes] = useState((new Date()).getMonth() + 1);
+    const [anio, setAnio] = useState((new Date()).getFullYear());
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
@@ -17,9 +19,14 @@ const Ingresos = () => {
     }
 
     const paginatedData = ingresos.slice(
-        (currentPage - 1) * pageSize, 
+        (currentPage - 1) * pageSize,
         currentPage * pageSize
     );
+
+    const formatoMonto = (monto) => {
+        const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+        return montoFormateado;
+    };
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -114,11 +121,9 @@ const Ingresos = () => {
         descripcion: '',
     }
 
-
-
     const getIngresos = async () => {
         try {
-            let url = 'http://localhost:8090/ingresos';
+            let url = 'http://localhost:8090/ingresos/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setIngresos(response.data);
@@ -133,6 +138,8 @@ const Ingresos = () => {
         fechaC = fechaC.split('-');
         return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
     };
+
+
 
     useEffect(() => {
         getIngresos();
@@ -162,7 +169,7 @@ const Ingresos = () => {
                                 {paginatedData.map((ingreso) => (
                                     <tr key={ingreso.id}>
                                         <td>{formatearFecha(ingreso.fecha_creacion)}</td>
-                                        <td>{ingreso.monto}</td>
+                                        <td>{formatoMonto(ingreso.monto)}</td>
                                         <td>{ingreso.patente}</td>
                                         <td>{ingreso.descripcion}</td>
                                         <td>
@@ -174,13 +181,13 @@ const Ingresos = () => {
                             </tbody>
                         </Table>
                         <Pagination>
-                            {[...Array(Math.ceil(ingresos.length/pageSize)).keys()].map((page) => (
+                            {[...Array(Math.ceil(ingresos.length / pageSize)).keys()].map((page) => (
                                 <Pagination.Item
                                     key={page + 1}
                                     active={page + 1 === currentPage}
                                     onClick={() => handlePageChange(page + 1)}
                                 >
-                                {page + 1}   
+                                    {page + 1}
                                 </Pagination.Item>
                             ))}
                         </Pagination>
@@ -199,12 +206,12 @@ const Ingresos = () => {
                             <Form.Label>Patente</Form.Label>
                             <Form.Control name="patente"
                                 required
-                                isValid={255 > editedItem.patente.length && editedItem.patente.length > 0} 
+                                isValid={255 > editedItem.patente.length && editedItem.patente.length > 0}
                                 isInvalid={editedItem.patente.length > 255 || editedItem.patente.length === 0}
                                 type='text' value={editedItem.patente} onChange={handleChange} />
-                                <Form.Control.Feedback type="invalid">
-                                    Ingrese una patente valida
-                                </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese una patente valida
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formMonto'>
                             <Form.Label>Monto</Form.Label>
@@ -215,24 +222,24 @@ const Ingresos = () => {
                                 min={1}
                                 max={1000000000}
                                 type='number' value={editedItem.monto} onChange={handleChange} />
-                                <Form.Control.Feedback type="invalid">
-                                    Ingrese un monto entre $1 y $1.000.000.000
-                                </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese un monto entre $1 y $1.000.000.000
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formDescripcion'>
                             <Form.Label>Descripción</Form.Label>
                             <Form.Control name="descripcion"
                                 required
-                                isValid={255 > editedItem.descripcion.length && editedItem.descripcion.length > 0} 
+                                isValid={255 > editedItem.descripcion.length && editedItem.descripcion.length > 0}
                                 isInvalid={editedItem.descripcion.length > 255 || editedItem.descripcion.length === 0}
                                 as='textarea' row={3} value={editedItem.descripcion} onChange={handleChange} />
-                                <Form.Control.Feedback type="invalid">
-                                    Ingrese una descripción valida
-                                </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese una descripción valida
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <hr></hr>
-                        <div style={{display:"flex", justifyContent: "end"}}>
-                            <Button variant='secondary' style={{marginRight: 2}} onClick={handleCloseEdit}>Cerrar</Button>
+                        <div style={{ display: "flex", justifyContent: "end" }}>
+                            <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleCloseEdit}>Cerrar</Button>
                             <Button variant='primary' type='sumbit'>Guardar</Button>
                         </div>
                     </Form>

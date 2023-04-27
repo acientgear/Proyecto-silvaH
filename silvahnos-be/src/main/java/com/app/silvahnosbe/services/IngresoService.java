@@ -14,8 +14,8 @@ public class IngresoService {
     @Autowired
     IngresoRepository ingresoRepository;
 
-    public ArrayList<IngresoEntity> obtenerIngresos(){
-        return (ArrayList<IngresoEntity>) ingresoRepository.obtenerIngresos();
+    public ArrayList<IngresoEntity> obtenerIngresos(int anio, int mes){
+        return (ArrayList<IngresoEntity>) ingresoRepository.obtenerIngresos(anio, mes);
     }
 
     public IngresoEntity obtenerIngresoPorId(Long id){
