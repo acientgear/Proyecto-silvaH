@@ -148,14 +148,14 @@ const Egresos = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <Table responsive striped >
+                        <Table striped responsive="sm" hover>
                             <thead>
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Descripción</th>
-                                    <th>Patente</th>
-                                    <th>Monto</th>
-                                    <th>Acciones</th>
+                                    <th style={{ width: '150px' }}>Fecha</th>
+                                    <th style={{ width: '150px' }}>Descripción</th>
+                                    <th style={{ width: '150px' }}>Patente</th>
+                                    <th style={{ width: '150px' }}>Monto</th>
+                                    <th style={{ width: '150px' }}>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -166,8 +166,8 @@ const Egresos = () => {
                                         <td>{egreso.patente}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
-                                            <Button variant='primary' onClick={() => handleShowEdit(egreso)} style={{ marginRight: 2, width:"88px"}}>Editar</Button>
-                                            <Button variant='danger' onClick={() => handleShowDelete(egreso)} style={{ width:"88px"}}>Eliminar</Button>
+                                            <Button variant='primary' onClick={() => handleShowEdit(egreso)} style={{ marginRight: 2, width: "88px" }}>Editar</Button>
+                                            <Button variant='danger' onClick={() => handleShowDelete(egreso)} style={{ width: "88px" }}>Eliminar</Button>
                                         </td>
                                     </tr>
 
