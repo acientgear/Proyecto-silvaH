@@ -1,13 +1,25 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Modal, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Form, Modal, Pagination, Row, Table } from 'react-bootstrap';
 
 const Ingresos = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+
     const [ingresos, setIngresos] = useState([]);
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    }
+
+    const paginatedData = ingresos.slice(
+        (currentPage - 1) * pageSize, 
+        currentPage * pageSize
+    );
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -147,7 +159,7 @@ const Ingresos = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {ingresos.map((ingreso) => (
+                                {paginatedData.map((ingreso) => (
                                     <tr key={ingreso.id}>
                                         <td>{formatearFecha(ingreso.fecha_creacion)}</td>
                                         <td>{ingreso.monto}</td>
@@ -161,6 +173,17 @@ const Ingresos = () => {
                                 ))}
                             </tbody>
                         </Table>
+                        <Pagination>
+                            {[...Array(Math.ceil(ingresos.length/pageSize)).keys()].map((page) => (
+                                <Pagination.Item
+                                    key={page + 1}
+                                    active={page + 1 === currentPage}
+                                    onClick={() => handlePageChange(page + 1)}
+                                >
+                                {page + 1}   
+                                </Pagination.Item>
+                            ))}
+                        </Pagination>
                     </Col>
                 </Row>
             </Container>
