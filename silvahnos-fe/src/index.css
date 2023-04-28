@@ -12,17 +12,10 @@ code {
     monospace;
 }
 
-
-.card:hover {
-  transform: translateY(-10px);
-  transition: transform 0.3s ease-in-out;
-}
-
-.card {
+.cardsH {
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  padding: 20px;
   margin: 20px;
   width: 369px;
   height: 300px;
@@ -30,7 +23,7 @@ code {
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
-  border: none;
+  
 }
 
 .table {
