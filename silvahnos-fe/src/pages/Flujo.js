@@ -1,7 +1,5 @@
-import { Col, Row, Card, Button, Container, Table } from "react-bootstrap";
-import Ingresos from "../components/images/ingresos.png";
-import Egresos from "../components/images/egresos.png";
-import Silvahnos from "../components/images/silvahnos.jpg";
+import { Col, Row, Container, Table } from "react-bootstrap";
+import LineChart from './ingreso/Grafico';
 
 const Flujo = () => {
     return (
@@ -11,7 +9,7 @@ const Flujo = () => {
             </Row>
             <Row className="justify-content-md-center">
                 <Col md="auto">
-                    <Table responsive bordered style={{borderColor:"black",width:"400px"}}>
+                    <Table responsive bordered style={{ borderColor: "black", width: "400px" }}>
                         <thead>
                             <tr style={{ background: "#FF6D60" }}>
                                 <th>Total egresos</th>
@@ -32,6 +30,11 @@ const Flujo = () => {
                         </thead>
                     </Table>
                 </Col>
+            </Row>
+            <Row>
+                <Container style={{width:"500px"}}>
+                    <LineChart/>
+                </Container>
             </Row>
         </Container>
     );
