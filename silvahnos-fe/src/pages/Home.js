@@ -6,13 +6,13 @@ import Facturas from "../components/images/facturas.png";
 const Home = () => {
   return (
     <Container>
-      <Row xs={1} className="justify-content-md-center">
-        <Col md="auto">
+      <Row className="justify-content-center">
+        <Col xs="auto" >
           <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black" }} href="/flujo">Visualizar flujo de caja</Button>
         </Col>
       </Row>
-      <Row xs={1} sm={2} md={3}>
-        <Col >
+      <Row xs={1} lg={2} xl={3}>
+        <Col style={{display: "flex", justifyContent: "center", alignItems: "start"}}>
           <Card className="cardsH">
             <Card.Body>
               <Card.Title>Últimos Ingresos</Card.Title>
@@ -52,7 +52,7 @@ const Home = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col>
+        <Col style={{display: "flex", justifyContent: "center", alignItems: "start"}}>
           <Card className="cardsH">
             <Card.Body>
               <Card.Title>Egresos del mes de abril</Card.Title>
@@ -102,7 +102,7 @@ const Home = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col>
+        <Col style={{display: "flex", justifyContent: "center", alignItems: "start"}}>
           <Card className="cardsH">
             <Card.Body>
               <Card.Title>Facturas más próximas a vencer</Card.Title>
