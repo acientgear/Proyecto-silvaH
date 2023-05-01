@@ -33,4 +33,17 @@ public class EgresoService {
     public ArrayList<EgresoEntity> obtenerEgresoPorAnioAndMes(int anio, int mes){
         return (ArrayList<EgresoEntity>) egresoRepository.obtenerEgresosPorAnioAndMes(anio, mes);
     }
+
+    public ArrayList<EgresoEntity> obtenerUltimosEgresos(){
+        return (ArrayList<EgresoEntity>) egresoRepository.obtenerUltimosEgresos();
+    }
+
+    public Integer obtenerTotalEgresosPorMes(int anio, int mes){
+        ArrayList<EgresoEntity> egresos = (ArrayList<EgresoEntity>) egresoRepository.obtenerEgresosPorAnioAndMes(anio, mes);
+        Integer total = 0;
+        for(EgresoEntity egreso : egresos){
+            total += egreso.getMonto();
+        }
+        return total;
+    }
 }

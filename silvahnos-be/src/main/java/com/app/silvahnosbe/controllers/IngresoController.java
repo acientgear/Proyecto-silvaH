@@ -45,4 +45,22 @@ public class IngresoController {
         IngresoEntity ingresoGuardado = ingresoService.guardarIngreso(ingreso);
         return ResponseEntity.ok().body(ingresoGuardado);
     }
+
+    @GetMapping("/ultimos")
+    public ResponseEntity<ArrayList<IngresoEntity>> getUltimosIngresos(){
+        ArrayList<IngresoEntity> ingresos = ingresoService.obtenerUltimosIngresos();
+        if(ingresos == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(ingresos);
+    }
+
+    @GetMapping("/total/{anio}/{mes}")
+    public ResponseEntity<Integer> getTotalIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        Integer total = ingresoService.obtenerTotalIngresosPorMes(anio, mes);
+        if(total == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(total);
+    }
 }

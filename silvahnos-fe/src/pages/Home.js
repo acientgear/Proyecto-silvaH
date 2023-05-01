@@ -1,17 +1,97 @@
+import axios from 'axios';
 import { Col, Row, Card, Button, Container, Table, Badge, ListGroup } from "react-bootstrap";
+import { useState, useEffect } from 'react';
 import LineChartIngresos from './ingreso/Grafico';
 import LineChartEgresos from './egreso/Grafico';
 
 const Home = () => {
+  const [ingresos, setIngresos] = useState([]);
+  const [egresos, setEgresos] = useState([]);
+
+  const [totalIngresos, setTotalIngresos] = useState(0);
+  const [totalEgresos, setTotalEgresos] = useState(0);
+
+  const getIgresos = async () => {
+    try {
+      let url = 'http://localhost:8090/ingresos/ultimos';
+      const response = await axios.get(url);
+      if (response.status === 200) {
+        setIngresos(response.data);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const getEgresos = async () => {
+    try {
+      let url = 'http://localhost:8090/egresos/ultimos';
+      const response = await axios.get(url);
+      if (response.status === 200) {
+        setEgresos(response.data);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const formatearFecha = (fecha) => {
+    let fechaC = fecha.split('T')[0];
+    fechaC = fechaC.split('-');
+    return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
+  };
+
+  const formatoMonto = (monto) => {
+    const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+    return montoFormateado;
+  };
+
+  let fechaAcual = new Date();
+  let anio = fechaAcual.getFullYear();
+  let mes = fechaAcual.getMonth() + 1;
+
+  const totalIngresosMes = async () => {
+    try {
+      let url = 'http://localhost:8090/ingresos/total/' + anio + '/' + mes;
+      const response = await axios.get(url);
+      if (response.status === 200) {
+        setTotalIngresos(response.data);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const totalEgresosMes = async () => {
+    try {
+      let url = 'http://localhost:8090/egresos/total/' + anio + '/' + mes;
+      const response = await axios.get(url);
+      if (response.status === 200) {
+        setTotalEgresos(response.data);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  console.log(totalEgresos);
+
+  useEffect(() => {
+    getIgresos();
+    totalIngresosMes();
+    getEgresos();
+    totalEgresosMes();
+  }, []);
+
   return (
     <Container>
       <Row className="justify-content-center">
         <Col xs="auto" >
-          <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black",fontWeight:"bold" }} href="/flujo">Visualizar flujo de caja</Button>
+          <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/flujo">Visualizar flujo de caja</Button>
         </Col>
         <Col xs="auto" >
           <ListGroup>
-            <ListGroup.Item style={{fontWeight:"bold"}}>Saldo cuenta: $ 5.000</ListGroup.Item>
+            <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: $ 5.000</ListGroup.Item>
           </ListGroup>
         </Col>
       </Row>
@@ -31,28 +111,20 @@ const Home = () => {
 
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>04-03-2021</td>
-                      <td>ASTARA</td>
-                      <td>$ 14.000</td>
-                    </tr>
-                    <tr>
-                      <td>05-03-2021</td>
-                      <td>HSJD78</td>
-                      <td>$ 15.000</td>
-                    </tr>
-                    <tr>
-                      <td>06-03-2021</td>
-                      <td>JD7823</td>
-                      <td>$ 16.000</td>
-                    </tr>
+                    {ingresos.map((ingreso) => (
+                      <tr key={ingreso.id}>
+                        <td>{formatearFecha(ingreso.fecha_creacion)}</td>
+                        <td>{ingreso.patente}</td>
+                        <td>{formatoMonto(ingreso.monto)}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </Table>
                 <ListGroup>
-                  <ListGroup.Item>Total ingresos: $ 60.000</ListGroup.Item>
+                  <ListGroup.Item>Total ingresos: {formatoMonto(totalIngresos)}</ListGroup.Item>
                 </ListGroup>
                 <ListGroup>
-                  <LineChartIngresos/>
+                  <LineChartIngresos />
                 </ListGroup>
               </Card.Text>
               <Button variant="success" href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar un ingreso</Button>
@@ -71,31 +143,22 @@ const Home = () => {
                       <th style={{ width: '100px' }}>Patente</th>
                       <th style={{ width: '100px' }}>Monto</th>
                     </tr>
-
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>07-03-2021</td>
-                      <td>TALLER</td>
-                      <td>$ 17.000</td>
-                    </tr>
-                    <tr>
-                      <td>08-03-2021</td>
-                      <td>TALLER</td>
-                      <td>$ 18.000</td>
-                    </tr>
-                    <tr>
-                      <td>09-03-2021</td>
-                      <td>TALLER</td>
-                      <td>$ 19.000</td>
-                    </tr>
+                    {egresos.map((egreso) => (
+                      <tr key={egreso.id}>
+                        <td>{formatearFecha(egreso.fecha_creacion)}</td>
+                        <td>{egreso.patente}</td>
+                        <td>{formatoMonto(egreso.monto)}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </Table>
                 <ListGroup>
-                  <ListGroup.Item>Total egresos: $ 55.000</ListGroup.Item>
+                  <ListGroup.Item>Total egresos: {formatoMonto(totalEgresos)}</ListGroup.Item>
                 </ListGroup>
                 <ListGroup>
-                  <LineChartEgresos/>
+                  <LineChartEgresos />
                 </ListGroup>
               </Card.Text>
               <Button variant="danger" href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar un egreso</Button>

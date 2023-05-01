@@ -66,4 +66,22 @@ public class EgresoController {
         egresoService.eliminarEgreso(egreso);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/ultimos")
+    public ResponseEntity<ArrayList<EgresoEntity>> getUltimosEgresos(){
+        ArrayList<EgresoEntity> egresos = egresoService.obtenerUltimosEgresos();
+        if(egresos == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(egresos);
+    }
+
+    @GetMapping("/total/{anio}/{mes}")
+    public ResponseEntity<Integer> getTotalEgresosPorMes(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        Integer total = egresoService.obtenerTotalEgresosPorMes(anio, mes);
+        if(total == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(total);
+    }
 }

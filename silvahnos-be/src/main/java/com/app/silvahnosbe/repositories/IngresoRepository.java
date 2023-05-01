@@ -15,4 +15,7 @@ public interface IngresoRepository extends JpaRepository<IngresoEntity, Long>{
                     "YEAR(i.fecha_creacion) = :anio and "+
                     "MONTH(i.fecha_creacion) = :mes and i.borrado = 0", nativeQuery = true)
     ArrayList<IngresoEntity> obtenerIngresos(@Param("anio") int anio, @Param("mes") int mes);
+
+    @Query(value = "SELECT * FROM ingreso i WHERE i.borrado = 0 ORDER BY i.fecha_creacion DESC LIMIT 3", nativeQuery = true)
+    ArrayList<IngresoEntity> obtenerUltimosIngresos();
 }

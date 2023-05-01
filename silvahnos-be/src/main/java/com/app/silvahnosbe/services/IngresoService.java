@@ -25,4 +25,17 @@ public class IngresoService {
     public IngresoEntity guardarIngreso(IngresoEntity ingreso){
         return ingresoRepository.save(ingreso);
     }
+
+    public ArrayList<IngresoEntity> obtenerUltimosIngresos(){
+        return (ArrayList<IngresoEntity>) ingresoRepository.obtenerUltimosIngresos();
+    }
+
+    public Integer obtenerTotalIngresosPorMes(int anio, int mes){
+        ArrayList<IngresoEntity> ingresos = (ArrayList<IngresoEntity>) ingresoRepository.obtenerIngresos(anio, mes);
+        Integer total = 0;
+        for(IngresoEntity ingreso : ingresos){
+            total += ingreso.getMonto();
+        }
+        return total;
+    }
 }
