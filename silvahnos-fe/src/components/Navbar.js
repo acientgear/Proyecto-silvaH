@@ -7,7 +7,7 @@ function BasicExample() {
     <Navbar collapseOnSelect expand="md" style={{ background: "#D9D9D9", color: "red" }}>
       <Container>
         <Navbar.Brand href="/" style={{ color: "white", fontWeight: "bold" }}>
-          <a href="/">
+          <div href="/">
             {" "}
             <img
               src={Logo}
@@ -15,7 +15,7 @@ function BasicExample() {
               width="100"
               height="50"
             />
-          </a></Navbar.Brand>
+          </div></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto" style={{ color: "black", fontWeight: "bold" }}>

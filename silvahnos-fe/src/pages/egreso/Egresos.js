@@ -161,6 +161,7 @@ const Egresos = () => {
                             <tbody>
                                 {egresos.map((egreso) => (
                                     <tr key={egreso.id}>
+                                        {console.log(egreso.fecha_creacion)}
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
                                         <td>{egreso.descripcion}</td>
                                         <td>{egreso.patente}</td>

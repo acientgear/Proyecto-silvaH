@@ -30,23 +30,7 @@ class LineChart extends Component {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                stepSize: 125000,
-                            },
-                        },
-                    ],
-                    xAxes: [
-                        {
-                            ticks: {
-                                fontSize: 14,
 
-                            },
-                        },
-                    ],
-                },
             },
         });
     }

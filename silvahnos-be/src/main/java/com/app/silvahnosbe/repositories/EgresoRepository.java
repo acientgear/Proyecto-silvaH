@@ -19,4 +19,7 @@ public interface EgresoRepository extends JpaRepository<EgresoEntity,Long>{
 
     @Query(value = "SELECT * FROM egreso e WHERE e.borrado = 0 ORDER BY e.fecha_creacion DESC LIMIT 3", nativeQuery = true)
     ArrayList<EgresoEntity> obtenerUltimosEgresos();
+
+    @Query(value = "SELECT sum(e.monto) as monto FROM egreso e WHERE year(e.fecha_creacion) = :anio and month(e.fecha_creacion) = :mes and day(e.fecha_creacion) = :dia and e.borrado = 0", nativeQuery = true)
+    Integer obtenerMontoPorDia(@Param("anio") int anio, @Param("mes") int mes, @Param("dia") int dia);
 }

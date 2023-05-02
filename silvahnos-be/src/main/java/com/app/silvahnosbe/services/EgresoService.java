@@ -46,4 +46,12 @@ public class EgresoService {
         }
         return total;
     }
+
+    public Integer obtenerMontoPorDia(int anio, int mes, int dia){
+        Integer monto = egresoRepository.obtenerMontoPorDia(anio, mes, dia);
+        if (monto == null){
+            return 0;
+        }
+        return monto;
+    }
 }
