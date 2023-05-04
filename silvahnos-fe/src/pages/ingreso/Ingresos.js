@@ -139,7 +139,10 @@ const Ingresos = () => {
         return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
     };
 
-
+    let total = 0;
+    ingresos.forEach(ingreso => {
+        total += ingreso.monto;
+    });
 
     useEffect(() => {
         getIngresos();
@@ -149,36 +152,44 @@ const Ingresos = () => {
         <>
             <Container>
                 <Row>
-                    <Col>
-                        <h1>Ingresos</h1>
-                    </Col>
+                    <Col><h1>Ingresos</h1></Col>
+                    <Col md={{ span: 3, offset: 3 }}><Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar un ingreso</Button></Col>
                 </Row>
                 <Row>
                     <Col>
                         <Table striped responsive="sm" hover>
                             <thead>
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Monto</th>
-                                    <th>Origen</th>
-                                    <th>Descripción</th>
-                                    <th>Acciones</th>
+                                    <th style={{ width: '150px' }}>Fecha</th>
+                                    <th style={{ width: '150px' }}>Descripción</th>
+                                    <th style={{ width: '150px' }}>Patente</th>
+                                    <th style={{ width: '150px' }}>Monto</th>
+                                    <th style={{ width: '150px' }}>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {paginatedData.map((ingreso) => (
                                     <tr key={ingreso.id}>
                                         <td>{formatearFecha(ingreso.fecha_creacion)}</td>
-                                        <td>{formatoMonto(ingreso.monto)}</td>
-                                        <td>{ingreso.patente}</td>
                                         <td>{ingreso.descripcion}</td>
+                                        <td>{ingreso.patente}</td>
+                                        <td>{formatoMonto(ingreso.monto)}</td>
                                         <td>
-                                            <Button variant='primary' onClick={() => handleShowEdit(ingreso)} style={{ marginRight: 2 }}>Editar</Button>
-                                            <Button variant='danger' onClick={() => handleShowDelete(ingreso)}>Eliminar</Button>
+                                            <Button variant='primary' onClick={() => handleShowEdit(ingreso)} style={{ marginRight: 2, width: "88px" }}>Editar</Button>
+                                            <Button variant='danger' onClick={() => handleShowDelete(ingreso)} style={{ width: "88px" }}>Eliminar</Button>
                                         </td>
                                     </tr>
                                 ))}
-                            </tbody>
+                            </tbody> 
+                            <tfoot>
+                                <tr style={{background:"#E6F4DD"}}>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{formatoMonto(total)}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                         </Table>
                         <Pagination>
                             {[...Array(Math.ceil(ingresos.length / pageSize)).keys()].map((page) => (

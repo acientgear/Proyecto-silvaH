@@ -9,7 +9,6 @@ import Ingresos from './pages/ingreso/Ingresos';
 import CrearIngreso from './pages/ingreso/CrearIngreso';
 import Facturas from "./pages/factura/Facturas"
 import CrearFactura from "./pages/factura/CrearFactura"
-import Flujo from "./pages/Flujo"
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
           <Route path="/crearIngreso" element={<CrearIngreso />} />
           <Route path="/facturas" element={<Facturas />} />
           <Route path="/crearFactura" element={<CrearFactura />} />
-          <Route path="/flujo" element={<Flujo />} />
         </Routes>
       </Container>
     </Layout>

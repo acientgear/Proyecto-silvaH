@@ -18,4 +18,7 @@ public interface IngresoRepository extends JpaRepository<IngresoEntity, Long>{
 
     @Query(value = "SELECT * FROM ingreso i WHERE i.borrado = 0 ORDER BY i.fecha_creacion DESC LIMIT 3", nativeQuery = true)
     ArrayList<IngresoEntity> obtenerUltimosIngresos();
+
+    @Query(value = "SELECT sum(i.monto) as monto FROM ingreso i WHERE year(i.fecha_creacion) = :anio and month(i.fecha_creacion) = :mes and day(i.fecha_creacion) = :dia and i.borrado = 0", nativeQuery = true)
+    Integer obtenerMontoPorDia(@Param("anio") int anio, @Param("mes") int mes, @Param("dia") int dia);
 }

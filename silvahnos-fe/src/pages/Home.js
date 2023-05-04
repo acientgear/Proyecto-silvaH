@@ -89,7 +89,7 @@ const Home = () => {
         </Col>
         <Col xs="auto" >
           <ListGroup>
-            <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: $ 5.000</ListGroup.Item>
+            <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: $ 8.000.000</ListGroup.Item>
           </ListGroup>
         </Col>
       </Row>
@@ -123,7 +123,7 @@ const Home = () => {
               <ListGroup>
                 <LineChartIngresos />
               </ListGroup>
-              <Button variant="success" href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar un ingreso</Button>
+              <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar un ingreso</Button>
             </Card.Body>
           </Card>
         </Col>
@@ -155,7 +155,7 @@ const Home = () => {
               <ListGroup>
                 <LineChartEgresos />
               </ListGroup>
-              <Button variant="danger" href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar un egreso</Button>
+              <Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar un egreso</Button>
             </Card.Body>
           </Card>
         </Col>

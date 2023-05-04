@@ -38,4 +38,13 @@ public class IngresoService {
         }
         return total;
     }
+
+    public Integer obtenerMontoPorDia(int anio, int mes, int dia){
+        Integer monto = ingresoRepository.obtenerMontoPorDia(anio, mes, dia);
+        if (monto == null){
+            return 0;
+        }
+        System.out.println("Para el anio: " + anio + " mes: " + mes + " dia: " + dia + " el monto es: " + monto);
+        return monto;
+    }
 }

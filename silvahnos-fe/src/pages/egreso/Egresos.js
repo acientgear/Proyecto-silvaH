@@ -1,12 +1,32 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Modal, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Form, Modal, Row, Table, Pagination } from 'react-bootstrap';
 
 const Egresos = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 6;
+
     const [egresos, setEgresos] = useState([]);
+    const [mes, setMes] = useState((new Date()).getMonth() + 1);
+    const [anio, setAnio] = useState((new Date()).getFullYear());
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [validated, setValidated] = useState(false);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    }
+
+    const paginatedData = egresos.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+    );
+
+    const formatoMonto = (monto) => {
+        const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+        return montoFormateado;
+    };
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -34,6 +54,17 @@ const Egresos = () => {
             ...editedItem,
             [e.target.name]: e.target.value,
         });
+    };
+
+    const handleSumbit = (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            updateEgreso();
+            setValidated(true);
+        }
     };
 
     const updateEgreso = async () => {
@@ -89,10 +120,6 @@ const Egresos = () => {
         descripcion: '',
     }
 
-    let fechaAcual = new Date();
-    let anio = fechaAcual.getFullYear();
-    let mes = fechaAcual.getMonth() + 1;
-
     const getEgresos = async () => {
         try {
             let url = 'http://localhost:8090/egresos/' + anio + '/' + mes;
@@ -111,30 +138,11 @@ const Egresos = () => {
         return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
     };
 
-    const formatoMonto = (monto) => {
-        const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
-        return montoFormateado;
-    };
-
     let total = 0;
     egresos.forEach((egreso) => {
         total += egreso.monto;
         console.log(total);
     });
-
-    const handleSumbit = (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            updateEgreso();
-            setValidated(true);
-        }
-    };
-
-    const [validated, setValidated] = useState(false);
-    console.log(validated);
 
     useEffect(() => {
         getEgresos();
@@ -145,6 +153,7 @@ const Egresos = () => {
             <Container>
                 <Row>
                     <Col><h1>Egresos</h1></Col>
+                    <Col md={{ span: 3, offset: 3 }}><Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar un egreso</Button></Col>
                 </Row>
                 <Row>
                     <Col>
@@ -159,9 +168,8 @@ const Egresos = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {egresos.map((egreso) => (
+                                {paginatedData.map((egreso) => (
                                     <tr key={egreso.id}>
-                                        {console.log(egreso.fecha_creacion)}
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
                                         <td>{egreso.descripcion}</td>
                                         <td>{egreso.patente}</td>
@@ -174,8 +182,27 @@ const Egresos = () => {
 
                                 ))}
                             </tbody>
+                            <tfoot>
+                                <tr style={{background:"#FBE6DD"}}>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{formatoMonto(total)}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                         </Table>
-                        <h1 style={{ textAlign: "center" }}>Total: {formatoMonto(total)}</h1>
+                        <Pagination>
+                            {[...Array(Math.ceil(egresos.length / pageSize)).keys()].map((page) => (
+                                <Pagination.Item
+                                    key={page + 1}
+                                    active={page + 1 === currentPage}
+                                    onClick={() => handlePageChange(page + 1)}
+                                >
+                                    {page + 1}
+                                </Pagination.Item>
+                            ))}
+                        </Pagination>
                     </Col>
                 </Row>
             </Container>
