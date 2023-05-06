@@ -123,7 +123,7 @@ const Home = () => {
               <ListGroup>
                 <LineChartIngresos />
               </ListGroup>
-              <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar un ingreso</Button>
+              <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar ingreso</Button>
             </Card.Body>
           </Card>
         </Col>
@@ -155,7 +155,7 @@ const Home = () => {
               <ListGroup>
                 <LineChartEgresos />
               </ListGroup>
-              <Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar un egreso</Button>
+              <Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar egreso</Button>
             </Card.Body>
           </Card>
         </Col>
@@ -201,7 +201,7 @@ const Home = () => {
                   </Badge>
                 </ListGroup.Item>
               </ListGroup>
-              <Button variant="primary" href="/crearFactura" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black" }}>Registrar una factura</Button>
+              <Button variant="primary" href="/crearFactura" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black" }}>Registrar factura</Button>
             </Card.Body>
           </Card>
         </Col>
