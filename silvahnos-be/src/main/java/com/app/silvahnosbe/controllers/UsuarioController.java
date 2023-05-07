@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.silvahnosbe.entities.FlujoEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;
+import com.app.silvahnosbe.models.FlujoModel;
 import com.app.silvahnosbe.services.UsuarioService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,4 +52,13 @@ public class UsuarioController {
         return ResponseEntity.ok().body(null);
     }
     
+    @GetMapping("/flujo")
+    public ResponseEntity<ArrayList<FlujoEntity>> getFlujo(){
+        ArrayList<FlujoEntity> flujo = usuarioService.obtenerFlujo();
+        if(flujo == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(flujo);
+    }
+
 }

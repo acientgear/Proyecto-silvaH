@@ -44,7 +44,6 @@ public class IngresoService {
         if (monto == null){
             return 0;
         }
-        System.out.println("Para el anio: " + anio + " mes: " + mes + " dia: " + dia + " el monto es: " + monto);
         return monto;
     }
 }
