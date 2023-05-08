@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Chart } from 'chart.js';
 import 'chart.js/auto';
+import axios from 'axios';
 
 const data = [
     { month: 'Enero', ingresos: 18000000, egresos: 26168454, saldoCuenta: -8168454 },
@@ -10,11 +11,36 @@ const data = [
     { month: 'Mayo', ingresos: 0, egresos: 0, saldoCuenta: 0 }
 ];
 
-class LineChart extends Component {
+const getFlujos = async () => {
+    try {
+        let url = 'http://localhost:8090/usuario/flujo';
+        const response = await axios.get(url);
+        if (response.status === 200) {
+            return response.data;
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+class LineChart extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            flujos: []
+        };
+    }
+
     chartRef = React.createRef();
     myChart = null;
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        const flujosDB = await getFlujos();
+        this.setState({ flujos: flujosDB });
+        console.log(this.state.flujos);
+
         const myChartRef = this.chartRef.current.getContext('2d');
 
         if (this.myChart) {
@@ -28,14 +54,14 @@ class LineChart extends Component {
                 datasets: [
                     {
                         label: 'Ingresos',
-                        data: [data[0].ingresos, data[1].ingresos, data[2].ingresos],
+                        data: [this.state.flujos[0].total_ingresos, this.state.flujos[1].total_ingresos, this.state.flujos[2].total_ingresos],
                         backgroundColor: 'rgba(184, 231, 225, 0.2)',
                         borderColor: 'rgba(184, 231, 225, 1)',
                         borderWidth: 1,
                     },
                     {
                         label: 'Egresos',
-                        data: [data[0].egresos, data[1].egresos, data[2].egresos],
+                        data: [this.state.flujos[0].total_egresos, this.state.flujos[1].total_egresos, this.state.flujos[2].total_egresos],
                         backgroundColor: 'rgba(242, 182, 160, 0.2)',
                         borderColor: 'rgba(242, 182, 160, 1)',
                         borderWidth: 1,

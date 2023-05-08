@@ -15,15 +15,14 @@ import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.models.FlujoModel;
 import com.app.silvahnosbe.services.UsuarioService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-
+@CrossOrigin
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
