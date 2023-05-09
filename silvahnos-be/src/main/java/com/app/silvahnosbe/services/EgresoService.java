@@ -84,7 +84,7 @@ public class EgresoService {
             registro.setTipo("Ingreso");
             registros.add(registro);
         }
-        registros.sort((RegistroModel r1, RegistroModel r2) -> r1.getFecha().compareTo(r2.getFecha()));
+        registros.sort((RegistroModel r1, RegistroModel r2) -> r2.getFecha().compareTo(r1.getFecha()));
 
         return registros;
     }

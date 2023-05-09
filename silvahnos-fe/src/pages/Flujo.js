@@ -1,7 +1,7 @@
 import LineChart from './GraficoFlujo';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ListGroup, ListGroupItem, Table, Col, Row, Container, Accordion, Badge, Tab, Tabs } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Table, Col, Row, Container, Accordion, Badge, Tab, Tabs, Card } from 'react-bootstrap';
 import PieChart from './PieChart';
 
 const formatoMonto = (monto) => {
@@ -76,69 +76,26 @@ const Flujo = () => {
                 <Col><h1>Flujo de caja</h1></Col>
             </Row>
             <Row >
-                <Col md="auto">
-                    <Table striped hover style={{ width: "300px" }}>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Mes actual</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style={{ fontWeight: "bold" }}>Ingresos</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Astara</td>
-                                <td>$ 100.000</td>
-                            </tr>
-                            <tr>
-                                <td>Taller</td>
-                                <td>$ 200.000</td>
-                            </tr>
-                            <tr>
-                                <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                <td>$ 300.000</td>
-                            </tr>
-                            <tr>
-                                <td style={{ fontWeight: "bold" }}>Egresos</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Arriendo</td>
-                                <td>$ 100.000</td>
-                            </tr>
-                            <tr>
-                                <td>Astara</td>
-                                <td>$ 200.000</td>
-                            </tr>
-                            <tr>
-                                <td>Repuestos</td>
-                                <td>$ 100.000</td>
-                            </tr>
-                            <tr>
-                                <td>Sueldos</td>
-                                <td>$ 100.000</td>
-                            </tr>
-                            <tr>
-                                <td>Taller</td>
-                                <td>$ 200.000</td>
-                            </tr>
-                            <tr>
-                                <td>Otros</td>
-                                <td>$ 100.000</td>
-                            </tr>
-                            <tr>
-                                <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                <td>$ 800.000</td>
-                            </tr>
-                            <tr>
-                                <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                <td>$ 500.000</td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                <Col sm={3} >
+                    <Card style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
+                        <Card.Body>
+                            <h4 style={{ textAlign: "center" }}>Ingresos y egresos de este mes</h4>
+                            {registros.map((registro) => (
+                                <div key={registro.id}>
+                                    <ListGroup.Item as="li" className="d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                            <div className="fw-bold">{formatearFecha(registro.fecha)}</div>
+                                            {registro.descripcion}
+                                        </div>
+                                        <Badge bg={registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD'} pill style={{ color: "black", backgroundColor: registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD' }}>
+                                            {formatoMonto(registro.monto)}
+                                        </Badge>
+                                    </ListGroup.Item>
+                                    <br></br>
+                                </div>
+                            ))}
+                        </Card.Body>
+                    </Card>
                 </Col>
                 <Col md="auto">
                     <Row>
@@ -217,33 +174,77 @@ const Flujo = () => {
                 </Col>
             </Row>
             <Row>
-                <Col sm={3} style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
-                    <h4 style={{ textAlign: "center" }}>Ingresos y egresos de este mes</h4>
-                    {registros.map((registro) => (
-                        <div key={registro.id}>
-                            <ListGroup.Item as="li" className="d-flex justify-content-between align-items-start">
-                                <div className="ms-2 me-auto">
-                                    <div className="fw-bold">{formatearFecha(registro.fecha)}</div>
-                                    {registro.descripcion}
-                                </div>
-                                <Badge bg={registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD'} pill style={{ color: "black", backgroundColor: registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD' }}>
-                                    {formatoMonto(registro.monto)}
-                                </Badge>
-                            </ListGroup.Item>
-                            <br></br>
-                        </div>
-                    ))}
-                </Col>
+                <Table striped hover style={{ width: "300px" }}>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Mes actual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Ingresos</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Astara</td>
+                            <td>$ 100.000</td>
+                        </tr>
+                        <tr>
+                            <td>Taller</td>
+                            <td>$ 200.000</td>
+                        </tr>
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
+                            <td>$ 300.000</td>
+                        </tr>
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Egresos</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Arriendo</td>
+                            <td>$ 100.000</td>
+                        </tr>
+                        <tr>
+                            <td>Astara</td>
+                            <td>$ 200.000</td>
+                        </tr>
+                        <tr>
+                            <td>Repuestos</td>
+                            <td>$ 100.000</td>
+                        </tr>
+                        <tr>
+                            <td>Sueldos</td>
+                            <td>$ 100.000</td>
+                        </tr>
+                        <tr>
+                            <td>Taller</td>
+                            <td>$ 200.000</td>
+                        </tr>
+                        <tr>
+                            <td>Otros</td>
+                            <td>$ 100.000</td>
+                        </tr>
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Egresos totales</td>
+                            <td>$ 800.000</td>
+                        </tr>
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
+                            <td>$ 500.000</td>
+                        </tr>
+                    </tbody>
+                </Table>
                 <Col sm={3}>
                     <Tabs
-                        defaultActiveKey="profile"
+                        defaultActiveKey="Ingresos"
                         id="uncontrolled-tab-example"
-                        className="mb-3"
                     >
-                        <Tab eventKey="home" title="Ingresos">
+                        <Tab eventKey="Ingresos" title="Ingresos">
                             <PieChart />
                         </Tab>
-                        <Tab eventKey="profile" title="Egresos">
+                        <Tab eventKey="Egresos" title="Egresos">
                             <PieChart />
                         </Tab>
                     </Tabs>
