@@ -1,11 +1,18 @@
 import LineChart from './GraficoFlujo';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ListGroup, ListGroupItem, Table, Col, Row, Container, Accordion,Badge } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Table, Col, Row, Container, Accordion, Badge, Tab, Tabs } from 'react-bootstrap';
+import PieChart from './PieChart';
 
 const formatoMonto = (monto) => {
     const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
     return montoFormateado;
+};
+
+const formatearFecha = (fecha) => {
+    let fechaC = fecha.split('T')[0];
+    fechaC = fechaC.split('-');
+    return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
 };
 
 const data = [
@@ -57,6 +64,8 @@ const Flujo = () => {
     const egresosTotales = flujos.reduce((total, mes) => total + mes.egresos, 0);
     const saldoCuenta = ingresosTotales - egresosTotales;
 
+
+
     useEffect(() => {
         getRegistros();
     }, []);
@@ -68,7 +77,7 @@ const Flujo = () => {
             </Row>
             <Row >
                 <Col md="auto">
-                    <Table striped hover>
+                    <Table striped hover style={{ width: "300px" }}>
                         <thead>
                             <tr>
                                 <th></th>
@@ -133,7 +142,7 @@ const Flujo = () => {
                 </Col>
                 <Col md="auto">
                     <Row>
-                        <Table striped hover>
+                        <Table>
                             <thead>
                                 <tr style={{ background: "#ACB1D6" }}>
                                     <th></th>
@@ -208,22 +217,36 @@ const Flujo = () => {
                 </Col>
             </Row>
             <Row>
-                <Col sm={4} style={{maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
-                    <h4 style={{ textAlign:"center"}}>Ingresos y egresos de este mes</h4>
+                <Col sm={3} style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
+                    <h4 style={{ textAlign: "center" }}>Ingresos y egresos de este mes</h4>
                     {registros.map((registro) => (
                         <div key={registro.id}>
                             <ListGroup.Item as="li" className="d-flex justify-content-between align-items-start">
                                 <div className="ms-2 me-auto">
-                                    <div className="fw-bold">{registro.fecha}</div>
+                                    <div className="fw-bold">{formatearFecha(registro.fecha)}</div>
                                     {registro.descripcion}
                                 </div>
-                                <Badge bg="warning" pill style={{ color: "black" }}>
-                                    {registro.monto}
+                                <Badge bg={registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD'} pill style={{ color: "black", backgroundColor: registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD' }}>
+                                    {formatoMonto(registro.monto)}
                                 </Badge>
                             </ListGroup.Item>
                             <br></br>
                         </div>
                     ))}
+                </Col>
+                <Col sm={3}>
+                    <Tabs
+                        defaultActiveKey="profile"
+                        id="uncontrolled-tab-example"
+                        className="mb-3"
+                    >
+                        <Tab eventKey="home" title="Ingresos">
+                            <PieChart />
+                        </Tab>
+                        <Tab eventKey="profile" title="Egresos">
+                            <PieChart />
+                        </Tab>
+                    </Tabs>
                 </Col>
             </Row>
         </Container>
