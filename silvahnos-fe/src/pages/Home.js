@@ -74,6 +74,20 @@ const Home = () => {
     }
   };
 
+  const colorIngreso = (i) => {
+    if(i % 2 === 0){
+      return "#B8E7E1"
+    }
+    return "#FFF"
+  }
+
+  const colorEgreso = (i) => {
+    if(i % 2 === 0){
+      return "#F2B6A0"
+    }
+    return "#FFF"
+  }
+
   useEffect(() => {
     getIgresos();
     totalIngresosMes();
@@ -95,43 +109,43 @@ const Home = () => {
       </Row>
       <Row xs={1} lg={2} xl={3}>
         <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-          <Card className="cardsH">
+          <Card className="cardsH" border='true' style={{borderColor:"#B8E7E1"}}>
             <Card.Body>
-              <Card.Title>Últimos ingresos registrados</Card.Title>
-              <Table striped responsive="sm" hover bordered>
+              <Card.Title >Últimos ingresos registrados</Card.Title>
+              <Table striped responsive="sm" hover bordered style={{borderColor:"#B8E7E1"}}>
                 <thead>
                   <tr>
                     <th style={{ width: '100px' }}>Fecha</th>
                     <th style={{ width: '100px' }}>Patente</th>
                     <th style={{ width: '100px' }}>Monto</th>
                   </tr>
-
                 </thead>
                 <tbody>
-                  {ingresos.map((ingreso) => (
-                    <tr key={ingreso.id}>
-                      <td>{formatearFecha(ingreso.fecha_creacion)}</td>
+                  {ingresos.map((ingreso, index) => (
+                    <tr style={{backgroundColor: colorIngreso(index)}} key={ingreso.id}>
+                      <td >{formatearFecha(ingreso.fecha_creacion)}</td>
                       <td>{ingreso.patente}</td>
                       <td>{formatoMonto(ingreso.monto)}</td>
                     </tr>
-                  ))}
+                  )
+                  )}
                 </tbody>
               </Table>
-              <ListGroup>
+              <ListGroup style={{ border: '1px solid #B8E7E1' }}>
                 <ListGroup.Item>Total ingresos: {formatoMonto(totalIngresos)}</ListGroup.Item>
               </ListGroup>
               <ListGroup>
                 <LineChartIngresos />
               </ListGroup>
-              <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar ingreso</Button>
+              <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold",marginTop:"5px" }}>Registrar ingreso</Button>
             </Card.Body>
           </Card>
         </Col>
         <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-          <Card className="cardsH">
+          <Card className="cardsH" border='true' style={{borderColor:"#F2B6A0"}}>
             <Card.Body>
-              <Card.Title>Últimos egresos registrados</Card.Title>
-              <Table striped responsive="sm" hover bordered>
+              <Card.Title >Últimos egresos registrados</Card.Title>
+              <Table striped responsive="sm" hover bordered style={{borderColor:"#F2B6A0"}}>
                 <thead>
                   <tr>
                     <th style={{ width: '100px' }}>Fecha</th>
@@ -140,8 +154,8 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {egresos.map((egreso) => (
-                    <tr key={egreso.id}>
+                  {egresos.map((egreso, index) => (
+                    <tr style={{backgroundColor: colorEgreso(index)}}key={egreso.id}>
                       <td>{formatearFecha(egreso.fecha_creacion)}</td>
                       <td>{egreso.patente}</td>
                       <td>{formatoMonto(egreso.monto)}</td>
@@ -155,7 +169,7 @@ const Home = () => {
               <ListGroup>
                 <LineChartEgresos />
               </ListGroup>
-              <Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar egreso</Button>
+              <Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black",marginTop:"5px" }}>Registrar egreso</Button>
             </Card.Body>
           </Card>
         </Col>
@@ -201,7 +215,7 @@ const Home = () => {
                   </Badge>
                 </ListGroup.Item>
               </ListGroup>
-              <Button variant="primary" href="/crearFactura" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black" }}>Registrar factura</Button>
+              <Button variant="primary" href="/crearFactura" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black", marginTop:"5px" }}>Registrar factura</Button>
             </Card.Body>
           </Card>
         </Col>

@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import axios from 'axios';
+import Dias from '../components/data/Dias';
 
 const data = [
     { month: 'Enero', ingresos: 18000000, egresos: 26168454, saldoCuenta: -8168454 },
@@ -37,6 +38,10 @@ class LineChart extends React.Component {
 
     async componentDidMount() {
 
+        const year = new Date().getFullYear();
+        const month = new Date().getMonth();
+        const dias = Dias(year, month);
+
         const flujosDB = await getFlujos();
         this.setState({ flujos: flujosDB });
         console.log(this.state.flujos);
@@ -50,7 +55,7 @@ class LineChart extends React.Component {
         this.myChart = new Chart(myChartRef, {
             type: 'line',
             data: {
-                labels: ['enero', 'febrero', 'marzo'],
+                labels: dias,
                 datasets: [
                     {
                         label: 'Ingresos',

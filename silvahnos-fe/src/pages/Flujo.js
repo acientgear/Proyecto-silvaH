@@ -5,7 +5,7 @@ import { ListGroup, ListGroupItem, Table, Col, Row, Container, Accordion, Badge,
 import PieChart from './PieChart';
 import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
-
+import GraficoBarras from './GraficoBarras';
 
 const formatoMonto = (monto) => {
     const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
@@ -52,6 +52,9 @@ const Flujo = () => {
     const [mes, setMes] = useState((new Date()).getMonth() + 1);
     const [anio, setAnio] = useState((new Date()).getFullYear());
 
+    const idMes = mes.toLocaleString('es-ES', { month: 'long' });
+    const nombreMes = (Sem1.concat(Sem2))[idMes]
+
     const [saldos, setSaldos] = useState([]);
 
     const getSaldos = async () => {
@@ -78,13 +81,13 @@ const Flujo = () => {
         }
     };
 
-    console.log("registros: ", registros);
-
     const [flujos, setFlujos] = useState(data);
 
     const ingresosTotales = flujos.reduce((total, mes) => total + mes.ingresos, 0);
     const egresosTotales = flujos.reduce((total, mes) => total + mes.egresos, 0);
     const saldoCuenta = ingresosTotales - egresosTotales;
+
+
 
     useEffect(() => {
         getRegistros();
@@ -92,20 +95,19 @@ const Flujo = () => {
     }, []);
 
     return (
-
         <Container fluid >
             <h1>Flujo de caja</h1>
             <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
                 <Row>
                     <Col sm={3} style={{ marginTop: "10px" }}>
                         <ListGroup>
-                            <ListGroup.Item action href="#link1">
+                            <ListGroup.Item action variant="info" href="#link1">
                                 Resumen anual
                             </ListGroup.Item>
-                            <ListGroup.Item action href="#link2">
+                            <ListGroup.Item action variant="info" href="#link2">
                                 Resumen mensual
                             </ListGroup.Item>
-                            <ListGroup.Item action href="#link3">
+                            <ListGroup.Item action variant="info" href="#link3">
                                 Gráficos
                             </ListGroup.Item>
 
@@ -114,8 +116,10 @@ const Flujo = () => {
                     <Col sm={9}>
                         <Tab.Content>
                             <Tab.Pane eventKey="#link1">
+                                <h3>Resumen anual</h3>
+                                <hr></hr>
                                 <Row>
-                                    <h2>Resumen anual</h2>
+                                    
                                     <Table responsive hover>
                                         <thead>
                                             <tr style={{ background: "#ACB1D6" }}>
@@ -198,8 +202,10 @@ const Flujo = () => {
                                 </Row>
                             </Tab.Pane>
                             <Tab.Pane eventKey="#link2">
+                                <h3>Resumen mensual</h3>
+                                <hr></hr>
                                 <Row>
-                                    <h4 style={{ textAlign: "center" }}>Ingresos y egresos de este mes</h4>
+                                    
                                     <Col sm={6}>
                                         <Card style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
                                             <Card.Body>
@@ -225,7 +231,7 @@ const Flujo = () => {
                                             <thead>
                                                 <tr>
                                                     <th></th>
-                                                    <th>Mes actual</th>
+                                                    <th>{nombreMes}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -287,7 +293,10 @@ const Flujo = () => {
                                 </Row>
                             </Tab.Pane>
                             <Tab.Pane eventKey="#link3">
-                                <Row sm={2}>
+                                <h3>Gráficos</h3>
+                                <hr></hr>
+                                <Row xs={1} sm={2}>
+                                    
                                     <Col>
                                         <Card>
                                             <Card.Body>
@@ -298,7 +307,16 @@ const Flujo = () => {
                                                 </div>
                                             </Card.Body>
                                         </Card>
-
+                                        <br></br>
+                                        <Card>
+                                            <Card.Body>
+                                                <Card.Title>Ingresos y egresos</Card.Title>
+                                                <Card.Subtitle className="mb-2 text-muted">Anual</Card.Subtitle>
+                                                <div style={{ width: "100%", height: "250px", margin: "auto", justifyContent: "center" }}>
+                                                    <GraficoBarras />
+                                                </div>
+                                            </Card.Body>
+                                        </Card>
 
                                     </Col>
                                     <Col>
@@ -306,15 +324,15 @@ const Flujo = () => {
                                             <Card.Body>
                                                 <Card.Title>Porcentaje ingresos y egresos</Card.Title>
                                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                                <Tabs
+                                                <Tabs justify
                                                     defaultActiveKey="Ingresos"
                                                     id="uncontrolled-tab-example"
                                                     style={{ justifyContent: "center"}}
                                                 >
-                                                    <Tab  eventKey="Ingresos" title="Ingresos">
+                                                    <Tab eventKey="Ingresos" title="Ingresos" style={{color:"black"}}>
                                                         <PieChart />
                                                     </Tab>
-                                                    <Tab eventKey="Egresos" title="Egresos">
+                                                    <Tab eventKey="Egresos" title="Egresos" style={{color:"black"}}>
                                                         <PieChart />
                                                     </Tab>
                                                 </Tabs>
@@ -323,6 +341,7 @@ const Flujo = () => {
 
                                     </Col>
                                 </Row>
+
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

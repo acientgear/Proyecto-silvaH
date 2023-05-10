@@ -4,7 +4,7 @@ const Layout = ({ children }) => {
     return (
         <>
             <Navbar/>
-            <main style={{backgroundColor: "#F7F7F8"}}>{children}</main>
+            <main style={{backgroundColor:"#f7f7f8"}}>{children}</main>
         </>
     );
 };
