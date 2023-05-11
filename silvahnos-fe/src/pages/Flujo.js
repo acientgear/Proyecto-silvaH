@@ -1,7 +1,7 @@
 import LineChart from './GraficoFlujo';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ListGroup, ListGroupItem, Table, Col, Row, Container, Accordion, Badge, Tab, Tabs, Card } from 'react-bootstrap';
+import { ListGroup, Table, Col, Row, Container, Badge, Tab, Tabs, Card } from 'react-bootstrap';
 import PieChart from './PieChart';
 import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
@@ -18,41 +18,10 @@ const formatearFecha = (fecha) => {
     return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
 };
 
-
-const data = [
-    { month: 'Enero', ingresos: 2, egresos: 1, saldoCuenta: -8168454 },
-    { month: 'Febrero', ingresos: 4, egresos: 3, saldoCuenta: 0 },
-    { month: 'Marzo', ingresos: 6, egresos: 5, saldoCuenta: 0 },
-    { month: 'Abril', ingresos: 8, egresos: 7, saldoCuenta: 0 },
-    { month: 'Mayo', ingresos: 10, egresos: 9, saldoCuenta: 0 },
-    { month: 'Junio', ingresos: 12, egresos: 11, saldoCuenta: 0 },
-    { month: 'Julio', ingresos: 14, egresos: 13, saldoCuenta: 0 },
-    { month: 'Agosto', ingresos: 16, egresos: 15, saldoCuenta: 0 },
-    { month: 'Septiembre', ingresos: 18, egresos: 17, saldoCuenta: 0 },
-    { month: 'Octubre', ingresos: 20, egresos: 19, saldoCuenta: 0 },
-    { month: 'Noviembre', ingresos: 22, egresos: 21, saldoCuenta: 0 },
-    { month: 'Diciembre', ingresos: 24, egresos: 23, saldoCuenta: 0 },
-];
-
-const ingresos = [
-    { tipo: 'Astara', monto: 100000 },
-    { tipo: 'Taller', monto: 200000 }
-];
-
-const egresos = [
-    { tipo: 'Arriendo', monto: 100000 },
-    { tipo: 'Astara', monto: 200000 },
-    { tipo: 'Repuestos', monto: 100000 },
-    { tipo: 'Sueldos', monto: 100000 },
-    { tipo: 'Taller', monto: 200000 },
-    { tipo: 'Otros', monto: 100000 }
-];
-
 const Flujo = () => {
     const [registros, setRegistros] = useState([]);
-    const [mes, setMes] = useState((new Date()).getMonth() + 1);
-    const [anio, setAnio] = useState((new Date()).getFullYear());
-
+    const mes = new Date().getMonth() + 1;
+    const anio = new Date().getFullYear();
 
     let saldo = 0;
 
@@ -85,13 +54,6 @@ const Flujo = () => {
         }
     };
 
-    const [flujos, setFlujos] = useState(data);
-
-    const ingresosTotales = flujos.reduce((total, mes) => total + mes.ingresos, 0);
-    const egresosTotales = flujos.reduce((total, mes) => total + mes.egresos, 0);
-
-    console.log(saldos)
-
     useEffect(() => {
         getRegistros();
         getSaldos();
@@ -113,7 +75,6 @@ const Flujo = () => {
                             <ListGroup.Item action variant="info" href="#graficos">
                                 Gráficos
                             </ListGroup.Item>
-
                         </ListGroup>
                     </Col>
                     <Col sm={9}>
@@ -121,8 +82,7 @@ const Flujo = () => {
                             <Tab.Pane eventKey="#resumen_anual">
                                 <h3>Resumen anual</h3>
                                 <hr></hr>
-                                <Row>
-                                    
+                                <Row>    
                                     <Table responsive hover>
                                         <thead>
                                             <tr style={{ background: "#ACB1D6" }}>
@@ -208,7 +168,6 @@ const Flujo = () => {
                                 <h3>Resumen mensual</h3>
                                 <hr></hr>
                                 <Row>
-                                    
                                     <Col sm={6}>
                                         <Card style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
                                             <Card.Body>
@@ -299,7 +258,6 @@ const Flujo = () => {
                                 <h3>Gráficos</h3>
                                 <hr></hr>
                                 <Row xs={1} sm={2}>
-                                    
                                     <Col>
                                         <Card>
                                             <Card.Body>
@@ -341,10 +299,8 @@ const Flujo = () => {
                                                 </Tabs>
                                             </Card.Body>
                                         </Card>
-
                                     </Col>
                                 </Row>
-
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

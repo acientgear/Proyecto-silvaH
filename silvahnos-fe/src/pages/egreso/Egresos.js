@@ -150,7 +150,6 @@ const Egresos = () => {
     let total = 0;
     egresos.forEach((egreso) => {
         total += egreso.monto;
-        console.log(total);
     });
 
     useEffect(() => {

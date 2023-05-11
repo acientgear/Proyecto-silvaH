@@ -28,13 +28,7 @@ const data = {
 };
 
 const options = {
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
-    }
+
 };
 
 const DoubleBarChart = () => {
