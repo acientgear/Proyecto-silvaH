@@ -18,6 +18,7 @@ const formatearFecha = (fecha) => {
     return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
 };
 
+
 const data = [
     { month: 'Enero', ingresos: 2, egresos: 1, saldoCuenta: -8168454 },
     { month: 'Febrero', ingresos: 4, egresos: 3, saldoCuenta: 0 },
@@ -52,6 +53,9 @@ const Flujo = () => {
     const [mes, setMes] = useState((new Date()).getMonth() + 1);
     const [anio, setAnio] = useState((new Date()).getFullYear());
 
+
+    let saldo = 0;
+
     const idMes = mes.toLocaleString('es-ES', { month: 'long' });
     const nombreMes = (Sem1.concat(Sem2))[idMes]
 
@@ -59,7 +63,7 @@ const Flujo = () => {
 
     const getSaldos = async () => {
         try {
-            let url = 'http://localhost:8090/saldos/';
+            let url = 'http://localhost:8090/saldo/'+ anio;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setSaldos(response.data);
@@ -85,9 +89,8 @@ const Flujo = () => {
 
     const ingresosTotales = flujos.reduce((total, mes) => total + mes.ingresos, 0);
     const egresosTotales = flujos.reduce((total, mes) => total + mes.egresos, 0);
-    const saldoCuenta = ingresosTotales - egresosTotales;
 
-
+    console.log(saldos)
 
     useEffect(() => {
         getRegistros();
@@ -132,7 +135,7 @@ const Flujo = () => {
                                         <tbody>
                                             <tr style={{ background: "#E6F4DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {flujos.map((mes, index) => {
+                                                {saldos.map((mes, index) => {
                                                     if (index <= 5) {
                                                         return (<td key={index}>{formatoMonto(mes.ingresos)}</td>)
                                                     }
@@ -140,7 +143,7 @@ const Flujo = () => {
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {flujos.map((mes, index) => {
+                                                {saldos.map((mes, index) => {
                                                     if (index <= 5) {
                                                         return (<td key={index}>{formatoMonto(mes.egresos)}</td>)
                                                     }
@@ -148,11 +151,10 @@ const Flujo = () => {
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {flujos.map((mes, index) => {
+                                                {saldos.map((mes, index) => {
                                                     if (index <= 5) {
-                                                        const saldoMesAnterior = index > 0 ? flujos[index - 1].saldoCuenta : 0;
-                                                        flujos[index].saldoCuenta = saldoMesAnterior + mes.ingresos - mes.egresos;
-                                                        return <td key={index}>{formatoMonto(saldoMesAnterior + mes.ingresos - mes.egresos)}</td>
+                                                        saldo = saldo + mes.ingresos - mes.egresos
+                                                        return <td key={index}>{formatoMonto(saldo)}</td>;
                                                     }
                                                 })}
                                             </tr>
@@ -170,7 +172,7 @@ const Flujo = () => {
                                         <tbody>
                                             <tr style={{ background: "#E6F4DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {flujos.map((mes, index) => {
+                                                {saldos.map((mes, index) => {
                                                     if (index > 5) {
                                                         return (<td key={index}>{formatoMonto(mes.ingresos)}</td>)
                                                     }
@@ -178,7 +180,7 @@ const Flujo = () => {
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {flujos.map((mes, index) => {
+                                                {saldos.map((mes, index) => {
                                                     if (index > 5) {
                                                         return (
                                                             <td key={index}>{formatoMonto(mes.egresos)}</td>
@@ -188,11 +190,12 @@ const Flujo = () => {
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {flujos.map((mes, index) => {
+                                                {saldos.map((mes, index) => {
                                                     if (index > 5) {
-                                                        const saldoMesAnterior = index > 0 ? flujos[index - 1].saldoCuenta : 0;
-                                                        flujos[index].saldoCuenta = saldoMesAnterior + mes.ingresos - mes.egresos;
-                                                        return <td key={index}>{formatoMonto(saldoMesAnterior + mes.ingresos - mes.egresos)}</td>
+                                                        saldo = saldo + mes.ingresos - mes.egresos
+                                                        //const saldoMesAnterior = index > 0 ? flujos[index - 1].saldoCuenta : 0;
+                                                        //flujos[index].saldoCuenta = saldoMesAnterior + mes.ingresos - mes.egresos;
+                                                        return <td key={index}>{formatoMonto(saldo)}</td>;
                                                     }
                                                 })}
                                             </tr>

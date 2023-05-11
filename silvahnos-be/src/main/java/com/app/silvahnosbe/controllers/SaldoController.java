@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.app.silvahnosbe.entities.SaldoEntity;
+import com.app.silvahnosbe.models.SaldoModel;
 import com.app.silvahnosbe.services.SaldoService;
 
 @CrossOrigin
@@ -18,12 +20,18 @@ public class SaldoController {
     @Autowired
     private SaldoService saldoService;
 
-    @RequestMapping
-    public ResponseEntity<ArrayList<SaldoEntity>> getAllSaldos(){
-        ArrayList<SaldoEntity> saldos = saldoService.obtenerSaldos();
+    @GetMapping("/{anio}")
+    public ResponseEntity<ArrayList<SaldoModel>> getAllSaldos(@PathVariable ("anio") Integer anio){
+        ArrayList<SaldoModel> saldos = saldoService.obtenerSaldos(anio);
         if(saldos == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(saldos);
+    }
+
+    @GetMapping("/{mes}/{anio}")
+    public ResponseEntity<Integer> getSaldoCuenta(@PathVariable("anio") Integer anio, @PathVariable("mes") Integer mes){
+        Integer saldoMesAnio = saldoService.obtenerSaldoCuenta(anio, mes);
+        return ResponseEntity.ok().body(saldoMesAnio);
     }
 }

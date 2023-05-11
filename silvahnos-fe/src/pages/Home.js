@@ -7,6 +7,11 @@ import LineChartEgresos from './egreso/Grafico';
 const Home = () => {
   const [ingresos, setIngresos] = useState([]);
   const [egresos, setEgresos] = useState([]);
+  const [saldo, setSaldo] = useState(0);
+
+  let fechaAcual = new Date();
+  let anio = fechaAcual.getFullYear();
+  let mes = fechaAcual.getMonth() + 1;
 
   const [totalIngresos, setTotalIngresos] = useState(0);
   const [totalEgresos, setTotalEgresos] = useState(0);
@@ -35,6 +40,18 @@ const Home = () => {
     }
   };
 
+  const getSaldoCuenta = async () => {
+    try{
+      let url = 'http://localhost:8090/saldo/'+mes+'/'+anio;
+      const response = await axios.get(url);
+      if(response.status === 200){
+        setSaldo(response.data);
+      }
+    } catch(err){
+      console.log(err.message);
+    }
+  }
+
   const formatearFecha = (fecha) => {
     let fechaC = fecha.split('T')[0];
     fechaC = fechaC.split('-');
@@ -46,9 +63,7 @@ const Home = () => {
     return montoFormateado;
   };
 
-  let fechaAcual = new Date();
-  let anio = fechaAcual.getFullYear();
-  let mes = fechaAcual.getMonth() + 1;
+  
 
   const totalIngresosMes = async () => {
     try {
@@ -93,6 +108,7 @@ const Home = () => {
     totalIngresosMes();
     getEgresos();
     totalEgresosMes();
+    getSaldoCuenta();
   }, []);
 
   return (
@@ -103,13 +119,13 @@ const Home = () => {
         </Col>
         <Col xs="auto" >
           <ListGroup>
-            <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: $ 8.000.000</ListGroup.Item>
+            <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: {formatoMonto(saldo)}</ListGroup.Item>
           </ListGroup>
         </Col>
       </Row>
       <Row xs={1} lg={2} xl={3}>
         <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-          <Card className="cardsH" border='true' style={{borderColor:"#B8E7E1"}}>
+          <Card className="cardsH">
             <Card.Body>
               <Card.Title >Últimos ingresos registrados</Card.Title>
               <Table striped responsive="sm" hover bordered style={{borderColor:"#B8E7E1"}}>
@@ -142,7 +158,7 @@ const Home = () => {
           </Card>
         </Col>
         <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-          <Card className="cardsH" border='true' style={{borderColor:"#F2B6A0"}}>
+          <Card className="cardsH">
             <Card.Body>
               <Card.Title >Últimos egresos registrados</Card.Title>
               <Table striped responsive="sm" hover bordered style={{borderColor:"#F2B6A0"}}>

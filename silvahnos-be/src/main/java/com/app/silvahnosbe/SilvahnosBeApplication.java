@@ -9,5 +9,4 @@ public class SilvahnosBeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SilvahnosBeApplication.class, args);
 	}
-
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.silvahnosbe.entities.SaldoEntity;
+import com.app.silvahnosbe.models.SaldoModel;
 import com.app.silvahnosbe.repositories.SaldoRepository;
 
 @Service
@@ -13,7 +13,11 @@ public class SaldoService {
     @Autowired
     SaldoRepository saldoRepository;
 
-    public ArrayList<SaldoEntity> obtenerSaldos(){
-        return saldoRepository.obtenerSaldos();
+    public ArrayList<SaldoModel> obtenerSaldos(Integer anio){
+        return saldoRepository.obtenerSaldos(anio);
+    }
+
+    public Integer obtenerSaldoCuenta(Integer anio, Integer mes){
+        return saldoRepository.obtenerSaldoCuenta(anio, mes);
     }
 }
