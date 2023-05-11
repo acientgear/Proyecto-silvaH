@@ -60,16 +60,37 @@ function CrearEgreso() {
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group className="mb-3" controlId="formEgreso">
                             <Form.Label>Patente</Form.Label>
-                            <Form.Control name="patente"
+                            <Form.Select
+                                aria-label="select"
+                                name="patente"
                                 required
-                                isValid={255 > egreso.patente.length && egreso.patente.length > 0}
-                                isInvalid={egreso.patente.length > 255 || egreso.patente.length === 0}
-                                type="text" placeholder="Ingrese patente" onChange={handleChange}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Ingrese una patente valida
-                            </Form.Control.Feedback>
+                                placeholder="Ingrese patente"
+                                onChange={handleChange}
+                            >
+                                <option value="sueldos">Sueldos</option>
+                                <option value="arriendo">Arriendo</option>
+                                <option value="astara">Astara</option>
+                                <option value="creditos">Créditos</option>
+                                <option value="repuestos">Repuestos</option>
+                                <option value="taller">Taller</option>
+                                <option value="otros">Otros</option>
+                            </Form.Select>
+                            {egreso.patente === "otros" && (
+                                <div className="mt-3">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ingrese patente personalizada"
+                                        name="otraPatente"
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Ingrese una patente válida.
+                                    </Form.Control.Feedback>
+                                </div>
+                            )}
                         </Form.Group>
+
                         <Form.Group className="mb-3" controlId="formEgreso">
                             <Form.Label>Monto</Form.Label>
                             <Form.Control name="monto" required
@@ -86,12 +107,12 @@ function CrearEgreso() {
                             <Form.Label>Descripción</Form.Label>
                             <Form.Control name="descripcion"
                                 required
-                                isValid={255 > egreso.descripcion.length && egreso.descripcion.length > 0} 
+                                isValid={255 > egreso.descripcion.length && egreso.descripcion.length > 0}
                                 isInvalid={egreso.descripcion.length > 255 || egreso.descripcion.length === 0}
                                 as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange} />
-                                <Form.Control.Feedback type="invalid">
-                                    Ingrese una descripción valida
-                                </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese una descripción valida
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
                         <Button type="submit">Guardar</Button>
