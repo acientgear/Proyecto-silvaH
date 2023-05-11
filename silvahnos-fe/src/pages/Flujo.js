@@ -97,17 +97,17 @@ const Flujo = () => {
     return (
         <Container fluid >
             <h1>Flujo de caja</h1>
-            <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+            <Tab.Container id="list-group-tabs-example" defaultActiveKey="#resumen_anual">
                 <Row>
                     <Col sm={3} style={{ marginTop: "10px" }}>
                         <ListGroup>
-                            <ListGroup.Item action variant="info" href="#link1">
+                            <ListGroup.Item action variant="info" href="#resumen_anual">
                                 Resumen anual
                             </ListGroup.Item>
-                            <ListGroup.Item action variant="info" href="#link2">
+                            <ListGroup.Item action variant="info" href="#resumen_mensual">
                                 Resumen mensual
                             </ListGroup.Item>
-                            <ListGroup.Item action variant="info" href="#link3">
+                            <ListGroup.Item action variant="info" href="#graficos">
                                 Gráficos
                             </ListGroup.Item>
 
@@ -115,7 +115,7 @@ const Flujo = () => {
                     </Col>
                     <Col sm={9}>
                         <Tab.Content>
-                            <Tab.Pane eventKey="#link1">
+                            <Tab.Pane eventKey="#resumen_anual">
                                 <h3>Resumen anual</h3>
                                 <hr></hr>
                                 <Row>
@@ -201,7 +201,7 @@ const Flujo = () => {
                                     <hr />
                                 </Row>
                             </Tab.Pane>
-                            <Tab.Pane eventKey="#link2">
+                            <Tab.Pane eventKey="#resumen_mensual">
                                 <h3>Resumen mensual</h3>
                                 <hr></hr>
                                 <Row>
@@ -292,7 +292,7 @@ const Flujo = () => {
                                     </Col>
                                 </Row>
                             </Tab.Pane>
-                            <Tab.Pane eventKey="#link3">
+                            <Tab.Pane eventKey="#graficos">
                                 <h3>Gráficos</h3>
                                 <hr></hr>
                                 <Row xs={1} sm={2}>

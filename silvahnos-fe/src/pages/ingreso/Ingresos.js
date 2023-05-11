@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Modal, Pagination, Row, Table } from 'react-bootstrap';
+import InputMonth from '../../components/InputMonth';
 
 const Ingresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -85,6 +86,14 @@ const Ingresos = () => {
         deleteIngreso();
     };
 
+    const handleChangeMes = (e) => {
+        setMes(e.target.value);
+    };
+
+    const handleChangeAnio = (e) => {
+        setAnio(e.target.value);
+    };
+
     const deleteIngreso = async () => {
         try {
             let url = 'http://localhost:8090/ingresos';
@@ -153,7 +162,16 @@ const Ingresos = () => {
             <Container>
                 <Row>
                     <Col><h1>Ingresos</h1></Col>
-                    <Col md={{ span: 3, offset: 3 }}><Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar un ingreso</Button></Col>
+                    <Col className='d-flex align-items-center'>
+                        <InputMonth 
+                            mes={mes} 
+                            anio={anio}
+                            onChangeAnio={handleChangeAnio}
+                            onChangeMes={handleChangeMes}
+                            get={getIngresos}
+                        />
+                    </Col>
+                    <Col className='d-flex align-items-center justify-content-end'><Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar un ingreso</Button></Col>
                 </Row>
                 <Row>
                     <Col>

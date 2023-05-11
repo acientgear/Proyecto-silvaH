@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Modal, Row, Table, Pagination } from 'react-bootstrap';
+import InputMonth from '../../components/InputMonth';
 
 const Egresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -98,6 +99,14 @@ const Egresos = () => {
         }
     };
 
+    const handleChangeMes = (e) => {
+        setMes(e.target.value);
+    };
+
+    const handleChangeAnio = (e) => {
+        setAnio(e.target.value);
+    };
+
     const [editedItem, setEditedItem] = useState({
         id: null,
         borrado: false,
@@ -153,7 +162,16 @@ const Egresos = () => {
             <Container>
                 <Row>
                     <Col><h1>Egresos</h1></Col>
-                    <Col md={{ span: 3, offset: 3 }}><Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar un egreso</Button></Col>
+                    <Col className='d-flex align-items-center'>
+                        <InputMonth 
+                            mes={mes} 
+                            anio={anio} 
+                            onChangeAnio={handleChangeAnio} 
+                            onChangeMes={handleChangeMes} 
+                            get={getEgresos}
+                        />
+                    </Col>
+                    <Col className='d-flex align-items-center justify-content-end'><Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar un egreso</Button></Col>
                 </Row>
                 <Row>
                     <Col>
