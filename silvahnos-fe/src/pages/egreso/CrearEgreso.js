@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import CategoriasEgreso from '../../components/data/CategoriasEgreso';
 
 function CrearEgreso() {
     const [validated, setValidated] = useState(false);
@@ -12,7 +13,7 @@ function CrearEgreso() {
         fecha_modificacion: null,
         fecha_borrado: null,
         monto: '',
-        patente: '',
+        origen: '',
         descripcion: '',
     });
 
@@ -59,23 +60,21 @@ function CrearEgreso() {
                 <Col>
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group className="mb-3" controlId="formEgreso">
-                            <Form.Label>Patente</Form.Label>
+                            <Form.Label>Origen</Form.Label>
                             <Form.Select
                                 aria-label="select"
-                                name="patente"
+                                name="origen"
                                 required
-                                placeholder="Ingrese patente"
+                                placeholder="Ingrese de donde viene el egreso"
                                 onChange={handleChange}
                             >
-                                <option value="sueldos">Sueldos</option>
-                                <option value="arriendo">Arriendo</option>
-                                <option value="astara">Astara</option>
-                                <option value="creditos">Créditos</option>
-                                <option value="repuestos">Repuestos</option>
-                                <option value="taller">Taller</option>
-                                <option value="otros">Otros</option>
+                                {CategoriasEgreso.map((categoria) => (
+                                    <option key={categoria.id} value={categoria.nombre}>
+                                        {categoria.nombre}
+                                    </option>
+                                ))}
                             </Form.Select>
-                            {egreso.patente === "otros" && (
+                            {egreso.patente === "Otros" && (
                                 <div className="mt-3">
                                     <Form.Control
                                         type="text"

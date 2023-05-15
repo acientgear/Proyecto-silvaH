@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import CategoriasIngreso from '../../components/data/CategoriasIngreso';
 
 const CrearIngreso = () => {
     const [validated, setValidated] = useState(false);
@@ -14,6 +15,7 @@ const CrearIngreso = () => {
         patente: '',
         monto: 0,
         descripcion: '',
+        origen: '',
     });
 
     const handleChange = (e) => {
@@ -60,15 +62,28 @@ const CrearIngreso = () => {
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Patente</Form.Label>
-                            <Form.Control name="patente" 
+                            <Form.Control name="patente"
                                 required
-                                isValid={255 > ingreso.patente.length && ingreso.patente.length > 0} 
-                                isInvalid={ingreso.patente.length > 255 || ingreso.patente.length === 0}
-                                type="text" placeholder="Ingrese patente" onChange={handleChange} 
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Ingrese una patente valida
-                                </Form.Control.Feedback>
+                                isValid={6 > ingreso.patente.length && ingreso.patente.length > 0}
+                                isInvalid={ingreso.patente.length > 6 || ingreso.patente.length === 0}
+                                type="text" placeholder="Ingrese la patente" onChange={handleChange}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese una patente valida
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Origen</Form.Label>
+                            <Form.Select name="origen"
+                                required
+                                aria-label="select"
+                                placeholder="Ingrese de donde viene" 
+                                onChange={handleChange}
+                            >
+                                {CategoriasIngreso.map((categoria) => (
+                                    <option key={categoria.id} value={categoria.nombre}>{categoria.nombre}</option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Monto</Form.Label>
@@ -78,25 +93,25 @@ const CrearIngreso = () => {
                                 min={1}
                                 max={1000000000}
                                 type="number" placeholder="Ingrese monto" onChange={handleChange} />
-                                <Form.Control.Feedback type="invalid">
-                                    Ingrese un monto entre $1 y $1.000.000.000
-                                </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese un monto entre $1 y $1.000.000.000
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Descripción</Form.Label>
                             <Form.Control name="descripcion"
                                 required
-                                isValid={255 > ingreso.descripcion.length && ingreso.descripcion.length > 0} 
+                                isValid={255 > ingreso.descripcion.length && ingreso.descripcion.length > 0}
                                 isInvalid={ingreso.descripcion.length > 255 || ingreso.descripcion.length === 0}
                                 as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange} />
-                                <Form.Control.Feedback type="invalid">
-                                    Ingrese una descripción valida
-                                </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                                Ingrese una descripción valida
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
                         <Button variant='success' type='sumbit'>Guardar</Button>
                     </Form>
-                    
+
                 </Col>
             </Row>
         </Container>

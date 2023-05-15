@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Modal, Pagination, Row, Table } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
+import CategoriasIngreso from '../../components/data/CategoriasIngreso';
 
 const Ingresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -115,6 +116,7 @@ const Ingresos = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
+        origen: '',
         monto: '',
         descripcion: '',
     });
@@ -126,6 +128,7 @@ const Ingresos = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
+        origen: '',
         monto: '',
         descripcion: '',
     }
@@ -180,6 +183,7 @@ const Ingresos = () => {
                                 <tr>
                                     <th style={{ width: '150px' }}>Fecha</th>
                                     <th style={{ width: '150px' }}>Descripción</th>
+                                    <th style={{ width: '150px' }}>Origen</th>
                                     <th style={{ width: '150px' }}>Patente</th>
                                     <th style={{ width: '150px' }}>Monto</th>
                                     <th style={{ width: '150px' }}>Acciones</th>
@@ -190,6 +194,7 @@ const Ingresos = () => {
                                     <tr key={ingreso.id}>
                                         <td>{formatearFecha(ingreso.fecha_creacion)}</td>
                                         <td>{ingreso.descripcion}</td>
+                                        <td>{ingreso.origen}</td>
                                         <td>{ingreso.patente}</td>
                                         <td>{formatoMonto(ingreso.monto)}</td>
                                         <td>
@@ -231,16 +236,31 @@ const Ingresos = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
-                        <Form.Group className='mb-3' controlId='formPatente'>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Patente</Form.Label>
                             <Form.Control name="patente"
                                 required
-                                isValid={255 > editedItem.patente.length && editedItem.patente.length > 0}
-                                isInvalid={editedItem.patente.length > 255 || editedItem.patente.length === 0}
-                                type='text' value={editedItem.patente} onChange={handleChange} />
+                                isValid={6 > editedItem.patente.length && editedItem.patente.length > 0}
+                                isInvalid={editedItem.patente.length > 6 || editedItem.patente.length === 0}
+                                type="text" placeholder="Ingrese la patente" value={editedItem.patente} onChange={handleChange}
+                            />
                             <Form.Control.Feedback type="invalid">
                                 Ingrese una patente valida
                             </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Origen</Form.Label>
+                            <Form.Select name="origen"
+                                required
+                                aria-label="select"
+                                placeholder="Ingrese de donde viene" 
+                                onChange={handleChange}
+                                value={editedItem.origen}
+                            >
+                                {CategoriasIngreso.map((categoria) => (
+                                    <option key={categoria.id} value={categoria.nombre}>{categoria.nombre}</option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formMonto'>
                             <Form.Label>Monto</Form.Label>

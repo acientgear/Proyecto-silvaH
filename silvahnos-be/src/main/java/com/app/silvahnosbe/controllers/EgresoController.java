@@ -2,7 +2,6 @@ package com.app.silvahnosbe.controllers;
 
 import java.util.ArrayList;
 
-import org.hibernate.annotations.ConverterRegistrations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

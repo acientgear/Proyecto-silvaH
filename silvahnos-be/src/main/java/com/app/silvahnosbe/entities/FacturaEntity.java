@@ -36,7 +36,7 @@ public class FacturaEntity {
     private Timestamp fecha_creacion;
     @UpdateTimestamp
     private Timestamp fecha_modificacion;
-    @UpdateTimestamp
+
     private Timestamp fecha_borrado;
     private int numero_factura;
 }

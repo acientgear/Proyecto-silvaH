@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Modal, Row, Table, Pagination } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
+import CategoriasEgreso from '../../components/data/CategoriasEgreso';
 
 const Egresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -113,7 +114,7 @@ const Egresos = () => {
         fecha_creacion: null,
         fecha_modificacion: null,
         fecha_borrado: null,
-        patente: '',
+        origen: '',
         monto: '',
         descripcion: '',
     });
@@ -124,7 +125,7 @@ const Egresos = () => {
         fecha_creacion: null,
         fecha_modificacion: null,
         fecha_borrado: null,
-        patente: '',
+        origen: '',
         monto: '',
         descripcion: '',
     }
@@ -179,7 +180,7 @@ const Egresos = () => {
                                 <tr>
                                     <th style={{ width: '150px' }}>Fecha</th>
                                     <th style={{ width: '150px' }}>Descripción</th>
-                                    <th style={{ width: '150px' }}>Patente</th>
+                                    <th style={{ width: '150px' }}>Origen</th>
                                     <th style={{ width: '150px' }}>Monto</th>
                                     <th style={{ width: '150px' }}>Acciones</th>
                                 </tr>
@@ -189,7 +190,7 @@ const Egresos = () => {
                                     <tr key={egreso.id}>
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
                                         <td>{egreso.descripcion}</td>
-                                        <td>{egreso.patente}</td>
+                                        <td>{egreso.origen}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
                                             <Button variant='primary' onClick={() => handleShowEdit(egreso)} style={{ marginRight: 2, width: "88px" }}>Editar</Button>
@@ -232,16 +233,21 @@ const Egresos = () => {
                 <Modal.Body>
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group className="mb-3" controlId="formEgreso">
-                            <Form.Label>Patente</Form.Label>
-                            <Form.Control name="patente"
+                            <Form.Label>Origen</Form.Label>
+                            <Form.Select
+                                aria-label="select"
+                                name="origen"
                                 required
-                                isValid={255 > editedItem.patente.length && editedItem.patente.length > 0}
-                                isInvalid={editedItem.patente.length > 255 || editedItem.patente.length === 0}
-                                type="text" placeholder="Ingrese patente" onChange={handleChange}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Ingrese una patente valida
-                            </Form.Control.Feedback>
+                                placeholder="Ingrese de donde viene el egreso"
+                                onChange={handleChange}
+                                value={editedItem.origen}
+                            >
+                                {CategoriasEgreso.map((categoria) => (
+                                    <option key={categoria.id} value={categoria.nombre}>
+                                        {categoria.nombre}
+                                    </option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formEgreso">
                             <Form.Label>Monto</Form.Label>
@@ -250,7 +256,9 @@ const Egresos = () => {
                                 isInvalid={editedItem.monto <= 0 || editedItem.monto > 1000000000}
                                 min={1}
                                 max={1000000000}
-                                type="number" placeholder="Ingrese monto" onChange={handleChange} />
+                                type="number" placeholder="Ingrese monto" 
+                                value={editedItem.monto}
+                                onChange={handleChange} />
                             <Form.Control.Feedback type="invalid">
                                 El monto debe ser mayor a $ 0 y menor a $ 1.000.000.000
                             </Form.Control.Feedback>
@@ -261,7 +269,7 @@ const Egresos = () => {
                                 required
                                 isValid={255 > editedItem.descripcion.length && editedItem.descripcion.length > 0}
                                 isInvalid={editedItem.descripcion.length > 255 || editedItem.descripcion.length === 0}
-                                as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange} />
+                                as="textarea" row={3} placeholder="Ingrese descripción" value={editedItem.descripcion} onChange={handleChange} />
                             <Form.Control.Feedback type="invalid">
                                 Ingrese una descripción valida
                             </Form.Control.Feedback>

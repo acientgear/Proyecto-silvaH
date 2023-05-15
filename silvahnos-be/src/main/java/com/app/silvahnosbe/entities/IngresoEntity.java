@@ -22,6 +22,7 @@ public class IngresoEntity {
     private Long id;
 
     private int monto;
+    private String origen;
     private String patente;
     private String descripcion;
     private boolean borrado;
@@ -30,5 +31,6 @@ public class IngresoEntity {
     private Timestamp fecha_creacion;
     @UpdateTimestamp
     private Timestamp fecha_modificacion;
+    
     private Timestamp fecha_borrado;
 }
