@@ -26,7 +26,7 @@ const CrearIngreso = () => {
         setValidated(false);
     };
 
-    const handleSumbit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
@@ -64,7 +64,7 @@ const CrearIngreso = () => {
                         validated={validated}  
                         modal={false}
                         handleChange={handleChange}
-                        handleSumbit={handleSumbit}
+                        handleSubmit={handleSubmit}
                         />
                 </Col>
             </Row>

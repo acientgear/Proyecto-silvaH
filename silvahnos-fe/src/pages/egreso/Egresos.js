@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Modal, Row, Table, Pagination } from 'react-bootstrap';
+import { Button, Col, Container, Modal, Row, Table, Pagination } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
-import CategoriasEgreso from '../../components/data/CategoriasEgreso';
+import FormEgreso from '../../components/FormEgreso';
 
 const Egresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -58,7 +58,7 @@ const Egresos = () => {
         });
     };
 
-    const handleSumbit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
@@ -231,52 +231,14 @@ const Egresos = () => {
                     <Modal.Title>Editar Egreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form noValidate validated={validated} onSubmit={handleSumbit}>
-                        <Form.Group className="mb-3" controlId="formEgreso">
-                            <Form.Label>Origen</Form.Label>
-                            <Form.Select
-                                aria-label="select"
-                                name="origen"
-                                required
-                                placeholder="Ingrese de donde viene el egreso"
-                                onChange={handleChange}
-                                value={editedItem.origen}
-                            >
-                                {CategoriasEgreso.map((categoria) => (
-                                    <option key={categoria.id} value={categoria.nombre}>
-                                        {categoria.nombre}
-                                    </option>
-                                ))}
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formEgreso">
-                            <Form.Label>Monto</Form.Label>
-                            <Form.Control name="monto" required
-                                isValid={1000000000 > editedItem.monto && editedItem.monto > 0}
-                                isInvalid={editedItem.monto <= 0 || editedItem.monto > 1000000000}
-                                min={1}
-                                max={1000000000}
-                                type="number" placeholder="Ingrese monto" 
-                                value={editedItem.monto}
-                                onChange={handleChange} />
-                            <Form.Control.Feedback type="invalid">
-                                El monto debe ser mayor a $ 0 y menor a $ 1.000.000.000
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Descripción</Form.Label>
-                            <Form.Control name="descripcion"
-                                required
-                                isValid={255 > editedItem.descripcion.length && editedItem.descripcion.length > 0}
-                                isInvalid={editedItem.descripcion.length > 255 || editedItem.descripcion.length === 0}
-                                as="textarea" row={3} placeholder="Ingrese descripción" value={editedItem.descripcion} onChange={handleChange} />
-                            <Form.Control.Feedback type="invalid">
-                                Ingrese una descripción valida
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Button variant='secondary' onClick={handleCloseEdit}>Cerrar</Button>
-                        <Button type="submit">Guardar</Button>
-                    </Form>
+                    <FormEgreso 
+                        egreso={editedItem}
+                        validated={validated}
+                        modal={true}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        handleCloseEdit={handleCloseEdit}
+                    />
                 </Modal.Body>
             </Modal>
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
-import CategoriasEgreso from '../../components/data/CategoriasEgreso';
+import FormEgreso from '../../components/FormEgreso';
 
 function CrearEgreso() {
     const [validated, setValidated] = useState(false);
@@ -24,7 +24,7 @@ function CrearEgreso() {
         });
     };
 
-    const handleSumbit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
@@ -58,64 +58,13 @@ function CrearEgreso() {
             </Row>
             <Row>
                 <Col>
-                    <Form noValidate validated={validated} onSubmit={handleSumbit}>
-                        <Form.Group className="mb-3" controlId="formEgreso">
-                            <Form.Label>Origen</Form.Label>
-                            <Form.Select
-                                aria-label="select"
-                                name="origen"
-                                required
-                                placeholder="Ingrese de donde viene el egreso"
-                                onChange={handleChange}
-                            >
-                                {CategoriasEgreso.map((categoria) => (
-                                    <option key={categoria.id} value={categoria.nombre}>
-                                        {categoria.nombre}
-                                    </option>
-                                ))}
-                            </Form.Select>
-                            {egreso.patente === "Otros" && (
-                                <div className="mt-3">
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Ingrese patente personalizada"
-                                        name="otraPatente"
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        Ingrese una patente válida.
-                                    </Form.Control.Feedback>
-                                </div>
-                            )}
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="formEgreso">
-                            <Form.Label>Monto</Form.Label>
-                            <Form.Control name="monto" required
-                                isValid={1000000000 > egreso.monto && egreso.monto > 0}
-                                isInvalid={egreso.monto <= 0 || egreso.monto > 1000000000}
-                                min={1}
-                                max={1000000000}
-                                type="number" placeholder="Ingrese monto" onChange={handleChange} />
-                            <Form.Control.Feedback type="invalid">
-                                El monto debe ser mayor a $ 0 y menor a $ 1.000.000.000
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Descripción</Form.Label>
-                            <Form.Control name="descripcion"
-                                required
-                                isValid={255 > egreso.descripcion.length && egreso.descripcion.length > 0}
-                                isInvalid={egreso.descripcion.length > 255 || egreso.descripcion.length === 0}
-                                as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange} />
-                            <Form.Control.Feedback type="invalid">
-                                Ingrese una descripción valida
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
-                        <Button type="submit">Guardar</Button>
-                    </Form>
+                    <FormEgreso 
+                        egreso={egreso}
+                        validated={validated}
+                        modal={false}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                    />
                 </Col>
             </Row>
         </Container >

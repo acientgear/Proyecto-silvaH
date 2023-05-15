@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Modal, Pagination, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
 import FormIngreso from '../../components/FormIngreso';
 
@@ -58,7 +58,7 @@ const Ingresos = () => {
         });
     };
 
-    const handleSumbit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
@@ -240,7 +240,7 @@ const Ingresos = () => {
                         validated={validated} 
                         modal={true}
                         handleChange={handleChange}
-                        handleSumbit={handleSumbit}
+                        handleSubmit={handleSubmit}
                         handleCloseEdit={handleCloseEdit}
                         />
                 </Modal.Body>

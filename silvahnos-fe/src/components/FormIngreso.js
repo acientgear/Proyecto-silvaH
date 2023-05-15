@@ -1,7 +1,7 @@
 import CategoriasIngreso from "./data/CategoriasIngreso";
 import { Button, Form } from "react-bootstrap";
 
-const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit, handleSumbit}) => {
+const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit, handleSubmit}) => {
 
     const modalFooter = () => {
         return (
@@ -9,7 +9,7 @@ const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit,
                 <hr></hr>
                 <div style={{ display: "flex", justifyContent: "end" }}>
                     <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleCloseEdit}>Cerrar</Button>
-                    <Button variant='primary' type='sumbit'>Guardar</Button>
+                    <Button variant='primary' type='submit'>Guardar</Button>
                 </div>
             </div>
         )
@@ -19,13 +19,13 @@ const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit,
         return (
             <div>
                 <Button variant='primary' href='/' style={{ marginRight: 2 }}>Atras</Button>
-                <Button variant='success' type='sumbit'>Guardar</Button>
+                <Button variant='success' type='submit'>Guardar</Button>
             </div>
         )
     }
 
     return (
-        <Form noValidate validated={validated} onSubmit={handleSumbit}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Patente con componente</Form.Label>
                 <Form.Control name="patente"
