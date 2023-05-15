@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Modal, Pagination, Row, Table } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
-import CategoriasIngreso from '../../components/data/CategoriasIngreso';
+import FormIngreso from '../../components/FormIngreso';
 
 const Ingresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -235,63 +235,14 @@ const Ingresos = () => {
                     <Modal.Title>Editar Ingreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form noValidate validated={validated} onSubmit={handleSumbit}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Patente</Form.Label>
-                            <Form.Control name="patente"
-                                required
-                                isValid={6 > editedItem.patente.length && editedItem.patente.length > 0}
-                                isInvalid={editedItem.patente.length > 6 || editedItem.patente.length === 0}
-                                type="text" placeholder="Ingrese la patente" value={editedItem.patente} onChange={handleChange}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Ingrese una patente valida
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Origen</Form.Label>
-                            <Form.Select name="origen"
-                                required
-                                aria-label="select"
-                                placeholder="Ingrese de donde viene" 
-                                onChange={handleChange}
-                                value={editedItem.origen}
-                            >
-                                {CategoriasIngreso.map((categoria) => (
-                                    <option key={categoria.id} value={categoria.nombre}>{categoria.nombre}</option>
-                                ))}
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group className='mb-3' controlId='formMonto'>
-                            <Form.Label>Monto</Form.Label>
-                            <Form.Control name="monto"
-                                required
-                                isValid={1000000000 > editedItem.monto && editedItem.monto > 0}
-                                isInvalid={editedItem.monto <= 0 || editedItem.monto > 1000000000}
-                                min={1}
-                                max={1000000000}
-                                type='number' value={editedItem.monto} onChange={handleChange} />
-                            <Form.Control.Feedback type="invalid">
-                                Ingrese un monto entre $1 y $1.000.000.000
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group className='mb-3' controlId='formDescripcion'>
-                            <Form.Label>Descripción</Form.Label>
-                            <Form.Control name="descripcion"
-                                required
-                                isValid={255 > editedItem.descripcion.length && editedItem.descripcion.length > 0}
-                                isInvalid={editedItem.descripcion.length > 255 || editedItem.descripcion.length === 0}
-                                as='textarea' row={3} value={editedItem.descripcion} onChange={handleChange} />
-                            <Form.Control.Feedback type="invalid">
-                                Ingrese una descripción valida
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <hr></hr>
-                        <div style={{ display: "flex", justifyContent: "end" }}>
-                            <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleCloseEdit}>Cerrar</Button>
-                            <Button variant='primary' type='sumbit'>Guardar</Button>
-                        </div>
-                    </Form>
+                    <FormIngreso 
+                        ingreso={editedItem} 
+                        validated={validated} 
+                        modal={true}
+                        handleChange={handleChange}
+                        handleSumbit={handleSumbit}
+                        handleCloseEdit={handleCloseEdit}
+                        />
                 </Modal.Body>
             </Modal>
 
