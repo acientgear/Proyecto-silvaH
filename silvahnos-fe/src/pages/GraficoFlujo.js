@@ -4,9 +4,9 @@ import 'chart.js/auto';
 import axios from 'axios';
 import Dias from '../components/data/Dias';
 
-const getMontoPorDia = async (anio,mes,dia) => {
+const getMontoPorDia = async (tipo, anio, mes, dia) => {
     try {
-        let url = 'http://localhost:8090/egresos/monto/' + anio + '/' + mes + '/' + dia;
+        let url = 'http://localhost:8090/' + tipo + '/monto/' + anio + '/' + mes + '/' + dia;
         const response = await axios.get(url);
         if (response.status === 200) {
             return response.data;
@@ -16,13 +16,13 @@ const getMontoPorDia = async (anio,mes,dia) => {
     }
 };
 
-async function obtenerMontosEgresosMes(){
+async function obtenerMontosMes(tipo) {
     const montos = [];
     const fecha = new Date();
-    const dias = Dias(fecha.getFullYear(),fecha.getMonth());
-    
+    const dias = Dias(fecha.getFullYear(), fecha.getMonth());
+
     for (let i = 1; i <= dias.length; i++) {
-        const monto = getMontoPorDia(fecha.getFullYear(), fecha.getMonth() + 1, i);
+        const monto = getMontoPorDia(tipo, fecha.getFullYear(), fecha.getMonth() + 1, i);
         montos.push(monto);
     }
 
@@ -30,14 +30,6 @@ async function obtenerMontosEgresosMes(){
 
     return datos;
 }
-
-const data = [
-    { month: 'Enero', ingresos: 18000000, egresos: 26168454, saldoCuenta: -8168454 },
-    { month: 'Febrero', ingresos: 20000000, egresos: 18000000, saldoCuenta: 0 },
-    { month: 'Marzo', ingresos: 22268362, egresos: 20690022, saldoCuenta: 0 },
-    { month: 'Abril', ingresos: 0, egresos: 0, saldoCuenta: 0 },
-    { month: 'Mayo', ingresos: 0, egresos: 0, saldoCuenta: 0 }
-];
 
 const getFlujos = async () => {
     try {
@@ -51,14 +43,7 @@ const getFlujos = async () => {
     }
 }
 
-class LineChart extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            flujos: []
-        };
-    }
+class LineChart extends Component {
 
     chartRef = React.createRef();
     myChart = null;
@@ -69,18 +54,16 @@ class LineChart extends React.Component {
         const month = new Date().getMonth();
         const dias = Dias(year, month);
 
-        const flujosDB = await getFlujos();
-        this.setState({ flujos: flujosDB });
-        console.log(this.state.flujos);
-
         const myChartRef = this.chartRef.current.getContext('2d');
+
+        let tipo1 = 'ingresos';
+        let tipo2 = 'egresos';
+        const montosIngresos = await obtenerMontosMes(tipo1);
+        const montosEgresos = await obtenerMontosMes(tipo2);
 
         if (this.myChart) {
             this.myChart.destroy();
         }
-
-        const montos = await obtenerMontosEgresosMes();
-        console.log(montos)
 
         this.myChart = new Chart(myChartRef, {
             type: 'line',
@@ -89,14 +72,14 @@ class LineChart extends React.Component {
                 datasets: [
                     {
                         label: 'Ingresos',
-                        data: [this.state.flujos[0].total_ingresos],
+                        data: montosIngresos,
                         backgroundColor: 'rgba(184, 231, 225, 0.2)',
                         borderColor: 'rgba(184, 231, 225, 1)',
                         borderWidth: 1,
                     },
                     {
                         label: 'Egresos',
-                        data: montos,
+                        data: montosEgresos,
                         backgroundColor: 'rgba(242, 182, 160, 0.2)',
                         borderColor: 'rgba(242, 182, 160, 1)',
                         borderWidth: 1,
