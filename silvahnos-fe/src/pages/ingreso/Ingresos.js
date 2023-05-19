@@ -209,6 +209,7 @@ const Ingresos = () => {
                                     <td>Total</td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>{formatoMonto(total)}</td>
                                     <td></td>
                                 </tr>
