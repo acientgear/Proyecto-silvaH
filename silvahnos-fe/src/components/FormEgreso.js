@@ -36,6 +36,7 @@ const FormEgreso = ({egreso, validated, modal, handleChange, handleSubmit, handl
                     onChange={handleChange}
                     value={egreso.origen}
                 >
+                    <option value="">Seleccione una opción</option>
                     {CategoriasEgreso.map((categoria) => (
                         <option key={categoria.id} value={categoria.nombre}>
                             {categoria.nombre}
