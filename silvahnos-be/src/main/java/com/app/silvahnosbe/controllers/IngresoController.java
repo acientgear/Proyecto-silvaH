@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.IngresoEntity;
+import com.app.silvahnosbe.models.MontoOrigenModel;
 import com.app.silvahnosbe.services.IngresoService;
 
 @CrossOrigin
@@ -71,5 +72,11 @@ public class IngresoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(total);
+    }
+
+    @GetMapping("/origen/{anio}/{mes}")
+    public ArrayList<MontoOrigenModel> getEgresosPorOrigen(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        ArrayList<MontoOrigenModel> montosOrigen = ingresoService.obtenerMontoOrigen(anio,mes);
+        return montosOrigen;
     }
 }

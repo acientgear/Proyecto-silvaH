@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
+import com.app.silvahnosbe.models.MontoOrigenModel;
 import com.app.silvahnosbe.models.RegistroModel;
 import com.app.silvahnosbe.services.EgresoService;
 
@@ -98,5 +99,11 @@ public class EgresoController {
     public ArrayList<RegistroModel> getEgresosIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
         ArrayList<RegistroModel> registros = egresoService.obtenerEgresosIngresos(anio,mes);
         return registros;
+    }
+
+    @GetMapping("/origen/{anio}/{mes}")
+    public ArrayList<MontoOrigenModel> getEgresosPorOrigen(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        ArrayList<MontoOrigenModel> montosOrigen = egresoService.obtenerMontoOrigen(anio,mes);
+        return montosOrigen;
     }
 }

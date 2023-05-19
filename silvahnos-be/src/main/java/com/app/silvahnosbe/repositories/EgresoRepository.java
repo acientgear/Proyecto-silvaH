@@ -1,6 +1,7 @@
 package com.app.silvahnosbe.repositories;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
+import com.app.silvahnosbe.models.MontoOrigenModel;
 
 import java.util.ArrayList;
 
@@ -22,4 +23,7 @@ public interface EgresoRepository extends JpaRepository<EgresoEntity,Long>{
 
     @Query(value = "SELECT sum(e.monto) as monto FROM egreso e WHERE year(e.fecha_creacion) = :anio and month(e.fecha_creacion) = :mes and day(e.fecha_creacion) = :dia and e.borrado = 0", nativeQuery = true)
     Integer obtenerMontoPorDia(@Param("anio") int anio, @Param("mes") int mes, @Param("dia") int dia);
+
+    @Query(value = "SELECT SUM(e.monto) as monto_total, e.origen FROM egreso as e WHERE e.borrado = 0 AND YEAR(e.fecha_creacion) = :anio AND MONTH(e.fecha_creacion) = :mes GROUP BY e.origen",nativeQuery = true)
+    ArrayList<MontoOrigenModel> obtenerMontoOrigenPorAnioAndMes(@Param("anio") int anio, @Param("mes") int mes);
 }

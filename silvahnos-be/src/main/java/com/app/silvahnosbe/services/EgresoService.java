@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.entities.IngresoEntity;
+import com.app.silvahnosbe.models.MontoOrigenModel;
 import com.app.silvahnosbe.models.RegistroModel;
 import com.app.silvahnosbe.repositories.EgresoRepository;
 import com.app.silvahnosbe.repositories.IngresoRepository;
@@ -87,5 +88,9 @@ public class EgresoService {
         registros.sort((RegistroModel r1, RegistroModel r2) -> r2.getFecha().compareTo(r1.getFecha()));
 
         return registros;
+    }
+
+    public ArrayList<MontoOrigenModel> obtenerMontoOrigen(int anio, int mes){
+        return (ArrayList<MontoOrigenModel>) egresoRepository.obtenerMontoOrigenPorAnioAndMes(anio, mes);
     }
 }

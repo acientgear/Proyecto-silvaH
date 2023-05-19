@@ -2,7 +2,8 @@ import LineChart from './GraficoFlujo';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ListGroup, Table, Col, Row, Container, Badge, Tab, Tabs, Card } from 'react-bootstrap';
-import PieChart from './PieChart';
+import PieChartEgreso from './egreso/PieChart';
+import PieChartIngreso from './ingreso/PieChart';
 import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
 import GraficoBarras from './GraficoBarras';
@@ -99,9 +100,6 @@ const Flujo = () => {
     const [montosIngresos, setMontosIngresos] = useState([]);
     const [montosEgresos, setMontosEgresos] = useState([]);
     let saldoCue = 0;
-
-    console.log(montosIngresos);
-    console.log(montosEgresos);
 
     const fetchMontos = async () => {
         const tipo1 = 'ingresos';
@@ -356,10 +354,10 @@ const Flujo = () => {
                                                     style={{ justifyContent: "center" }}
                                                 >
                                                     <Tab eventKey="Ingresos" title="Ingresos" style={{ color: "black" }}>
-                                                        <PieChart />
+                                                        <PieChartIngreso />
                                                     </Tab>
                                                     <Tab eventKey="Egresos" title="Egresos" style={{ color: "black" }}>
-                                                        <PieChart />
+                                                        <PieChartEgreso />
                                                     </Tab>
                                                 </Tabs>
                                             </Card.Body>

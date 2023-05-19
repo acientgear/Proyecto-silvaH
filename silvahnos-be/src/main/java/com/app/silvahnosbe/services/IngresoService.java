@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.silvahnosbe.entities.IngresoEntity;
+import com.app.silvahnosbe.models.MontoOrigenModel;
 import com.app.silvahnosbe.repositories.IngresoRepository;
 
 @Service
@@ -45,5 +46,9 @@ public class IngresoService {
             return 0;
         }
         return monto;
+    }
+    
+    public ArrayList<MontoOrigenModel> obtenerMontoOrigen(int anio, int mes){
+        return (ArrayList<MontoOrigenModel>) ingresoRepository.obtenerMontoOrigenPorAnioAndMes(anio, mes);
     }
 }
