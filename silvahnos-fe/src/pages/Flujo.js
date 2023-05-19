@@ -18,6 +18,43 @@ const formatearFecha = (fecha) => {
     return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
 };
 
+
+
+
+
+// otra forma de mostrar el saldo
+const getTotalPorMes = async (tipo, anio, mes) => {
+    try {
+        let url = 'http://localhost:8090/' + tipo + '/total/' + anio + '/' + mes;
+        const response = await axios.get(url);
+        if (response.status === 200) {
+            return response.data;
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+async function getTotalMontosPorMes(tipo) {
+    const montos = [];
+    const fecha = new Date();
+    const anio = fecha.getFullYear();
+    const mes = fecha.getMonth();
+
+    for (let i = 1; i <= 12; i++) {
+        const monto = getTotalPorMes(tipo, anio, i);
+        montos.push(monto);
+    }
+
+    const datos = await Promise.all(montos);
+
+    return datos;
+}
+
+
+
+
+
 const Flujo = () => {
     const [registros, setRegistros] = useState([]);
     const mes = new Date().getMonth() + 1;
@@ -32,7 +69,7 @@ const Flujo = () => {
 
     const getSaldos = async () => {
         try {
-            let url = 'http://localhost:8090/saldo/'+ anio;
+            let url = 'http://localhost:8090/saldo/' + anio;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setSaldos(response.data);
@@ -54,9 +91,34 @@ const Flujo = () => {
         }
     };
 
+
+    //otra forma de mostrar el saldo
+    let tipo1 = 'ingresos';
+    let tipo2 = 'egresos';
+
+    const [montosIngresos, setMontosIngresos] = useState([]);
+    const [montosEgresos, setMontosEgresos] = useState([]);
+    let saldoCue = 0;
+
+    console.log(montosIngresos);
+    console.log(montosEgresos);
+
+    const fetchMontos = async () => {
+        const tipo1 = 'ingresos';
+        const tipo2 = 'egresos';
+
+        const montosIngresos = await getTotalMontosPorMes(tipo1);
+        const montosEgresos = await getTotalMontosPorMes(tipo2);
+
+        setMontosIngresos(montosIngresos);
+        setMontosEgresos(montosEgresos);
+    };
+
+
     useEffect(() => {
         getRegistros();
         getSaldos();
+        fetchMontos(); // nuevo
     }, []);
 
     return (
@@ -75,6 +137,9 @@ const Flujo = () => {
                             <ListGroup.Item action variant="info" href="#graficos">
                                 Gráficos
                             </ListGroup.Item>
+                            <ListGroup.Item action variant="info" href="#otra_forma">
+                                Otra forma de mostrar el saldo
+                            </ListGroup.Item>
                         </ListGroup>
                     </Col>
                     <Col sm={9}>
@@ -82,7 +147,7 @@ const Flujo = () => {
                             <Tab.Pane eventKey="#resumen_anual">
                                 <h3>Resumen anual</h3>
                                 <hr></hr>
-                                <Row>    
+                                <Row>
                                     <Table responsive hover>
                                         <thead>
                                             <tr style={{ background: "#ACB1D6" }}>
@@ -288,18 +353,99 @@ const Flujo = () => {
                                                 <Tabs justify
                                                     defaultActiveKey="Ingresos"
                                                     id="uncontrolled-tab-example"
-                                                    style={{ justifyContent: "center"}}
+                                                    style={{ justifyContent: "center" }}
                                                 >
-                                                    <Tab eventKey="Ingresos" title="Ingresos" style={{color:"black"}}>
+                                                    <Tab eventKey="Ingresos" title="Ingresos" style={{ color: "black" }}>
                                                         <PieChart />
                                                     </Tab>
-                                                    <Tab eventKey="Egresos" title="Egresos" style={{color:"black"}}>
+                                                    <Tab eventKey="Egresos" title="Egresos" style={{ color: "black" }}>
                                                         <PieChart />
                                                     </Tab>
                                                 </Tabs>
                                             </Card.Body>
                                         </Card>
                                     </Col>
+                                </Row>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="#otra_forma">
+                                <h3>Otra forma de mostrar el saldo</h3>
+                                <hr></hr>
+                                <Row>
+                                    <Table responsive hover>
+                                        <thead>
+                                            <tr style={{ background: "#ACB1D6" }}>
+                                                <th width={125}></th>
+                                                {Sem1.map((mes, index) => (
+                                                    <th key={index} width={100}>{mes}</th>
+                                                ))}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style={{ background: "#E6F4DD" }}>
+                                                <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
+                                                {montosIngresos.map((monto, index) => {
+                                                    if (index <= 5) {
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
+                                                    }
+                                                })}
+                                            </tr>
+                                            <tr style={{ background: "#FBE6DD" }}>
+                                                <td style={{ fontWeight: "bold" }}>Egresos totales</td>
+                                                {montosEgresos.map((monto, index) => {
+                                                    if (index <= 5) {
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
+                                                    }
+                                                })}
+                                            </tr>
+                                            <tr style={{ background: "#B9F3E4" }}>
+                                                <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
+                                                {montosIngresos.map((monto, index) => {
+                                                    if (index <= 5) {
+                                                        saldoCue = saldoCue + monto - montosEgresos[index]
+                                                        return <td key={index}>{formatoMonto(saldoCue)}</td>;
+                                                    }
+                                                })}
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                    <Table responsive hover>
+                                        <thead>
+                                            <tr style={{ background: "#ACB1D6" }}>
+                                                <th width={125}></th>
+                                                {Sem2.map((mes, index) => (
+                                                    <th key={index} width={100}>{mes}</th>
+                                                ))}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style={{ background: "#E6F4DD" }}>
+                                                <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
+                                                {montosIngresos.map((monto, index) => {
+                                                    if (index > 5) {
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
+                                                    }
+                                                })}
+                                            </tr>
+                                            <tr style={{ background: "#FBE6DD" }}>
+                                                <td style={{ fontWeight: "bold" }}>Egresos totales</td>
+                                                {montosEgresos.map((monto, index) => {
+                                                    if (index > 5) {
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
+                                                    }
+                                                })}
+                                            </tr>
+                                            <tr style={{ background: "#B9F3E4" }}>
+                                                <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
+                                                {montosIngresos.map((monto, index) => {
+                                                    if (index > 5) {
+                                                        saldoCue = saldoCue + monto - montosEgresos[index]
+                                                        return <td key={index}>{formatoMonto(saldoCue)}</td>;
+                                                    }
+                                                })}
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                    <hr />
                                 </Row>
                             </Tab.Pane>
                         </Tab.Content>
