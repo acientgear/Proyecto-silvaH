@@ -40,8 +40,6 @@ const Home = () => {
     }
   };
 
-  console.log("egresos: ",egresos)
-
   const getSaldoCuenta = async () => {
     try{
       let url = 'http://localhost:8090/saldo/'+mes+'/'+anio;
@@ -102,7 +100,7 @@ const Home = () => {
     }
     return "#FFF"
   }
-
+  
   useEffect(() => {
     getIgresos();
     totalIngresosMes();
