@@ -40,6 +40,8 @@ const Home = () => {
     }
   };
 
+  console.log("egresos: ",egresos)
+
   const getSaldoCuenta = async () => {
     try{
       let url = 'http://localhost:8090/saldo/'+mes+'/'+anio;
@@ -62,8 +64,6 @@ const Home = () => {
     const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
     return montoFormateado;
   };
-
-  
 
   const totalIngresosMes = async () => {
     try {
@@ -165,7 +165,7 @@ const Home = () => {
                 <thead>
                   <tr>
                     <th style={{ width: '100px' }}>Fecha</th>
-                    <th style={{ width: '100px' }}>Patente</th>
+                    <th style={{ width: '100px' }}>Origen</th>
                     <th style={{ width: '100px' }}>Monto</th>
                   </tr>
                 </thead>
@@ -173,7 +173,7 @@ const Home = () => {
                   {egresos.map((egreso, index) => (
                     <tr style={{backgroundColor: colorEgreso(index)}}key={egreso.id}>
                       <td>{formatearFecha(egreso.fecha_creacion)}</td>
-                      <td>{egreso.patente}</td>
+                      <td>{egreso.origen}</td>
                       <td>{formatoMonto(egreso.monto)}</td>
                     </tr>
                   ))}

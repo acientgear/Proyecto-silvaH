@@ -27,7 +27,7 @@ const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit,
     return (
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Patente con componente</Form.Label>
+                <Form.Label>Patente</Form.Label>
                 <Form.Control name="patente"
                     required
                     isValid={6 > ingreso.patente.length && ingreso.patente.length > 0}
