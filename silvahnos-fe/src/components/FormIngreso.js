@@ -47,6 +47,7 @@ const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit,
                     onChange={handleChange}
                     value={ingreso.origen}
                 >
+                    <option value="">Seleccione una opción</option>
                     {CategoriasIngreso.map((categoria) => (
                         <option key={categoria.id} value={categoria.nombre}>{categoria.nombre}</option>
                     ))}
