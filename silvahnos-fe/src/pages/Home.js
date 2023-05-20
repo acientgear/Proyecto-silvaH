@@ -41,13 +41,13 @@ const Home = () => {
   };
 
   const getSaldoCuenta = async () => {
-    try{
-      let url = 'http://localhost:8090/saldo/'+mes+'/'+anio;
+    try {
+      let url = 'http://localhost:8090/ingresos/total/' + mes;
       const response = await axios.get(url);
-      if(response.status === 200){
+      if (response.status === 200) {
         setSaldo(response.data);
       }
-    } catch(err){
+    } catch (err) {
       console.log(err.message);
     }
   }
@@ -88,19 +88,19 @@ const Home = () => {
   };
 
   const colorIngreso = (i) => {
-    if(i % 2 === 0){
+    if (i % 2 === 0) {
       return "#B8E7E1"
     }
     return "#FFF"
   }
 
   const colorEgreso = (i) => {
-    if(i % 2 === 0){
+    if (i % 2 === 0) {
       return "#F2B6A0"
     }
     return "#FFF"
   }
-  
+
   useEffect(() => {
     getIgresos();
     totalIngresosMes();
@@ -113,7 +113,7 @@ const Home = () => {
     <Container>
       <Row className="justify-content-center">
         <Col xs="auto" >
-          <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/flujo">Visualizar flujo de caja</Button>
+          <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/flujo">Visualizar resumen</Button>
         </Col>
         <Col xs="auto" >
           <ListGroup>
@@ -126,7 +126,7 @@ const Home = () => {
           <Card className="cardsH">
             <Card.Body>
               <Card.Title >Últimos ingresos registrados</Card.Title>
-              <Table striped responsive="sm" hover bordered style={{borderColor:"#B8E7E1"}}>
+              <Table striped responsive="sm" hover bordered style={{ borderColor: "#B8E7E1" }}>
                 <thead>
                   <tr>
                     <th style={{ width: '100px' }}>Fecha</th>
@@ -136,7 +136,7 @@ const Home = () => {
                 </thead>
                 <tbody>
                   {ingresos.map((ingreso, index) => (
-                    <tr style={{backgroundColor: colorIngreso(index)}} key={ingreso.id}>
+                    <tr style={{ backgroundColor: colorIngreso(index) }} key={ingreso.id}>
                       <td >{formatearFecha(ingreso.fecha_creacion)}</td>
                       <td>{ingreso.patente}</td>
                       <td>{formatoMonto(ingreso.monto)}</td>
@@ -151,7 +151,7 @@ const Home = () => {
               <ListGroup>
                 <LineChartIngresos />
               </ListGroup>
-              <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold",marginTop:"5px" }}>Registrar ingreso</Button>
+              <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold", marginTop: "5px" }}>Registrar ingreso</Button>
             </Card.Body>
           </Card>
         </Col>
@@ -159,7 +159,7 @@ const Home = () => {
           <Card className="cardsH">
             <Card.Body>
               <Card.Title >Últimos egresos registrados</Card.Title>
-              <Table striped responsive="sm" hover bordered style={{borderColor:"#F2B6A0"}}>
+              <Table striped responsive="sm" hover bordered style={{ borderColor: "#F2B6A0" }}>
                 <thead>
                   <tr>
                     <th style={{ width: '100px' }}>Fecha</th>
@@ -169,7 +169,7 @@ const Home = () => {
                 </thead>
                 <tbody>
                   {egresos.map((egreso, index) => (
-                    <tr style={{backgroundColor: colorEgreso(index)}}key={egreso.id}>
+                    <tr style={{ backgroundColor: colorEgreso(index) }} key={egreso.id}>
                       <td>{formatearFecha(egreso.fecha_creacion)}</td>
                       <td>{egreso.origen}</td>
                       <td>{formatoMonto(egreso.monto)}</td>
@@ -183,7 +183,7 @@ const Home = () => {
               <ListGroup>
                 <LineChartEgresos />
               </ListGroup>
-              <Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black",marginTop:"5px" }}>Registrar egreso</Button>
+              <Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black", marginTop: "5px" }}>Registrar egreso</Button>
             </Card.Body>
           </Card>
         </Col>
@@ -229,7 +229,7 @@ const Home = () => {
                   </Badge>
                 </ListGroup.Item>
               </ListGroup>
-              <Button variant="primary" href="/crearFactura" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black", marginTop:"5px" }}>Registrar factura</Button>
+              <Button variant="primary" href="/crearFactura" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black", marginTop: "5px" }}>Registrar factura</Button>
             </Card.Body>
           </Card>
         </Col>

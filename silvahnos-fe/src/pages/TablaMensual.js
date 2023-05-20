@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const mes = new Date().getMonth() + 1;
 const idMes = mes.toLocaleString('es-ES', { month: 'long' });
-const nombreMes = (Sem1.concat(Sem2))[idMes]
+const nombreMes = (Sem1.concat(Sem2))[idMes-1];
 
 const TablaMensual = () => {
     const [montosOrigenIngresos, setMontosOrigenIngresos] = useState([]);
@@ -26,6 +26,7 @@ const TablaMensual = () => {
             let url = 'http://localhost:8090/ingresos/origen/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
+                setTotalIngresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
                 setMontosOrigenIngresos(response.data);
             }
         } catch (err) {
@@ -37,6 +38,7 @@ const TablaMensual = () => {
             let url = 'http://localhost:8090/egresos/origen/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
+                setTotalEgresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
                 setMontosOrigenEgresos(response.data);
             }
         } catch (err) {
@@ -47,11 +49,9 @@ const TablaMensual = () => {
     useEffect(() => {
         getMontosOrigenIngresos();
         getMontosOrigenEgresos();
-        setTotalIngresos(montosOrigenIngresos.reduce((total, montoOrigenIngreso) => total + montoOrigenIngreso.monto_total, 0));
-        setTotalEgresos(montosOrigenEgresos.reduce((total, montoOrigenEgreso) => total + montoOrigenEgreso.monto_total, 0));
     }, []);
 
-    console.log(montosOrigenIngresos)
+    console.log("fdfsdsad:",montosOrigenIngresos)
 
     return (
         <Table striped hover>

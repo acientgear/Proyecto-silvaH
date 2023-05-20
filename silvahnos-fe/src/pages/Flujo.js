@@ -122,7 +122,7 @@ const Flujo = () => {
 
     return (
         <Container fluid >
-            <h1>Flujo de caja</h1>
+            <h1>Balance</h1>
             <Tab.Container id="list-group-tabs-example" defaultActiveKey="#resumen_anual">
                 <Row>
                     <Col sm={3} style={{ marginTop: "10px" }}>
@@ -136,14 +136,11 @@ const Flujo = () => {
                             <ListGroup.Item action variant="info" href="#graficos">
                                 Gráficos
                             </ListGroup.Item>
-                            <ListGroup.Item action variant="info" href="#otra_forma">
-                                Otra forma de mostrar el saldo
-                            </ListGroup.Item>
                         </ListGroup>
                     </Col>
                     <Col sm={9}>
                         <Tab.Content>
-                            <Tab.Pane eventKey="#resumen_anual">
+                        <Tab.Pane eventKey="#resumen_anual">
                                 <h3>Resumen anual</h3>
                                 <hr></hr>
                                 <Row>
@@ -159,26 +156,26 @@ const Flujo = () => {
                                         <tbody>
                                             <tr style={{ background: "#E6F4DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {saldos.map((mes, index) => {
+                                                {montosIngresos.map((monto, index) => {
                                                     if (index <= 5) {
-                                                        return (<td key={index}>{formatoMonto(mes.ingresos)}</td>)
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
                                                     }
                                                 })}
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {saldos.map((mes, index) => {
+                                                {montosEgresos.map((monto, index) => {
                                                     if (index <= 5) {
-                                                        return (<td key={index}>{formatoMonto(mes.egresos)}</td>)
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
                                                     }
                                                 })}
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {saldos.map((mes, index) => {
+                                                {montosIngresos.map((monto, index) => {
                                                     if (index <= 5) {
-                                                        saldo = saldo + mes.ingresos - mes.egresos
-                                                        return <td key={index}>{formatoMonto(saldo)}</td>;
+                                                        saldoCue = saldoCue + monto - montosEgresos[index]
+                                                        return <td key={index}>{formatoMonto(saldoCue)}</td>;
                                                     }
                                                 })}
                                             </tr>
@@ -196,30 +193,26 @@ const Flujo = () => {
                                         <tbody>
                                             <tr style={{ background: "#E6F4DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {saldos.map((mes, index) => {
+                                                {montosIngresos.map((monto, index) => {
                                                     if (index > 5) {
-                                                        return (<td key={index}>{formatoMonto(mes.ingresos)}</td>)
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
                                                     }
                                                 })}
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {saldos.map((mes, index) => {
+                                                {montosEgresos.map((monto, index) => {
                                                     if (index > 5) {
-                                                        return (
-                                                            <td key={index}>{formatoMonto(mes.egresos)}</td>
-                                                        )
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
                                                     }
                                                 })}
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {saldos.map((mes, index) => {
+                                                {montosIngresos.map((monto, index) => {
                                                     if (index > 5) {
-                                                        saldo = saldo + mes.ingresos - mes.egresos
-                                                        //const saldoMesAnterior = index > 0 ? flujos[index - 1].saldoCuenta : 0;
-                                                        //flujos[index].saldoCuenta = saldoMesAnterior + mes.ingresos - mes.egresos;
-                                                        return <td key={index}>{formatoMonto(saldo)}</td>;
+                                                        saldoCue = saldoCue + monto - montosEgresos[index]
+                                                        return <td key={index}>{formatoMonto(saldoCue)}</td>;
                                                     }
                                                 })}
                                             </tr>
@@ -294,96 +287,15 @@ const Flujo = () => {
                                                     style={{ justifyContent: "center" }}
                                                 >
                                                     <Tab eventKey="Ingresos" title="Ingresos" style={{ color: "black" }}>
-                                                        <PieChartIngreso />
+                                                        <PieChartIngreso anio={anio} mes={mes}/>
                                                     </Tab>
                                                     <Tab eventKey="Egresos" title="Egresos" style={{ color: "black" }}>
-                                                        <PieChartEgreso />
+                                                        <PieChartEgreso anio={anio} mes={mes}/>
                                                     </Tab>
                                                 </Tabs>
                                             </Card.Body>
                                         </Card>
                                     </Col>
-                                </Row>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="#otra_forma">
-                                <h3>Otra forma de mostrar el saldo</h3>
-                                <hr></hr>
-                                <Row>
-                                    <Table responsive hover>
-                                        <thead>
-                                            <tr style={{ background: "#ACB1D6" }}>
-                                                <th width={125}></th>
-                                                {Sem1.map((mes, index) => (
-                                                    <th key={index} width={100}>{mes}</th>
-                                                ))}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr style={{ background: "#E6F4DD" }}>
-                                                <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {montosIngresos.map((monto, index) => {
-                                                    if (index <= 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
-                                                    }
-                                                })}
-                                            </tr>
-                                            <tr style={{ background: "#FBE6DD" }}>
-                                                <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {montosEgresos.map((monto, index) => {
-                                                    if (index <= 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
-                                                    }
-                                                })}
-                                            </tr>
-                                            <tr style={{ background: "#B9F3E4" }}>
-                                                <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {montosIngresos.map((monto, index) => {
-                                                    if (index <= 5) {
-                                                        saldoCue = saldoCue + monto - montosEgresos[index]
-                                                        return <td key={index}>{formatoMonto(saldoCue)}</td>;
-                                                    }
-                                                })}
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                    <Table responsive hover>
-                                        <thead>
-                                            <tr style={{ background: "#ACB1D6" }}>
-                                                <th width={125}></th>
-                                                {Sem2.map((mes, index) => (
-                                                    <th key={index} width={100}>{mes}</th>
-                                                ))}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr style={{ background: "#E6F4DD" }}>
-                                                <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {montosIngresos.map((monto, index) => {
-                                                    if (index > 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
-                                                    }
-                                                })}
-                                            </tr>
-                                            <tr style={{ background: "#FBE6DD" }}>
-                                                <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {montosEgresos.map((monto, index) => {
-                                                    if (index > 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
-                                                    }
-                                                })}
-                                            </tr>
-                                            <tr style={{ background: "#B9F3E4" }}>
-                                                <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {montosIngresos.map((monto, index) => {
-                                                    if (index > 5) {
-                                                        saldoCue = saldoCue + monto - montosEgresos[index]
-                                                        return <td key={index}>{formatoMonto(saldoCue)}</td>;
-                                                    }
-                                                })}
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                    <hr />
                                 </Row>
                             </Tab.Pane>
                         </Tab.Content>

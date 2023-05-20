@@ -51,4 +51,12 @@ public class IngresoService {
     public ArrayList<MontoOrigenModel> obtenerMontoOrigen(int anio, int mes){
         return (ArrayList<MontoOrigenModel>) ingresoRepository.obtenerMontoOrigenPorAnioAndMes(anio, mes);
     }
+
+    public Integer obtenerSaldoCuenta(int mes){
+        Integer monto = ingresoRepository.obtenerSaldoCuenta(mes);
+        if (monto == null){
+            return 0;
+        }
+        return monto;
+    }
 }

@@ -25,4 +25,7 @@ public interface IngresoRepository extends JpaRepository<IngresoEntity, Long>{
     
     @Query(value = "SELECT SUM(i.monto) as monto_total, i.origen FROM ingreso as i WHERE i.borrado = 0 AND YEAR(i.fecha_creacion) = :anio AND MONTH(i.fecha_creacion) = :mes GROUP BY i.origen",nativeQuery = true)
     ArrayList<MontoOrigenModel> obtenerMontoOrigenPorAnioAndMes(@Param("anio") int anio, @Param("mes") int mes);
+
+    @Query(value = "SELECT ing.monto - egr.monto FROM (SELECT SUM(monto) as monto FROM egreso WHERE borrado = 0 AND MONTH(fecha_creacion) <= :mes) as egr, (SELECT SUM(monto) as monto FROM ingreso WHERE borrado = 0 AND MONTH(fecha_creacion) <= :mes) as ing",nativeQuery = true)
+    Integer obtenerSaldoCuenta(@Param("mes") int mes);
 }

@@ -19,12 +19,12 @@ const options = {
     },
 };
 
-const PieChartEgreso = () => {
+const PieChartEgreso = ({anio,mes}) => {
 
     const [montosOrigen, setMontosOrigen] = useState([]);
 
     useEffect(() => {
-        const getMontoOrigen = async (anio, mes) => {
+        const getMontoOrigen = async () => {
             try {
                 let url = 'http://localhost:8090/egresos/origen/' + anio + '/' + mes;
                 const response = await axios.get(url);
@@ -36,18 +36,14 @@ const PieChartEgreso = () => {
             }
         };
 
-        getMontoOrigen(anio, mes);
-    }, []);
-
-    const fecha = new Date();
-    const anio = fecha.getFullYear();
-    const mes = fecha.getMonth() + 1;
+        getMontoOrigen();
+    }, [anio,mes]);
 
     const data = {
         labels: montosOrigen.map((item) => item.origen),
         datasets: [
             {
-                label: '# of Votes',
+                label: 'Monto total: ',
                 data: montosOrigen.map((item) => item.monto_total),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -66,7 +62,6 @@ const PieChartEgreso = () => {
                     'rgba(60, 240, 228, 1)',
                     'rgba(60, 90, 240, 1)',
                     'rgba(203, 87, 226, 1)',
-
                 ],
                 borderWidth: 1,
             },

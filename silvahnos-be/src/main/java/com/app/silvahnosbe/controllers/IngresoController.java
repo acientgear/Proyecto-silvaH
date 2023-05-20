@@ -79,4 +79,13 @@ public class IngresoController {
         ArrayList<MontoOrigenModel> montosOrigen = ingresoService.obtenerMontoOrigen(anio,mes);
         return montosOrigen;
     }
+
+    @GetMapping("/total/{mes}")
+    public ResponseEntity<Integer> obtenerSaldoCuenta(@PathVariable("mes") int mes){
+        Integer total = ingresoService.obtenerSaldoCuenta(mes);
+        if(total == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(total);
+    }
 }
