@@ -7,6 +7,7 @@ import PieChartIngreso from './ingreso/PieChart';
 import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
 import GraficoBarras from './GraficoBarras';
+import TablaMensual from './TablaMensual';
 
 const formatoMonto = (monto) => {
     const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
@@ -252,68 +253,7 @@ const Flujo = () => {
                                         </Card>
                                     </Col>
                                     <Col sm={6}>
-                                        <Table striped hover>
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>{nombreMes}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td style={{ fontWeight: "bold" }}>Ingresos</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Astara</td>
-                                                    <td>$ 100.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Taller</td>
-                                                    <td>$ 200.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                    <td>$ 300.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{ fontWeight: "bold" }}>Egresos</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Arriendo</td>
-                                                    <td>$ 100.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Astara</td>
-                                                    <td>$ 200.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Repuestos</td>
-                                                    <td>$ 100.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Sueldos</td>
-                                                    <td>$ 100.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Taller</td>
-                                                    <td>$ 200.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Otros</td>
-                                                    <td>$ 100.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                    <td>$ 800.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                    <td>$ 500.000</td>
-                                                </tr>
-                                            </tbody>
-                                        </Table>
+                                        <TablaMensual/>
                                     </Col>
                                 </Row>
                             </Tab.Pane>

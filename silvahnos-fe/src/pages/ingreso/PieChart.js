@@ -39,9 +39,6 @@ const PieChartIngreso = () => {
         getMontoOrigen(anio, mes);
     }, []);
 
-    console.log(montosOrigen);
-    console.log(montosOrigen.map((item) => item.monto_total));
-
     const fecha = new Date();
     const anio = fecha.getFullYear();
     const mes = fecha.getMonth() + 1;
