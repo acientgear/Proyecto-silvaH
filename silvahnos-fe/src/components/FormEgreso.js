@@ -35,6 +35,7 @@ const FormEgreso = ({egreso, validated, modal, handleChange, handleSubmit, handl
                     placeholder="Ingrese de donde viene el egreso"
                     onChange={handleChange}
                     value={egreso.origen}
+                    isInvalid={egreso.origen === ""}
                 >
                     <option value="">Seleccione una opción</option>
                     {CategoriasEgreso.map((categoria) => (
@@ -43,6 +44,9 @@ const FormEgreso = ({egreso, validated, modal, handleChange, handleSubmit, handl
                         </option>
                     ))}
                 </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                    Seleccione una opción.
+                </Form.Control.Feedback>
                 {egreso.patente === "Otros" && (
                     <div className="mt-3">
                         <Form.Control

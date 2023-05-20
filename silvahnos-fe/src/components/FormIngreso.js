@@ -46,12 +46,16 @@ const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit,
                     placeholder="Ingrese de donde viene"
                     onChange={handleChange}
                     value={ingreso.origen}
+                    isInvalid={ingreso.origen === ""}
                 >
-                    <option value="">Seleccione una opción</option>
+                    <option key={0} value="">Seleccione una opción</option>
                     {CategoriasIngreso.map((categoria) => (
                         <option key={categoria.id} value={categoria.nombre}>{categoria.nombre}</option>
                     ))}
                 </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                    Seleccione una opción valida
+                </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className='mb-3' controlId='formMonto'>
                 <Form.Label>Monto</Form.Label>

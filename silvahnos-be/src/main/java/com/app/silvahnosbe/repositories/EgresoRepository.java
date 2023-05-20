@@ -15,7 +15,7 @@ public interface EgresoRepository extends JpaRepository<EgresoEntity,Long>{
     @Query(value = "SELECT * FROM egreso e WHERE e.borrado = 0", nativeQuery = true)
     ArrayList<EgresoEntity> obtenerEgresos();
 
-    @Query(value = "SELECT * FROM egreso as e WHERE YEAR(e.fecha_creacion) = :anio and MONTH(e.fecha_creacion) = :mes and e.borrado = 0", nativeQuery = true)
+    @Query(value = "SELECT * FROM egreso as e WHERE YEAR(e.fecha_creacion) = :anio and MONTH(e.fecha_creacion) = :mes and e.borrado = 0 ORDER BY e.fecha_creacion DESC", nativeQuery = true)
     ArrayList<EgresoEntity> obtenerEgresosPorAnioAndMes(@Param("anio") int anio, @Param("mes") int mes);
 
     @Query(value = "SELECT * FROM egreso e WHERE e.borrado = 0 ORDER BY e.fecha_creacion DESC LIMIT 3", nativeQuery = true)
