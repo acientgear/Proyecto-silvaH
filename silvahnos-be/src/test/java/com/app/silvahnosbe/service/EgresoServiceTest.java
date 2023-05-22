@@ -1,0 +1,74 @@
+package com.app.silvahnosbe.service;
+
+
+import static org.mockito.BDDMockito.given;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.app.silvahnosbe.entities.EgresoEntity;
+import com.app.silvahnosbe.repositories.EgresoRepository;
+import com.app.silvahnosbe.services.EgresoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+
+
+@ExtendWith(MockitoExtension.class)
+public class EgresoServiceTest {
+
+   @Mock
+    private EgresoRepository egresoRepository;
+
+   @InjectMocks
+    private EgresoService egresoService;
+
+    EgresoEntity egreso;
+   @BeforeEach
+   void setup(){
+        egreso= new EgresoEntity();
+        egreso.setDescripcion("pintura");
+        egreso.setId(1l);
+        egreso.setMonto(15000);
+   }
+    @DisplayName("test para guardar un egreso")
+    @Test
+    void testGuardarEgreso (){
+
+        //given
+        given(egresoRepository.save(egreso)).willReturn(egreso);
+        //when
+        EgresoEntity egreso1=egresoService.guardarEgreso(egreso);
+        //then
+        assertThat(egreso1).isNotNull();
+    }
+
+
+    @DisplayName("test para listar egresos")
+    @Test
+    void testListarEgreso(){
+       //given
+        EgresoEntity egreso2 = new EgresoEntity();
+        egreso2.setDescripcion("pintura");
+        egreso2.setId(1l);
+        egreso2.setMonto(150000);
+        given(egresoRepository.findAll()).willReturn(List.of(egreso,egreso2));
+        //when
+        List<EgresoEntity> egresos=egresoService.obtenerEgresos();
+        // then
+        assertThat(egresos).isNotNull();
+        assertThat(egresos.size()).isEqualTo(2);
+    }
+
+
+
+
+}
