@@ -1,4 +1,4 @@
-package com.app.silvahnosbe.controllers;
+package com.app.silvahnosbe;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest
-public class UsuarioControllerTest{
+public class UsuarioControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,42 +34,25 @@ public class UsuarioControllerTest{
     private ObjectMapper objectMapper;
 
     @Test
-    void testGuardarUsuario(){
+    public void guardarUsuario() throws Exception {
 
-        //given
-        UsuarioEntity usuario= new UsuarioEntity();
-        usuario.setNombre("pedro");
-        usuario.setId(1L);
-        usuario.setEmail("prueba@email.com");
-        usuario.setPassword("password");
+        // given
+        UsuarioEntity usuario = new UsuarioEntity(1L, "pedro", "password", "email", false, null, null, null);
         given(usuarioService.guardarUsuario(any(UsuarioEntity.class)))
-                .willAnswer((invoction) ->invoction.getArgument(0) );
-
+                .willAnswer((invoction) -> invoction.getArgument(0));
 
         // when
+        ResultActions response = mockMvc.perform(post("/usuario")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(usuario)));
 
-        ResultActions response = null;
-        try {
-            response = mockMvc.perform(post("/api/usuario")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(usuario))
-            );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        // then
+        response.andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.nombre", is(usuario.getNombre())))
+                .andExpect(jsonPath("$.password", is(usuario.getPassword())))
+                .andExpect(jsonPath("$.email", is(usuario.getEmail())));
 
-        //then
-        try {
-            response.andDo(print())
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.nombre",is(usuario.getNombre())));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
-
 }
-
-
-
