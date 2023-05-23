@@ -180,5 +180,18 @@ public class IngresoServiceTest {
 
     }
 
+    @DisplayName("test para obtener el total de los ingresos por dia")
+    @Test
+    void testObtenerMontoPorDia() {
+        //given
+        given(ingresoRepository.obtenerMontoPorDia(2023,5,23)).willReturn(180000);
+        //when
+        int Ingresos=ingresoService.obtenerMontoPorDia(2023,5,23);
+        //then
+        assertThat(Ingresos).isNotNull();
+        assertThat(Ingresos).isEqualTo(180000);
+
+    }
+
     
 }
