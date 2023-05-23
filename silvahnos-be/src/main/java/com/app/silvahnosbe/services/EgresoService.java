@@ -1,6 +1,7 @@
 package com.app.silvahnosbe.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,8 @@ public class EgresoService {
     @Autowired
     IngresoService ingresoService;
 
-    public ArrayList<EgresoEntity> obtenerEgresos(){
-        return (ArrayList<EgresoEntity>) egresoRepository.obtenerEgresos();
+    public List<EgresoEntity> obtenerEgresos(){
+        return (List<EgresoEntity>) egresoRepository.obtenerEgresos();
     }
 
     public EgresoEntity obtenerEgresoPorId(Long id){
@@ -37,7 +38,7 @@ public class EgresoService {
     }
 
     public void eliminarEgreso(EgresoEntity egreso){
-        egreso.setBorrado(true);
+        egresoRepository.deleteById(egreso.getId());
     }
 
     public ArrayList<EgresoEntity> obtenerEgresoPorAnioAndMes(int anio, int mes){
