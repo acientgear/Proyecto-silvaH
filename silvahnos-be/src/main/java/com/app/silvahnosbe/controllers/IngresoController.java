@@ -1,6 +1,6 @@
 package com.app.silvahnosbe.controllers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.IngresoEntity;
-import com.app.silvahnosbe.models.MontoOrigenModel;
 import com.app.silvahnosbe.services.IngresoService;
 
 @CrossOrigin
@@ -24,8 +23,8 @@ public class IngresoController {
     IngresoService ingresoService;
 
     @GetMapping("/{anio}/{mes}")
-    public ResponseEntity<ArrayList<IngresoEntity>> getAllIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
-        ArrayList<IngresoEntity> ingresos= ingresoService.obtenerIngresos(anio, mes);
+    public ResponseEntity<List<IngresoEntity>> getAllIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        List<IngresoEntity> ingresos= ingresoService.obtenerIngresos(anio, mes);
         if(ingresos == null){
             return ResponseEntity.notFound().build();
         }
@@ -48,8 +47,8 @@ public class IngresoController {
     }
 
     @GetMapping("/ultimos")
-    public ResponseEntity<ArrayList<IngresoEntity>> getUltimosIngresos(){
-        ArrayList<IngresoEntity> ingresos = ingresoService.obtenerUltimosIngresos();
+    public ResponseEntity<List<IngresoEntity>> getUltimosIngresos(){
+        List<IngresoEntity> ingresos = ingresoService.obtenerUltimosIngresos();
         if(ingresos == null){
             return ResponseEntity.notFound().build();
         }
@@ -72,12 +71,6 @@ public class IngresoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(total);
-    }
-
-    @GetMapping("/origen/{anio}/{mes}")
-    public ArrayList<MontoOrigenModel> getEgresosPorOrigen(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
-        ArrayList<MontoOrigenModel> montosOrigen = ingresoService.obtenerMontoOrigen(anio,mes);
-        return montosOrigen;
     }
 
     @GetMapping("/total/{mes}")

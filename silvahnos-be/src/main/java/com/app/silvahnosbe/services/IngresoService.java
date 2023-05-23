@@ -1,12 +1,11 @@
 package com.app.silvahnosbe.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.silvahnosbe.entities.IngresoEntity;
-import com.app.silvahnosbe.models.MontoOrigenModel;
 import com.app.silvahnosbe.repositories.IngresoRepository;
 
 @Service
@@ -15,8 +14,8 @@ public class IngresoService {
     @Autowired
     IngresoRepository ingresoRepository;
 
-    public ArrayList<IngresoEntity> obtenerIngresos(int anio, int mes){
-        return (ArrayList<IngresoEntity>) ingresoRepository.obtenerIngresos(anio, mes);
+    public List<IngresoEntity> obtenerIngresos(int anio, int mes){
+        return (List<IngresoEntity>) ingresoRepository.obtenerIngresos(anio, mes);
     }
 
     public IngresoEntity obtenerIngresoPorId(Long id){
@@ -27,12 +26,12 @@ public class IngresoService {
         return ingresoRepository.save(ingreso);
     }
 
-    public ArrayList<IngresoEntity> obtenerUltimosIngresos(){
-        return (ArrayList<IngresoEntity>) ingresoRepository.obtenerUltimosIngresos();
+    public List<IngresoEntity> obtenerUltimosIngresos(){
+        return (List<IngresoEntity>) ingresoRepository.obtenerUltimosIngresos();
     }
 
     public Integer obtenerTotalIngresosPorMes(int anio, int mes){
-        ArrayList<IngresoEntity> ingresos = (ArrayList<IngresoEntity>) ingresoRepository.obtenerIngresos(anio, mes);
+        List<IngresoEntity> ingresos = (List<IngresoEntity>) ingresoRepository.obtenerIngresos(anio, mes);
         Integer total = 0;
         for(IngresoEntity ingreso : ingresos){
             total += ingreso.getMonto();
@@ -48,9 +47,6 @@ public class IngresoService {
         return monto;
     }
     
-    public ArrayList<MontoOrigenModel> obtenerMontoOrigen(int anio, int mes){
-        return (ArrayList<MontoOrigenModel>) ingresoRepository.obtenerMontoOrigenPorAnioAndMes(anio, mes);
-    }
 
     public Integer obtenerSaldoCuenta(int mes){
         Integer monto = ingresoRepository.obtenerSaldoCuenta(mes);

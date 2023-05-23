@@ -1,6 +1,5 @@
 package com.app.silvahnosbe.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
-import com.app.silvahnosbe.models.MontoOrigenModel;
 import com.app.silvahnosbe.models.RegistroModel;
 import com.app.silvahnosbe.services.EgresoService;
 
@@ -27,8 +25,8 @@ public class EgresoController {
     EgresoService egresoService;
 
     @GetMapping("/{anio}/{mes}")
-    public ResponseEntity<ArrayList<EgresoEntity>> getEgresoByAnioAndMes(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
-        ArrayList<EgresoEntity> egresos = egresoService.obtenerEgresoPorAnioAndMes(anio, mes);
+    public ResponseEntity<List<EgresoEntity>> getEgresoByAnioAndMes(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        List<EgresoEntity> egresos = egresoService.obtenerEgresoPorAnioAndMes(anio, mes);
         if(egresos == null){
             return ResponseEntity.notFound().build();
         }
@@ -52,8 +50,8 @@ public class EgresoController {
     }
 
     @GetMapping("/ultimos")
-    public ResponseEntity<ArrayList<EgresoEntity>> getUltimosEgresos(){
-        ArrayList<EgresoEntity> egresos = egresoService.obtenerUltimosEgresos();
+    public ResponseEntity<List<EgresoEntity>> getUltimosEgresos(){
+        List<EgresoEntity> egresos = egresoService.obtenerUltimosEgresos();
         if(egresos == null){
             return ResponseEntity.notFound().build();
         }
@@ -79,14 +77,9 @@ public class EgresoController {
     }
 
     @GetMapping("/ingresos/{anio}/{mes}")
-    public ArrayList<RegistroModel> getEgresosIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
-        ArrayList<RegistroModel> registros = egresoService.obtenerEgresosIngresos(anio,mes);
+    public List<RegistroModel> getEgresosIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        List<RegistroModel> registros = egresoService.obtenerEgresosIngresos(anio,mes);
         return registros;
     }
 
-    @GetMapping("/origen/{anio}/{mes}")
-    public ArrayList<MontoOrigenModel> getEgresosPorOrigen(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
-        ArrayList<MontoOrigenModel> montosOrigen = egresoService.obtenerMontoOrigen(anio,mes);
-        return montosOrigen;
-    }
 }

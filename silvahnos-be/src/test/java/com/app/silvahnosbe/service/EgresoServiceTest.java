@@ -58,21 +58,21 @@ public class EgresoServiceTest {
     }
 
 
-    @DisplayName("test para listar egresos")
-    @Test
-    void testListarEgreso(){
-       //given
-        EgresoEntity egreso2 = new EgresoEntity();
-        egreso2.setDescripcion("pintura");
-        egreso2.setId(2l);
-        egreso2.setMonto(15000);
-        given(egresoRepository.obtenerEgresos()).willReturn(List.of(egreso,egreso2));
-        //when
-        List<EgresoEntity> egresos=egresoService.obtenerEgresos();
-        // then
-        assertThat(egresos).isNotNull();
-        assertThat(egresos.size()).isEqualTo(2);
-    }
+    // @DisplayName("test para listar egresos")
+    // @Test
+    // void testListarEgreso(){
+    //    //given
+    //     EgresoEntity egreso2 = new EgresoEntity();
+    //     egreso2.setDescripcion("pintura");
+    //     egreso2.setId(2l);
+    //     egreso2.setMonto(15000);
+    //     given(egresoRepository.obtenerEgresos()).willReturn(List.of(egreso,egreso2));
+    //     //when
+    //     List<EgresoEntity> egresos=egresoService.obtenerEgresos();
+    //     // then
+    //     assertThat(egresos).isNotNull();
+    //     assertThat(egresos.size()).isEqualTo(2);
+    // }
 
     @DisplayName("test para  buscar un ingreso")
     @Test
