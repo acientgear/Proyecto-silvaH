@@ -25,24 +25,6 @@ public class EgresoController {
     @Autowired
     EgresoService egresoService;
 
-    @GetMapping
-    public ResponseEntity<ArrayList<EgresoEntity>> getAllEgresos(){
-        ArrayList<EgresoEntity> egresos= egresoService.obtenerEgresos();
-        if(egresos == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(egresos);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<EgresoEntity> getEgresoById(@PathVariable("id") Long id){
-        EgresoEntity egreso = egresoService.obtenerEgresoPorId(id);
-        if(egreso == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(egreso);
-    }
-
     @GetMapping("/{anio}/{mes}")
     public ResponseEntity<ArrayList<EgresoEntity>> getEgresoByAnioAndMes(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
         ArrayList<EgresoEntity> egresos = egresoService.obtenerEgresoPorAnioAndMes(anio, mes);
