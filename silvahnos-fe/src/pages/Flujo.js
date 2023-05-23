@@ -56,7 +56,7 @@ const Flujo = () => {
 
     const getRegistros = async () => {
         try {
-            let url = 'http://localhost:8090/egresos/ingresos/' + anio + '/' + mes;
+            let url = 'http://localhost:8090/registros/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setRegistros(response.data);

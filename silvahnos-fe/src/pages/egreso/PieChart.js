@@ -26,7 +26,7 @@ const PieChartEgreso = ({anio,mes}) => {
     useEffect(() => {
         const getMontoOrigen = async () => {
             try {
-                let url = 'http://localhost:8090/egresos/origen/' + anio + '/' + mes;
+                let url = 'http://localhost:8090/montos/egreso/' + anio + '/' + mes;
                 const response = await axios.get(url);
                 if (response.status === 200) {
                     setMontosOrigen(response.data);
@@ -66,6 +66,24 @@ const PieChartEgreso = ({anio,mes}) => {
                 borderWidth: 1,
             },
         ],
+    };
+
+    const options = {
+        tooltips: {
+            callbacks: {
+                label: function (tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                    console.log(dataset);
+                    var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                        return previousValue + currentValue;
+                    }
+                    );
+                    var currentValue = dataset.data[tooltipItem.index];
+                    var percentage = Math.floor((currentValue / total) * 100 + 0.5);
+                    return percentage + '%';
+                },
+            },
+        },
     };
 
     return (

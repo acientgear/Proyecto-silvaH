@@ -7,19 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
-import com.app.silvahnosbe.repositories.IngresoRepository;
 
 @Service
 public class EgresoService {
     
     @Autowired
     EgresoRepository egresoRepository;
-
-    @Autowired
-    IngresoRepository ingresoRepository;
-
-    @Autowired
-    IngresoService ingresoService;
 
     public EgresoEntity obtenerEgresoPorId(Long id){
         return egresoRepository.findById(id).orElse(null);

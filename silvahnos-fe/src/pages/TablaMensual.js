@@ -23,7 +23,7 @@ const TablaMensual = () => {
 
     const getMontosOrigenIngresos = async () => {
         try {
-            let url = 'http://localhost:8090/ingresos/origen/' + anio + '/' + mes;
+            let url = 'http://localhost:8090/montos/ingreso/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setTotalIngresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
@@ -35,7 +35,7 @@ const TablaMensual = () => {
     };
     const getMontosOrigenEgresos = async () => {
         try {
-            let url = 'http://localhost:8090/egresos/origen/' + anio + '/' + mes;
+            let url = 'http://localhost:8090/montos/egreso/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setTotalEgresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
@@ -50,8 +50,6 @@ const TablaMensual = () => {
         getMontosOrigenIngresos();
         getMontosOrigenEgresos();
     }, []);
-
-    console.log("fdfsdsad:",montosOrigenIngresos)
 
     return (
         <Table striped hover>
