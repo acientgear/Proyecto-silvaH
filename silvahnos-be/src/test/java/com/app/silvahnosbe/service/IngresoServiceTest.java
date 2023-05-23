@@ -157,5 +157,28 @@ public class IngresoServiceTest {
         assertThat(ingresos.size()).isEqualTo(2);
     }
 
+    @DisplayName("test para obtener el total de los ingresos")
+    @Test
+    void testObtenerMontoPorMes() {
+        //given
+        IngresoEntity ingreso2 = new IngresoEntity();
+        ingreso2.setDescripcion("pintura");
+        ingreso2.setId(2l);
+        ingreso2.setMonto(15000);
+
+        IngresoEntity ingreso3 = new IngresoEntity();
+        ingreso3.setDescripcion("pintura");
+        ingreso3.setId(2l);
+        ingreso3.setMonto(15000);
+        given(ingresoRepository.obtenerIngresos(2023,3)).willReturn(List.of(ingreso,ingreso2,ingreso3));
+
+        //when
+        int Ingresos=ingresoService.obtenerTotalIngresosPorMes(2023,3);
+        //then
+        assertThat(Ingresos).isNotNull();
+        assertThat(Ingresos).isEqualTo(180000);
+
+    }
+
     
 }
