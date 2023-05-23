@@ -7,15 +7,15 @@ import axios from 'axios';
 
 const mes = new Date().getMonth() + 1;
 const idMes = mes.toLocaleString('es-ES', { month: 'long' });
-const nombreMes = (Sem1.concat(Sem2))[idMes-1];
+const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
 
 const TablaMensual = () => {
     const [montosOrigenIngresos, setMontosOrigenIngresos] = useState([]);
     const [montosOrigenEgresos, setMontosOrigenEgresos] = useState([]);
-    const [totalIngresos,setTotalIngresos] = useState(0);
-    const [totalEgresos,setTotalEgresos] = useState(0);
+    const [totalIngresos, setTotalIngresos] = useState(0);
+    const [totalEgresos, setTotalEgresos] = useState(0);
     const [anio, setAnio] = useState((new Date()).getFullYear());
-    
+
     const formatoMonto = (monto) => {
         const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
         return montoFormateado;
@@ -52,48 +52,53 @@ const TablaMensual = () => {
     }, []);
 
     return (
-        <Table striped hover>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>{nombreMes}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style={{ fontWeight: "bold" }}>Ingresos</td>
-                    <td></td>
-                </tr>
-                {montosOrigenIngresos.map((montoOrigenIngreso) => (
-                    <tr key={montoOrigenIngreso.id}>
-                        <td>{montoOrigenIngreso.origen}</td>
-                        <td>{formatoMonto(montoOrigenIngreso.monto_total)}</td>
-                    </tr>
-                ))}
-                <tr>
-                    <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                    <td>{formatoMonto(totalIngresos)}</td>
-                </tr>
-                <tr>
-                    <td style={{ fontWeight: "bold" }}>Egresos</td>
-                    <td></td>
-                </tr>
-                {montosOrigenEgresos.map((montoOrigenEgreso) => (
-                    <tr key={montoOrigenEgreso.id}>
-                        <td>{montoOrigenEgreso.origen}</td>
-                        <td>{formatoMonto(montoOrigenEgreso.monto_total)}</td>
-                    </tr>
-                ))}
-                <tr>
-                    <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                    <td>{formatoMonto(totalEgresos)}</td>
-                </tr>
-                <tr>
-                    <td style={{ fontWeight: "bold" }}>Diferencia mes</td>
-                    <td>{formatoMonto(totalIngresos-totalEgresos)}</td>
-                </tr>
-            </tbody>
-        </Table>
+        <>
+            <div key="tabla-mensual">
+                <Table striped hover>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>{nombreMes}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Ingresos</td>
+                            <td></td>
+                        </tr>
+                        {montosOrigenIngresos.map((montoOrigenIngreso, index) => (
+                            <tr key={index}>
+                                <td>{montoOrigenIngreso.origen}</td>
+                                <td>{formatoMonto(montoOrigenIngreso.monto_total)}</td>
+                            </tr>
+                        ))}
+
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
+                            <td>{formatoMonto(totalIngresos)}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Egresos</td>
+                            <td></td>
+                        </tr>
+                        {montosOrigenEgresos.map((montoOrigenEgreso, index) => (
+                            <tr key={index}>
+                                <td>{montoOrigenEgreso.origen}</td>
+                                <td>{formatoMonto(montoOrigenEgreso.monto_total)}</td>
+                            </tr>
+                        ))}
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Egresos totales</td>
+                            <td>{formatoMonto(totalEgresos)}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ fontWeight: "bold" }}>Diferencia mes</td>
+                            <td>{formatoMonto(totalIngresos - totalEgresos)}</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </div>
+        </>
     );
 }
 

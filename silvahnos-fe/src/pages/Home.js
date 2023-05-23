@@ -107,7 +107,7 @@ const Home = () => {
     getEgresos();
     totalEgresosMes();
     getSaldoCuenta();
-  }, );
+  },);
 
   return (
     <Container>
@@ -229,7 +229,7 @@ const Home = () => {
                   </Badge>
                 </ListGroup.Item>
               </ListGroup>
-              <Button variant="primary" href="/crearFactura" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black", marginTop: "5px" }}>Registrar factura</Button>
+              <Button variant="primary" href="/#" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black", marginTop: "5px" }}>Registrar factura</Button>
             </Card.Body>
           </Card>
         </Col>

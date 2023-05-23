@@ -49,7 +49,10 @@ const PieChartIngreso = ({anio,mes}) => {
 
     return (
         <>
+        <div key="pie-chart-ingreso">
+
             <Pie data={data} options={options} />
+        </div>
         </>
     );
 };

@@ -86,10 +86,14 @@ class LineChart extends Component {
 
     render() {
         return (
-            <canvas
-                id="myChart"
-                ref={this.chartRef}
-            />
+            <>
+                <div key="grafico-egresos">
+                    <canvas
+                        id="myChart"
+                        ref={this.chartRef}
+                    />
+                </div>
+            </>
         );
     }
 }

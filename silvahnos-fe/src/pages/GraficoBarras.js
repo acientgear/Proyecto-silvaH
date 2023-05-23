@@ -77,12 +77,16 @@ const DoubleBarChart = () => {
     const options = {};
 
     return (
-        <div>
-            <Bar
-                data={data}
-                options={options}
-            />
-        </div>
+        <>
+            <div key="grafico-barras">
+                <div>
+                    <Bar
+                        data={data}
+                        options={options}
+                    />
+                </div>
+            </div>
+        </>
     );
 };
 

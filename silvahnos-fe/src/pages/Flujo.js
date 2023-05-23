@@ -83,7 +83,7 @@ const Flujo = () => {
     useEffect(() => {
         getRegistros();
         fetchMontos(); // nuevo
-    },);
+    }, []);
 
     return (
         <Container fluid >
@@ -105,7 +105,7 @@ const Flujo = () => {
                     </Col>
                     <Col sm={9}>
                         <Tab.Content>
-                        <Tab.Pane eventKey="#resumen_anual">
+                            <Tab.Pane eventKey="#resumen_anual">
                                 <h3>Resumen anual</h3>
                                 <hr></hr>
                                 <Row>
@@ -113,9 +113,10 @@ const Flujo = () => {
                                         <thead>
                                             <tr style={{ background: "#ACB1D6" }}>
                                                 <th width={125}></th>
-                                                {Sem1.map((mes, index) => (
-                                                    <th key={index} width={100}>{mes}</th>
+                                                {Sem1.map((mes) => (
+                                                    <th key={mes} width={100}>{mes}</th>
                                                 ))}
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -123,8 +124,9 @@ const Flujo = () => {
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
                                                 {montosIngresos.map((monto, index) => {
                                                     if (index <= 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
+                                                        return (<td key={index}>{formatoMonto(monto)}</td>);
                                                     }
+                                                    return null;
                                                 })}
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
@@ -133,15 +135,18 @@ const Flujo = () => {
                                                     if (index <= 5) {
                                                         return (<td key={index}>{formatoMonto(monto)}</td>)
                                                     }
+                                                    return null;
                                                 })}
+
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
                                                 {montosIngresos.map((monto, index) => {
                                                     if (index <= 5) {
-                                                        saldoCue = saldoCue + monto - montosEgresos[index]
+                                                        saldoCue = saldoCue + monto - montosEgresos[index];
                                                         return <td key={index}>{formatoMonto(saldoCue)}</td>;
                                                     }
+                                                    return null;
                                                 })}
                                             </tr>
                                         </tbody>
@@ -150,8 +155,8 @@ const Flujo = () => {
                                         <thead>
                                             <tr style={{ background: "#ACB1D6" }}>
                                                 <th width={125}></th>
-                                                {Sem2.map((mes, index) => (
-                                                    <th key={index} width={100}>{mes}</th>
+                                                {Sem2.map((mes) => (
+                                                    <th key={mes} width={100}>{mes}</th>
                                                 ))}
                                             </tr>
                                         </thead>
@@ -162,6 +167,7 @@ const Flujo = () => {
                                                     if (index > 5) {
                                                         return (<td key={index}>{formatoMonto(monto)}</td>)
                                                     }
+                                                    return null;
                                                 })}
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
@@ -170,15 +176,17 @@ const Flujo = () => {
                                                     if (index > 5) {
                                                         return (<td key={index}>{formatoMonto(monto)}</td>)
                                                     }
+                                                    return null;
                                                 })}
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
                                                 {montosIngresos.map((monto, index) => {
                                                     if (index > 5) {
-                                                        saldoCue = saldoCue + monto - montosEgresos[index]
+                                                        saldoCue = saldoCue + monto - montosEgresos[index];
                                                         return <td key={index}>{formatoMonto(saldoCue)}</td>;
                                                     }
+                                                    return null;
                                                 })}
                                             </tr>
                                         </tbody>
@@ -193,9 +201,9 @@ const Flujo = () => {
                                     <Col sm={6}>
                                         <Card style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
                                             <Card.Body>
-                                                {registros.map((registro) => (
-                                                    <div key={registro.id}>
-                                                        <ListGroup.Item as="li" className="d-flex justify-content-between align-items-start">
+                                                {registros.map((registro, index) => (
+                                                    <div key={index}>
+                                                        <ListGroup.Item key={`registro-${index}`} as="li" className="d-flex justify-content-between align-items-start">
                                                             <div className="ms-2 me-auto">
                                                                 <div className="fw-bold">{formatearFecha(registro.fecha)}</div>
                                                                 {registro.descripcion}
@@ -211,7 +219,7 @@ const Flujo = () => {
                                         </Card>
                                     </Col>
                                     <Col sm={6}>
-                                        <TablaMensual/>
+                                        <TablaMensual />
                                     </Col>
                                 </Row>
                             </Tab.Pane>
@@ -252,10 +260,10 @@ const Flujo = () => {
                                                     style={{ justifyContent: "center" }}
                                                 >
                                                     <Tab eventKey="Ingresos" title="Ingresos" style={{ color: "black" }}>
-                                                        <PieChartIngreso anio={anio} mes={mes}/>
+                                                        <PieChartIngreso anio={anio} mes={mes} />
                                                     </Tab>
                                                     <Tab eventKey="Egresos" title="Egresos" style={{ color: "black" }}>
-                                                        <PieChartEgreso anio={anio} mes={mes}/>
+                                                        <PieChartEgreso anio={anio} mes={mes} />
                                                     </Tab>
                                                 </Tabs>
                                             </Card.Body>

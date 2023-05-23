@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import axios from 'axios';
@@ -88,10 +88,14 @@ class LineChart extends Component {
 
     render() {
         return (
-            <canvas
-                id="myChart"
-                ref={this.chartRef}
-            />
+            <>
+                <div key="grafico-flujo">
+                    <canvas
+                        id="myChart"
+                        ref={this.chartRef}
+                    />
+                </div>
+            </>
         );
     }
 }
