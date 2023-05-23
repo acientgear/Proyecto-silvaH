@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
-import com.app.silvahnosbe.models.RegistroModel;
 import com.app.silvahnosbe.services.EgresoService;
 
 @CrossOrigin
@@ -75,11 +74,4 @@ public class EgresoController {
         }
         return ResponseEntity.ok().body(total);
     }
-
-    @GetMapping("/ingresos/{anio}/{mes}")
-    public List<RegistroModel> getEgresosIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
-        List<RegistroModel> registros = egresoService.obtenerEgresosIngresos(anio,mes);
-        return registros;
-    }
-
 }
