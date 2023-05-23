@@ -31,15 +31,6 @@ public class IngresoController {
         return ResponseEntity.ok().body(ingresos);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<IngresoEntity> getIngresoById(@PathVariable("id") Long id){
-        IngresoEntity ingreso = ingresoService.obtenerIngresoPorId(id);
-        if(ingreso == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(ingreso);
-    }
-
     @PostMapping
     public ResponseEntity<IngresoEntity> createIngreso(@RequestBody IngresoEntity ingreso){
         IngresoEntity ingresoGuardado = ingresoService.guardarIngreso(ingreso);
