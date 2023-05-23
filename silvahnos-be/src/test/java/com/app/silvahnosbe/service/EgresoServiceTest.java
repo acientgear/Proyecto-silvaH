@@ -99,6 +99,21 @@ public class EgresoServiceTest {
     }
 
 
+    @DisplayName("test para buscar por mes/año")
+    @Test
+    void TestMesAnio(){
+
+    }
+
+    @Test
+    void TestUltimosEgresos(){
+
+    }
+
+    @Test
+    void TestMontoPorDia(){
+
+    }
 
 
 
