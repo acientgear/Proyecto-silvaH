@@ -1,6 +1,7 @@
 package com.app.silvahnosbe.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class EgresoController {
     EgresoService egresoService;
 
     @GetMapping
-    public ResponseEntity<ArrayList<EgresoEntity>> getAllEgresos(){
-        ArrayList<EgresoEntity> egresos= egresoService.obtenerEgresos();
+    public ResponseEntity<List<EgresoEntity>> getAllEgresos(){
+        List<EgresoEntity> egresos= egresoService.obtenerEgresos();
         if(egresos == null){
             return ResponseEntity.notFound().build();
         }
