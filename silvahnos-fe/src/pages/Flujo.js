@@ -20,10 +20,6 @@ const formatearFecha = (fecha) => {
     return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
 };
 
-
-
-
-
 // otra forma de mostrar el saldo
 const getTotalPorMes = async (tipo, anio, mes) => {
     try {
@@ -53,33 +49,10 @@ async function getTotalMontosPorMes(tipo) {
     return datos;
 }
 
-
-
-
-
 const Flujo = () => {
     const [registros, setRegistros] = useState([]);
     const mes = new Date().getMonth() + 1;
     const anio = new Date().getFullYear();
-
-    let saldo = 0;
-
-    const idMes = mes.toLocaleString('es-ES', { month: 'long' });
-    const nombreMes = (Sem1.concat(Sem2))[idMes]
-
-    const [saldos, setSaldos] = useState([]);
-
-    const getSaldos = async () => {
-        try {
-            let url = 'http://localhost:8090/saldo/' + anio;
-            const response = await axios.get(url);
-            if (response.status === 200) {
-                setSaldos(response.data);
-            }
-        } catch (err) {
-            console.log(err.message);
-        }
-    };
 
     const getRegistros = async () => {
         try {
@@ -92,7 +65,6 @@ const Flujo = () => {
             console.log(err.message);
         }
     };
-
 
     //otra forma de mostrar el saldo
     let tipo1 = 'ingresos';
@@ -113,10 +85,8 @@ const Flujo = () => {
         setMontosEgresos(montosEgresos);
     };
 
-
     useEffect(() => {
         getRegistros();
-        getSaldos();
         fetchMontos(); // nuevo
     }, []);
 
