@@ -107,7 +107,7 @@ const Home = () => {
     getEgresos();
     totalEgresosMes();
     getSaldoCuenta();
-  }, []);
+  }, );
 
   return (
     <Container>

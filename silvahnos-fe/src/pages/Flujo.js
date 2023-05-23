@@ -37,7 +37,6 @@ async function getTotalMontosPorMes(tipo) {
     const montos = [];
     const fecha = new Date();
     const anio = fecha.getFullYear();
-    const mes = fecha.getMonth();
 
     for (let i = 1; i <= 12; i++) {
         const monto = getTotalPorMes(tipo, anio, i);
@@ -66,10 +65,6 @@ const Flujo = () => {
         }
     };
 
-    //otra forma de mostrar el saldo
-    let tipo1 = 'ingresos';
-    let tipo2 = 'egresos';
-
     const [montosIngresos, setMontosIngresos] = useState([]);
     const [montosEgresos, setMontosEgresos] = useState([]);
     let saldoCue = 0;
@@ -88,7 +83,7 @@ const Flujo = () => {
     useEffect(() => {
         getRegistros();
         fetchMontos(); // nuevo
-    }, []);
+    },);
 
     return (
         <Container fluid >

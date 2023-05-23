@@ -155,7 +155,7 @@ const Egresos = () => {
 
     useEffect(() => {
         getEgresos();
-    }, []);
+    },);
 
     return (
         <>

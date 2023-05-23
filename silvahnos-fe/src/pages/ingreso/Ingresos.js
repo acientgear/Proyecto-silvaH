@@ -158,7 +158,7 @@ const Ingresos = () => {
 
     useEffect(() => {
         getIngresos();
-    }, []);
+    },);
 
     return (
         <>
