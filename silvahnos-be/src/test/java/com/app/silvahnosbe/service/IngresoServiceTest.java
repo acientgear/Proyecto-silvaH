@@ -193,5 +193,18 @@ public class IngresoServiceTest {
 
     }
 
+    @DisplayName("test para obtener el saldo de la cuenta")
+    @Test
+    void testObtenerSaldoCuenta() {
+        //given
+        given(ingresoRepository.obtenerSaldoCuenta(5)).willReturn(180000);
+        //when
+        int Ingresos=ingresoService.obtenerSaldoCuenta(5);
+        //then
+        assertThat(Ingresos).isNotNull();
+        assertThat(Ingresos).isEqualTo(180000);
+
+    }
+
     
 }
