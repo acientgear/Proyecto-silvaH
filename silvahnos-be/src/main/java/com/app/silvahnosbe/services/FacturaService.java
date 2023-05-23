@@ -1,6 +1,6 @@
 package com.app.silvahnosbe.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,8 @@ public class FacturaService {
     @Autowired
     FacturaRepository facturaRepository;
 
-    public ArrayList<FacturaEntity> obtenerFacturas(){
-        return (ArrayList<FacturaEntity>) facturaRepository.findAll();
+    public List<FacturaEntity> obtenerFacturas(){
+        return (List<FacturaEntity>) facturaRepository.findAll();
     }
 
     public FacturaEntity obtenerFacturaPorId(Long id){

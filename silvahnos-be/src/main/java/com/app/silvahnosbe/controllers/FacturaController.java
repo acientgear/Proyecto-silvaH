@@ -1,6 +1,6 @@
 package com.app.silvahnosbe.controllers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +24,8 @@ public class FacturaController {
     FacturaService facturaService;
 
     @GetMapping
-    public ResponseEntity<ArrayList<FacturaEntity>> getAllFacturas(){
-        ArrayList<FacturaEntity> facturas= facturaService.obtenerFacturas();
+    public ResponseEntity<List<FacturaEntity>> getAllFacturas(){
+        List<FacturaEntity> facturas= facturaService.obtenerFacturas();
         if(facturas == null){
             return ResponseEntity.notFound().build();
         }

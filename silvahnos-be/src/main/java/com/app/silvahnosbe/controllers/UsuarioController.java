@@ -1,7 +1,7 @@
 package com.app.silvahnosbe.controllers;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,8 +28,8 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @GetMapping()
-    public ResponseEntity <ArrayList<UsuarioEntity>> getAllUsuarios(){
-        ArrayList<UsuarioEntity> usuarios=usuarioService.obtenerUsuarios();
+    public ResponseEntity <List<UsuarioEntity>> getAllUsuarios(){
+        List<UsuarioEntity> usuarios=usuarioService.obtenerUsuarios();
         if(usuarios==null){
             return ResponseEntity.notFound().build();
         }
