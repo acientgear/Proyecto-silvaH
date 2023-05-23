@@ -1,4 +1,4 @@
-package com.app.silvahnosbe.service;
+package com.app.silvahnosbe.controller;
 
 
 import com.app.silvahnosbe.services.IngresoService;

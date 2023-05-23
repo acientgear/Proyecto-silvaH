@@ -1,4 +1,4 @@
-package com.app.silvahnosbe;
+package com.app.silvahnosbe.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 
