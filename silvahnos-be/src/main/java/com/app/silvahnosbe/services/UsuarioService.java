@@ -1,6 +1,6 @@
 package com.app.silvahnosbe.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +12,8 @@ import com.app.silvahnosbe.repositories.UsuarioRepository;
 public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
-    public ArrayList<UsuarioEntity> obtenerUsuarios(){
-        return (ArrayList<UsuarioEntity>) usuarioRepository.findAll();
+    public List<UsuarioEntity> obtenerUsuarios(){
+        return (List<UsuarioEntity>) usuarioRepository.findAll();
 
     }
 
