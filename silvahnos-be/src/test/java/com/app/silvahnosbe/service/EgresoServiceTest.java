@@ -3,6 +3,9 @@ package com.app.silvahnosbe.service;
 
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
@@ -20,6 +23,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -38,6 +42,8 @@ public class EgresoServiceTest {
         egreso.setDescripcion("pintura");
         egreso.setId(1l);
         egreso.setMonto(15000);
+        egreso.setBorrado(false);
+        egresoService.guardarEgreso(egreso);
    }
     @DisplayName("test para guardar un egreso")
     @Test
@@ -58,8 +64,8 @@ public class EgresoServiceTest {
        //given
         EgresoEntity egreso2 = new EgresoEntity();
         egreso2.setDescripcion("pintura");
-        egreso2.setId(1l);
-        egreso2.setMonto(150000);
+        egreso2.setId(2l);
+        egreso2.setMonto(15000);
         given(egresoRepository.findAll()).willReturn(List.of(egreso,egreso2));
         //when
         List<EgresoEntity> egresos=egresoService.obtenerEgresos();
@@ -68,7 +74,28 @@ public class EgresoServiceTest {
         assertThat(egresos.size()).isEqualTo(2);
     }
 
+    @DisplayName("test para  buscar un ingreso")
+    @Test
+    void TestObtenerEgreso(){
+       //given
+        given(egresoRepository.findById(1l)).willReturn(Optional.of(egreso));
+        //when
+        EgresoEntity egreso1=egresoService.obtenerEgresoPorId(egreso.getId());
+        //then
+        assertThat(egreso1.getId()).isEqualTo(1l);
+    }
 
 
+    @DisplayName("test para actualizar un egreso")
+    @Test
+    void TestEliminarEgreso(){
+       long egresoId=1l;
+       //given
+        willDoNothing().given(egresoRepository).delete(egreso);
+        // when
+        egresoService.obtenerEgresoPorId(egresoId);
+        //then
+        verify(egresoRepository,times(1)).deleteById(egresoId);
+    }
 
 }
