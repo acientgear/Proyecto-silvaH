@@ -20,7 +20,6 @@ async function getTotalMontosPorMes(tipo) {
     const montos = [];
     const fecha = new Date();
     const anio = fecha.getFullYear();
-    const mes = fecha.getMonth();
 
     for (let i = 1; i <= 12; i++) {
         const monto = getTotalPorMes(tipo, anio, i);

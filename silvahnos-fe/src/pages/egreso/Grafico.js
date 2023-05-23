@@ -18,7 +18,7 @@ function obtenerNombresUltimos5Dias() {
     return nombresDias;
 }
 
-const getMontoPorDia = async (anio,mes,dia) => {
+const getMontoPorDia = async (anio, mes, dia) => {
     try {
         let url = 'http://localhost:8090/egresos/monto/' + anio + '/' + mes + '/' + dia;
         const response = await axios.get(url);
@@ -30,7 +30,7 @@ const getMontoPorDia = async (anio,mes,dia) => {
     }
 };
 
-async function obtenerMontos5Dias()  {
+async function obtenerMontos5Dias() {
     const hoy = new Date();
     const montos = [];
 
@@ -54,7 +54,7 @@ class LineChart extends Component {
 
     async componentDidMount() {
         const nombresDias = obtenerNombresUltimos5Dias();
-        
+
         const montos = await obtenerMontos5Dias();
 
         const myChartRef = this.chartRef.current.getContext('2d');

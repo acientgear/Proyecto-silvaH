@@ -47,8 +47,6 @@ function CrearEgreso() {
         }
     }
 
-    let montoValido = false;
-
     return (
         <Container>
             <Row>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import {Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import FormIngreso from '../../components/FormIngreso';
 
 const CrearIngreso = () => {
@@ -59,13 +59,13 @@ const CrearIngreso = () => {
             </Row>
             <Row>
                 <Col>
-                    <FormIngreso 
-                        ingreso={ingreso} 
-                        validated={validated}  
+                    <FormIngreso
+                        ingreso={ingreso}
+                        validated={validated}
                         modal={false}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
-                        />
+                    />
                 </Col>
             </Row>
         </Container>

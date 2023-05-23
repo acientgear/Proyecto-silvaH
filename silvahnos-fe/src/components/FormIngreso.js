@@ -1,7 +1,7 @@
 import CategoriasIngreso from "./data/CategoriasIngreso";
 import { Button, Form } from "react-bootstrap";
 
-const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit, handleSubmit}) => {
+const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit, handleSubmit }) => {
 
     const modalFooter = () => {
         return (

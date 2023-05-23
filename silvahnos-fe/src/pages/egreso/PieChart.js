@@ -3,23 +3,7 @@ import { Pie } from 'react-chartjs-2';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const options = {
-    tooltips: {
-        callbacks: {
-            label: function (tooltipItem, data) {
-                var dataset = data.datasets[tooltipItem.datasetIndex];
-                var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
-                    return previousValue + currentValue;
-                });
-                var currentValue = dataset.data[tooltipItem.index];
-                var percentage = Math.floor((currentValue / total) * 100 + 0.5);
-                return percentage + '%';
-            },
-        },
-    },
-};
-
-const PieChartEgreso = ({anio,mes}) => {
+const PieChartEgreso = ({ anio, mes }) => {
 
     const [montosOrigen, setMontosOrigen] = useState([]);
 
@@ -37,7 +21,7 @@ const PieChartEgreso = ({anio,mes}) => {
         };
 
         getMontoOrigen();
-    }, [anio,mes]);
+    }, [anio, mes]);
 
     const data = {
         labels: montosOrigen.map((item) => item.origen),
@@ -70,19 +54,6 @@ const PieChartEgreso = ({anio,mes}) => {
 
     const options = {
         tooltips: {
-            callbacks: {
-                label: function (tooltipItem, data) {
-                    var dataset = data.datasets[tooltipItem.datasetIndex];
-                    console.log(dataset);
-                    var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
-                        return previousValue + currentValue;
-                    }
-                    );
-                    var currentValue = dataset.data[tooltipItem.index];
-                    var percentage = Math.floor((currentValue / total) * 100 + 0.5);
-                    return percentage + '%';
-                },
-            },
         },
     };
 

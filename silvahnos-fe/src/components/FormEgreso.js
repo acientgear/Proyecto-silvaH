@@ -1,8 +1,8 @@
-import {Form, Button} from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import CategoriasEgreso from './data/CategoriasEgreso';
 
-const FormEgreso = ({egreso, validated, modal, handleChange, handleSubmit, handleCloseEdit}) => {
-    
+const FormEgreso = ({ egreso, validated, modal, handleChange, handleSubmit, handleCloseEdit }) => {
+
     const modalFooter = () => {
         return (
             <div>
@@ -72,7 +72,7 @@ const FormEgreso = ({egreso, validated, modal, handleChange, handleSubmit, handl
                     max={1000000000}
                     type="number" placeholder="Ingrese monto" onChange={handleChange}
                     value={egreso.monto}
-                    />
+                />
                 <Form.Control.Feedback type="invalid">
                     El monto debe ser mayor a $ 0 y menor a $ 1.000.000.000
                 </Form.Control.Feedback>
@@ -86,7 +86,7 @@ const FormEgreso = ({egreso, validated, modal, handleChange, handleSubmit, handl
                     isInvalid={egreso.descripcion.length > 255 || egreso.descripcion.length === 0}
                     as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange}
                     value={egreso.descripcion}
-                    />
+                />
                 <Form.Control.Feedback type="invalid">
                     Ingrese una descripción valida
                 </Form.Control.Feedback>

@@ -18,7 +18,7 @@ function obtenerNombresUltimos5Dias() {
     return nombresDias;
 }
 
-const getMontoPorDia = async (anio,mes,dia) => {
+const getMontoPorDia = async (anio, mes, dia) => {
     try {
         let url = 'http://localhost:8090/ingresos/monto/' + anio + '/' + mes + '/' + dia;
         const response = await axios.get(url);
@@ -30,7 +30,7 @@ const getMontoPorDia = async (anio,mes,dia) => {
     }
 };
 
-async function obtenerMontos5Dias()  {
+async function obtenerMontos5Dias() {
     const hoy = new Date();
     const montos = [];
 
@@ -39,7 +39,7 @@ async function obtenerMontos5Dias()  {
         fecha.setDate(hoy.getDate() - i);
 
         const monto = getMontoPorDia(fecha.getFullYear(), fecha.getMonth() + 1, fecha.getDate());
-      
+
         montos.push(monto);
     }
 
@@ -55,7 +55,7 @@ class LineChart extends Component {
     async componentDidMount() {
 
         const nombresDias = obtenerNombresUltimos5Dias();
-        
+
         const montos = await obtenerMontos5Dias();
         console.log(montos);
 
@@ -72,7 +72,7 @@ class LineChart extends Component {
                 datasets: [
                     {
                         label: 'Ingresos',
-                        data: [montos[4], montos[3], montos[2], montos[1], montos[0] ],
+                        data: [montos[4], montos[3], montos[2], montos[1], montos[0]],
                         backgroundColor: 'rgba(184, 231, 225, 0.2)',
                         borderColor: 'rgba(184, 231, 225, 1)',
                         borderWidth: 1,

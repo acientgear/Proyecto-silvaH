@@ -2,7 +2,6 @@ const CategoriaIngreso = [
     {
         id: 1, 
         nombre: 'Astara'
-
     },
     {
         id: 2,

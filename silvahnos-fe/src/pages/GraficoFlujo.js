@@ -31,18 +31,6 @@ async function obtenerMontosMes(tipo) {
     return datos;
 }
 
-const getFlujos = async () => {
-    try {
-        let url = 'http://localhost:8090/usuario/flujo';
-        const response = await axios.get(url);
-        if (response.status === 200) {
-            return response.data;
-        }
-    } catch (err) {
-        console.log(err.message);
-    }
-}
-
 class LineChart extends Component {
 
     chartRef = React.createRef();

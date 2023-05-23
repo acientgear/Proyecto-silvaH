@@ -166,8 +166,8 @@ const Ingresos = () => {
                 <Row>
                     <Col><h1>Ingresos</h1></Col>
                     <Col className='d-flex align-items-center'>
-                        <InputMonth 
-                            mes={mes} 
+                        <InputMonth
+                            mes={mes}
                             anio={anio}
                             onChangeAnio={handleChangeAnio}
                             onChangeMes={handleChangeMes}
@@ -203,9 +203,9 @@ const Ingresos = () => {
                                         </td>
                                     </tr>
                                 ))}
-                            </tbody> 
+                            </tbody>
                             <tfoot>
-                                <tr style={{background:"#E6F4DD"}}>
+                                <tr style={{ background: "#E6F4DD" }}>
                                     <td>Total</td>
                                     <td></td>
                                     <td></td>
@@ -236,14 +236,14 @@ const Ingresos = () => {
                     <Modal.Title>Editar Ingreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormIngreso 
-                        ingreso={editedItem} 
-                        validated={validated} 
+                    <FormIngreso
+                        ingreso={editedItem}
+                        validated={validated}
                         modal={true}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         handleCloseEdit={handleCloseEdit}
-                        />
+                    />
                 </Modal.Body>
             </Modal>
 

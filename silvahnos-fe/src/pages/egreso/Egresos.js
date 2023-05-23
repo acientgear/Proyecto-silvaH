@@ -163,11 +163,11 @@ const Egresos = () => {
                 <Row>
                     <Col><h1>Egresos</h1></Col>
                     <Col className='d-flex align-items-center'>
-                        <InputMonth 
-                            mes={mes} 
-                            anio={anio} 
-                            onChangeAnio={handleChangeAnio} 
-                            onChangeMes={handleChangeMes} 
+                        <InputMonth
+                            mes={mes}
+                            anio={anio}
+                            onChangeAnio={handleChangeAnio}
+                            onChangeMes={handleChangeMes}
                             get={getEgresos}
                         />
                     </Col>
@@ -201,7 +201,7 @@ const Egresos = () => {
                                 ))}
                             </tbody>
                             <tfoot>
-                                <tr style={{background:"#FBE6DD"}}>
+                                <tr style={{ background: "#FBE6DD" }}>
                                     <td>Total</td>
                                     <td></td>
                                     <td></td>
@@ -231,7 +231,7 @@ const Egresos = () => {
                     <Modal.Title>Editar Egreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormEgreso 
+                    <FormEgreso
                         egreso={editedItem}
                         validated={validated}
                         modal={true}
