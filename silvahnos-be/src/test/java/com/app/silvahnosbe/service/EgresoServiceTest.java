@@ -22,12 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @ExtendWith(MockitoExtension.class)
 public class EgresoServiceTest {
+
+
 
    @Mock
     private EgresoRepository egresoRepository;
@@ -35,6 +36,9 @@ public class EgresoServiceTest {
    @InjectMocks
     private EgresoService egresoService;
 
+
+    Date fecha= new Date();
+    Date fecha1= new Date();
     EgresoEntity egreso;
    @BeforeEach
    void setup(){
@@ -43,6 +47,7 @@ public class EgresoServiceTest {
         egreso.setId(1l);
         egreso.setMonto(15000);
         egreso.setBorrado(false);
+        egreso.setFecha_creacion(fecha);
         egresoService.guardarEgreso(egreso);
    }
     @DisplayName("test para guardar un egreso")
@@ -98,9 +103,116 @@ public class EgresoServiceTest {
         verify(egresoRepository,times(1)).deleteById(egresoId);
     }
 
+    @DisplayName("test para buscar un egreso por mes año")
+    @Test
+    void TestMY(){
+
+       //given
+        EgresoEntity egreso2 = new EgresoEntity();
+        egreso2.setDescripcion("pintura");
+        egreso2.setId(2l);
+        egreso2.setMonto(15000);
+        egreso2.setFecha_creacion(fecha1);
+
+        given(egresoRepository.obtenerEgresosPorAnioAndMes(2023,3)).willReturn(List.of(egreso,egreso2));
+       //when
+        List<EgresoEntity> egresos=egresoService.obtenerEgresoPorAnioAndMes(2023,3);
+       //then
+        assertThat(egresos).isNotNull();
+        assertThat(egresos.size()).isEqualTo(2);
+    }
+
+
+    @DisplayName("test para lista vacia de egresos")
+    @Test
+    void testListaVaciaEgreso(){
+        //given
+        EgresoEntity egreso2 = new EgresoEntity();
+        egreso2.setDescripcion("pintura");
+        egreso2.setId(2l);
+        egreso2.setMonto(15000);
+        given(egresoRepository.obtenerEgresosPorAnioAndMes(2023,3)).willReturn(Collections.emptyList());
+        //when
+        List<EgresoEntity> egresos=egresoService.obtenerEgresoPorAnioAndMes(2023,3);
+        // then
+        assertThat(egresos).isEmpty();
+        assertThat(egresos.size()).isEqualTo(0);
+    }
+
+   @DisplayName("test para obtener ultimos egresos")
+   @Test
+    void TestUltimoEgreso() {
+       //given
+       EgresoEntity egreso2 = new EgresoEntity();
+       egreso2.setDescripcion("pintura");
+       egreso2.setId(2l);
+       egreso2.setMonto(15000);
+
+       EgresoEntity egreso1 = new EgresoEntity();
+       egreso1.setDescripcion("pintura");
+       egreso1.setId(2l);
+       egreso1.setMonto(15000);
+       given(egresoRepository.obtenerUltimosEgresos()).willReturn(List.of(egreso,egreso1,egreso2));
+
+
+       //when
+       List<EgresoEntity> egresos=egresoService.obtenerUltimosEgresos();
+       //then
+       assertThat(egresos).isNotNull();
+       assertThat(egresos.size()).isLessThan(4);
+
+   }
+
+    @DisplayName("test para obtener el total de los egresos")
+    @Test
+    void TestTotalEgreso() {
+        //given
+        EgresoEntity egreso2 = new EgresoEntity();
+        egreso2.setDescripcion("pintura");
+        egreso2.setId(2l);
+        egreso2.setMonto(15000);
+
+        EgresoEntity egreso1 = new EgresoEntity();
+        egreso1.setDescripcion("pintura");
+        egreso1.setId(2l);
+        egreso1.setMonto(15000);
+        given(egresoRepository.obtenerEgresosPorAnioAndMes(2023,3)).willReturn(List.of(egreso,egreso1,egreso2));
+
+
+        //when
+        int egresos=egresoService.obtenerTotalEgresosPorMes(2023,3);
+        //then
+        assertThat(egresos).isNotNull();
+        assertThat(egresos).isEqualTo(45000);
+
+    }
 
 
 
+    @DisplayName("test para obtener el total de los egresos del dia")
+    @Test
+    void TestTotalDiaEgreso() {
+        //given
+        EgresoEntity egreso2 = new EgresoEntity();
+        egreso2.setDescripcion("pintura");
+        egreso2.setId(2l);
+        egreso2.setMonto(15000);
+
+        EgresoEntity egreso1 = new EgresoEntity();
+        egreso1.setDescripcion("pintura");
+        egreso1.setId(3l);
+        egreso1.setMonto(15000);
+
+        given(egresoRepository.obtenerMontoPorDia(2023,3,1)).willReturn(15000);
+        
+
+        //when
+        int egresos=egresoService.obtenerMontoPorDia(2023,3,2);
+        //then
+        assertThat(egresos).isNotNull();
+        assertThat(egresos).isEqualTo(45000);
+
+    }
 
 
 
