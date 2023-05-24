@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.silvahnosbe.models.Registro;
 import com.app.silvahnosbe.services.RegistroService;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/registros")
 public class RegistroController {

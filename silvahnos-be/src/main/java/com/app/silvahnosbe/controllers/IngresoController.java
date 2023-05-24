@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.silvahnosbe.entities.IngresoEntity;
 import com.app.silvahnosbe.services.IngresoService;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/ingresos")
 public class IngresoController {

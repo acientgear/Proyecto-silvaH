@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.silvahnosbe.models.Monto;
 import com.app.silvahnosbe.services.MontoService;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("/montos")
 public class MontoController {
