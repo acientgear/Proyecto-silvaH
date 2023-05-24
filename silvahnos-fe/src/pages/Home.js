@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Col, Row, Card, Button, Container, Table, Badge, ListGroup } from "react-bootstrap";
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useCallback } from 'react';
 import LineChartIngresos from './ingreso/Grafico';
 import LineChartEgresos from './egreso/Grafico';
 
@@ -40,7 +40,7 @@ const Home = () => {
     }
   };
 
-  const getSaldoCuenta = async () => {
+  const getSaldoCuenta = useCallback(async () => {
     try {
       let url = 'http://localhost:8090/ingresos/total/' + mes;
       const response = await axios.get(url);
@@ -50,7 +50,7 @@ const Home = () => {
     } catch (err) {
       console.log(err.message);
     }
-  }
+  }, [mes]);
 
   const formatearFecha = (fecha) => {
     let fechaC = fecha.split('T')[0];
@@ -63,7 +63,7 @@ const Home = () => {
     return montoFormateado;
   };
 
-  const totalIngresosMes = async () => {
+  const totalIngresosMes = useCallback(async () => {
     try {
       let url = 'http://localhost:8090/ingresos/total/' + anio + '/' + mes;
       const response = await axios.get(url);
@@ -73,19 +73,21 @@ const Home = () => {
     } catch (err) {
       console.log(err.message);
     }
-  };
+  }, [anio, mes]);
+  
 
-  const totalEgresosMes = async () => {
-    try {
-      let url = 'http://localhost:8090/egresos/total/' + anio + '/' + mes;
-      const response = await axios.get(url);
-      if (response.status === 200) {
-        setTotalEgresos(response.data);
-      }
-    } catch (err) {
-      console.log(err.message);
+const totalEgresosMes = useCallback(async () => {
+  try {
+    let url = 'http://localhost:8090/egresos/total/' + anio + '/' + mes;
+    const response = await axios.get(url);
+    if (response.status === 200) {
+      setTotalEgresos(response.data);
     }
-  };
+  } catch (err) {
+    console.log(err.message);
+  }
+}, [anio, mes]);
+
 
   const colorIngreso = (i) => {
     if (i % 2 === 0) {
@@ -107,7 +109,7 @@ const Home = () => {
     getEgresos();
     totalEgresosMes();
     getSaldoCuenta();
-  },);
+  },[getSaldoCuenta,totalEgresosMes,totalIngresosMes]);
 
   return (
     <Container>
@@ -145,7 +147,7 @@ const Home = () => {
                   )}
                 </tbody>
               </Table>
-              <ListGroup style={{ border: '1px solid #B8E7E1' }}>
+              <ListGroup>
                 <ListGroup.Item>Total ingresos: {formatoMonto(totalIngresos)}</ListGroup.Item>
               </ListGroup>
               <ListGroup>

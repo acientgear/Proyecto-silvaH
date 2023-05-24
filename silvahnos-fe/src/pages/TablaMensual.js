@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useCallback } from 'react';
 import { Table } from 'react-bootstrap';
 import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
@@ -14,14 +14,14 @@ const TablaMensual = () => {
     const [montosOrigenEgresos, setMontosOrigenEgresos] = useState([]);
     const [totalIngresos, setTotalIngresos] = useState(0);
     const [totalEgresos, setTotalEgresos] = useState(0);
-    const [anio, setAnio] = useState((new Date()).getFullYear());
+    const [anio] = useState((new Date()).getFullYear());
 
     const formatoMonto = (monto) => {
         const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
         return montoFormateado;
     };
 
-    const getMontosOrigenIngresos = async () => {
+    const getMontosOrigenIngresos = useCallback(async () => {
         try {
             let url = 'http://localhost:8090/montos/ingreso/' + anio + '/' + mes;
             const response = await axios.get(url);
@@ -32,8 +32,9 @@ const TablaMensual = () => {
         } catch (err) {
             console.log(err.message);
         }
-    };
-    const getMontosOrigenEgresos = async () => {
+    }, [anio]);
+    
+    const getMontosOrigenEgresos = useCallback(async () => {
         try {
             let url = 'http://localhost:8090/montos/egreso/' + anio + '/' + mes;
             const response = await axios.get(url);
@@ -44,12 +45,12 @@ const TablaMensual = () => {
         } catch (err) {
             console.log(err.message);
         }
-    };
+    }, [anio]);
 
     useEffect(() => {
         getMontosOrigenIngresos();
         getMontosOrigenEgresos();
-    }, []);
+    }, [getMontosOrigenIngresos, getMontosOrigenEgresos]);
 
     return (
         <>

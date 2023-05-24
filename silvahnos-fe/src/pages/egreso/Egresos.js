@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Button, Col, Container, Modal, Row, Table, Pagination } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
 import FormEgreso from '../../components/FormEgreso';
@@ -130,17 +130,18 @@ const Egresos = () => {
         descripcion: '',
     }
 
-    const getEgresos = async () => {
+    const getEgresos = useCallback(async () => {
         try {
-            let url = 'http://localhost:8090/egresos/' + anio + '/' + mes;
-            const response = await axios.get(url);
-            if (response.status === 200) {
-                setEgresos(response.data);
-            }
+          let url = 'http://localhost:8090/egresos/' + anio + '/' + mes;
+          const response = await axios.get(url);
+          if (response.status === 200) {
+            setEgresos(response.data);
+          }
         } catch (err) {
-            console.log(err.message);
+          console.log(err.message);
         }
-    };
+      }, [anio, mes]);
+      
 
     const formatearFecha = (fecha) => {
         let fechaC = fecha.split('T')[0];
@@ -155,7 +156,7 @@ const Egresos = () => {
 
     useEffect(() => {
         getEgresos();
-    },);
+    },[getEgresos]);
 
     return (
         <>

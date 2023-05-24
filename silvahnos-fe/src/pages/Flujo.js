@@ -1,5 +1,5 @@
 import LineChart from './GraficoFlujo';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { ListGroup, Table, Col, Row, Container, Badge, Tab, Tabs, Card } from 'react-bootstrap';
 import PieChartEgreso from './egreso/PieChart';
@@ -20,38 +20,37 @@ const formatearFecha = (fecha) => {
     return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
 };
 
-// otra forma de mostrar el saldo
-const getTotalPorMes = async (tipo, anio, mes) => {
-    try {
-        let url = 'http://localhost:8090/' + tipo + '/total/' + anio + '/' + mes;
-        const response = await axios.get(url);
-        if (response.status === 200) {
-            return response.data;
-        }
-    } catch (err) {
-        console.log(err.message);
-    }
-}
-
-async function getTotalMontosPorMes(tipo) {
-    const montos = [];
-    const fecha = new Date();
-    const anio = fecha.getFullYear();
-
-    for (let i = 1; i <= 12; i++) {
-        const monto = getTotalPorMes(tipo, anio, i);
-        montos.push(monto);
-    }
-
-    const datos = await Promise.all(montos);
-
-    return datos;
-}
-
 const Flujo = () => {
     const [registros, setRegistros] = useState([]);
     const mes = new Date().getMonth() + 1;
     const anio = new Date().getFullYear();
+
+    async function getTotalMontosPorMes(tipo) {
+        const montos = [];
+        const fecha = new Date();
+        const anio = fecha.getFullYear();
+
+        for (let i = 1; i <= 12; i++) {
+            const monto = getTotalPorMes(tipo, anio, i);
+            montos.push(monto);
+        }
+
+        const datos = await Promise.all(montos);
+
+        return datos;
+    }
+
+    const getTotalPorMes = useCallback(async (tipo, anio, mes) => {
+        try {
+            let url = 'http://localhost:8090/' + tipo + '/total/' + anio + '/' + mes;
+            const response = await axios.get(url);
+            if (response.status === 200) {
+                return response.data;
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    }, []);
 
     const getRegistros = async () => {
         try {
@@ -82,8 +81,8 @@ const Flujo = () => {
 
     useEffect(() => {
         getRegistros();
-        fetchMontos(); // nuevo
-    }, []);
+        fetchMontos();
+    },[]);
 
     return (
         <Container fluid >

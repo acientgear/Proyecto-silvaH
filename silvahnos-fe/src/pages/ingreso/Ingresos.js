@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
 import FormIngreso from '../../components/FormIngreso';
@@ -108,7 +108,6 @@ const Ingresos = () => {
         }
     };
 
-
     const [editedItem, setEditedItem] = useState({
         id: null,
         borrado: false,
@@ -133,17 +132,18 @@ const Ingresos = () => {
         descripcion: '',
     }
 
-    const getIngresos = async () => {
+    const getIngresos = useCallback(async () => {
         try {
-            let url = 'http://localhost:8090/ingresos/' + anio + '/' + mes;
-            const response = await axios.get(url);
-            if (response.status === 200) {
-                setIngresos(response.data);
-            }
+          let url = 'http://localhost:8090/ingresos/' + anio + '/' + mes;
+          const response = await axios.get(url);
+          if (response.status === 200) {
+            setIngresos(response.data);
+          }
         } catch (err) {
-            console.log(err.message);
+          console.log(err.message);
         }
-    };
+      }, [anio, mes]);
+      
 
     const formatearFecha = (fecha) => {
         let fechaC = fecha.split('T')[0];
@@ -158,7 +158,7 @@ const Ingresos = () => {
 
     useEffect(() => {
         getIngresos();
-    },);
+    },[getIngresos]);
 
     return (
         <>

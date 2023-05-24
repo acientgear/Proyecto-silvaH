@@ -57,7 +57,6 @@ class LineChart extends Component {
         const nombresDias = obtenerNombresUltimos5Dias();
 
         const montos = await obtenerMontos5Dias();
-        console.log(montos);
 
         const myChartRef = this.chartRef.current.getContext('2d');
 
