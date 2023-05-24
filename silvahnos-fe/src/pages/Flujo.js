@@ -122,31 +122,17 @@ const Flujo = () => {
                                         <tbody>
                                             <tr style={{ background: "#E6F4DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {montosIngresos.map((monto, index) => {
-                                                    if (index <= 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>);
-                                                    }
-                                                    return null;
-                                                })}
+                                                {montosIngresos.slice(0, 6).map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {montosEgresos.map((monto, index) => {
-                                                    if (index <= 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
-                                                    }
-                                                    return null;
-                                                })}
-
+                                                {montosEgresos.slice(0, 6).map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {montosIngresos.map((monto, index) => {
-                                                    if (index <= 5) {
-                                                        saldoCue = saldoCue + monto - montosEgresos[index];
-                                                        return <td key={index}>{formatoMonto(saldoCue)}</td>;
-                                                    }
-                                                    return null;
+                                                {montosIngresos.slice(0, 6).map((monto, index) => {
+                                                    saldoCue = saldoCue + monto - montosEgresos[index];
+                                                    return <td key={index}>{formatoMonto(saldoCue)}</td>;
                                                 })}
                                             </tr>
                                         </tbody>
@@ -163,30 +149,17 @@ const Flujo = () => {
                                         <tbody>
                                             <tr style={{ background: "#E6F4DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {montosIngresos.map((monto, index) => {
-                                                    if (index > 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
-                                                    }
-                                                    return null;
-                                                })}
+                                                {montosIngresos.slice(6, 12).map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {montosEgresos.map((monto, index) => {
-                                                    if (index > 5) {
-                                                        return (<td key={index}>{formatoMonto(monto)}</td>)
-                                                    }
-                                                    return null;
-                                                })}
+                                                {montosEgresos.slice(6, 12).map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {montosIngresos.map((monto, index) => {
-                                                    if (index > 5) {
-                                                        saldoCue = saldoCue + monto - montosEgresos[index];
-                                                        return <td key={index}>{formatoMonto(saldoCue)}</td>;
-                                                    }
-                                                    return null;
+                                                {montosIngresos.slice(6, 12).map((monto, index) => {
+                                                    saldoCue = saldoCue + monto - montosEgresos[index];
+                                                    return <td key={index}>{formatoMonto(saldoCue)}</td>;
                                                 })}
                                             </tr>
                                         </tbody>
