@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  mysql-db:
+    image: mysql
+    restart: always
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: LuchoSick17!
+      MYSQL_DATABASE: silvahnos
+      DB_DIALECT: MySQL8Dialect
+    ports:
+      - 3307:3306
+  app:
+    container_name: silvahnos-be
+    image: luistoro17/silvahnos-be:latest
+    ports:
+      - '8090:8090'
+    environment:
+      - DB_URL=jdbc:mysql://mysql-db:3306/silvahnos
+      - DB_USERNAME=root
+      - DB_PASSWORD=LuchoSick17!
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - mysql-db
+volumes:
+  mysql-data:
