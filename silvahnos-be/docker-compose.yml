@@ -1,12 +1,18 @@
-version: "3.8"
+version: '3.8'
 services:
+  silvahnos-fe:
+    container_name: silvahnos-fe
+    image: luistoro17/silvahnos-fe:latest
+    ports: 
+      - 3000:3000
   mysql-db:
+    container_name: mysql-db
     image: mysql
     restart: always
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: LuchoSick17!
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: silvahnos
       DB_DIALECT: MySQL8Dialect
     ports:
@@ -17,9 +23,9 @@ services:
     ports:
       - '8090:8090'
     environment:
-      - DB_URL=jdbc:mysql://mysql-db:3306/silvahnos
+      - DB_URL=jdbc:mysql://mysql-db:3306/silvahnos?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - DB_USERNAME=root
-      - DB_PASSWORD=LuchoSick17!
+      - DB_PASSWORD=password
     deploy:
       restart_policy:
         condition: on-failure
