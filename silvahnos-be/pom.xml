@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.app</groupId>
 	<artifactId>silvahnos-be</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>silvahnos-be</name>
 	<description>Backend para el proyecto de Silva Hnos 17-04-23</description>
 	<properties>
@@ -64,6 +64,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>SilvaHnos-be</finalName>
 	</build>
 
 </project>
