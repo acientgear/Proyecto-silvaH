@@ -23,7 +23,7 @@ const TablaMensual = () => {
 
     const getMontosOrigenIngresos = useCallback(async () => {
         try {
-            let url = 'http://localhost:8090/montos/ingreso/' + anio + '/' + mes;
+            let url = 'http://138.197.32.113:8090/montos/ingreso/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setTotalIngresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
@@ -36,7 +36,7 @@ const TablaMensual = () => {
     
     const getMontosOrigenEgresos = useCallback(async () => {
         try {
-            let url = 'http://localhost:8090/montos/egreso/' + anio + '/' + mes;
+            let url = 'http://138.197.32.113:8090/montos/egreso/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setTotalEgresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));

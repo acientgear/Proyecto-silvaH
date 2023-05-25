@@ -18,7 +18,7 @@ const Home = () => {
 
   const getIgresos = async () => {
     try {
-      let url = 'http://localhost:8090/ingresos/ultimos';
+      let url = 'http://138.197.32.113:8090/ingresos/ultimos';
       const response = await axios.get(url);
       if (response.status === 200) {
         setIngresos(response.data);
@@ -30,7 +30,7 @@ const Home = () => {
 
   const getEgresos = async () => {
     try {
-      let url = 'http://localhost:8090/egresos/ultimos';
+      let url = 'http://138.197.32.113:8090/egresos/ultimos';
       const response = await axios.get(url);
       if (response.status === 200) {
         setEgresos(response.data);
@@ -42,7 +42,7 @@ const Home = () => {
 
   const getSaldoCuenta = useCallback(async () => {
     try {
-      let url = 'http://localhost:8090/ingresos/total/' + mes;
+      let url = 'http://138.197.32.113:8090/ingresos/total/' + mes;
       const response = await axios.get(url);
       if (response.status === 200) {
         setSaldo(response.data);
@@ -65,7 +65,7 @@ const Home = () => {
 
   const totalIngresosMes = useCallback(async () => {
     try {
-      let url = 'http://localhost:8090/ingresos/total/' + anio + '/' + mes;
+      let url = 'http://138.197.32.113:8090/ingresos/total/' + anio + '/' + mes;
       const response = await axios.get(url);
       if (response.status === 200) {
         setTotalIngresos(response.data);
@@ -78,7 +78,7 @@ const Home = () => {
 
 const totalEgresosMes = useCallback(async () => {
   try {
-    let url = 'http://localhost:8090/egresos/total/' + anio + '/' + mes;
+    let url = 'http://138.197.32.113:8090/egresos/total/' + anio + '/' + mes;
     const response = await axios.get(url);
     if (response.status === 200) {
       setTotalEgresos(response.data);

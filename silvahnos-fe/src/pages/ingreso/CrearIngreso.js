@@ -40,7 +40,7 @@ const CrearIngreso = () => {
 
     const createIngreso = async () => {
         try {
-            let url = "http://localhost:8090/ingresos";
+            let url = "http://138.197.32.113:8090/ingresos";
             let response = await axios.post(url, ingreso);
             if (response.status === 200) {
                 window.location.href = "/ingresos";

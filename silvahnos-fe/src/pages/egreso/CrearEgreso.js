@@ -37,7 +37,7 @@ function CrearEgreso() {
 
     const createEgreso = async () => {
         try {
-            let url = "http://localhost:8090/egresos";
+            let url = "http://138.197.32.113:8090/egresos";
             let response = await axios.post(url, egreso);
             if (response.status === 200) {
                 window.location.href = "/egresos";

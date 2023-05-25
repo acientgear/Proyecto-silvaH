@@ -71,7 +71,7 @@ const Egresos = () => {
 
     const updateEgreso = async () => {
         try {
-            let url = 'http://localhost:8090/egresos';
+            let url = 'http://138.197.32.113:8090/egresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
@@ -89,7 +89,7 @@ const Egresos = () => {
 
     const deleteEgreso = async () => {
         try {
-            let url = 'http://localhost:8090/egresos';
+            let url = 'http://138.197.32.113:8090/egresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseDelete();
@@ -132,7 +132,7 @@ const Egresos = () => {
 
     const getEgresos = useCallback(async () => {
         try {
-          let url = 'http://localhost:8090/egresos/' + anio + '/' + mes;
+          let url = 'http://138.197.32.113:8090/egresos/' + anio + '/' + mes;
           const response = await axios.get(url);
           if (response.status === 200) {
             setEgresos(response.data);

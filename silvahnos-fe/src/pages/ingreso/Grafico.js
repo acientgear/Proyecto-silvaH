@@ -11,7 +11,7 @@ function obtenerNombresUltimos5Dias() {
     for (let i = 0; i <= 4; i++) {
         const fecha = new Date();
         fecha.setDate(hoy.getDate() - i);
-        const nombreDia = dias[fecha.getDay()];
+        const nombreDia = dias[fecha.getDay()+1];
         nombresDias.push(nombreDia);
     }
 
@@ -20,7 +20,7 @@ function obtenerNombresUltimos5Dias() {
 
 const getMontoPorDia = async (anio, mes, dia) => {
     try {
-        let url = 'http://localhost:8090/ingresos/monto/' + anio + '/' + mes + '/' + dia;
+        let url = 'http://138.197.32.113:8090/ingresos/monto/' + anio + '/' + mes + '/' + dia;
         const response = await axios.get(url);
         if (response.status === 200) {
             return response.data;
@@ -38,7 +38,7 @@ async function obtenerMontos5Dias() {
         const fecha = new Date();
         fecha.setDate(hoy.getDate() - i);
 
-        const monto = getMontoPorDia(fecha.getFullYear(), fecha.getMonth() + 1, fecha.getDate());
+        const monto = getMontoPorDia(fecha.getFullYear(), fecha.getMonth() + 1, fecha.getDate()+1);
 
         montos.push(monto);
     }

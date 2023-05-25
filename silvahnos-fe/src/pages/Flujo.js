@@ -27,7 +27,7 @@ const Flujo = () => {
 
     const getTotalPorMes = useCallback(async (tipo, anio, mes) => {
         try {
-            let url = 'http://localhost:8090/' + tipo + '/total/' + anio + '/' + mes;
+            let url = 'http://138.197.32.113:8090/' + tipo + '/total/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 return response.data;
@@ -54,7 +54,7 @@ const Flujo = () => {
 
     const getRegistros = useCallback(async () => {
         try {
-            let url = 'http://localhost:8090/registros/' + anio + '/' + mes;
+            let url = 'http://138.197.32.113:8090/registros/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setRegistros(response.data);
@@ -64,8 +64,10 @@ const Flujo = () => {
         }
     }, [anio, mes]);
 
-    const [montosIngresos, setMontosIngresos] = useState([]);
-    const [montosEgresos, setMontosEgresos] = useState([]);
+    const [montosIngresosSem1, setMontosIngresosSem1] = useState([]);
+    const [montosEgresosSem1, setMontosEgresosSem1] = useState([]);
+    const [montosIngresosSem2, setMontosIngresosSem2] = useState([]);
+    const [montosEgresosSem2, setMontosEgresosSem2] = useState([]);
     let saldoCue = 0;
 
     const fetchMontos = useCallback(async () => {
@@ -75,16 +77,16 @@ const Flujo = () => {
         const montosIngresos = await getTotalMontosPorMes(tipo1);
         const montosEgresos = await getTotalMontosPorMes(tipo2);
 
-        setMontosIngresos(montosIngresos);
-        setMontosEgresos(montosEgresos);
+        setMontosIngresosSem1(montosIngresos.slice(0, 6));
+        setMontosIngresosSem2(montosIngresos.slice(6, 12));
+        setMontosEgresosSem1(montosEgresos.slice(0, 6));
+        setMontosEgresosSem2(montosEgresos.slice(6, 12));
     }, [getTotalMontosPorMes]);
 
     useEffect(() => {
         getRegistros();
         fetchMontos();
     }, [fetchMontos, getRegistros]);
-
-    console.log("flujo.js");
 
     return (
         <Container fluid >
@@ -123,16 +125,16 @@ const Flujo = () => {
                                         <tbody>
                                             <tr style={{ background: "#E6F4DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {montosIngresos.slice(0, 6).map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
+                                                {montosIngresosSem1.map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {montosEgresos.slice(0, 6).map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
+                                                {montosEgresosSem1.map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {montosIngresos.slice(0, 6).map((monto, index) => {
-                                                    saldoCue = saldoCue + monto - montosEgresos[index];
+                                                {montosIngresosSem1.map((monto, index) => {
+                                                    saldoCue = saldoCue + monto - montosEgresosSem1[index];
                                                     return <td key={index}>{formatoMonto(saldoCue)}</td>;
                                                 })}
                                             </tr>
@@ -150,16 +152,16 @@ const Flujo = () => {
                                         <tbody>
                                             <tr style={{ background: "#E6F4DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Ingresos totales</td>
-                                                {montosIngresos.slice(6, 12).map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
+                                                {montosIngresosSem2.map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
                                             </tr>
                                             <tr style={{ background: "#FBE6DD" }}>
                                                 <td style={{ fontWeight: "bold" }}>Egresos totales</td>
-                                                {montosEgresos.slice(6, 12).map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
+                                                {montosEgresosSem2.map((monto, index) => (<td key={index}>{formatoMonto(monto)}</td>))}
                                             </tr>
                                             <tr style={{ background: "#B9F3E4" }}>
                                                 <td style={{ fontWeight: "bold" }}>Saldo cuenta</td>
-                                                {montosIngresos.slice(6, 12).map((monto, index) => {
-                                                    saldoCue = saldoCue + monto - montosEgresos[index];
+                                                {montosIngresosSem2.map((monto, index) => {
+                                                    saldoCue = saldoCue + monto - montosEgresosSem2[index];
                                                     return <td key={index}>{formatoMonto(saldoCue)}</td>;
                                                 })}
                                             </tr>

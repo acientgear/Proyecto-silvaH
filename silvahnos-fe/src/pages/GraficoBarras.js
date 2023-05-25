@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const getTotalPorMes = async (tipo, anio, mes) => {
     try {
-        let url = 'http://localhost:8090/' + tipo + '/total/' + anio + '/' + mes;
+        let url = 'http://138.197.32.113:8090/' + tipo + '/total/' + anio + '/' + mes;
         const response = await axios.get(url);
         if (response.status === 200) {
             return response.data;

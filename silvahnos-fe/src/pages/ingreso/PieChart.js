@@ -10,7 +10,7 @@ const PieChartIngreso = ({anio,mes}) => {
     useEffect(() => {
         const getMontoOrigen = async () => {
             try {
-                let url = 'http://localhost:8090/montos/ingreso/' + anio + '/' + mes;
+                let url = 'http://138.197.32.113:8090/montos/ingreso/' + anio + '/' + mes;
                 const response = await axios.get(url);
                 if (response.status === 200) {
                     setMontosOrigen(response.data);

@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
 import FormIngreso from '../../components/FormIngreso';
+import { utcToZonedTime } from 'date-fns-tz';
 
 const Ingresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -71,7 +72,7 @@ const Ingresos = () => {
 
     const updateIngreso = async () => {
         try {
-            let url = 'http://localhost:8090/ingresos';
+            let url = 'http://138.197.32.113:8090/ingresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
@@ -97,7 +98,7 @@ const Ingresos = () => {
 
     const deleteIngreso = async () => {
         try {
-            let url = 'http://localhost:8090/ingresos';
+            let url = 'http://138.197.32.113:8090/ingresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseDelete();
@@ -107,6 +108,15 @@ const Ingresos = () => {
             console.log(err.message);
         }
     };
+
+    function convertTimezone(dateString) {
+        const date = new Date(dateString);
+        const newYorkTimezone = 'America/New_York';
+      
+        const newYorkDate = utcToZonedTime(date, newYorkTimezone);
+      
+        return newYorkDate ;
+      }
 
     const [editedItem, setEditedItem] = useState({
         id: null,
@@ -134,7 +144,7 @@ const Ingresos = () => {
 
     const getIngresos = useCallback(async () => {
         try {
-          let url = 'http://localhost:8090/ingresos/' + anio + '/' + mes;
+          let url = 'http://138.197.32.113:8090/ingresos/' + anio + '/' + mes;
           const response = await axios.get(url);
           if (response.status === 200) {
             setIngresos(response.data);
@@ -146,9 +156,11 @@ const Ingresos = () => {
       
 
     const formatearFecha = (fecha) => {
-        let fechaC = fecha.split('T')[0];
-        fechaC = fechaC.split('-');
-        return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
+        const fechaConvT = convertTimezone(fecha);
+        const fechaConv = new Date(fechaConvT);
+        const fechaFormateada = fechaConv.toLocaleDateString('es-CL');
+        return fechaFormateada;
+
     };
 
     let total = 0;
@@ -159,6 +171,8 @@ const Ingresos = () => {
     useEffect(() => {
         getIngresos();
     },[getIngresos]);
+
+    console.log(ingresos)
 
     return (
         <>
