@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Button, Col, Container, Modal, Row, Table, Pagination } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
 import FormEgreso from '../../components/FormEgreso';
+import urlweb from '../../config/config';
 
 const Egresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -71,7 +72,7 @@ const Egresos = () => {
 
     const updateEgreso = async () => {
         try {
-            let url = 'http://138.197.32.113:8090/egresos';
+            let url = 'http://'+urlweb+'/egresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
@@ -89,7 +90,7 @@ const Egresos = () => {
 
     const deleteEgreso = async () => {
         try {
-            let url = 'http://138.197.32.113:8090/egresos';
+            let url = 'http://'+urlweb+'/egresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseDelete();
@@ -132,7 +133,7 @@ const Egresos = () => {
 
     const getEgresos = useCallback(async () => {
         try {
-          let url = 'http://138.197.32.113:8090/egresos/' + anio + '/' + mes;
+          let url = 'http://'+urlweb+'/egresos/' + anio + '/' + mes;
           const response = await axios.get(url);
           if (response.status === 200) {
             setEgresos(response.data);

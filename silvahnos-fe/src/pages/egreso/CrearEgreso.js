@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import FormEgreso from '../../components/FormEgreso';
+import urlweb from '../../config/config';
 
 function CrearEgreso() {
     const [validated, setValidated] = useState(false);
@@ -37,7 +38,7 @@ function CrearEgreso() {
 
     const createEgreso = async () => {
         try {
-            let url = "http://138.197.32.113:8090/egresos";
+            let url = "http://"+urlweb+"/egresos";
             let response = await axios.post(url, egreso);
             if (response.status === 200) {
                 window.location.href = "/egresos";

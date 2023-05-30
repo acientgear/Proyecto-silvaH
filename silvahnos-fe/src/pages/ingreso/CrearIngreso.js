@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import FormIngreso from '../../components/FormIngreso';
+import urlweb from '../../config/config';
 
 const CrearIngreso = () => {
     const [validated, setValidated] = useState(false);
@@ -40,7 +41,7 @@ const CrearIngreso = () => {
 
     const createIngreso = async () => {
         try {
-            let url = "http://138.197.32.113:8090/ingresos";
+            let url = "http://"+urlweb+"/ingresos";
             let response = await axios.post(url, ingreso);
             if (response.status === 200) {
                 window.location.href = "/ingresos";

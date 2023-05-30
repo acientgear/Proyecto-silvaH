@@ -4,6 +4,7 @@ import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
 import { useState } from 'react';
 import axios from 'axios';
+import urlweb from '../config/config';
 
 const mes = new Date().getMonth() + 1;
 const idMes = mes.toLocaleString('es-ES', { month: 'long' });
@@ -23,7 +24,7 @@ const TablaMensual = () => {
 
     const getMontosOrigenIngresos = useCallback(async () => {
         try {
-            let url = 'http://138.197.32.113:8090/montos/ingreso/' + anio + '/' + mes;
+            let url = 'http://'+urlweb+'/montos/ingreso/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setTotalIngresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
@@ -36,7 +37,7 @@ const TablaMensual = () => {
     
     const getMontosOrigenEgresos = useCallback(async () => {
         try {
-            let url = 'http://138.197.32.113:8090/montos/egreso/' + anio + '/' + mes;
+            let url = 'http://'+urlweb+'/montos/egreso/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setTotalEgresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));

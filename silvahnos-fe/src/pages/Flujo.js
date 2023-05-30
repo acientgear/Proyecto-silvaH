@@ -8,6 +8,7 @@ import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
 import GraficoBarras from './GraficoBarras';
 import TablaMensual from './TablaMensual';
+import urlweb from '../config/config';
 
 const formatoMonto = (monto) => {
     const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
@@ -27,7 +28,7 @@ const Flujo = () => {
 
     const getTotalPorMes = useCallback(async (tipo, anio, mes) => {
         try {
-            let url = 'http://138.197.32.113:8090/' + tipo + '/total/' + anio + '/' + mes;
+            let url = 'http://'+urlweb+'/' + tipo + '/total/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 return response.data;
@@ -54,7 +55,7 @@ const Flujo = () => {
 
     const getRegistros = useCallback(async () => {
         try {
-            let url = 'http://138.197.32.113:8090/registros/' + anio + '/' + mes;
+            let url = 'http://'+urlweb+'/registros/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setRegistros(response.data);

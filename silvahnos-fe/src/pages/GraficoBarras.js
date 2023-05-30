@@ -3,10 +3,11 @@ import { Bar } from 'react-chartjs-2';
 import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
 import axios from 'axios';
+import urlweb from '../config/config';
 
 const getTotalPorMes = async (tipo, anio, mes) => {
     try {
-        let url = 'http://138.197.32.113:8090/' + tipo + '/total/' + anio + '/' + mes;
+        let url = 'http://'+urlweb+'/' + tipo + '/total/' + anio + '/' + mes;
         const response = await axios.get(url);
         if (response.status === 200) {
             return response.data;

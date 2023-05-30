@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import axios from 'axios';
+import urlweb from '../../config/config';
 
 function obtenerNombresUltimos5Dias() {
     const dias = ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'];
@@ -20,7 +21,7 @@ function obtenerNombresUltimos5Dias() {
 
 const getMontoPorDia = async (anio, mes, dia) => {
     try {
-        let url = 'http://138.197.32.113:8090/ingresos/monto/' + anio + '/' + mes + '/' + dia;
+        let url = 'http://'+urlweb+'/ingresos/monto/' + anio + '/' + mes + '/' + dia;
         const response = await axios.get(url);
         if (response.status === 200) {
             return response.data;

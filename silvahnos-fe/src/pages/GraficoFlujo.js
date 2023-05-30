@@ -3,10 +3,11 @@ import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import axios from 'axios';
 import Dias from '../components/data/Dias';
+import urlweb from '../config/config';
 
 const getMontoPorDia = async (tipo, anio, mes, dia) => {
     try {
-        let url = 'http://138.197.32.113:8090/' + tipo + '/monto/' + anio + '/' + mes + '/' + dia;
+        let url = 'http://'+urlweb+'/' + tipo + '/monto/' + anio + '/' + mes + '/' + dia;
         const response = await axios.get(url);
         if (response.status === 200) {
             return response.data;

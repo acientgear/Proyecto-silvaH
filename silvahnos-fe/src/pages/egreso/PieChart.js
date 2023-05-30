@@ -2,6 +2,7 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import urlweb from '../../config/config';
 
 const PieChartEgreso = ({ anio, mes }) => {
 
@@ -10,7 +11,7 @@ const PieChartEgreso = ({ anio, mes }) => {
     useEffect(() => {
         const getMontoOrigen = async () => {
             try {
-                let url = 'http://138.197.32.113:8090/montos/egreso/' + anio + '/' + mes;
+                let url = 'http://'+urlweb+'/montos/egreso/' + anio + '/' + mes;
                 const response = await axios.get(url);
                 if (response.status === 200) {
                     setMontosOrigen(response.data);

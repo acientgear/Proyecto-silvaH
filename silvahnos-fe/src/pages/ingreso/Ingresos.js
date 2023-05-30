@@ -4,6 +4,7 @@ import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-boo
 import InputMonth from '../../components/InputMonth';
 import FormIngreso from '../../components/FormIngreso';
 import { utcToZonedTime } from 'date-fns-tz';
+import urlweb from '../../config/config';
 
 const Ingresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -72,7 +73,7 @@ const Ingresos = () => {
 
     const updateIngreso = async () => {
         try {
-            let url = 'http://138.197.32.113:8090/ingresos';
+            let url = 'http://'+urlweb+'/ingresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
@@ -98,7 +99,7 @@ const Ingresos = () => {
 
     const deleteIngreso = async () => {
         try {
-            let url = 'http://138.197.32.113:8090/ingresos';
+            let url = 'http://'+urlweb+'/ingresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseDelete();
@@ -144,7 +145,7 @@ const Ingresos = () => {
 
     const getIngresos = useCallback(async () => {
         try {
-          let url = 'http://138.197.32.113:8090/ingresos/' + anio + '/' + mes;
+          let url = 'http://'+urlweb+'/ingresos/' + anio + '/' + mes;
           const response = await axios.get(url);
           if (response.status === 200) {
             setIngresos(response.data);
@@ -171,8 +172,6 @@ const Ingresos = () => {
     useEffect(() => {
         getIngresos();
     },[getIngresos]);
-
-    console.log(ingresos)
 
     return (
         <>
