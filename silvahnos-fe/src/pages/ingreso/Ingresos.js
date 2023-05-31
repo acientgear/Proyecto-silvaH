@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback } from 'react';
 import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
 import FormIngreso from '../../components/FormIngreso';
-import { utcToZonedTime } from 'date-fns-tz';
 import urlweb from '../../config/config';
 
 const Ingresos = () => {
@@ -110,15 +109,6 @@ const Ingresos = () => {
         }
     };
 
-    function convertTimezone(dateString) {
-        const date = new Date(dateString);
-        const newYorkTimezone = 'America/New_York';
-      
-        const newYorkDate = utcToZonedTime(date, newYorkTimezone);
-      
-        return newYorkDate ;
-      }
-
     const [editedItem, setEditedItem] = useState({
         id: null,
         borrado: false,
@@ -156,12 +146,10 @@ const Ingresos = () => {
       }, [anio, mes]);
       
 
-    const formatearFecha = (fecha) => {
-        const fechaConvT = convertTimezone(fecha);
-        const fechaConv = new Date(fechaConvT);
-        const fechaFormateada = fechaConv.toLocaleDateString('es-CL');
-        return fechaFormateada;
-
+      const formatearFecha = (fecha) => {
+        let fechaC = fecha.split('T')[0];
+        fechaC = fechaC.split('-');
+        return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
     };
 
     let total = 0;
@@ -194,12 +182,12 @@ const Ingresos = () => {
                         <Table striped responsive="sm" hover>
                             <thead>
                                 <tr>
-                                    <th style={{ width: '150px' }}>Fecha</th>
-                                    <th style={{ width: '150px' }}>Descripción</th>
-                                    <th style={{ width: '150px' }}>Origen</th>
-                                    <th style={{ width: '150px' }}>Patente</th>
-                                    <th style={{ width: '150px' }}>Monto</th>
-                                    <th style={{ width: '150px' }}>Acciones</th>
+                                    <th style={{ width: '100px' }}>Fecha</th>
+                                    <th style={{ width: '100px' }}>Descripción</th>
+                                    <th style={{ width: '100px' }}>Origen</th>
+                                    <th style={{ width: '100px' }}>Patente</th>
+                                    <th style={{ width: '100px' }}>Monto</th>
+                                    <th style={{ width: '110px' }}>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -182,7 +182,7 @@ const Facturas = () => {
                                     <th>Fecha vencimiento</th>
                                     <th>Fecha pago</th>
                                     <th>Observacion</th>
-                                    <th>Acciones</th>
+                                    <th style={{width:"200px"}}>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>

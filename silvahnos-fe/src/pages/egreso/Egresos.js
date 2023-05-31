@@ -184,7 +184,7 @@ const Egresos = () => {
                                     <th style={{ width: '150px' }}>Descripción</th>
                                     <th style={{ width: '150px' }}>Origen</th>
                                     <th style={{ width: '150px' }}>Monto</th>
-                                    <th style={{ width: '150px' }}>Acciones</th>
+                                    <th style={{ width: '130px' }}>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
