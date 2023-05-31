@@ -44,6 +44,7 @@ const CrearIngreso = () => {
             let url = "http://"+urlweb+"/ingresos";
             let response = await axios.post(url, ingreso);
             if (response.status === 200) {
+                localStorage.setItem("showCrear", true);
                 window.location.href = "/ingresos";
             }
         } catch (err) {

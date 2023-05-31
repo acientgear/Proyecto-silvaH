@@ -4,6 +4,7 @@ import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-boo
 import InputMonth from '../../components/InputMonth';
 import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
+import Alerta from '../../components/Alerta';
 
 const Ingresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +17,18 @@ const Ingresos = () => {
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
+    const [showAlertDelete, setShowAlertDelete] = useState(false);
+    const [showAlertEdit, setShowAlertEdit] = useState(false);
+    const [showAlertCreate, setShowAlertCreate] = useState(false);
+
+    const handleAlertCreate = useCallback(() => {
+        let showCrear = localStorage.getItem("showCrear");
+        if (showCrear === 'true') {
+            setShowAlertCreate(true);
+        }
+        localStorage.setItem("showCrear", false);
+    }, []);
+
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -43,7 +56,7 @@ const Ingresos = () => {
 
     const handleCloseEdit = () => {
         setEditedItem(defaultItem);
-        setShowEdit(false)
+        setShowEdit(false);
     };
 
     const handleShowEdit = (ingreso) => {
@@ -76,6 +89,7 @@ const Ingresos = () => {
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
+                setShowAlertEdit(true);
                 getIngresos();
             }
         } catch (err) {
@@ -102,6 +116,7 @@ const Ingresos = () => {
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseDelete();
+                setShowAlertDelete(true);
                 getIngresos();
             }
         } catch (err) {
@@ -159,7 +174,8 @@ const Ingresos = () => {
 
     useEffect(() => {
         getIngresos();
-    },[getIngresos]);
+        handleAlertCreate();
+    },[getIngresos, handleAlertCreate]);
 
     return (
         <>
@@ -261,6 +277,10 @@ const Ingresos = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal>
+
+            {showAlertDelete && (<Alerta mensaje="Ingreso eliminado correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete}/>)}
+            {showAlertEdit && (<Alerta mensaje="Ingreso editado correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
+            {showAlertCreate && (<Alerta mensaje="Ingreso creado correctamente" tipo="success" show={showAlertCreate} setShow={setShowAlertCreate} />)}
         </>
     );
 };
