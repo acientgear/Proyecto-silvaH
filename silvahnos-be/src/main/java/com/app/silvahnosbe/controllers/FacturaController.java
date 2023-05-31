@@ -23,22 +23,13 @@ public class FacturaController {
     @Autowired
     FacturaService facturaService;
 
-    @GetMapping
-    public ResponseEntity<List<FacturaEntity>> getAllFacturas(){
-        List<FacturaEntity> facturas= facturaService.obtenerFacturas();
+    @GetMapping("/{anio}/{mes}")
+    public ResponseEntity<List<FacturaEntity>> getFacturas(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        List<FacturaEntity> facturas= facturaService.obtenerFacturas(anio, mes);
         if(facturas == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(facturas);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<FacturaEntity> getFacturaById(@PathVariable("id") Long id){
-        FacturaEntity factura = facturaService.obtenerFacturaPorId(id);
-        if(factura == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(factura);
     }
 
     @PostMapping
@@ -47,10 +38,5 @@ public class FacturaController {
         return ResponseEntity.ok().body(facturaGuardada);
     }
 
-    @DeleteMapping
-    public ResponseEntity<FacturaEntity> deleteFactura(@PathVariable("id") Long id){
-        facturaService.borrarFactura(id);
-        return ResponseEntity.ok().body(null);
-    }
 
 }

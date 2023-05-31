@@ -1,5 +1,6 @@
 package com.app.silvahnosbe.entities;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,17 +22,19 @@ public class FacturaEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    private Timestamp fecha_emision;
-    private Timestamp fecha_vencimiento;
-    private Timestamp fecha_pago;
+    // Datos
+    private int numero_factura;
+    private Date fecha_emision;
+    private Date fecha_vencimiento;
+    private Date fecha_pago;
     private String observaciones;
     private boolean borrado;
-    
+
+    // Fechas de acciones
     @CreationTimestamp
     private Timestamp fecha_creacion;
     @UpdateTimestamp
     private Timestamp fecha_modificacion;
-
     private Timestamp fecha_borrado;
-    private int numero_factura;
+
 }

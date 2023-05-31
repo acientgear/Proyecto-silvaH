@@ -14,19 +14,12 @@ public class FacturaService {
     @Autowired
     FacturaRepository facturaRepository;
 
-    public List<FacturaEntity> obtenerFacturas(){
-        return (List<FacturaEntity>) facturaRepository.findAll();
-    }
-
-    public FacturaEntity obtenerFacturaPorId(Long id){
-        return facturaRepository.findById(id).orElse(null);
+    public List<FacturaEntity> obtenerFacturas(int anio, int mes){
+        return (List<FacturaEntity>) facturaRepository.obteberFacturas(anio, mes);
     }
 
     public FacturaEntity guardarFactura(FacturaEntity factura){
         return facturaRepository.save(factura);
     }
 
-    public void borrarFactura(Long id){
-        facturaRepository.deleteById(id);
-    }
 }
