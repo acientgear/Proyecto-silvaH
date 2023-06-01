@@ -38,5 +38,13 @@ public class FacturaController {
         return ResponseEntity.ok().body(facturaGuardada);
     }
 
+    @GetMapping("/iva/{anio}/{mes}")
+    public ResponseEntity<Integer> getIva(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        Integer iva = facturaService.obtenerIva(anio, mes);
+        if(iva == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(iva);
+    }
 
 }

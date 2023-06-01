@@ -140,6 +140,10 @@ const Facturas = () => {
         return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
     };
 
+    const formatoMonto = (monto) => {
+        const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+        return montoFormateado;
+    };
 
     const [editedItem, setEditedItem] = useState({
         id: null,
@@ -195,6 +199,7 @@ const Facturas = () => {
                                 <tr>
                                     <th>N° factura</th>
                                     <th>Fecha emision</th>
+                                    <th>Monto</th>
                                     <th>Fecha vencimiento</th>
                                     <th>Fecha pago</th>
                                     <th>Observaciones</th>
@@ -206,12 +211,13 @@ const Facturas = () => {
                                     <tr key={factura.id}>
                                         <td>{factura.numero_factura}</td>
                                         <td>{formatearFecha(factura.fecha_emision)}</td>
+                                        <td>{formatoMonto(factura.monto)}</td>
                                         <td>{formatearFecha(factura.fecha_vencimiento)}</td>
                                         <td>{formatearFecha(factura.fecha_pago)}</td>
                                         <td>{factura.observaciones}</td>
                                         <td>
-                                            <Button variant='primary' onClick={() => handleShowEdit(factura)} style={{ marginRight: 2 }}>Editar</Button>
-                                            <Button variant='danger' onClick={() => handleShowDelete(factura)}>Eliminar</Button>
+                                            <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(factura)}><AiFillEdit/></a>
+                                            <a style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(factura)}><AiFillDelete/></a> 
                                         </td>
                                     </tr>
                                 ))}
@@ -263,9 +269,9 @@ const Facturas = () => {
                 </Modal.Footer>
             </Modal>
 
-            {showAlertDelete && (<Alerta mensaje="Ingreso eliminado correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete} />)}
-            {showAlertEdit && (<Alerta mensaje="Ingreso editado correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
-            {showAlertCreate && (<Alerta mensaje="Ingreso creado correctamente" tipo="success" show={showAlertCreate} setShow={setShowAlertCreate} />)}
+            {showAlertDelete && (<Alerta mensaje="Factura eliminada correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete} />)}
+            {showAlertEdit && (<Alerta mensaje="Factura editada correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
+            {showAlertCreate && (<Alerta mensaje="Factura creada correctamente" tipo="success" show={showAlertCreate} setShow={setShowAlertCreate} />)}
         </>
     );
 };

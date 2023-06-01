@@ -22,4 +22,8 @@ public class FacturaService {
         return facturaRepository.save(factura);
     }
 
+    public Integer obtenerIva(int anio, int mes){
+        return facturaRepository.obtenerIva(anio, mes);
+    }
+
 }

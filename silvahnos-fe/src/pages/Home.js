@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Col, Row, Card, Button, Container, Table, Badge, ListGroup } from "react-bootstrap";
-import { useState, useEffect,useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import LineChartIngresos from './ingreso/Grafico';
 import LineChartEgresos from './egreso/Grafico';
 import urlweb from '../config/config';
@@ -9,6 +9,7 @@ const Home = () => {
   const [ingresos, setIngresos] = useState([]);
   const [egresos, setEgresos] = useState([]);
   const [saldo, setSaldo] = useState(0);
+  const [iva,setIva] = useState(0);
 
   let fechaAcual = new Date();
   let anio = fechaAcual.getFullYear();
@@ -19,7 +20,7 @@ const Home = () => {
 
   const getIgresos = async () => {
     try {
-      let url = 'http://'+urlweb+'/ingresos/ultimos';
+      let url = 'http://' + urlweb + '/ingresos/ultimos';
       const response = await axios.get(url);
       if (response.status === 200) {
         setIngresos(response.data);
@@ -31,7 +32,7 @@ const Home = () => {
 
   const getEgresos = async () => {
     try {
-      let url = 'http://'+urlweb+'/egresos/ultimos';
+      let url = 'http://' + urlweb + '/egresos/ultimos';
       const response = await axios.get(url);
       if (response.status === 200) {
         setEgresos(response.data);
@@ -43,7 +44,7 @@ const Home = () => {
 
   const getSaldoCuenta = useCallback(async () => {
     try {
-      let url = 'http://'+urlweb+'/ingresos/total/' + mes;
+      let url = 'http://' + urlweb + '/ingresos/total/' + mes;
       const response = await axios.get(url);
       if (response.status === 200) {
         setSaldo(response.data);
@@ -52,6 +53,18 @@ const Home = () => {
       console.log(err.message);
     }
   }, [mes]);
+
+  const getIva = async () => {
+    try {
+      let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
+      const response = await axios.get(url);
+      if (response.status === 200) {
+        setIva(response.data);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const formatearFecha = (fecha) => {
     let fechaC = fecha.split('T')[0];
@@ -66,7 +79,7 @@ const Home = () => {
 
   const totalIngresosMes = useCallback(async () => {
     try {
-      let url = 'http://'+urlweb+'/ingresos/total/' + anio + '/' + mes;
+      let url = 'http://' + urlweb + '/ingresos/total/' + anio + '/' + mes;
       const response = await axios.get(url);
       if (response.status === 200) {
         setTotalIngresos(response.data);
@@ -75,19 +88,19 @@ const Home = () => {
       console.log(err.message);
     }
   }, [anio, mes]);
-  
 
-const totalEgresosMes = useCallback(async () => {
-  try {
-    let url = 'http://'+urlweb+'/egresos/total/' + anio + '/' + mes;
-    const response = await axios.get(url);
-    if (response.status === 200) {
-      setTotalEgresos(response.data);
+
+  const totalEgresosMes = useCallback(async () => {
+    try {
+      let url = 'http://' + urlweb + '/egresos/total/' + anio + '/' + mes;
+      const response = await axios.get(url);
+      if (response.status === 200) {
+        setTotalEgresos(response.data);
+      }
+    } catch (err) {
+      console.log(err.message);
     }
-  } catch (err) {
-    console.log(err.message);
-  }
-}, [anio, mes]);
+  }, [anio, mes]);
 
 
   const colorIngreso = (i) => {
@@ -110,7 +123,8 @@ const totalEgresosMes = useCallback(async () => {
     getEgresos();
     totalEgresosMes();
     getSaldoCuenta();
-  },[getSaldoCuenta,totalEgresosMes,totalIngresosMes]);
+    getIva();
+  }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes]);
 
   return (
     <Container>
@@ -121,6 +135,11 @@ const totalEgresosMes = useCallback(async () => {
         <Col xs="auto" >
           <ListGroup>
             <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: {formatoMonto(saldo)}</ListGroup.Item>
+          </ListGroup>
+        </Col>
+        <Col xs="auto" >
+          <ListGroup>
+            <ListGroup.Item style={{ fontWeight: "bold" }}>IVA a pagar: {formatoMonto(iva)}</ListGroup.Item>
           </ListGroup>
         </Col>
       </Row>

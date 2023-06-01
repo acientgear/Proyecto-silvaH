@@ -40,6 +40,21 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, handleC
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formFactura">
+                <Form.Label>Monto</Form.Label>
+                <Form.Control name="monto" required
+                    isValid={1000000000 > factura.monto && factura.monto > 0}
+                    isInvalid={factura.monto <= 0 || factura.monto > 1000000000}
+                    min={1}
+                    max={1000000000}
+                    type="number" placeholder="Ingrese monto" onChange={handleChange}
+                    value={factura.monto}
+                />
+                <Form.Control.Feedback type="invalid">
+                    El monto debe ser mayor a $ 0 y menor a $ 1.000.000.000
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formFactura">
                 <Form.Label>Fecha emisión</Form.Label>
                 <Form.Control name="fecha_emision" required
                     type="date" placeholder="Ingrese una fecha de emisión" onChange={handleChange}
@@ -57,7 +72,7 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, handleC
 
             <Form.Group className="mb-3" controlId="formFactura">
                 <Form.Label>Fecha pago</Form.Label>
-                <Form.Control name="fecha_pago" required
+                <Form.Control name="fecha_pago"
                     type="date" placeholder="Ingrese una fecha de pago" onChange={handleChange}
                     value={factura.fecha_pago}
                 />

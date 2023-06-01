@@ -27,6 +27,7 @@ public class FacturaEntity {
     private Date fecha_emision;
     private Date fecha_vencimiento;
     private Date fecha_pago;
+    private Integer monto;
     private String observaciones;
     private boolean borrado;
 
