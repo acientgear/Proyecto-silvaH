@@ -5,12 +5,12 @@ const Alerta = ({ mensaje, tipo, show, setShow }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShow(false);
-        }, 5000);
+        }, 3000);
         return () => clearTimeout(timer);
     }, [setShow]);
 
     return (
-        <Alert show={show} variant={tipo} className='text-center' dismissible style={{ position: 'absolute', bottom: 0, zIndex: 1000 }} >
+        <Alert show={show} variant={tipo} className='text-center' style={{ position: 'absolute', bottom: 0, zIndex: 1000 }} >
             {mensaje}
         </Alert>
     );

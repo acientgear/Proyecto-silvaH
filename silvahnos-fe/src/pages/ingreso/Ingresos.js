@@ -5,6 +5,7 @@ import InputMonth from '../../components/InputMonth';
 import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const Ingresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -191,19 +192,20 @@ const Ingresos = () => {
                             get={getIngresos}
                         />
                     </Col>
-                    <Col className='d-flex align-items-center justify-content-end'><Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar un ingreso</Button></Col>
+                    <Col className='d-flex align-items-center justify-content-end'>
+                        <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar ingreso</Button></Col>
                 </Row>
                 <Row>
                     <Col>
                         <Table striped responsive="sm" hover>
                             <thead>
                                 <tr>
-                                    <th style={{ width: '100px' }}>Fecha</th>
-                                    <th style={{ width: '100px' }}>Descripción</th>
-                                    <th style={{ width: '100px' }}>Origen</th>
-                                    <th style={{ width: '100px' }}>Patente</th>
-                                    <th style={{ width: '100px' }}>Monto</th>
-                                    <th style={{ width: '110px' }}>Acciones</th>
+                                    <th>Fecha</th>
+                                    <th>Descripción</th>
+                                    <th>Origen</th>
+                                    <th>Patente</th>
+                                    <th>Monto</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -215,8 +217,8 @@ const Ingresos = () => {
                                         <td>{ingreso.patente}</td>
                                         <td>{formatoMonto(ingreso.monto)}</td>
                                         <td>
-                                            <Button variant='primary' onClick={() => handleShowEdit(ingreso)} style={{ marginRight: 2, width: "88px" }}>Editar</Button>
-                                            <Button variant='danger' onClick={() => handleShowDelete(ingreso)} style={{ width: "88px" }}>Eliminar</Button>
+                                            <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(ingreso)}><AiFillEdit/></a>
+                                            <a style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(ingreso)}><AiFillDelete/></a> 
                                         </td>
                                     </tr>
                                 ))}

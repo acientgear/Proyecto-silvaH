@@ -12,7 +12,7 @@ function obtenerNombresUltimos5Dias() {
     for (let i = 0; i <= 4; i++) {
         const fecha = new Date();
         fecha.setDate(hoy.getDate() - i);
-        const nombreDia = dias[fecha.getDay()+1];
+        const nombreDia = dias[fecha.getDay()];
         nombresDias.push(nombreDia);
     }
 
@@ -39,7 +39,7 @@ async function obtenerMontos5Dias() {
         const fecha = new Date();
         fecha.setDate(hoy.getDate() - i);
 
-        const monto = getMontoPorDia(fecha.getFullYear(), fecha.getMonth() + 1, fecha.getDate()+1);
+        const monto = getMontoPorDia(fecha.getFullYear(), fecha.getMonth() + 1, fecha.getDate());
         montos.push(monto);
     }
 

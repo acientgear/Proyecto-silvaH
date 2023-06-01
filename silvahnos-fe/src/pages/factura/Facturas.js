@@ -177,11 +177,11 @@ const Facturas = () => {
                         <Table responsive="sm" striped hover>
                             <thead>
                                 <tr>
-                                    <th>Numero factura</th>
+                                    <th>N° factura</th>
                                     <th>Fecha emision</th>
                                     <th>Fecha vencimiento</th>
                                     <th>Fecha pago</th>
-                                    <th>Observacion</th>
+                                    <th>Observaciones</th>
                                     <th style={{width:"200px"}}>Acciones</th>
                                 </tr>
                             </thead>

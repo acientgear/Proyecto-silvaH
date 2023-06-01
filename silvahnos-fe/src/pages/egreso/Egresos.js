@@ -4,6 +4,7 @@ import { Button, Col, Container, Modal, Row, Table, Pagination } from 'react-boo
 import InputMonth from '../../components/InputMonth';
 import FormEgreso from '../../components/FormEgreso';
 import urlweb from '../../config/config';
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const Egresos = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -159,6 +160,9 @@ const Egresos = () => {
         getEgresos();
     },[getEgresos]);
 
+    console.log("fecha creación: ",egresos.map((egreso) => egreso.fecha_creacion));
+    console.log(new Date());
+
     return (
         <>
             <Container>
@@ -173,18 +177,18 @@ const Egresos = () => {
                             get={getEgresos}
                         />
                     </Col>
-                    <Col className='d-flex align-items-center justify-content-end'><Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar un egreso</Button></Col>
+                    <Col className='d-flex align-items-center justify-content-end'><Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar egreso</Button></Col>
                 </Row>
                 <Row>
                     <Col>
                         <Table striped responsive="sm" hover>
                             <thead>
                                 <tr>
-                                    <th style={{ width: '150px' }}>Fecha</th>
-                                    <th style={{ width: '150px' }}>Descripción</th>
-                                    <th style={{ width: '150px' }}>Origen</th>
-                                    <th style={{ width: '150px' }}>Monto</th>
-                                    <th style={{ width: '130px' }}>Acciones</th>
+                                    <th>Fecha</th>
+                                    <th>Descripción</th>
+                                    <th>Origen</th>
+                                    <th>Monto</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -195,8 +199,8 @@ const Egresos = () => {
                                         <td>{egreso.origen}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
-                                            <Button variant='primary' onClick={() => handleShowEdit(egreso)} style={{ marginRight: 2, width: "88px" }}>Editar</Button>
-                                            <Button variant='danger' onClick={() => handleShowDelete(egreso)} style={{ width: "88px" }}>Eliminar</Button>
+                                            <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(egreso)}><AiFillEdit/></a>
+                                            <a style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(egreso)}><AiFillDelete/></a>
                                         </td>
                                     </tr>
 
