@@ -1,6 +1,6 @@
 package com.app.silvahnosbe.entities;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
