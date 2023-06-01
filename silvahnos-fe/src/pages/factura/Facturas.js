@@ -4,6 +4,8 @@ import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-boo
 import urlweb from '../../config/config';
 import InputMonth from '../../components/InputMonth';
 import FormFactura from '../../components/FormFactura';
+import Alerta from '../../components/Alerta';
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const Facturas = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +18,17 @@ const Facturas = () => {
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
+    const [showAlertDelete, setShowAlertDelete] = useState(false);
+    const [showAlertEdit, setShowAlertEdit] = useState(false);
+    const [showAlertCreate, setShowAlertCreate] = useState(false);
+
+    const handleAlertCreate = useCallback(() => {
+        let showCrear = localStorage.getItem("showCrear");
+        if (showCrear === 'true') {
+            setShowAlertCreate(true);
+        }
+        localStorage.setItem("showCrear", false);
+    }, []);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -96,6 +109,7 @@ const Facturas = () => {
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
+                setShowAlertEdit(true);
                 getFacturas();
             }
         } catch (err) {
@@ -109,6 +123,7 @@ const Facturas = () => {
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseDelete();
+                setShowAlertDelete(true);
                 getFacturas();
             }
         } catch (err) {
@@ -154,7 +169,8 @@ const Facturas = () => {
 
     useEffect(() => {
         getFacturas();
-    }, [getFacturas]);
+        handleAlertCreate();
+    }, [getFacturas,handleAlertCreate]);
 
     return (
         <>
@@ -182,7 +198,7 @@ const Facturas = () => {
                                     <th>Fecha vencimiento</th>
                                     <th>Fecha pago</th>
                                     <th>Observaciones</th>
-                                    <th style={{width:"200px"}}>Acciones</th>
+                                    <th style={{ width: "200px" }}>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -222,13 +238,13 @@ const Facturas = () => {
                     <Modal.Title>Editar Factura</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormFactura 
+                    <FormFactura
                         factura={editedItem}
                         validated={validated}
                         modal={true}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
-                        handleCloseEdit={handleCloseEdit}    
+                        handleCloseEdit={handleCloseEdit}
                     />
                 </Modal.Body>
             </Modal>
@@ -246,6 +262,10 @@ const Facturas = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal>
+
+            {showAlertDelete && (<Alerta mensaje="Ingreso eliminado correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete} />)}
+            {showAlertEdit && (<Alerta mensaje="Ingreso editado correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
+            {showAlertCreate && (<Alerta mensaje="Ingreso creado correctamente" tipo="success" show={showAlertCreate} setShow={setShowAlertCreate} />)}
         </>
     );
 };
