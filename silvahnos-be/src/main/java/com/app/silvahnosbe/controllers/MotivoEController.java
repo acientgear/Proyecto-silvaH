@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.silvahnosbe.entities.LocalEntity;
-import com.app.silvahnosbe.services.LocalService;
+import com.app.silvahnosbe.entities.MotivoEEntity;
+import com.app.silvahnosbe.services.MotivoEService;
 
 @RestController
-@RequestMapping("/locales")
-public class LocalController {
+@RequestMapping("/motivosE")
+public class MotivoEController {
     @Autowired
-    LocalService LocalService;
+    MotivoEService motivoEService;
 
     @PostMapping
-    public ResponseEntity<LocalEntity> createLocal(@RequestBody LocalEntity local){
-        LocalEntity localGuardado = LocalService.guardarLocal(local);
-        return ResponseEntity.ok().body(localGuardado);
+    public ResponseEntity<MotivoEEntity> createMotivoE(@RequestBody MotivoEEntity motivoE){
+        MotivoEEntity motivoEGuardado = motivoEService.guardarMotivoE(motivoE);
+        return ResponseEntity.ok().body(motivoEGuardado);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<LocalEntity>> getLocales(){
-        List<LocalEntity> locales = LocalService.obtenerLocal();
-        if(locales == null){
+    public ResponseEntity<List<MotivoEEntity>> getMotivosE(){
+        List<MotivoEEntity> motivosE = motivoEService.obtenerMotivoE();
+        if(motivosE == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(locales);
+        return ResponseEntity.ok().body(motivosE);
     }
 }
