@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Monto {
     @Id
-    private String origen;
+    private int motivo;
     private Integer monto_total;
 }

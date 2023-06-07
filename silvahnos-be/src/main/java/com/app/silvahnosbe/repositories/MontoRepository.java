@@ -11,9 +11,9 @@ import com.app.silvahnosbe.models.Monto;
 
 @Repository
 public interface MontoRepository extends JpaRepository<Monto, Long>{
-    @Query(value = "SELECT SUM(i.monto) as monto_total, i.origen FROM ingreso as i WHERE i.borrado = 0 AND YEAR(i.fecha_creacion) = :anio AND MONTH(i.fecha_creacion) = :mes GROUP BY i.origen",nativeQuery = true)
+    @Query(value = "SELECT SUM(i.monto) as monto_total, i.motivo FROM ingreso as i WHERE i.borrado = 0 AND YEAR(i.fecha_creacion) = :anio AND MONTH(i.fecha_creacion) = :mes GROUP BY i.motivo",nativeQuery = true)
     List<Monto> obtenerMontoIngresoPorAnioAndMes(@Param("anio") int anio, @Param("mes") int mes);
 
-    @Query(value = "SELECT SUM(e.monto) as monto_total, e.origen FROM egreso as e WHERE e.borrado = 0 AND YEAR(e.fecha_creacion) = :anio AND MONTH(e.fecha_creacion) = :mes GROUP BY e.origen",nativeQuery = true)
+    @Query(value = "SELECT SUM(e.monto) as monto_total, e.motivo FROM egreso as e WHERE e.borrado = 0 AND YEAR(e.fecha_creacion) = :anio AND MONTH(e.fecha_creacion) = :mes GROUP BY e.motivo",nativeQuery = true)
     List<Monto> obtenerMontoEgresoPorAnioAndMes(@Param("anio") int anio, @Param("mes") int mes);
 }

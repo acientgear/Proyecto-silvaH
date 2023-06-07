@@ -3,6 +3,7 @@ import { Pie } from 'react-chartjs-2';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
+import CategoriasEgreso from '../../components/data/CategoriasEgreso';
 
 const PieChartEgreso = ({ anio, mes }) => {
 
@@ -25,7 +26,7 @@ const PieChartEgreso = ({ anio, mes }) => {
     }, [anio, mes]);
 
     const data = {
-        labels: montosOrigen.map((item) => item.origen),
+        labels: montosOrigen.map((item) => CategoriasEgreso[item.motivo-1].nombre),
         datasets: [
             {
                 label: 'Monto total: ',

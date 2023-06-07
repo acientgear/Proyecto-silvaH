@@ -27,19 +27,19 @@ const FormEgreso = ({ egreso, validated, modal, handleChange, handleSubmit, hand
     return (
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formEgreso">
-                <Form.Label>Origen</Form.Label>
+                <Form.Label>Motivo</Form.Label>
                 <Form.Select
                     aria-label="select"
-                    name="origen"
+                    name="motivo"
                     required
                     placeholder="Ingrese de donde viene el egreso"
                     onChange={handleChange}
-                    value={egreso.origen}
-                    isInvalid={egreso.origen === ""}
+                    value={egreso.motivo}
+                    isInvalid={egreso.motivo === 0}
                 >
-                    <option value="">Seleccione una opción</option>
+                    <option value= "" >Seleccione una opción</option>
                     {CategoriasEgreso.map((categoria) => (
-                        <option key={categoria.id} value={categoria.nombre}>
+                        <option key={categoria.id} value={categoria.id}>
                             {categoria.nombre}
                         </option>
                     ))}
