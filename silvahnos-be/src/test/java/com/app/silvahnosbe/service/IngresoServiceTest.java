@@ -41,7 +41,7 @@ public class IngresoServiceTest {
         ingreso= new IngresoEntity();
         ingreso.setId(1l);
         ingreso.setMonto(150000);
-        ingreso.setOrigen("ASTARA");
+        ingreso.setMotivo(1);
         ingreso.setDescripcion("Cuadratura BMW");
         ingreso.setBorrado(false);
         ingreso.setFecha_creacion(new Timestamp(new Date().getTime()));
@@ -79,7 +79,7 @@ public class IngresoServiceTest {
         ingreso2.setDescripcion("Cambio pintura");
         ingreso2.setId(2l);
         ingreso2.setMonto(15000);
-        ingreso2.setOrigen("ASTARA");
+        ingreso2.setMotivo(1);
         ingreso2.setBorrado(false);
         ingreso2.setFecha_creacion(new Timestamp(new Date().getTime()));
         //System.out.println(ingreso2.getFecha_creacion());
@@ -110,7 +110,7 @@ public class IngresoServiceTest {
         ingreso2.setDescripcion("Cambio pintura");
         ingreso2.setId(2l);
         ingreso2.setMonto(15000);
-        ingreso2.setOrigen("ASTARA");
+        ingreso2.setMotivo(1);
         ingreso2.setBorrado(false);
         ingreso2.setFecha_creacion(new Timestamp(new Date().getTime()));
 
@@ -118,7 +118,7 @@ public class IngresoServiceTest {
         ingreso2.setDescripcion("Cambio pintura");
         ingreso2.setId(3l);
         ingreso2.setMonto(15000);
-        ingreso2.setOrigen("ASTARA");
+        ingreso2.setMotivo(1);
         ingreso2.setBorrado(false);
         ingreso2.setFecha_creacion(new Timestamp(new Date().getTime()));
 
@@ -126,7 +126,7 @@ public class IngresoServiceTest {
         ingreso2.setDescripcion("Cambio pintura");
         ingreso2.setId(4l);
         ingreso2.setMonto(15000);
-        ingreso2.setOrigen("ASTARA");
+        ingreso2.setMotivo(1);
         ingreso2.setBorrado(false);
         ingreso2.setFecha_creacion(new Timestamp(new Date().getTime()));
         given(ingresoRepository.obtenerUltimosIngresos()).willReturn(new ArrayList<>(List.of(ingreso2,ingreso3,ingreso4)));
@@ -145,7 +145,7 @@ public class IngresoServiceTest {
         ingreso2.setDescripcion("Cambio pintura");
         ingreso2.setId(2l);
         ingreso2.setMonto(15000);
-        ingreso2.setOrigen("ASTARA");
+        ingreso2.setMotivo(1);
         ingreso2.setBorrado(false);
         ingreso2.setFecha_creacion(new Timestamp(new Date().getTime()));
 

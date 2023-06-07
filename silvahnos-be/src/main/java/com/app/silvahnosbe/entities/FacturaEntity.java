@@ -30,6 +30,8 @@ public class FacturaEntity {
     private Integer monto;
     private String observaciones;
     private boolean borrado;
+    private int empresa;
+    private int estado;
 
     // Fechas de acciones
     @CreationTimestamp
