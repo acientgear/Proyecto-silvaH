@@ -23,7 +23,7 @@ public class EgresoEntity {
     private Long id;
 
     private int monto;
-    private int motivo;
+    private Long motivo;
     private String descripcion;
     private Boolean borrado;
 
