@@ -13,27 +13,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.silvahnosbe.entities.LocalEntity;
-import com.app.silvahnosbe.services.LocalService;
+import com.app.silvahnosbe.entities.EstadoEntity;
+import com.app.silvahnosbe.services.EstadoService;
 
 @RestController
-@RequestMapping("/locales")
-public class LocalController {
+@RequestMapping("/estados")
+public class EstadoController {
     @Autowired
-    LocalService localService;
-
-    @PostMapping
-    public ResponseEntity<LocalEntity> createLocal(@RequestBody LocalEntity local){
-        LocalEntity localGuardado = localService.guardarLocal(local);
-        return ResponseEntity.ok().body(localGuardado);
-    }
+    EstadoService estadoService;
 
     @GetMapping("")
-    public ResponseEntity<List<LocalEntity>> getLocales(){
-        List<LocalEntity> locales = localService.obtenerLocal();
-        if(locales == null){
+    public ResponseEntity<List<EstadoEntity>> getEstados(){
+        List<EstadoEntity> estados = estadoService.obtenerEstado();
+        if(estados == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(locales);
+        return ResponseEntity.ok().body(estados);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EstadoEntity> getEstado(@PathVariable("id") long id){
+        EstadoEntity estado = estadoService.obtenerEstadoPorId(id);
+        if(estado == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(estado);
     }
 }

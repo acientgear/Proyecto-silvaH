@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.silvahnosbe.entities.LocalEntity;
-import com.app.silvahnosbe.services.LocalService;
+import com.app.silvahnosbe.entities.EmpresaEntity;
+import com.app.silvahnosbe.services.EmpresaService;
 
 @RestController
-@RequestMapping("/locales")
-public class LocalController {
+@RequestMapping("/empresas")
+public class EmpresaController {
     @Autowired
-    LocalService localService;
+    EmpresaService empresaService;
 
     @PostMapping
-    public ResponseEntity<LocalEntity> createLocal(@RequestBody LocalEntity local){
-        LocalEntity localGuardado = localService.guardarLocal(local);
-        return ResponseEntity.ok().body(localGuardado);
+    public ResponseEntity<EmpresaEntity> createEmpresa(@RequestBody EmpresaEntity empresa){
+        EmpresaEntity empresaGuardado = empresaService.guardarEmpresa(empresa);
+        return ResponseEntity.ok().body(empresaGuardado);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<LocalEntity>> getLocales(){
-        List<LocalEntity> locales = localService.obtenerLocal();
-        if(locales == null){
+    public ResponseEntity<List<EmpresaEntity>> getEmpresas(){
+        List<EmpresaEntity> empresas = empresaService.obtenerEmpresa();
+        if(empresas == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(locales);
+        return ResponseEntity.ok().body(empresas);
     }
 }
