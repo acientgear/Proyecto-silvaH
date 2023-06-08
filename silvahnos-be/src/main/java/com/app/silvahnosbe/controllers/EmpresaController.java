@@ -36,4 +36,13 @@ public class EmpresaController {
         }
         return ResponseEntity.ok().body(empresas);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EmpresaEntity> getEmpresaById(@PathVariable(value = "id") Long id){
+        EmpresaEntity empresa = empresaService.obtenerEmpresaPorId(id);
+        if(empresa == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(empresa);
+    }
 }

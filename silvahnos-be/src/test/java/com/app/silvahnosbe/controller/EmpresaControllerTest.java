@@ -72,5 +72,19 @@ public class EmpresaControllerTest {
         assertEquals(empresa, response.getBody());
     }
     
+    @DisplayName("Test para obtener un egreso por id")
+    @Test
+    void testGetEmpresaById_EmpresaExiste_ReturnsEmpresa() {
+        // Given
+        EmpresaEntity empresa = new EmpresaEntity();
+        when(empresaService.obtenerEmpresaPorId(1L)).thenReturn(empresa);
+
+        // When
+        ResponseEntity<EmpresaEntity> response = empresaController.getEmpresaById(1L);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(empresa, response.getBody());
+    }
     
 }
