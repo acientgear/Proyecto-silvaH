@@ -22,10 +22,12 @@ public class IngresoEntity {
     private Long id;
 
     private int monto;
-    private String origen;
+    private int motivo;
     private String patente;
     private String descripcion;
     private boolean borrado;
+    @Column(nullable = true)
+    private int factura;
 
     @CreationTimestamp
     private Timestamp fecha_creacion;

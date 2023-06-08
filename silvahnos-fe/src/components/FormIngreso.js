@@ -39,18 +39,18 @@ const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit,
                 </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Origen</Form.Label>
-                <Form.Select name="origen"
+                <Form.Label>Motivo</Form.Label>
+                <Form.Select name="motivo"
                     required
                     aria-label="select"
                     placeholder="Ingrese de donde viene"
                     onChange={handleChange}
-                    value={ingreso.origen}
-                    isInvalid={ingreso.origen === ""}
+                    value={ingreso.motivo}
+                    isInvalid={ingreso.motivo === 0}
                 >
                     <option key={0} value="">Seleccione una opción</option>
                     {CategoriasIngreso.map((categoria) => (
-                        <option key={categoria.id} value={categoria.nombre}>{categoria.nombre}</option>
+                        <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
                     ))}
                 </Form.Select>
                 <Form.Control.Feedback type="invalid">

@@ -3,6 +3,7 @@ import { Col, Row, Card, Button, Container, Table, Badge, ListGroup } from "reac
 import { useState, useEffect, useCallback } from 'react';
 import LineChartIngresos from './ingreso/Grafico';
 import LineChartEgresos from './egreso/Grafico';
+import CategoriasEgreso from '../components/data/CategoriasEgreso';
 import urlweb from '../config/config';
 
 const Home = () => {
@@ -185,7 +186,7 @@ const Home = () => {
                 <thead>
                   <tr>
                     <th style={{ width: '100px' }}>Fecha</th>
-                    <th style={{ width: '100px' }}>Origen</th>
+                    <th style={{ width: '100px' }}>Motivo</th>
                     <th style={{ width: '100px' }}>Monto</th>
                   </tr>
                 </thead>
@@ -193,7 +194,7 @@ const Home = () => {
                   {egresos.map((egreso, index) => (
                     <tr style={{ backgroundColor: colorEgreso(index) }} key={egreso.id}>
                       <td>{formatearFecha(egreso.fecha_creacion)}</td>
-                      <td>{egreso.origen}</td>
+                      <td>{CategoriasEgreso[egreso.motivo-1].nombre}</td>
                       <td>{formatoMonto(egreso.monto)}</td>
                     </tr>
                   ))}

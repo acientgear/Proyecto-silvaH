@@ -14,7 +14,7 @@ function CrearEgreso() {
         fecha_modificacion: null,
         fecha_borrado: null,
         monto: '',
-        origen: '',
+        motivo: 0,
         descripcion: '',
     });
 
