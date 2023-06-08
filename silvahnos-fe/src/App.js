@@ -10,6 +10,10 @@ import CrearIngreso from './pages/ingreso/CrearIngreso';
 import Facturas from './pages/factura/Facturas';
 import CrearFactura from './pages/factura/CrearFactura';
 import Flujo from './pages/Flujo';
+import AdminView from './pages/admin/AdminView';
+import CrearMotivoI from './pages/admin/CrearMotivoI';
+import CrearMotivoE from './pages/admin/CrearMotivoE';
+import CrearEmpresa from './pages/admin/CrearEmpresa';
 
 function App() {
   return (
@@ -24,6 +28,10 @@ function App() {
           <Route path="/crearIngreso" element={<CrearIngreso />} />
           <Route path='/crearFactura' element={<CrearFactura />} />
           <Route path="/flujo" element={<Flujo />} />
+          <Route path="/administracion" element={<AdminView />} />
+          <Route path="/crearMotivoI" element={<CrearMotivoI />} />
+          <Route path="/crearMotivoE" element={<CrearMotivoE />} />
+          <Route path="/crearEmpresa" element={<CrearEmpresa />} />
         </Routes>
       </Container>
     </Layout>
