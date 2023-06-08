@@ -16,7 +16,7 @@ public class EmpresaService {
 
     public List<EmpresaEntity> obtenerEmpresa(){
 
-        return (List<EmpresaEntity>) empresaRepository.findAll();
+        return (List<EmpresaEntity>) empresaRepository.obtenerEmpresas();
     }
 
     public EmpresaEntity obtenerEmpresaPorId(Long id){

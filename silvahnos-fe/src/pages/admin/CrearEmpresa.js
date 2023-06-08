@@ -1,15 +1,30 @@
-import { Form, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
+import FormEmpresa from '../../components/FormEmpresa';
 
 const CrearEmpresa = () => {
+    const [validated, setValidated] = useState(false);
+
     const [empresa, setempresa] = useState({
         id: null,
         rut: '',
         nombre: '',
-        direccion: ''
+        direccion: '',
+        borrado: 0
     });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            createEmpresa();
+            setValidated(true);
+        }
+    };
 
     const handleChange = (e) => {
         setempresa({
@@ -32,52 +47,19 @@ const CrearEmpresa = () => {
     };
 
     return (
-        <div>
-            <h1>Crear Motivo de engreso</h1>
-            <Form>
-                <Form.Group className="mb-3" controlId="formRut">
-                    <Form.Label>Rut</Form.Label>
-                    <Form.Control name="rut" required
-                        isValid={9000000 > empresa.rut && empresa.rut > 0}
-                        isInvalid={empresa.rut <= 0 || empresa.rut > 1000000000}
-                        min={1}
-                        max={1000000000}
-                        type="number" placeholder="Ingrese rut" onChange={handleChange}
-                        value={empresa.rut}
+        <Container>
+            <Row>
+                <Col>
+                    <FormEmpresa
+                        empresa={empresa}
+                        validated={validated}
+                        modal={false}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
                     />
-                    <Form.Control.Feedback type="invalid">
-                        Ingrese un rut válido
-                    </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group className='mb-3' controlId='formNombre'>
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control name="nombre"
-                        required
-                        isValid={255 > empresa.nombre.length && empresa.nombre.length > 0}
-                        isInvalid={empresa.nombre.length > 255 || empresa.nombre.length === 0}
-                        as='textarea' row={3} value={empresa.nombre} onChange={handleChange} />
-                    <Form.Control.Feedback type="invalid">
-                        Ingrese un nombre válido
-                    </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group className='mb-3' controlId='formDirección'>
-                    <Form.Label>Dirección</Form.Label>
-                    <Form.Control name="direccion"
-                        required
-                        isValid={255 > empresa.direccion.length && empresa.direccion.length > 0}
-                        isInvalid={empresa.direccion.length > 255 || empresa.direccion.length === 0}
-                        as='textarea' row={3} value={empresa.direccion} onChange={handleChange} />
-                    <Form.Control.Feedback type="invalid">
-                        Ingrese una dirección válida
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Button variant='primary' href='/administracion' style={{ marginRight: 2 }}>Atrás</Button>
-                <Button variant='success' onClick={createEmpresa}>Guardar</Button>
-            </Form>
-
-        </div>
+                </Col>
+            </Row>
+        </Container >
     );
 }
 

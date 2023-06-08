@@ -19,4 +19,6 @@ public class EmpresaEntity {
     private String rut ;
     private String nombre;
     private String direccion ;
+
+    private Boolean borrado;
 }

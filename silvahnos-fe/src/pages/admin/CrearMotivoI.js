@@ -40,7 +40,7 @@ const CrearMotivoI = () => {
                         required
                         isValid={255 > motivoI.nombre.length && motivoI.nombre.length > 0}
                         isInvalid={motivoI.nombre.length > 255 || motivoI.nombre.length === 0}
-                        as='textarea' row={3} value={motivoI.nombre} onChange={handleChange} />
+                        type='text' row={3} value={motivoI.nombre} onChange={handleChange} />
                     <Form.Control.Feedback type="invalid">
                         Ingrese un nombre válido
                     </Form.Control.Feedback>

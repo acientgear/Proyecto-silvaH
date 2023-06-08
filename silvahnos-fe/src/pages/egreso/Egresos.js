@@ -162,9 +162,6 @@ const Egresos = () => {
         getEgresos();
     },[getEgresos]);
 
-    console.log("fecha creación: ",egresos.map((egreso) => egreso.fecha_creacion));
-    console.log(new Date());
-
     return (
         <>
             <Container>
