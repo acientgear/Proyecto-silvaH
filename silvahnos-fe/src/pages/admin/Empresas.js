@@ -1,4 +1,4 @@
-import { Row, Col, Table, Card, Button, Modal } from 'react-bootstrap'
+import { Table, Card, Button, Modal } from 'react-bootstrap'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';

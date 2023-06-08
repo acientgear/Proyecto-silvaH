@@ -48,6 +48,7 @@ const FormEmpresa = ({ empresa, validated, modal, handleChange, handleSubmit, ha
                         isValid={255 > empresa.nombre.length && empresa.nombre.length > 0}
                         isInvalid={empresa.nombre.length > 255 || empresa.nombre.length === 0}
                         type='text' row={3} value={empresa.nombre} onChange={handleChange} />
+                        {empresa.nombre.length + ' < 256'}
                     <Form.Control.Feedback type="invalid">
                         Ingrese un nombre válido
                     </Form.Control.Feedback>

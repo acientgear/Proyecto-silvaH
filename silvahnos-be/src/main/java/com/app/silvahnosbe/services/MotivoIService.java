@@ -16,7 +16,7 @@ public class MotivoIService {
 
     public List<MotivoIEntity> obtenerMotivoI(){
 
-        return (List<MotivoIEntity>) motivoIRepository.findAll();
+        return (List<MotivoIEntity>) motivoIRepository.obtenerMotivosI();
     }
 
     public MotivoIEntity obtenerMotivoIPorId(Long id){

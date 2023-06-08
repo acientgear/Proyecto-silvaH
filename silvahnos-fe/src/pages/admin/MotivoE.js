@@ -1,17 +1,119 @@
-import { Row, Col, Table, Card, Button } from 'react-bootstrap'
+import { Table, Card, Button, Modal } from 'react-bootstrap'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import FormMotivoI from '../../components/FormMotivoI';
 
 const MotivoE = () => {
-    const [motivosE, setmotivosE] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 6;
 
-    const getmotivosE = async () => {
+    const [motivosE, setMotivosE] = useState([]);
+
+    const [showDelete, setShowDelete] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+    const [validated, setValidated] = useState(false);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    }
+
+    const paginatedData = motivosE.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+    );
+
+    const handleCloseDelete = () => {
+        setEditedItem(defaultItem);
+        setShowDelete(false);
+    }
+
+    const handleShowDelete = (motivoE) => {
+        setEditedItem(motivoE);
+        setShowDelete(true);
+    }
+
+    const handleCloseEdit = () => {
+        setEditedItem(defaultItem);
+        setShowEdit(false);
+    };
+
+    const handleShowEdit = (motivoE) => {
+        setValidated(false);
+        setEditedItem(motivoE);
+        setShowEdit(true);
+    };
+
+    const handleChange = (e) => {
+        setEditedItem({
+            ...editedItem,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            updatemotivoE();
+            setValidated(true);
+        }
+    };
+
+    const updatemotivoE = async () => {
+        try {
+            let url = 'http://' + urlweb + '/motivosE';
+            const response = await axios.post(url, editedItem);
+            if (response.status === 200) {
+                handleCloseEdit();
+                getMotivosE();
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    const handleDelete = () => {
+        editedItem.borrado = true;
+        deleteMotivoE();
+    };
+
+    const deleteMotivoE = async () => {
+        try {
+            let url = 'http://' + urlweb + '/motivosE';
+            const response = await axios.post(url, editedItem);
+            if (response.status === 200) {
+                handleCloseDelete();
+                getMotivosE();
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    const [editedItem, setEditedItem] = useState({
+        id: null,
+        nombre: '',
+        descripcion: '',
+        borrado: false,
+    });
+
+    const defaultItem = {
+        id: null,
+        nombre: '',
+        descripcion: '',
+        borrado: false,
+    }
+
+    const getMotivosE = async () => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
             const response = await axios.get(url);
             if (response.status === 200) {
-                setmotivosE(response.data);
+                setMotivosE(response.data);
             }
         } catch (err) {
             console.log(err.message);
@@ -19,7 +121,7 @@ const MotivoE = () => {
     };
 
     useEffect(() => {
-        getmotivosE();
+        getMotivosE();
     }, []);
 
     return (
@@ -32,6 +134,7 @@ const MotivoE = () => {
                             <tr>
                                 <th style={{ width: '100px' }}>Nombre</th>
                                 <th style={{ width: '100px' }}>Descripción</th>
+                                <th style={{ width: '100px' }}>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,6 +142,10 @@ const MotivoE = () => {
                                 <tr key={motivo.id}>
                                     <td >{motivo.nombre}</td>
                                     <td >{motivo.descripcion}</td>
+                                    <td>
+                                        <a style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(motivo)}><AiFillEdit /></a>
+                                        <a style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(motivo)}><AiFillDelete /></a>
+                                    </td>
                                 </tr>
                             )
                             )}
@@ -47,6 +154,37 @@ const MotivoE = () => {
                     <Button href="/crearMotivoE">Registrar motivo de egreso</Button>
                 </Card.Body>
             </Card>
+
+            {/*Modal para eliminar*/}
+            <Modal show={showDelete} onHide={handleCloseDelete}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Eliminar motivo de ingreso</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>¿Está seguro que desea eliminar el motivo de ingreso?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant='secondary' onClick={handleCloseDelete}>Cerrar</Button>
+                    <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/*Modal para editar*/}
+            <Modal show={showEdit} onHide={handleCloseEdit}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Editar motivo de ingreso</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <FormMotivoI
+                        motivoI={editedItem}
+                        validated={validated}
+                        modal={true}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        handleCloseEdit={handleCloseEdit}
+                    />
+                </Modal.Body>
+            </Modal>
         </div >
     )
 }

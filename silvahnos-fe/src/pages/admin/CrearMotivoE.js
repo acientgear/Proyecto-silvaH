@@ -1,23 +1,38 @@
-import { Form,Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
+import FormMotivoE from '../../components/FormMotivoE';
 
 const CrearMotivoE = () => {
-    const [motivoE, setmotivoE] = useState({
+    const [validated, setValidated] = useState(false);
+
+    const [motivoE, setMotivoE] = useState({
         id: null,
         nombre: '',
-        descripcion: ''
+        descripcion: '',
+        borrado: 0
     });
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            createMotivoE();
+            setValidated(true);
+        }
+    };
+
     const handleChange = (e) => {
-        setmotivoE({
+        setMotivoE({
             ...motivoE,
             [e.target.name]: e.target.value
         });
     }
 
-    const createmotivoE = async () => {
+    const createMotivoE = async () => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
             const response = await axios.post(url, motivoE);
@@ -31,37 +46,19 @@ const CrearMotivoE = () => {
     };
 
     return (
-        <div>
-            <h1>Crear Motivo de engreso</h1>
-            <Form>
-                <Form.Group className='mb-3' controlId='formNombre'>
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control name="nombre"
-                        required
-                        isValid={255 > motivoE.nombre.length && motivoE.nombre.length > 0}
-                        isInvalid={motivoE.nombre.length > 255 || motivoE.nombre.length === 0}
-                        type='text' row={3} value={motivoE.nombre} onChange={handleChange} />
-                    <Form.Control.Feedback type="invalid">
-                        Ingrese un nombre válido
-                    </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group className='mb-3' controlId='formDescripcion'>
-                    <Form.Label>Descripción</Form.Label>
-                    <Form.Control name="descripcion"
-                        required
-                        isValid={255 > motivoE.descripcion.length && motivoE.descripcion.length > 0}
-                        isInvalid={motivoE.descripcion.length > 255 || motivoE.descripcion.length === 0}
-                        as='textarea' row={3} value={motivoE.descripcion} onChange={handleChange} />
-                    <Form.Control.Feedback type="invalid">
-                        Ingrese una descripcion válida
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Button variant='primary' href='/administracion' style={{ marginRight: 2 }}>Atrás</Button>
-                <Button variant='success' onClick={createmotivoE}>Guardar</Button>
-            </Form>
-
-        </div>
+        <Container>
+            <Row>
+                <Col>
+                    <FormMotivoE
+                        motivoE={motivoE}
+                        validated={validated}
+                        modal={false}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                    />
+                </Col>
+            </Row>
+        </Container >
     );
 }
 
