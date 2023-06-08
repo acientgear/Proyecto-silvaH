@@ -5,6 +5,7 @@ import InputMonth from '../../components/InputMonth';
 import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
+import CategoriasIngreso from '../../components/data/CategoriasIngreso';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const Ingresos = () => {
@@ -132,7 +133,7 @@ const Ingresos = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
-        origen: '',
+        motivo: 0,
         monto: '',
         descripcion: '',
     });
@@ -144,7 +145,7 @@ const Ingresos = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
-        origen: '',
+        motivo: 0,
         monto: '',
         descripcion: '',
     }
@@ -202,7 +203,7 @@ const Ingresos = () => {
                                 <tr>
                                     <th>Fecha</th>
                                     <th>Descripción</th>
-                                    <th>Origen</th>
+                                    <th>Motivo</th>
                                     <th>Patente</th>
                                     <th>Monto</th>
                                     <th>Acciones</th>
@@ -213,7 +214,7 @@ const Ingresos = () => {
                                     <tr key={ingreso.id}>
                                         <td>{formatearFecha(ingreso.fecha_creacion)}</td>
                                         <td>{ingreso.descripcion}</td>
-                                        <td>{ingreso.origen}</td>
+                                        <td>{CategoriasIngreso[ingreso.motivo-1].nombre}</td>
                                         <td>{ingreso.patente}</td>
                                         <td>{formatoMonto(ingreso.monto)}</td>
                                         <td>

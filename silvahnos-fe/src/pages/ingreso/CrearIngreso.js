@@ -15,8 +15,9 @@ const CrearIngreso = () => {
         fecha_borrado: null,
         patente: '',
         monto: 0,
+        motivo: 0,
         descripcion: '',
-        origen: '',
+        
     });
 
     const handleChange = (e) => {
