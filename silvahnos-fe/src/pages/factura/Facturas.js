@@ -5,7 +5,7 @@ import urlweb from '../../config/config';
 import InputMonth from '../../components/InputMonth';
 import FormFactura from '../../components/FormFactura';
 import Alerta from '../../components/Alerta';
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiFillCheckCircle } from "react-icons/ai";
 
 const Facturas = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -15,12 +15,14 @@ const Facturas = () => {
     const [anio, setAnio] = useState((new Date()).getFullYear());
     const [facturas, setFacturas] = useState([]);
 
+    const [showCheck, setShowCheck] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
     const [showAlertDelete, setShowAlertDelete] = useState(false);
     const [showAlertEdit, setShowAlertEdit] = useState(false);
     const [showAlertCreate, setShowAlertCreate] = useState(false);
+
 
     const handleAlertCreate = useCallback(() => {
         let showCrear = localStorage.getItem("showCrear");
@@ -38,6 +40,16 @@ const Facturas = () => {
         (currentPage - 1) * pageSize,
         currentPage * pageSize
     );
+
+    const handleCloseCheck = () => {
+        setEditedItem(defaultItem);
+        setShowCheck(false);
+    }
+
+    const handleShowCheck = (factura) => {
+        setEditedItem(factura);
+        setShowCheck(true);
+    }
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -77,6 +89,12 @@ const Facturas = () => {
         }
     };
 
+    const handleCheck = () => {
+        editedItem.estado.id = 2;
+        updateFactura();
+        
+    };
+
     const handleDelete = () => {
         editedItem.borrado = true;
         deleteFactura();
@@ -109,6 +127,7 @@ const Facturas = () => {
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
+                handleCloseCheck();
                 setShowAlertEdit(true);
                 getFacturas();
             }
@@ -224,8 +243,9 @@ const Facturas = () => {
                                         <td>{factura.estado.nombre}</td>
                                         <td>{factura.observaciones}</td>
                                         <td>
+                                            <a style={{cursor: "pointer", marginRight: 2, color: "#198754"}} onClick={() => handleShowCheck(factura)}><AiFillCheckCircle/></a>
                                             <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(factura)}><AiFillEdit/></a>
-                                            <a style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(factura)}><AiFillDelete/></a> 
+                                            <a style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(factura)}><AiFillDelete/></a>
                                         </td>
                                     </tr>
                                 ))}
@@ -245,6 +265,20 @@ const Facturas = () => {
                     </Col>
                 </Row>
             </Container>
+
+            {/*Modal para marcar como pagada*/}
+            <Modal show={showCheck} onHide={handleCloseCheck}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Marcar como pagada</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>¿Está seguro que desea marcar como pagada la factura?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant='secondary' onClick={handleCloseCheck}>Cerrar</Button>
+                    <Button variant='success' onClick={handleCheck}>Marcar como pagada</Button>
+                </Modal.Footer>
+            </Modal>
 
             {/*Modal para editar*/}
             <Modal show={showEdit} onHide={handleCloseEdit}>
