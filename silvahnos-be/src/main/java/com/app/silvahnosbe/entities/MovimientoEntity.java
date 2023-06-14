@@ -1,5 +1,7 @@
 package com.app.silvahnosbe.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,10 +18,15 @@ public class MovimientoEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    private Long local;
-    private String usuario;
-    private long rol;
-    private long id_objetivo; //id de la factura, ingreso o egreso
-    private String tipo; // si es factura, ingreo o egreso
-    private String mov; // accion realizada, create, delete, update.
+    // Relacion con local
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "local")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private LocalEntity local;
+
+    // Relacion con usuario
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private UsuarioEntity usuario;
 }
