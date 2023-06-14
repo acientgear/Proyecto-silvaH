@@ -62,7 +62,7 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, setFact
                     value={factura.empresa.id}
                     isInvalid={factura.empresa.id === 0}
                 >
-                    <option value="" >Seleccione una opción</option>
+                    <option value="0" >Seleccione una opción</option>
                     {empresas.map((categoria) => (
                         <option key={categoria.id} value={categoria.id}>
                             {categoria.nombre}
@@ -102,14 +102,6 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, setFact
                 <Form.Control name="fecha_vencimiento" required
                     type="date" placeholder="Ingrese una fecha de vencimiento" onChange={handleChange}
                     value={factura.fecha_vencimiento}
-                />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formFactura">
-                <Form.Label>Fecha pago</Form.Label>
-                <Form.Control name="fecha_pago"
-                    type="date" placeholder="Ingrese una fecha de pago" onChange={handleChange}
-                    value={factura.fecha_pago}
                 />
             </Form.Group>
 

@@ -184,7 +184,7 @@ const Egresos = () => {
                                 <tr>
                                     <th>Fecha</th>
                                     <th>Descripción</th>
-                                    <th>motivo</th>
+                                    <th>Motivo</th>
                                     <th>Monto</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -237,6 +237,7 @@ const Egresos = () => {
                 <Modal.Body>
                     <FormEgreso
                         egreso={editedItem}
+                        setEgreso={setEditedItem}
                         validated={validated}
                         modal={true}
                         handleChange={handleChange}

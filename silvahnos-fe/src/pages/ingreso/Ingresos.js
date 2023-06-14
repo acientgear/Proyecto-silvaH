@@ -257,6 +257,7 @@ const Ingresos = () => {
                 <Modal.Body>
                     <FormIngreso
                         ingreso={editedItem}
+                        setIngreso={setEditedItem}
                         validated={validated}
                         modal={true}
                         handleChange={handleChange}

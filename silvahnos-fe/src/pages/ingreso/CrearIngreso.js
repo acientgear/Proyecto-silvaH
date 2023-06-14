@@ -36,12 +36,6 @@ const CrearIngreso = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
-            setIngreso({
-                ...ingreso,
-                "motivo":{
-                    "id": motivoId
-                }
-            });
             console.log(ingreso)
             createIngreso();
             setValidated(true);

@@ -11,16 +11,20 @@ const CrearFactura = () => {
     const [factura, setFactura] = useState({
         id: null,
         borrado: false,
-        fecha_creacion: null,
-        fecha_modificacion: null,
-        fecha_borrado: null,
+        fecha_creacion: '',
+        fecha_modificacion: '',
+        fecha_borrado: '',
         observaciones: '',
+        monto: 0,
+        estado: {
+            id: 1
+        },
         empresa: {
             id: 0
         },
-        fecha_emision: null,
-        fecha_vencimiento: null,
-        fecha_pago: null,
+        fecha_emision: '',
+        fecha_vencimiento: '',
+        fecha_pago: '',
         numero_factura: 0,
     });
 
@@ -38,12 +42,6 @@ const CrearFactura = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
-            setFactura({
-                ...factura,
-                "emrpresa":{
-                    "id": facturaId
-                }
-            });
             console.log(factura)
             createFactura();
             setValidated(true);

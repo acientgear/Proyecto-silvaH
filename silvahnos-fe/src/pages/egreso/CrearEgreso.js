@@ -34,12 +34,6 @@ function CrearEgreso() {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
-            setEgreso({
-                ...egreso,
-                "motivo":{
-                    "id": motivoId
-                }
-            });
             console.log(egreso)
             createEgreso();
             setValidated(true);

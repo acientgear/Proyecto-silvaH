@@ -202,8 +202,9 @@ const Facturas = () => {
                                     <th>Monto</th>
                                     <th>Fecha vencimiento</th>
                                     <th>Fecha pago</th>
+                                    <th>Estado</th>
                                     <th>Observaciones</th>
-                                    <th style={{ width: "200px" }}>Acciones</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -213,7 +214,8 @@ const Facturas = () => {
                                         <td>{formatearFecha(factura.fecha_emision)}</td>
                                         <td>{formatoMonto(factura.monto)}</td>
                                         <td>{formatearFecha(factura.fecha_vencimiento)}</td>
-                                        <td>{formatearFecha(factura.fecha_pago)}</td>
+                                        <td>{factura.fecha_pago ? formatearFecha(factura.fecha_pago) : '---'}</td>
+                                        <td>{factura.estado.nombre}</td>
                                         <td>{factura.observaciones}</td>
                                         <td>
                                             <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(factura)}><AiFillEdit/></a>
@@ -246,6 +248,7 @@ const Facturas = () => {
                 <Modal.Body>
                     <FormFactura
                         factura={editedItem}
+                        setFactura={setEditedItem}
                         validated={validated}
                         modal={true}
                         handleChange={handleChange}
