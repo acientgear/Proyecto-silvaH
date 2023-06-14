@@ -17,5 +17,4 @@ public class UsuarioEntity {
 
     private String contrasenna;
     private String nombre;
-    private long rol;
 }

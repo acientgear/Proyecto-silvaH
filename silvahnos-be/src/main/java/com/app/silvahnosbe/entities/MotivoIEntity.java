@@ -18,4 +18,5 @@ public class MotivoIEntity {
 
     private String nombre;
     private String descripcion;
+    private boolean borrado;
 }
