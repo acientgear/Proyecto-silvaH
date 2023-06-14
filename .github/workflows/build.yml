@@ -2,7 +2,7 @@ name: SonarCloud
 on:
   push:
     branches:
-      - PSH-674
+      - PSH-67
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
