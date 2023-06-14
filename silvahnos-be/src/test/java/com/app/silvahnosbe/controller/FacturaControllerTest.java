@@ -107,5 +107,39 @@ public class FacturaControllerTest {
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+
+    @DisplayName("Test para obtener las facturas proximas a vencer")
+    @Test
+    void testGetProximasVencer_ExistenFacturas_ReturnsList() {
+        // Given
+        int anio = 2023;
+        int mes = 5;
+        List<FacturaEntity> facturas = new ArrayList<>();
+        facturas.add(new FacturaEntity());
+        when(facturaService.obtenerProximasVencer(anio, mes)).thenReturn(facturas);
+
+        // When
+        ResponseEntity<List<FacturaEntity>> response = facturaController.getProximasVencer(anio, mes);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(facturas, response.getBody());
+    }
+
+    @DisplayName("Test para obtener las facturas proximas a vencer cuando no existen facturas")
+    @Test
+    void testGetProximasVencer_NoExistenFacturas_ReturnsNotFound() {
+        // Given
+        int anio = 2023;
+        int mes = 5;
+        when(facturaService.obtenerProximasVencer(anio, mes)).thenReturn(null);
+
+        // When
+        ResponseEntity<List<FacturaEntity>> response = facturaController.getProximasVencer(anio, mes);
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
     
 }
