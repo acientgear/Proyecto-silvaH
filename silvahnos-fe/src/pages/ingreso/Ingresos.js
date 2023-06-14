@@ -132,7 +132,7 @@ const Ingresos = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
-        motivo: 0,
+        motivo: {},
         monto: '',
         descripcion: '',
     });
@@ -144,7 +144,7 @@ const Ingresos = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
-        motivo: 0,
+        motivo: {},
         monto: '',
         descripcion: '',
     }

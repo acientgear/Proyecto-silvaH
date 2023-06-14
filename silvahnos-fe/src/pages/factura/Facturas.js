@@ -147,28 +147,34 @@ const Facturas = () => {
 
     const [editedItem, setEditedItem] = useState({
         id: null,
-        borrado: false,
-        fecha_creacion: null,
-        fecha_modificacion: null,
-        fecha_borrado: null,
+        numero_factura: 0,
+        fecha_emision: '',
+        fecha_vencimiento: '',
+        fecha_pago: '',
+        monto: 0,
         observaciones: '',
-        fecha_emision: null,
-        fecha_vencimiento: null,
-        fecha_pago: null,
-        numero_factura: null,
+        borrado: false,
+        estado: {},
+        empresa: {},
+        fecha_creacion: '',
+        fecha_modificacion: '',
+        fecha_borrado: ''
     });
 
     const defaultItem = {
         id: null,
-        borrado: false,
-        fecha_creacion: null,
-        fecha_modificacion: null,
-        fecha_borrado: null,
+        numero_factura: 0,
+        fecha_emision: '',
+        fecha_vencimiento: '',
+        fecha_pago: '',
+        monto: 0,
         observaciones: '',
-        fecha_emision: null,
-        fecha_vencimiento: null,
-        fecha_pago: null,
-        numero_factura: null,
+        borrado: false,
+        estado: {},
+        empresa: {},
+        fecha_creacion: '',
+        fecha_modificacion: '',
+        fecha_borrado: ''
     }
 
     useEffect(() => {

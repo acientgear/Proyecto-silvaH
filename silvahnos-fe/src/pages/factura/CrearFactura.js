@@ -6,26 +6,25 @@ import urlweb from '../../config/config';
 
 const CrearFactura = () => {
     const [validated, setValidated] = useState(false);
-    const [facturaId, setFacturaId] = useState(0);
 
     const [factura, setFactura] = useState({
         id: null,
-        borrado: false,
-        fecha_creacion: '',
-        fecha_modificacion: '',
-        fecha_borrado: '',
-        observaciones: '',
+        numero_factura: 0,
+        fecha_emision: '',
+        fecha_vencimiento: '',
+        fecha_pago: '',
         monto: 0,
+        observaciones: '',
+        borrado: false,
         estado: {
             id: 1
         },
         empresa: {
             id: 0
         },
-        fecha_emision: '',
-        fecha_vencimiento: '',
-        fecha_pago: '',
-        numero_factura: 0,
+        fecha_creacion: '',
+        fecha_modificacion: '',
+        fecha_borrado: ''
     });
 
     const handleChange = (e) => {
