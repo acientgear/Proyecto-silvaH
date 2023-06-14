@@ -47,4 +47,13 @@ public class FacturaController {
         return ResponseEntity.ok().body(iva);
     }
 
+    @GetMapping("/proximasVencer/{anio}/{mes}")
+    public ResponseEntity<List<FacturaEntity>> getProximasVencer(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        List<FacturaEntity> facturas= facturaService.obtenerProximasVencer(anio, mes);
+        if(facturas == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(facturas);
+    }
+
 }

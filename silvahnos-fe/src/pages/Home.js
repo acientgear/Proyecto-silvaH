@@ -9,8 +9,9 @@ import urlweb from '../config/config';
 const Home = () => {
   const [ingresos, setIngresos] = useState([]);
   const [egresos, setEgresos] = useState([]);
+  const [facturas, setFacturas] = useState([]);
   const [saldo, setSaldo] = useState(0);
-  const [iva,setIva] = useState(0);
+  const [iva, setIva] = useState(0);
 
   let fechaAcual = new Date();
   let anio = fechaAcual.getFullYear();
@@ -67,10 +68,32 @@ const Home = () => {
     }
   };
 
+  const getProximasFacturasVencer = async () => {
+    try {
+      let url = 'http://' + urlweb + '/facturas/proximasVencer/' + anio + '/' + mes;
+      const response = await axios.get(url);
+      if (response.status === 200) {
+        setFacturas(response.data);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const formatearFecha = (fecha) => {
     let fechaC = fecha.split('T')[0];
     fechaC = fechaC.split('-');
     return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
+  };
+
+  const calcularDiasPorVencer = (fecha) => {
+    let fechaC = fecha.split('T')[0];
+    fechaC = fechaC.split('-');
+    let fechaVencimiento = new Date(fechaC[0], fechaC[1] - 1, fechaC[2]);
+    let fechaActual = new Date();
+    let diferencia = fechaVencimiento.getTime() - fechaActual.getTime();
+    let dias = Math.round(diferencia / (1000 * 60 * 60 * 24)) + 1;
+    return dias;
   };
 
   const formatoMonto = (monto) => {
@@ -125,6 +148,7 @@ const Home = () => {
     totalEgresosMes();
     getSaldoCuenta();
     getIva();
+    getProximasFacturasVencer();
   }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes]);
 
   return (
@@ -215,42 +239,21 @@ const Home = () => {
             <Card.Body>
               <Card.Title>Facturas más próximas a vencer</Card.Title>
               <ListGroup numbered>
-                <ListGroup.Item
-                  as="li"
-                  className="d-flex justify-content-between align-items-start"
-                >
-                  <div className="ms-2 me-auto">
-                    <div className="fw-bold">N° Factura: 131</div>
-                    Fecha de vencimiento: 04-03-2021
-                  </div>
-                  <Badge bg="warning" pill style={{ color: "black" }}>
-                    Vence en 2 días
-                  </Badge>
-                </ListGroup.Item>
-                <ListGroup.Item
-                  as="li"
-                  className="d-flex justify-content-between align-items-start"
-                >
-                  <div className="ms-2 me-auto">
-                    <div className="fw-bold">N° Factura: 132</div>
-                    Fecha de vencimiento: 04-04-2021
-                  </div>
-                  <Badge bg="warning" pill style={{ color: "black" }}>
-                    Vence en 3 días
-                  </Badge>
-                </ListGroup.Item>
-                <ListGroup.Item
-                  as="li"
-                  className="d-flex justify-content-between align-items-start"
-                >
-                  <div className="ms-2 me-auto">
-                    <div className="fw-bold">N° Factura: 133</div>
-                    Fecha de vencimiento: 04-05-2021
-                  </div>
-                  <Badge bg="warning" pill style={{ color: "black" }}>
-                    Vence en 4 días
-                  </Badge>
-                </ListGroup.Item>
+                {facturas.map((factura) => (
+                  <ListGroup.Item
+                    key={factura.id}
+                    as="li"
+                    className="d-flex justify-content-between align-items-start"
+                  >
+                    <div className="ms-2 me-auto">
+                      <div className="fw-bold">N° Factura: {factura.numero_factura}</div>
+                      Fecha de vencimiento: {formatearFecha(factura.fecha_vencimiento)}
+                    </div>
+                    <Badge bg="warning" pill style={{ color: "black" }}>
+                      Vence en {calcularDiasPorVencer(factura.fecha_vencimiento)} día(s)
+                    </Badge>
+                  </ListGroup.Item>
+                ))}
               </ListGroup>
               <Button variant="primary" href="/crearFactura" style={{ backgroundColor: "#A5C0DD", border: "none", fontWeight: "bold", color: "black", marginTop: "5px" }}>Registrar factura</Button>
             </Card.Body>

@@ -20,11 +20,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.app.silvahnosbe.entities.EstadoEntity;
 import com.app.silvahnosbe.entities.FacturaEntity;
 import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.services.FacturaService;
 
-/*@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class FacturaServiceTest {
     @Mock
     private FacturaRepository facturaRepository;
@@ -32,39 +33,101 @@ public class FacturaServiceTest {
     @InjectMocks
     private FacturaService facturaService;
 
-
-    Date fecha= new Date();
     FacturaEntity factura;
-    @BeforeEach
+    EstadoEntity estado;
 
-    void setup(){
-        factura= new FacturaEntity();
-        factura.setNumero_factura(131);
-        factura.setFecha_emision(fecha);
-        factura.setFecha_vencimiento(fecha);
-        factura.setFecha_pago(fecha);
+    @BeforeEach
+    void setUp() {
+        estado = new EstadoEntity();
+        estado.setId(1l);
+        estado.setNombre("no pagada");
+
+        factura = new FacturaEntity();
+        factura.setId(1l);
+        factura.setNumero_factura(1);
+        factura.setFecha_emision(new Date(System.currentTimeMillis()));
+        factura.setFecha_vencimiento(new Date(System.currentTimeMillis()));
+        factura.setFecha_pago(new Date(System.currentTimeMillis()));
+        factura.setMonto(14000);
         factura.setObservaciones("pintura");
         factura.setBorrado(false);
-        factura.setFecha_creacion(new Timestamp(new Date().getTime()));
+        factura.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
         facturaService.guardarFactura(factura);
     }
 
     @DisplayName("test para guardar una factura")
     @Test
-    void testGuardarFactura(){
-        //given
+    void testGuardarFactura() {
+
+        // given
         given(facturaRepository.save(factura)).willReturn(factura);
-        //when
-        FacturaEntity factura1=facturaService.guardarFactura(factura);
-        //then
+        // when
+        FacturaEntity factura1 = facturaService.guardarFactura(factura);
+        // then
         assertThat(factura1).isNotNull();
     }
 
-
     @DisplayName("test para obtener facturas")
     @Test
-    void obtenerFacturasTest(){
-        facturaService.obtenerFacturas(2021, 5);
-        verify(facturaRepository).obteberFacturas(2021, 5);
+    void testObtenerFacturas() {
+        // given
+        List<FacturaEntity> facturas = new ArrayList<>();
+        facturas.add(factura);
+        given(facturaRepository.obteberFacturas(2021, 10)).willReturn(facturas);
+        // when
+        List<FacturaEntity> facturas1 = facturaService.obtenerFacturas(2021, 10);
+        // then
+        assertThat(facturas1).isNotNull();
     }
-}*/
+
+    @DisplayName("test para obtener facturas cuando no existen")
+    @Test
+    void testObtenerFacturasCuandoNoExisten() {
+        // given
+        List<FacturaEntity> facturas = new ArrayList<>();
+        given(facturaRepository.obteberFacturas(2021, 10)).willReturn(facturas);
+        // when
+        List<FacturaEntity> facturas1 = facturaService.obtenerFacturas(2021, 10);
+        // then
+        assertThat(facturas1).isEmpty();
+    }
+
+    @DisplayName("test para obtener iva")
+    @Test
+    void testObtenerIva() {
+        // given
+        given(facturaRepository.obtenerIva(2021, 10)).willReturn(1400);
+        // when
+        Integer iva = facturaService.obtenerIva(2021, 10);
+        // then
+        assertThat(iva).isNotNull();
+    }
+
+    @DisplayName("test para obtener proximas a vencer")
+    @Test
+    void testObtenerProximasVencer() {
+        // given
+        List<FacturaEntity> facturas = new ArrayList<>();
+        facturas.add(factura);
+        given(facturaRepository.obtenerProximasVencer(2021, 10)).willReturn(facturas);
+        // when
+        List<FacturaEntity> facturas1 = facturaService.obtenerProximasVencer(2021, 10);
+        // then
+        assertThat(facturas1).isNotNull();
+    }
+
+    @DisplayName("test para obtener proximas a vencer cuando no existen")
+    @Test
+    void testObtenerProximasVencerCuandoNoExisten() {
+        // given
+        List<FacturaEntity> facturas = new ArrayList<>();
+        given(facturaRepository.obtenerProximasVencer(2021, 10)).willReturn(facturas);
+        // when
+        List<FacturaEntity> facturas1 = facturaService.obtenerProximasVencer(2021, 10);
+        // then
+        assertThat(facturas1).isEmpty();
+    }
+    
+
+
+}

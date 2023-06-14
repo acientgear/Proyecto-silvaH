@@ -26,4 +26,8 @@ public class FacturaService {
         return facturaRepository.obtenerIva(anio, mes);
     }
 
+    public List<FacturaEntity> obtenerProximasVencer(int anio, int mes){
+        return (List<FacturaEntity>) facturaRepository.obtenerProximasVencer(anio, mes);
+    }
+
 }
