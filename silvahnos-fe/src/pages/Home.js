@@ -194,7 +194,7 @@ const Home = () => {
                   {egresos.map((egreso, index) => (
                     <tr style={{ backgroundColor: colorEgreso(index) }} key={egreso.id}>
                       <td>{formatearFecha(egreso.fecha_creacion)}</td>
-                      <td>{CategoriasEgreso[egreso.motivo-1].nombre}</td>
+                      <td>{egreso.motivo.nombre}</td>
                       <td>{formatoMonto(egreso.monto)}</td>
                     </tr>
                   ))}

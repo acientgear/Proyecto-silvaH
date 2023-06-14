@@ -6,6 +6,7 @@ import urlweb from '../../config/config';
 
 function CrearEgreso() {
     const [validated, setValidated] = useState(false);
+    const [motivoId, setMotivoId] = useState(0);
 
     const [egreso, setEgreso] = useState({
         id: null,
@@ -14,8 +15,10 @@ function CrearEgreso() {
         fecha_modificacion: null,
         fecha_borrado: null,
         monto: '',
-        motivo: 0,
-        descripcion: '',
+        motivo: {
+            id: 0
+        },
+        descripcion: ''
     });
 
     const handleChange = (e) => {
@@ -31,6 +34,13 @@ function CrearEgreso() {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
+            setEgreso({
+                ...egreso,
+                "motivo":{
+                    "id": motivoId
+                }
+            });
+            console.log(egreso)
             createEgreso();
             setValidated(true);
         }
@@ -59,6 +69,7 @@ function CrearEgreso() {
                 <Col>
                     <FormEgreso 
                         egreso={egreso}
+                        setEgreso={setEgreso}
                         validated={validated}
                         modal={false}
                         handleChange={handleChange}

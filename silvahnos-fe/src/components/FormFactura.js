@@ -1,7 +1,18 @@
 import { Form, Button } from "react-bootstrap"
-import CategoriasEgreso from './data/CategoriasEgreso';
+import Empresas from './data/Empresas';
 
-const FormFactura = ({ handleCloseEdit, validated, handleSubmit, factura, handleChange, modal }) => {
+const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, setFactura, handleChange, modal }) => {
+    const handleEmpresa = (e) => {
+        setFactura({
+            ...factura,
+            "empresa": {
+                "id": e.target.value
+            }
+        });
+    }
+
+    const empresas = Empresas();
+    
     const modalFooter = () => {
         return (
             <div>
@@ -47,12 +58,12 @@ const FormFactura = ({ handleCloseEdit, validated, handleSubmit, factura, handle
                     name="empresa"
                     required
                     placeholder="Ingrese la empresa a la que le emitió la factura"
-                    onChange={handleChange}
-                    value={factura.empresa}
-                    isInvalid={factura.empresa === 0}
+                    onChange={handleEmpresa}
+                    value={factura.empresa.id}
+                    isInvalid={factura.empresa.id === 0}
                 >
                     <option value="" >Seleccione una opción</option>
-                    {CategoriasEgreso.map((categoria) => (
+                    {empresas.map((categoria) => (
                         <option key={categoria.id} value={categoria.id}>
                             {categoria.nombre}
                         </option>

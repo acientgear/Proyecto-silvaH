@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import urlweb from "../../config/config";
 
-const CategoriaEgresos = () => {
+const Empresas = () => {
     const [data, setData] = useState([])
 
     const get = async () => {
         try{
-            let url = 'http://' + urlweb + '/motivosE';
+            let url = 'http://' + urlweb + '/empresas';
             const response = await axios.get(url)
             if(response.status === 200){
                 setData(response.data)
@@ -24,4 +24,4 @@ const CategoriaEgresos = () => {
     return data;
 }
 
-export default CategoriaEgresos;
+export default Empresas;

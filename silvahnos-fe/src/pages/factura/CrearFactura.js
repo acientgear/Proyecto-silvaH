@@ -6,6 +6,7 @@ import urlweb from '../../config/config';
 
 const CrearFactura = () => {
     const [validated, setValidated] = useState(false);
+    const [facturaId, setFacturaId] = useState(0);
 
     const [factura, setFactura] = useState({
         id: null,
@@ -14,6 +15,9 @@ const CrearFactura = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         observaciones: '',
+        empresa: {
+            id: 0
+        },
         fecha_emision: null,
         fecha_vencimiento: null,
         fecha_pago: null,
@@ -34,6 +38,13 @@ const CrearFactura = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
+            setFactura({
+                ...factura,
+                "emrpresa":{
+                    "id": facturaId
+                }
+            });
+            console.log(factura)
             createFactura();
             setValidated(true);
         }
@@ -62,6 +73,7 @@ const CrearFactura = () => {
                 <Col>
                     <FormFactura
                         factura={factura}
+                        setFactura={setFactura}
                         validated={validated}
                         modal={false}
                         handleChange={handleChange}

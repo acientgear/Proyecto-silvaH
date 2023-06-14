@@ -6,6 +6,7 @@ import urlweb from '../../config/config';
 
 const CrearIngreso = () => {
     const [validated, setValidated] = useState(false);
+    const [motivoId, setMotivoId] = useState(0);
 
     const [ingreso, setIngreso] = useState({
         id: null,
@@ -15,9 +16,10 @@ const CrearIngreso = () => {
         fecha_borrado: null,
         patente: '',
         monto: 0,
-        motivo: 0,
+        motivo: {
+            id: 0
+        },
         descripcion: '',
-        
     });
 
     const handleChange = (e) => {
@@ -34,24 +36,29 @@ const CrearIngreso = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
+            setIngreso({
+                ...ingreso,
+                "motivo":{
+                    "id": motivoId
+                }
+            });
+            console.log(ingreso)
             createIngreso();
             setValidated(true);
         }
     };
-
 
     const createIngreso = async () => {
         try {
             let url = "http://"+urlweb+"/ingresos";
             let response = await axios.post(url, ingreso);
             if (response.status === 200) {
-                localStorage.setItem("showCrear", true);
                 window.location.href = "/ingresos";
             }
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
         }
-    };
+    }
 
     return (
         <Container>
@@ -64,6 +71,7 @@ const CrearIngreso = () => {
                 <Col>
                     <FormIngreso
                         ingreso={ingreso}
+                        setIngreso={setIngreso}
                         validated={validated}
                         modal={false}
                         handleChange={handleChange}

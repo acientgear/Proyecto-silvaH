@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback } from 'react';
 import { Button, Col, Container, Modal, Row, Table, Pagination } from 'react-bootstrap';
 import InputMonth from '../../components/InputMonth';
 import FormEgreso from '../../components/FormEgreso';
-import CategoriasEgreso from '../../components/data/CategoriasEgreso';
 import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
@@ -195,7 +194,7 @@ const Egresos = () => {
                                     <tr key={egreso.id}>
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
                                         <td>{egreso.descripcion}</td>
-                                        <td>{CategoriasEgreso[egreso.motivo-1].nombre}</td>
+                                        <td>{egreso.motivo.nombre}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
                                             <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(egreso)}><AiFillEdit/></a>

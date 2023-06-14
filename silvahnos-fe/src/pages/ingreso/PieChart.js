@@ -8,6 +8,7 @@ import CategoriasIngreso from '../../components/data/CategoriasIngreso';
 const PieChartIngreso = ({anio,mes}) => {
 
     const [montosOrigen, setMontosOrigen] = useState([]);
+    const motivos = CategoriasIngreso();
 
     useEffect(() => {
         const getMontoOrigen = async () => {
@@ -26,7 +27,7 @@ const PieChartIngreso = ({anio,mes}) => {
     }, [anio,mes]);
 
     const data = {
-        labels: montosOrigen.map((item) => CategoriasIngreso[item.motivo-1].nombre),
+        labels: montosOrigen.map((item) => motivos.nombre),
         datasets: [
             {
                 label: 'Monto total',

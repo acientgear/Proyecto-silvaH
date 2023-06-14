@@ -28,7 +28,7 @@ public class IngresoEntity {
     private boolean borrado;
 
     // Relacion con motivo
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "motivo")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private MotivoIEntity motivo;

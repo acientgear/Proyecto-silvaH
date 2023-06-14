@@ -8,6 +8,7 @@ import CategoriasEgreso from '../../components/data/CategoriasEgreso';
 const PieChartEgreso = ({ anio, mes }) => {
 
     const [montosOrigen, setMontosOrigen] = useState([]);
+    const motivos = CategoriasEgreso();
 
     useEffect(() => {
         const getMontoOrigen = async () => {
@@ -26,7 +27,7 @@ const PieChartEgreso = ({ anio, mes }) => {
     }, [anio, mes]);
 
     const data = {
-        labels: montosOrigen.map((item) => CategoriasEgreso[item.motivo-1].nombre),
+        labels: montosOrigen.map((item) => motivos.nombre),
         datasets: [
             {
                 label: 'Monto total: ',

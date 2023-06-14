@@ -1,7 +1,17 @@
 import { Form, Button } from 'react-bootstrap';
 import CategoriasEgreso from './data/CategoriasEgreso';
 
-const FormEgreso = ({ egreso, validated, modal, handleChange, handleSubmit, handleCloseEdit }) => {
+const FormEgreso = ({ egreso, setEgreso, validated, modal, handleChange, handleSubmit, handleCloseEdit}) => {
+    const handleMotivo = (e) => {
+        setEgreso({
+            ...egreso,
+            "motivo": {
+                "id": e.target.value
+            }
+        });
+    }
+
+    const motivos = CategoriasEgreso();
 
     const modalFooter = () => {
         return (
@@ -33,12 +43,12 @@ const FormEgreso = ({ egreso, validated, modal, handleChange, handleSubmit, hand
                     name="motivo"
                     required
                     placeholder="Ingrese de donde viene el egreso"
-                    onChange={handleChange}
-                    value={egreso.motivo}
-                    isInvalid={egreso.motivo === 0}
+                    onChange={handleMotivo}
+                    value={egreso.motivo.id}
+                    isInvalid={egreso.motivo.id === 0}
                 >
-                    <option value= "" >Seleccione una opción</option>
-                    {CategoriasEgreso.map((categoria) => (
+                    <option value="0" >Seleccione una opción</option>
+                    {motivos.map((categoria) => (
                         <option key={categoria.id} value={categoria.id}>
                             {categoria.nombre}
                         </option>

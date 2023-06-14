@@ -1,7 +1,18 @@
 import CategoriasIngreso from "./data/CategoriasIngreso";
 import { Button, Form } from "react-bootstrap";
 
-const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit, handleSubmit }) => {
+const FormIngreso = ({ ingreso, setIngreso, validated, modal, handleChange, handleCloseEdit, handleSubmit }) => {
+
+    const handleMotivo = (e) => {
+        setIngreso({
+            ...ingreso,
+            "motivo": {
+                "id": e.target.value
+            }
+        });
+    }
+
+    const motivos = CategoriasIngreso();
 
     const modalFooter = () => {
         return (
@@ -44,12 +55,12 @@ const FormIngreso = ({ ingreso, validated, modal, handleChange, handleCloseEdit,
                     required
                     aria-label="select"
                     placeholder="Ingrese de donde viene"
-                    onChange={handleChange}
-                    value={ingreso.motivo}
-                    isInvalid={ingreso.motivo === 0}
+                    onChange={handleMotivo}
+                    value={ingreso.motivo.id}
+                    isInvalid={ingreso.motivo.id === 0}
                 >
                     <option key={0} value="">Seleccione una opción</option>
-                    {CategoriasIngreso.map((categoria) => (
+                    {motivos.map((categoria) => (
                         <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
                     ))}
                 </Form.Select>
