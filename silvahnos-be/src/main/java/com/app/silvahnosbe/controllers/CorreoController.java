@@ -24,11 +24,17 @@ public class CorreoController {
     CorreoService correoService;
 
     @GetMapping("")
-    public ResponseEntity<List<CorreoEntity>> getParametros(){
+    public ResponseEntity<List<CorreoEntity>> getCorreos(){
         List<CorreoEntity> correos= correoService.obtenerCorreos();
         if(correos == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(correos);
+    }
+
+    @PostMapping("/{nuevoCorreo}")
+    public ResponseEntity<CorreoEntity> actualizarCorreo(@PathVariable("nuevoCorreo") String nuevoCorreo){
+        CorreoEntity correoActualizado = correoService.actualizarCorreo(nuevoCorreo);
+        return ResponseEntity.ok().body(correoActualizado);
     }
 }

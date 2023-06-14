@@ -36,4 +36,13 @@ public class MotivoIController {
         }
         return ResponseEntity.ok().body(motivosI);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MotivoIEntity> getMotivoIById(@PathVariable(value = "id") Long id){
+        MotivoIEntity motivoI = motivoIService.obtenerMotivoIPorId(id);
+        if(motivoI == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(motivoI);
+    }
 }

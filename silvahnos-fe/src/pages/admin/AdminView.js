@@ -2,6 +2,8 @@ import { Row, Col} from 'react-bootstrap'
 import MotivoI from './MotivoI';
 import MotivoE from './MotivoE';
 import Empresas from './Empresas';
+import Parametro from './Parametro';
+import Correo from './Correo';
 
 const AdminView = () => {
     return (
@@ -16,6 +18,14 @@ const AdminView = () => {
                 </Col>
                 <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                     <Empresas />
+                </Col>
+            </Row>
+            <Row>
+                <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
+                    <Parametro />
+                </Col>
+                <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
+                    <Correo />
                 </Col>
             </Row>
         </div >

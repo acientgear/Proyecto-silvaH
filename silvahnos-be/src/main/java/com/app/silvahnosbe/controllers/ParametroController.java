@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +34,15 @@ public class ParametroController {
     }
 
     @PostMapping
-    public ResponseEntity<ParametroEntity> createFactura(@RequestBody ParametroEntity parametro){
+    public ResponseEntity<ParametroEntity> createParametro(@RequestBody ParametroEntity parametro){
         ParametroEntity parametroGuardado = parametroService.guardarParametro(parametro);
         return ResponseEntity.ok().body(parametroGuardado);
     }
+
+    @PostMapping("/{nuevoValor}")
+    public ResponseEntity<ParametroEntity> actualizarParametro(@PathVariable("nuevoValor") String nuevoValor){
+        ParametroEntity parametroActualizado = parametroService.actualizarParametro(nuevoValor);
+        return ResponseEntity.ok().body(parametroActualizado);
+    }
+
 }

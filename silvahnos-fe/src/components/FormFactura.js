@@ -1,6 +1,7 @@
 import { Form, Button } from "react-bootstrap"
+import CategoriasEgreso from './data/CategoriasEgreso';
 
-const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, handleChange, modal}) => {
+const FormFactura = ({ handleCloseEdit, validated, handleSubmit, factura, handleChange, modal }) => {
     const modalFooter = () => {
         return (
             <div>
@@ -22,7 +23,7 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, handleC
         )
     }
 
-    return(
+    return (
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formFactura">
                 <Form.Label>N° Factura</Form.Label>
@@ -36,6 +37,29 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, handleC
                 />
                 <Form.Control.Feedback type="invalid">
                     Se debe ingresar un número de factura valido.
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formFactura">
+                <Form.Label>Empresa</Form.Label>
+                <Form.Select
+                    aria-label="select"
+                    name="empresa"
+                    required
+                    placeholder="Ingrese la empresa a la que le emitió la factura"
+                    onChange={handleChange}
+                    value={factura.empresa}
+                    isInvalid={factura.empresa === 0}
+                >
+                    <option value="" >Seleccione una opción</option>
+                    {CategoriasEgreso.map((categoria) => (
+                        <option key={categoria.id} value={categoria.id}>
+                            {categoria.nombre}
+                        </option>
+                    ))}
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                    Seleccione una opción.
                 </Form.Control.Feedback>
             </Form.Group>
 

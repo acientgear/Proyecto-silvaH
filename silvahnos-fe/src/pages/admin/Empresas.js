@@ -126,8 +126,6 @@ const Empresas = () => {
         getEmpresas();
     }, []);
 
-    console.log(empresas);
-
     return (
         <div>
             <Card className="cardsH">

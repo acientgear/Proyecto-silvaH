@@ -26,4 +26,10 @@ public class ParametroService {
 
         return parametroRepository.save(parametro);
     }
+
+    public ParametroEntity actualizarParametro(String nuevoValor){
+        ParametroEntity parametro = parametroRepository.findById(1L).orElse(null);
+        parametro.setValor(nuevoValor);
+        return parametroRepository.save(parametro);
+    }
 }

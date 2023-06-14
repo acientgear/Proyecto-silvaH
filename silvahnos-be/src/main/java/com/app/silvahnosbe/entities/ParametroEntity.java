@@ -15,7 +15,5 @@ public class ParametroEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-
-    private String nombre;
     private String valor;
 }

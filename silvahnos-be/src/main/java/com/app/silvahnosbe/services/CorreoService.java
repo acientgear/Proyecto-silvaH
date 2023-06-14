@@ -21,4 +21,10 @@ public class CorreoService {
     public CorreoEntity obtenerCorreoPorId(Long id){
         return correoRepository.findById(id).orElse(null);
     }
+
+        public CorreoEntity actualizarCorreo(String nuevoCorreo){
+        CorreoEntity correo = correoRepository.findById(1L).orElse(null);
+        correo.setDireccion(nuevoCorreo);
+        return correoRepository.save(correo);
+    }
 }
