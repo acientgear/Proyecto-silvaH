@@ -74,5 +74,19 @@ public class RolControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(rol, response.getBody());
     }
+
+    @DisplayName("Test para obtener un rol por id cuando no existe")
+    @Test
+    public void testGetRolById_NoExistenRol_ReturnsNotFound() {
+        // Given
+        when(rolService.obtenerRolPorId(1L)).thenReturn(null);
+
+        // When
+        ResponseEntity<RolEntity> response = rolController.getRol(1L);
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
     
 }
