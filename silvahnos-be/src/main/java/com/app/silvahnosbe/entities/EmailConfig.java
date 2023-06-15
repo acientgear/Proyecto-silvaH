@@ -20,10 +20,13 @@ public class EmailConfig {
     @Column(unique = true,nullable = false)
     private Long id;
 
+
+
     private String host;
     private int port;
     private String username;
     private String password;
+    private String texto;
     private boolean auth;
     private boolean starttls;
 }

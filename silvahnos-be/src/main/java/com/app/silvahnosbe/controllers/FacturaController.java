@@ -3,6 +3,7 @@ package com.app.silvahnosbe.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -50,6 +51,15 @@ public class FacturaController {
     @GetMapping("/proximasVencer/{anio}/{mes}")
     public ResponseEntity<List<FacturaEntity>> getProximasVencer(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
         List<FacturaEntity> facturas= facturaService.obtenerProximasVencer(anio, mes);
+        if(facturas == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(facturas);
+    }
+
+    @GetMapping("/vencer")
+    public ResponseEntity<List<FacturaEntity>> facturasV(@Param("dias") int dias){
+        List<FacturaEntity> facturas= facturaService.facturaV(dias);
         if(facturas == null){
             return ResponseEntity.notFound().build();
         }

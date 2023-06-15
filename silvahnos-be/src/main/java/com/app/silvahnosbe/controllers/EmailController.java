@@ -18,4 +18,10 @@ public class EmailController {
         emailService.sendEmail();
         return ResponseEntity.ok("Correo electronico enviado correctamente");
     }
+
+    @PostMapping("/sendCron")
+    public ResponseEntity<String>sendCron(){
+        emailService.cronEmail();
+        return ResponseEntity.ok().body("correo electronico enviado correctamente");
+    }
 }

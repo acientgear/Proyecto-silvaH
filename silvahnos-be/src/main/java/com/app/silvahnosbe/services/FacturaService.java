@@ -15,7 +15,7 @@ public class FacturaService {
     FacturaRepository facturaRepository;
 
     public List<FacturaEntity> obtenerFacturas(int anio, int mes){
-        return (List<FacturaEntity>) facturaRepository.obteberFacturas(anio, mes);
+        return  facturaRepository.obteberFacturas(anio, mes);
     }
 
     public FacturaEntity guardarFactura(FacturaEntity factura){
@@ -28,6 +28,10 @@ public class FacturaService {
 
     public List<FacturaEntity> obtenerProximasVencer(int anio, int mes){
         return (List<FacturaEntity>) facturaRepository.obtenerProximasVencer(anio, mes);
+    }
+
+    public List<FacturaEntity> facturaV (int dias){
+        return facturaRepository.facturaV(dias);
     }
 
 }
