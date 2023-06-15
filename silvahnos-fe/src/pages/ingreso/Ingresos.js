@@ -12,7 +12,7 @@ const Ingresos = () => {
     const pageSize = 6;
 
     const [ingresos, setIngresos] = useState([]);
-    const [mes, setMes] = useState((new Date()).getMonth() + 1);
+    const [mes, setMes] = useState((new Date()).getMonth()+1);
     const [anio, setAnio] = useState((new Date()).getFullYear());
 
     const [showDelete, setShowDelete] = useState(false);
@@ -169,6 +169,7 @@ const Ingresos = () => {
         fechaC = fechaC.split('-');
         return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
     };
+    
 
     let total = 0;
     ingresos.forEach(ingreso => {
