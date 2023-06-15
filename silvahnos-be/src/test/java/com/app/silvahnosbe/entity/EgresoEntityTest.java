@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
 
-public class EgresoEntityTets {
+public class EgresoEntityTest {
 
     @Test
     void testDescripcion() {
