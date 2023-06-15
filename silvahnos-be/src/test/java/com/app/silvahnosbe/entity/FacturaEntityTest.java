@@ -7,6 +7,19 @@ import org.junit.jupiter.api.Test;
 import com.app.silvahnosbe.entities.FacturaEntity;
 
 public class FacturaEntityTest {
+
+    @Test
+    void testId(){
+        // Given
+        FacturaEntity factura = new FacturaEntity();
+
+        // When
+        factura.setId(1l);
+        Long id = factura.getId();
+
+        // Then
+        assertEquals(1, id);
+    }
     
     @Test
     void testNumeroFactura() {
