@@ -199,8 +199,8 @@ const Egresos = () => {
                                         <td>{egreso.motivo.nombre}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
-                                            <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(egreso)}><AiFillEdit/></a>
-                                            <a style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(egreso)}><AiFillDelete/></a>
+                                            <a href="" style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(egreso)}><AiFillEdit/></a>
+                                            <a href="" style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(egreso)}><AiFillDelete/></a>
                                         </td>
                                     </tr>
 
