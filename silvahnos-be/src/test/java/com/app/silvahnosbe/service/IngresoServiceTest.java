@@ -2,7 +2,6 @@ package com.app.silvahnosbe.service;
 
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -23,8 +22,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.app.silvahnosbe.entities.IngresoEntity;
 import com.app.silvahnosbe.repositories.IngresoRepository;
 import com.app.silvahnosbe.services.IngresoService;
-
-import jakarta.inject.Inject;
 
 @ExtendWith(MockitoExtension.class)
 public class IngresoServiceTest {

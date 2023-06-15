@@ -23,7 +23,6 @@ public class ParametroService {
     }
 
     public ParametroEntity guardarParametro(ParametroEntity parametro){
-
         return parametroRepository.save(parametro);
     }
 
