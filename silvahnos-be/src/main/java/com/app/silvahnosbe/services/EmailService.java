@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -50,15 +50,18 @@ public class EmailService {
     }
 
 
-    @Scheduled(cron="0 */15 * * * *")
+    @Scheduled(cron="0 */5 * * * *")
     public void cronEmail(){
         int dias = Integer.valueOf(parametroRepository.findById(1l).orElseThrow().getValor());
         String destino=correoRepository.findById(1L).get().getDireccion();
         List <FacturaEntity> facturas= facturaRepository.facturaV(dias);
+        if (facturas==null){
+            return ;
+        }
         String mensaje="\n";
         int i=0;
         while (i<facturas.size()){
-            mensaje=mensaje +"n° :"+ facturas.get(i).getNumero_factura() +  "\n " ;
+            mensaje=mensaje +"n° :"+ facturas.get(i).getNumero_factura() +"\n " ;
             i=i+1;
 
         }
@@ -69,6 +72,7 @@ public class EmailService {
         message.setTo(destino);
         message.setText(emailConfig.getTexto()+ mensaje);
         mailSender.send(message);
+       // facturaRepository.updateEstado(dias);
 
     }
 
