@@ -22,9 +22,10 @@ public class CorreoService {
         return correoRepository.findById(id).orElse(null);
     }
 
-        public CorreoEntity actualizarCorreo(String nuevoCorreo){
+    public CorreoEntity actualizarCorreo(String nuevoCorreo){
         CorreoEntity correo = correoRepository.findById(1L).orElse(null);
         correo.setDireccion(nuevoCorreo);
-        return correoRepository.save(correo);
+        correoRepository.save(correo);
+        return correo;
     }
 }

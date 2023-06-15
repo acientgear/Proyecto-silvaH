@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Modal, Pagination, Row, Table, ListGroup } from 'react-bootstrap';
 import urlweb from '../../config/config';
 import InputMonth from '../../components/InputMonth';
 import FormFactura from '../../components/FormFactura';
@@ -9,6 +9,7 @@ import { AiFillEdit, AiFillDelete, AiFillCheckCircle } from "react-icons/ai";
 
 const Facturas = () => {
     const [currentPage, setCurrentPage] = useState(1);
+    const [iva, setIva] = useState(0);
     const pageSize = 6;
 
     const [mes, setMes] = useState((new Date()).getMonth() + 1);
@@ -97,7 +98,7 @@ const Facturas = () => {
             const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
             const anio = fechaActual.getFullYear();
             return anio + '-' + mes + '-' + dia;
-          })();
+        })();
         updateFactura();
     };
 
@@ -112,6 +113,18 @@ const Facturas = () => {
 
     const handleChangeAnio = (e) => {
         setAnio(e.target.value);
+    };
+
+    const getIva = async () => {
+        try {
+            let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
+            const response = await axios.get(url);
+            if (response.status === 200) {
+                setIva(response.data);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
     };
 
     const getFacturas = useCallback(async () => {
@@ -205,7 +218,8 @@ const Facturas = () => {
     useEffect(() => {
         getFacturas();
         handleAlertCreate();
-    }, [getFacturas,handleAlertCreate]);
+        getIva();
+    }, [getFacturas, handleAlertCreate]);
 
     return (
         <>
@@ -221,6 +235,11 @@ const Facturas = () => {
                             get={getFacturas}
                         />
                     </Col>
+                    <Col>
+                        <ListGroup>
+                            <ListGroup.Item style={{ fontWeight: "bold" }}>IVA a pagar: {formatoMonto(iva)}</ListGroup.Item>
+                        </ListGroup>
+                    </Col>
                     <Col className='d-flex align-items-center justify-content-md-end'><Button href="/crearFactura" style={{ backgroundColor: "rgb(165, 192, 221)", color: "black", border: "none", fontWeight: "bold" }}>Registrar una factura</Button></Col>
                 </Row>
                 <Row>
@@ -229,6 +248,7 @@ const Facturas = () => {
                             <thead>
                                 <tr>
                                     <th>N° factura</th>
+                                    <th>Empresa</th>
                                     <th>Fecha emision</th>
                                     <th>Monto</th>
                                     <th>Fecha vencimiento</th>
@@ -242,6 +262,7 @@ const Facturas = () => {
                                 {paginatedData.map((factura) => (
                                     <tr key={factura.id}>
                                         <td>{factura.numero_factura}</td>
+                                        <td>{factura.empresa.nombre}</td>
                                         <td>{formatearFecha(factura.fecha_emision)}</td>
                                         <td>{formatoMonto(factura.monto)}</td>
                                         <td>{formatearFecha(factura.fecha_vencimiento)}</td>
@@ -249,9 +270,9 @@ const Facturas = () => {
                                         <td>{factura.estado.nombre}</td>
                                         <td>{factura.observaciones}</td>
                                         <td>
-                                            <a style={{cursor: "pointer", marginRight: 2, color: "#198754"}} onClick={() => handleShowCheck(factura)}><AiFillCheckCircle/></a>
-                                            <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(factura)}><AiFillEdit/></a>
-                                            <a style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(factura)}><AiFillDelete/></a>
+                                            <a style={{ cursor: "pointer", marginRight: 2, color: "#198754" }} onClick={() => handleShowCheck(factura)}><AiFillCheckCircle /></a>
+                                            <a style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(factura)}><AiFillEdit /></a>
+                                            <a style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(factura)}><AiFillDelete /></a>
                                         </td>
                                     </tr>
                                 ))}
@@ -270,10 +291,10 @@ const Facturas = () => {
                         </Pagination>
                     </Col>
                 </Row>
-            </Container>
+            </Container >
 
             {/*Modal para marcar como pagada*/}
-            <Modal show={showCheck} onHide={handleCloseCheck}>
+            < Modal show={showCheck} onHide={handleCloseCheck} >
                 <Modal.Header closeButton>
                     <Modal.Title>Marcar como pagada</Modal.Title>
                 </Modal.Header>
@@ -284,10 +305,10 @@ const Facturas = () => {
                     <Button variant='secondary' onClick={handleCloseCheck}>Cerrar</Button>
                     <Button variant='success' onClick={handleCheck}>Marcar como pagada</Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
 
             {/*Modal para editar*/}
-            <Modal show={showEdit} onHide={handleCloseEdit}>
+            < Modal show={showEdit} onHide={handleCloseEdit} >
                 <Modal.Header closeButton>
                     <Modal.Title>Editar Factura</Modal.Title>
                 </Modal.Header>
@@ -302,10 +323,10 @@ const Facturas = () => {
                         handleCloseEdit={handleCloseEdit}
                     />
                 </Modal.Body>
-            </Modal>
+            </Modal >
 
             {/*Modal para eliminar*/}
-            <Modal show={showDelete} onHide={handleCloseDelete}>
+            < Modal show={showDelete} onHide={handleCloseDelete} >
                 <Modal.Header closeButton>
                     <Modal.Title>Eliminar Factura</Modal.Title>
                 </Modal.Header>
@@ -316,7 +337,7 @@ const Facturas = () => {
                     <Button variant='secondary' onClick={handleCloseDelete}>Cerrar</Button>
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
 
             {showAlertDelete && (<Alerta mensaje="Factura eliminada correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete} />)}
             {showAlertEdit && (<Alerta mensaje="Factura editada correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
