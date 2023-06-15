@@ -141,5 +141,36 @@ public class FacturaControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    @DisplayName("Test para obtener las facturasV (pedro)")
+    @Test
+    void testMetodoFacturasV2() {
+        // Given
+        int dias = 4;
+        List<FacturaEntity> facturas = new ArrayList<>();
+        facturas.add(new FacturaEntity());
+        when(facturaService.facturaV(dias)).thenReturn(facturas);
+
+        // When
+        ResponseEntity<List<FacturaEntity>> response = facturaController.facturasV(dias);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(facturas, response.getBody());
+    }
+
+    @DisplayName("Test para obtener las facturasV (pedro) cuando no existen facturas")
+    @Test
+    void testMetodoFacturasV2_NoExistenFacturas_ReturnsNotFound() {
+        // Given
+        int dias = 4;
+        when(facturaService.facturaV(dias)).thenReturn(null);
+
+        // When
+        ResponseEntity<List<FacturaEntity>> response = facturaController.facturasV(dias);
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
     
 }
