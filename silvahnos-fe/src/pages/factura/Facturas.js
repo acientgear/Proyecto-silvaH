@@ -34,7 +34,7 @@ const Facturas = () => {
     }, []);
 
     const handlePageChange = (page) => {
-        if(page < 1 || page > Math.ceil(egresos.length / pageSize))
+        if(page < 1 || page > Math.ceil(facturas.length / pageSize))
             return;
         setCurrentPage(page);
     }
