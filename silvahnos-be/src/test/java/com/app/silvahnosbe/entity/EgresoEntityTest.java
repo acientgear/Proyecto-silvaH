@@ -2,11 +2,56 @@ package com.app.silvahnosbe.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.sql.Timestamp;
+
 import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
+import com.app.silvahnosbe.entities.MotivoEEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 
 public class EgresoEntityTest {
+
+    @Test
+    void testAllArgsConsstructor(){
+        // Given
+        MotivoEEntity motivoe = new MotivoEEntity();
+        MovimientoEntity movimiento = new MovimientoEntity();
+        Timestamp fecha = new Timestamp(System.currentTimeMillis());
+        EgresoEntity egreso = new EgresoEntity();
+
+        egreso.setId(1l);
+        egreso.setDescripcion("descripcion");
+        egreso.setMonto(12345);
+        egreso.setBorrado(false);
+        egreso.setMotivo(motivoe);
+        egreso.setMovimiento(movimiento);
+        egreso.setFecha_creacion(fecha);
+        egreso.setFecha_modificacion(fecha);
+        egreso.setFecha_borrado(fecha);
+
+        // When
+        Long id = egreso.getId();
+        String descripcion = egreso.getDescripcion();
+        int monto = egreso.getMonto();
+        boolean borrado = egreso.isBorrado();
+        Object motivoe1 = egreso.getMotivo();
+        Object movimiento1 = egreso.getMovimiento();
+        Object fechaCreacion = egreso.getFecha_creacion();
+        Object fechaModificacion = egreso.getFecha_modificacion();
+        Object fechaBorrado = egreso.getFecha_borrado();
+
+        // Then
+        assertEquals(1, id);
+        assertEquals("descripcion", descripcion);
+        assertEquals(12345, monto);
+        assertEquals(false, borrado);
+        assertEquals(motivoe1, motivoe);
+        assertEquals(movimiento, movimiento1);
+        assertEquals(fecha, fechaCreacion);
+        assertEquals(fecha, fechaModificacion);
+        assertEquals(fecha, fechaBorrado);
+    }
 
     @Test
     void testDescripcion() {
