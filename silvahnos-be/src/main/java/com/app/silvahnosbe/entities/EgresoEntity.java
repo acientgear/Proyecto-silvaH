@@ -25,7 +25,7 @@ public class EgresoEntity {
     private Long id;
     private int monto;
     private String descripcion;
-    private Boolean borrado;
+    private boolean borrado;
 
     // Relacion con motivo
     @ManyToOne(fetch = FetchType.LAZY)
