@@ -93,7 +93,7 @@ public class IngresoServiceTest {
         //when
         IngresoEntity ingreso1=ingresoService.obtenerIngresoPorId(1l);
         //then
-        assertThat(ingreso1.getId().equals(1));
+        assertThat(ingreso1.getId().equals(1l));
     }
 
     @DisplayName("test para obtenerlos últimos ingresos - caso ingresos > 3")
