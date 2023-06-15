@@ -9,6 +9,19 @@ import com.app.silvahnosbe.entities.IngresoEntity;
 public class IngresoEntityTest {
 
     @Test
+    void testId() {
+        // Given
+        IngresoEntity ingreso = new IngresoEntity();
+
+        // When
+        ingreso.setId(1l);
+        Long id = ingreso.getId();
+
+        // Then
+        assertEquals(1, id);
+    }
+
+    @Test
     void testDescripcion() {
         // Given
         IngresoEntity ingreso = new IngresoEntity();
@@ -35,6 +48,19 @@ public class IngresoEntityTest {
     }
 
     @Test
+    void testPatente(){
+        // Given
+        IngresoEntity ingreso = new IngresoEntity();
+
+        // When
+        ingreso.setPatente(null);
+        Object patente = ingreso.getPatente();
+
+        // Then
+        assertEquals(null, patente);
+    }
+
+    @Test
     void testBorrado() {
         // Given
         IngresoEntity ingreso = new IngresoEntity();
@@ -45,6 +71,19 @@ public class IngresoEntityTest {
 
         // Then
         assertEquals(false, borrado);
+    }
+
+    @Test
+    void testFactura(){
+        // Given
+        IngresoEntity ingreso = new IngresoEntity();
+
+        // When
+        ingreso.setFactura(null);
+        Object factura = ingreso.getFactura();
+
+        // Then
+        assertEquals(null, factura);
     }
 
     @Test
