@@ -44,7 +44,7 @@ public class EmailService {
         message.setFrom(emailConfig.getUsername());
         message.setTo("luis.toro.f@usach.cl");
         message.setSubject("Notificación factura");
-        message.setText(emailConfig.getTexto()+"LOOOOOOOOOOL");
+        message.setText("Factura 131 está por vencer");
 
         mailSender.send(message);
     }
