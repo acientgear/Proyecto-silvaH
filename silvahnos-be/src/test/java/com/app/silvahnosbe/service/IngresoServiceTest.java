@@ -82,7 +82,6 @@ public class IngresoServiceTest {
         //when
         List<IngresoEntity> ingresos=ingresoService.obtenerIngresos(2023,5);
         // then
-        assertThat(ingresos).isNotNull();
         assertThat(ingresos.size()).isEqualTo(2);
     }
 
@@ -94,7 +93,7 @@ public class IngresoServiceTest {
         //when
         IngresoEntity ingreso1=ingresoService.obtenerIngresoPorId(1l);
         //then
-        assertThat(ingreso1).isNotNull();
+        assertThat(ingreso1.getId().equals(1));
     }
 
     @DisplayName("test para obtenerlos últimos ingresos - caso ingresos > 3")
@@ -125,7 +124,6 @@ public class IngresoServiceTest {
         //when
         List<IngresoEntity> ingresos=ingresoService.obtenerUltimosIngresos();
         // then
-        assertThat(ingresos).isNotNull();
         assertThat(ingresos.size()).isEqualTo(3);
     }
 
@@ -144,7 +142,6 @@ public class IngresoServiceTest {
         //when
         List<IngresoEntity> ingresos=ingresoService.obtenerUltimosIngresos();
         // then
-        assertThat(ingresos).isNotNull();
         assertThat(ingresos.size()).isEqualTo(2);
     }
 
@@ -166,7 +163,6 @@ public class IngresoServiceTest {
         //when
         int Ingresos=ingresoService.obtenerTotalIngresosPorMes(2023,3);
         //then
-        assertThat(Ingresos).isNotNull();
         assertThat(Ingresos).isEqualTo(180000);
 
     }
@@ -179,7 +175,6 @@ public class IngresoServiceTest {
         //when
         int Ingresos=ingresoService.obtenerMontoPorDia(2023,5,23);
         //then
-        assertThat(Ingresos).isNotNull();
         assertThat(Ingresos).isEqualTo(180000);
 
     }
@@ -192,7 +187,6 @@ public class IngresoServiceTest {
         //when
         int Ingresos=ingresoService.obtenerSaldoCuenta(5);
         //then
-        assertThat(Ingresos).isNotNull();
         assertThat(Ingresos).isEqualTo(180000);
 
     }
