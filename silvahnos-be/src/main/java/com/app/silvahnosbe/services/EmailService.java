@@ -42,9 +42,9 @@ public class EmailService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(emailConfig.getUsername());
-        message.setTo("ppaillao@gmail.com");
-        message.setSubject("probando");
-        message.setText(emailConfig.getTexto()+"algo");
+        message.setTo("luis.toro.f@usach.cl");
+        message.setSubject("Notificación factura");
+        message.setText("Factura 131 está por vencer");
 
         mailSender.send(message);
     }
