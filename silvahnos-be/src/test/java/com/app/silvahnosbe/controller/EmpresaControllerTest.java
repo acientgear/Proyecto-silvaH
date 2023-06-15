@@ -86,5 +86,18 @@ public class EmpresaControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(empresa, response.getBody());
     }
+
+    @DisplayName("Test para obtener un egreso por id cuando no existe")
+    @Test
+    void testGetEmpresaById_EmpresaNoExiste_ReturnsNotFound() {
+        // Given
+        when(empresaService.obtenerEmpresaPorId(1L)).thenReturn(null);
+
+        // When
+        ResponseEntity<EmpresaEntity> response = empresaController.getEmpresaById(1L);
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
     
 }
