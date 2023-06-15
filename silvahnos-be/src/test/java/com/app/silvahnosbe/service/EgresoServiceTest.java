@@ -93,7 +93,6 @@ public class EgresoServiceTest {
         // when
         List<EgresoEntity> egresos = egresoService.obtenerEgresoPorAnioAndMes(2023, 3);
         // then
-        assertThat(egresos).isNotNull();
         assertThat(egresos.size()).isEqualTo(2);
     }
 
@@ -109,7 +108,6 @@ public class EgresoServiceTest {
         // when
         List<EgresoEntity> egresos = egresoService.obtenerEgresoPorAnioAndMes(2023, 3);
         // then
-        assertThat(egresos).isEmpty();
         assertThat(egresos.size()).isEqualTo(0);
     }
 
@@ -131,7 +129,6 @@ public class EgresoServiceTest {
         // when
         List<EgresoEntity> egresos = egresoService.obtenerUltimosEgresos();
         // then
-        assertThat(egresos).isNotNull();
         assertThat(egresos.size()).isLessThan(4);
 
     }
@@ -154,7 +151,6 @@ public class EgresoServiceTest {
         // when
         int egresos = egresoService.obtenerTotalEgresosPorMes(2023, 3);
         // then
-        assertThat(egresos).isNotNull();
         assertThat(egresos).isEqualTo(45000);
 
     }
@@ -178,7 +174,6 @@ public class EgresoServiceTest {
         // when
         int egresos = egresoService.obtenerMontoPorDia(2023, 3, 1);
         // then
-        assertThat(egresos).isNotNull();
         assertThat(egresos).isEqualTo(30000);
 
     }
