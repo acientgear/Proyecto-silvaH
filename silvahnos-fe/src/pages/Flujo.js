@@ -25,10 +25,11 @@ const Flujo = () => {
     const [registros, setRegistros] = useState([]);
     const mes = new Date().getMonth() + 1;
     const anio = new Date().getFullYear();
+    const [tabType, setTabType] = useState('Anual');
 
     const getTotalPorMes = useCallback(async (tipo, anio, mes) => {
         try {
-            let url = 'http://'+urlweb+'/' + tipo + '/total/' + anio + '/' + mes;
+            let url = 'http://' + urlweb + '/' + tipo + '/total/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 return response.data;
@@ -55,7 +56,7 @@ const Flujo = () => {
 
     const getRegistros = useCallback(async () => {
         try {
-            let url = 'http://'+urlweb+'/registros/' + anio + '/' + mes;
+            let url = 'http://' + urlweb + '/registros/' + anio + '/' + mes;
             const response = await axios.get(url);
             if (response.status === 200) {
                 setRegistros(response.data);
@@ -85,9 +86,89 @@ const Flujo = () => {
     }, [getTotalMontosPorMes]);
 
     useEffect(() => {
-        getRegistros();
         fetchMontos();
-    }, [fetchMontos, getRegistros]);
+    }, [fetchMontos]);
+
+    const tabGraficos = () => {
+        return (
+            <Row xs={1} sm={2}>
+                <Col>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Ingresos y egresos</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
+                            <div style={{ width: "100%", height: "250px", margin: "auto", justifyContent: "center" }}>
+                                <LineChart />
+                            </div>
+                        </Card.Body>
+                    </Card>
+                    <br></br>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Ingresos y egresos</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">Anual</Card.Subtitle>
+                            <div style={{ width: "100%", height: "250px", margin: "auto", justifyContent: "center" }}>
+                                <GraficoBarras />
+                            </div>
+                        </Card.Body>
+                    </Card>
+
+                </Col>
+                <Col>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Porcentaje ingresos y egresos</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
+                            <Tabs justify
+                                defaultActiveKey="Ingresos"
+                                id="uncontrolled-tab-example"
+                                style={{ justifyContent: "center" }}
+                            >
+                                <Tab eventKey="Ingresos" title="Ingresos" style={{ color: "black" }}>
+                                    <PieChartIngreso anio={anio} mes={mes} />
+                                </Tab>
+                                <Tab eventKey="Egresos" title="Egresos" style={{ color: "black" }}>
+                                    <PieChartEgreso anio={anio} mes={mes} />
+                                </Tab>
+                            </Tabs>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        );
+    }
+
+    const tabResumenMensual = () => {
+        return (
+            <Row>
+                <Col sm={6}>
+                    <Card style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
+                        <Card.Body>
+                            {registros.map((registro, index) => (
+                                <div key={index}>
+                                    <ListGroup.Item key={`registro-${index}`} as="li" className="d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                            <div className="fw-bold">{formatearFecha(registro.fecha)}</div>
+                                            {registro.descripcion}
+                                        </div>
+                                        <Badge bg={registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD'} pill style={{ color: "black", backgroundColor: registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD' }}>
+                                            {formatoMonto(registro.monto)}
+                                        </Badge>
+                                    </ListGroup.Item>
+                                    <br></br>
+                                </div>
+                            ))}
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col sm={6}>
+                    <TablaMensual />
+                </Col>
+            </Row>
+        );
+    }
+
+    
 
     return (
         <Container fluid >
@@ -96,13 +177,13 @@ const Flujo = () => {
                 <Row>
                     <Col sm={3} style={{ marginTop: "10px" }}>
                         <ListGroup>
-                            <ListGroup.Item action variant="info" href="#resumen_anual">
+                            <ListGroup.Item action variant="info" href="#resumen_anual" onClick={() => {setTabType('Anual')}}>
                                 Resumen anual
                             </ListGroup.Item>
-                            <ListGroup.Item action variant="info" href="#resumen_mensual">
+                            <ListGroup.Item action variant="info" href="#resumen_mensual" onClick={() => {getRegistros();setTabType('Mensual');}}>
                                 Resumen mensual
                             </ListGroup.Item>
-                            <ListGroup.Item action variant="info" href="#graficos">
+                            <ListGroup.Item action variant="info" href="#graficos" onClick={() => {setTabType('Graficos')}}>
                                 Gráficos
                             </ListGroup.Item>
                         </ListGroup>
@@ -174,79 +255,12 @@ const Flujo = () => {
                             <Tab.Pane eventKey="#resumen_mensual">
                                 <h3>Resumen mensual</h3>
                                 <hr></hr>
-                                <Row>
-                                    <Col sm={6}>
-                                        <Card style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
-                                            <Card.Body>
-                                                {registros.map((registro, index) => (
-                                                    <div key={index}>
-                                                        <ListGroup.Item key={`registro-${index}`} as="li" className="d-flex justify-content-between align-items-start">
-                                                            <div className="ms-2 me-auto">
-                                                                <div className="fw-bold">{formatearFecha(registro.fecha)}</div>
-                                                                {registro.descripcion}
-                                                            </div>
-                                                            <Badge bg={registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD'} pill style={{ color: "black", backgroundColor: registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD' }}>
-                                                                {formatoMonto(registro.monto)}
-                                                            </Badge>
-                                                        </ListGroup.Item>
-                                                        <br></br>
-                                                    </div>
-                                                ))}
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                    <Col sm={6}>
-                                        <TablaMensual />
-                                    </Col>
-                                </Row>
+                                {tabType === 'Mensual' ? tabResumenMensual() : null}
                             </Tab.Pane>
                             <Tab.Pane eventKey="#graficos">
                                 <h3>Gráficos</h3>
                                 <hr></hr>
-                                <Row xs={1} sm={2}>
-                                    <Col>
-                                        <Card>
-                                            <Card.Body>
-                                                <Card.Title>Ingresos y egresos</Card.Title>
-                                                <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                                <div style={{ width: "100%", height: "250px", margin: "auto", justifyContent: "center" }}>
-                                                    <LineChart />
-                                                </div>
-                                            </Card.Body>
-                                        </Card>
-                                        <br></br>
-                                        <Card>
-                                            <Card.Body>
-                                                <Card.Title>Ingresos y egresos</Card.Title>
-                                                <Card.Subtitle className="mb-2 text-muted">Anual</Card.Subtitle>
-                                                <div style={{ width: "100%", height: "250px", margin: "auto", justifyContent: "center" }}>
-                                                    <GraficoBarras />
-                                                </div>
-                                            </Card.Body>
-                                        </Card>
-
-                                    </Col>
-                                    <Col>
-                                        <Card>
-                                            <Card.Body>
-                                                <Card.Title>Porcentaje ingresos y egresos</Card.Title>
-                                                <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                                <Tabs justify
-                                                    defaultActiveKey="Ingresos"
-                                                    id="uncontrolled-tab-example"
-                                                    style={{ justifyContent: "center" }}
-                                                >
-                                                    <Tab eventKey="Ingresos" title="Ingresos" style={{ color: "black" }}>
-                                                        <PieChartIngreso anio={anio} mes={mes} />
-                                                    </Tab>
-                                                    <Tab eventKey="Egresos" title="Egresos" style={{ color: "black" }}>
-                                                        <PieChartEgreso anio={anio} mes={mes} />
-                                                    </Tab>
-                                                </Tabs>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                </Row>
+                                {tabType === 'Graficos' ? tabGraficos() : null}
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

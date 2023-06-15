@@ -19,6 +19,8 @@ const Egresos = () => {
     const [validated, setValidated] = useState(false);
 
     const handlePageChange = (page) => {
+        if(page < 1 || page > Math.ceil(egresos.length / pageSize))
+            return;
         setCurrentPage(page);
     }
 
@@ -215,15 +217,28 @@ const Egresos = () => {
                             </tfoot>
                         </Table>
                         <Pagination>
-                            {[...Array(Math.ceil(egresos.length / pageSize)).keys()].map((page) => (
-                                <Pagination.Item
-                                    key={page + 1}
-                                    active={page + 1 === currentPage}
-                                    onClick={() => handlePageChange(page + 1)}
-                                >
-                                    {page + 1}
-                                </Pagination.Item>
-                            ))}
+                            <Pagination.First onClick={() => handlePageChange(1)}/>
+                            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)}/>
+                            {[...Array(Math.ceil(egresos.length / pageSize)).keys()].map((page) => {
+                                if (page === 0 || page === Math.ceil(egresos.length / pageSize) - 1 || (currentPage - 2 <= page  && page <= currentPage + 2)){
+                                    return (
+                                        <Pagination.Item
+                                            key={page + 1}
+                                            active={page + 1 === currentPage}
+                                            onClick={() => handlePageChange(page + 1)}
+                                            >
+                                            {page + 1}
+                                        </Pagination.Item>
+                                    );
+                                } else if (page === currentPage - 3 || page === currentPage + 3){  
+                                    return (
+                                        <Pagination.Ellipsis/>
+                                    );
+                                }
+                                return null;
+                            })}
+                            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)}/>
+                            <Pagination.Last onClick={() => handlePageChange(Math.ceil(egresos.length / pageSize))}/>
                         </Pagination>
                     </Col>
                 </Row>
