@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,8 +29,8 @@ public class EgresoServiceTest {
     @InjectMocks
     private EgresoService egresoService;
 
-    Date fecha = new Date();
-    Date fecha1 = new Date();
+    Timestamp fecha = new Timestamp(System.currentTimeMillis());
+    Timestamp fecha1 = new Timestamp(System.currentTimeMillis());
     EgresoEntity egreso;
 
     @BeforeEach
