@@ -15,7 +15,7 @@ import jakarta.persistence.Id;
 @AllArgsConstructor
 public class Registro{
     @Id
-    private int id;
+    private Long id;
     private String tipo;
     private Date fecha;
     private String descripcion;

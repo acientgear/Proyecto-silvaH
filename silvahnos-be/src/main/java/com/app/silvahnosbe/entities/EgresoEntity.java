@@ -18,18 +18,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EgresoEntity {
-    public EgresoEntity(int i, int j, String string, boolean b, MotivoEEntity motivoe, MovimientoEntity movimiento2,
-            Timestamp fecha, Timestamp fecha2, Timestamp fecha3) {
-                this.id = (long) i;
-                this.monto = j;
-                this.descripcion = string;
-                this.borrado = b;
-                this.motivo = motivoe;
-                this.movimiento = movimiento2;
-                this.fecha_creacion = fecha;
-                this.fecha_modificacion = fecha2;
-                this.fecha_borrado = fecha3;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)

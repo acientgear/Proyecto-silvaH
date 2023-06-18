@@ -15,34 +15,29 @@ public class EgresoEntityTest {
     @Test
     void testAllArgsConsstructor(){
         // Given
-        MotivoEEntity motivoe = new MotivoEEntity();
-        MovimientoEntity movimiento = new MovimientoEntity();
-        Timestamp fecha1 = new Timestamp(System.currentTimeMillis());
-        Timestamp fecha2 = new Timestamp(System.currentTimeMillis());
-        Timestamp fecha3 = new Timestamp(System.currentTimeMillis());
-        EgresoEntity egreso = new EgresoEntity(1,12345,"desc",true,motivoe,movimiento,fecha1,fecha2,fecha3);
+        EgresoEntity egreso = new EgresoEntity(1L, 12345, "descripcion", false, new MotivoEEntity(), new MovimientoEntity(), new Timestamp(0), new Timestamp(0), new Timestamp(0));
 
         // When
         Long id = egreso.getId();
-        String descripcion = egreso.getDescripcion();
         int monto = egreso.getMonto();
+        String descripcion = egreso.getDescripcion();
         boolean borrado = egreso.isBorrado();
-        Object motivoE = egreso.getMotivo();
-        Object mov = egreso.getMovimiento();
-        Object fechaCreacion = egreso.getFecha_creacion();
-        Object fechaModificacion = egreso.getFecha_modificacion();
-        Object fechaBorrado = egreso.getFecha_borrado();
+        MotivoEEntity motivo = egreso.getMotivo();
+        MovimientoEntity movimiento = egreso.getMovimiento();
+        Timestamp fechaCreacion = egreso.getFecha_creacion();
+        Timestamp fechaModificacion = egreso.getFecha_modificacion();
+        Timestamp fechaBorrado = egreso.getFecha_borrado();
 
         // Then
-        assertEquals(1, id);
-        assertEquals("desc", descripcion);
+        assertEquals(1L, id);
         assertEquals(12345, monto);
-        assertEquals(true, borrado);
-        assertEquals(motivoe, motivoE);
-        assertEquals(mov, movimiento);
-        assertEquals(fecha1, fechaCreacion);
-        assertEquals(fecha2, fechaModificacion);
-        assertEquals(fecha3, fechaBorrado);
+        assertEquals("descripcion", descripcion);
+        assertEquals(false, borrado);
+        assertEquals(new MotivoEEntity(), motivo);
+        assertEquals(new MovimientoEntity(), movimiento);
+        assertEquals(new Timestamp(0), fechaCreacion);
+        assertEquals(new Timestamp(0), fechaModificacion);
+        assertEquals(new Timestamp(0), fechaBorrado);
     }
 
     @Test
