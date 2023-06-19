@@ -12,6 +12,29 @@ import com.app.silvahnosbe.entities.MovimientoEntity;
 
 public class EgresoEntityTest {
 
+
+    @Test
+    void testDataMethods() {
+        // Given
+        EgresoEntity egreso1 = new EgresoEntity();
+        EgresoEntity egreso2 = new EgresoEntity();
+
+        // When
+        egreso1.setId(1L);
+        egreso1.setMonto(12345);
+        egreso1.setDescripcion("descripcion");
+        egreso1.setBorrado(false);
+        egreso2.setId(1L);
+        egreso2.setMonto(12345);
+        egreso2.setDescripcion("descripcion");
+        egreso2.setBorrado(false);
+
+        // Then
+        assertEquals(egreso1, egreso2);
+        assertEquals(egreso1.hashCode(), egreso2.hashCode());
+        assertEquals("EgresoEntity(id=1, monto=12345, descripcion=descripcion, borrado=false, motivo=null, movimiento=null, fecha_creacion=null, fecha_modificacion=null, fecha_borrado=null)", egreso1.toString());
+    }
+
     @Test
     void testAllArgsConsstructor(){
         // Given
