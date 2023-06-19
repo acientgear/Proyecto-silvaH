@@ -35,27 +35,25 @@ public class EgresoEntityTest {
         assertEquals("EgresoEntity(id=1, monto=12345, descripcion=descripcion, borrado=false, motivo=null, movimiento=null, fecha_creacion=null, fecha_modificacion=null, fecha_borrado=null)", egreso1.toString());
     }
 
-    @Test
-    void testGetters() {
+   @Test
+    void testSetters() {
         // Given
         EgresoEntity egreso = new EgresoEntity();
+
+        // When
         egreso.setId(1L);
         egreso.setMonto(12345);
         egreso.setDescripcion("descripcion");
         egreso.setBorrado(false);
 
-        // When
-        Long id = egreso.getId();
-        int monto = egreso.getMonto();
-        String descripcion = egreso.getDescripcion();
-        boolean borrado = egreso.isBorrado();
-
         // Then
-        assertEquals(1L, id);
-        assertEquals(12345, monto);
-        assertEquals("descripcion", descripcion);
-        assertEquals(false, borrado);
+        assertEquals(1L, egreso.getId());
+        assertEquals(12345, egreso.getMonto());
+        assertEquals("descripcion", egreso.getDescripcion());
+        assertEquals(false, egreso.isBorrado());
     }
+
+
 
     @Test
     void testAllArgsConsstructor(){
