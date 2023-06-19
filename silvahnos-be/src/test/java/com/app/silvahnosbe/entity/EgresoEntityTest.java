@@ -36,6 +36,28 @@ public class EgresoEntityTest {
     }
 
     @Test
+    void testGetters() {
+        // Given
+        EgresoEntity egreso = new EgresoEntity();
+        egreso.setId(1L);
+        egreso.setMonto(12345);
+        egreso.setDescripcion("descripcion");
+        egreso.setBorrado(false);
+
+        // When
+        Long id = egreso.getId();
+        int monto = egreso.getMonto();
+        String descripcion = egreso.getDescripcion();
+        boolean borrado = egreso.isBorrado();
+
+        // Then
+        assertEquals(1L, id);
+        assertEquals(12345, monto);
+        assertEquals("descripcion", descripcion);
+        assertEquals(false, borrado);
+    }
+
+    @Test
     void testAllArgsConsstructor(){
         // Given
         EgresoEntity egreso = new EgresoEntity(1L, 12345, "descripcion", false, new MotivoEEntity(), new MovimientoEntity(), new Timestamp(0), new Timestamp(0), new Timestamp(0));
