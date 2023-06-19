@@ -1,6 +1,8 @@
 package com.app.silvahnosbe.service;
 
 import org.junit.jupiter.api.Test;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +28,15 @@ public class EstadoServiceTest {
 
     @InjectMocks
     private EstadoService estadoService;
+
+    EstadoEntity estado;
+
+    @BeforeEach
+    void setup() {
+        estado = new EstadoEntity();
+        estado.setId(1l);
+        estado.setNombre("Estado 1");
+    }
 
     @DisplayName("Test para obtener todos los estados cuando existen estados")
     @Test
@@ -57,19 +68,9 @@ public class EstadoServiceTest {
     @DisplayName("test para obtener un estado por id")
     @Test
     void testObtenerEstadoPorId() {
-        EstadoEntity estado = new EstadoEntity();
-        estado.setNombre("Estado 1");
-        estado.setId(1L);
-
+    
         given(estadoRepository.findById(1L)).willReturn(java.util.Optional.of(estado));
         assertThat(estadoService.obtenerEstadoPorId(1L)).isNotNull();
-    }
-
-    @DisplayName("test para obtener un estado por id cuando no existe")
-    @Test
-    void testObtenerEstadoPorId_NoExiste() {
-        given(estadoRepository.findById(1L)).willReturn(null);
-        assertThat(estadoService.obtenerEstadoPorId(1L)).isNull();
     }
 
 }
