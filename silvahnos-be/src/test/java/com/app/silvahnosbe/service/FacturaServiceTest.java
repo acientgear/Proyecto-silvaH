@@ -123,6 +123,19 @@ public class FacturaServiceTest {
         // then
         assertThat(facturas1).isEmpty();
     }
+
+    @DisplayName("test para obtener proximas a vencer (pedro)")
+    @Test
+    void testObtenerProximasVencerP() {
+        // given
+        List<FacturaEntity> facturas = new ArrayList<>();
+        facturas.add(factura);
+        given(facturaRepository.facturaV(4)).willReturn(facturas);
+        // when
+        List<FacturaEntity> facturas1 = facturaService.facturaV(4);
+        // then
+        assertThat(facturas1).isNotNull();
+    }
     
 
 
