@@ -205,4 +205,15 @@ public class IngresoServiceTest {
 
     }
 
+    @DisplayName("test para obtener el saldo de la cuenta por mes cuando es nulo")
+    @Test
+    void testObtenerSaldoCuentaPorMesNull() {
+        // given
+        given(ingresoRepository.obtenerSaldoCuenta(5)).willReturn(null);
+        // when
+        int saldo = ingresoService.obtenerSaldoCuenta(5);
+        // then
+        assertThat(saldo).isEqualTo(0);
+    }
+
 }
