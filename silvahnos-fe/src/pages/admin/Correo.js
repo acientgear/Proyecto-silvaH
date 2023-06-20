@@ -44,9 +44,6 @@ const Correo = () => {
         getCorreo();
     }, []);
 
-    console.log(correo);
-    console.log(correoActual);
-
     return (
         <div>
             <Card className="cardsH">

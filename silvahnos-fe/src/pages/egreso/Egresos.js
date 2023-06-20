@@ -19,7 +19,7 @@ const Egresos = () => {
     const [validated, setValidated] = useState(false);
 
     const handlePageChange = (page) => {
-        if(page < 1 || page > Math.ceil(egresos.length / pageSize))
+        if (page < 1 || page > Math.ceil(egresos.length / pageSize))
             return;
         setCurrentPage(page);
     }
@@ -75,12 +75,12 @@ const Egresos = () => {
 
     const updateEgreso = async () => {
         try {
-            let url = 'http://'+urlweb+'/egresos';
+            let url = 'http://' + urlweb + '/egresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
                 getEgresos();
-                
+
             }
         } catch (err) {
             console.log(err.message);
@@ -94,7 +94,7 @@ const Egresos = () => {
 
     const deleteEgreso = async () => {
         try {
-            let url = 'http://'+urlweb+'/egresos';
+            let url = 'http://' + urlweb + '/egresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseDelete();
@@ -137,16 +137,16 @@ const Egresos = () => {
 
     const getEgresos = useCallback(async () => {
         try {
-          let url = 'http://'+urlweb+'/egresos/' + anio + '/' + mes;
-          const response = await axios.get(url);
-          if (response.status === 200) {
-            setEgresos(response.data);
-          }
+            let url = 'http://' + urlweb + '/egresos/' + anio + '/' + mes;
+            const response = await axios.get(url);
+            if (response.status === 200) {
+                setEgresos(response.data);
+            }
         } catch (err) {
-          console.log(err.message);
+            console.log(err.message);
         }
-      }, [anio, mes]);
-      
+    }, [anio, mes]);
+
 
     const formatearFecha = (fecha) => {
         let fechaC = fecha.split('T')[0];
@@ -161,7 +161,7 @@ const Egresos = () => {
 
     useEffect(() => {
         getEgresos();
-    },[getEgresos]);
+    }, [getEgresos]);
 
     return (
         <>
@@ -199,13 +199,25 @@ const Egresos = () => {
                                         <td>{egreso.motivo.nombre}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
-                                            <a href="" style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(egreso)}><AiFillEdit/></a>
-                                            <a href="" style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(egreso)}><AiFillDelete/></a>
+                                            <button
+                                                type="button"
+                                                style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd", background: "none", border: "none", padding: 0 }}
+                                                onClick={() => handleShowEdit(egreso)}
+                                            >
+                                                <AiFillEdit />
+                                            </button>
+                                            <button
+                                                type="button"
+                                                style={{ cursor: "pointer", marginRight: 2, color: "#dc3545", background: "none", border: "none", padding: 0 }}
+                                                onClick={() => handleShowDelete(egreso)}
+                                            >
+                                                <AiFillDelete />
+                                            </button>
                                         </td>
                                     </tr>
-
                                 ))}
                             </tbody>
+
                             <tfoot>
                                 <tr style={{ background: "#FBE6DD" }}>
                                     <td>Total</td>
@@ -217,28 +229,28 @@ const Egresos = () => {
                             </tfoot>
                         </Table>
                         <Pagination>
-                            <Pagination.First onClick={() => handlePageChange(1)}/>
-                            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)}/>
+                            <Pagination.First onClick={() => handlePageChange(1)} />
+                            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
                             {[...Array(Math.ceil(egresos.length / pageSize)).keys()].map((page) => {
-                                if (page === 0 || page === Math.ceil(egresos.length / pageSize) - 1 || (currentPage - 2 <= page  && page <= currentPage + 2)){
+                                if (page === 0 || page === Math.ceil(egresos.length / pageSize) - 1 || (currentPage - 2 <= page && page <= currentPage + 2)) {
                                     return (
                                         <Pagination.Item
                                             key={page + 1}
                                             active={page + 1 === currentPage}
                                             onClick={() => handlePageChange(page + 1)}
-                                            >
+                                        >
                                             {page + 1}
                                         </Pagination.Item>
                                     );
-                                } else if (page === currentPage - 3 || page === currentPage + 3){  
+                                } else if (page === currentPage - 3 || page === currentPage + 3) {
                                     return (
-                                        <Pagination.Ellipsis/>
+                                        <Pagination.Ellipsis />
                                     );
                                 }
                                 return null;
                             })}
-                            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)}/>
-                            <Pagination.Last onClick={() => handlePageChange(Math.ceil(egresos.length / pageSize))}/>
+                            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
+                            <Pagination.Last onClick={() => handlePageChange(Math.ceil(egresos.length / pageSize))} />
                         </Pagination>
                     </Col>
                 </Row>

@@ -1,9 +1,14 @@
 package com.app.silvahnosbe.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -15,14 +20,29 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import com.app.silvahnosbe.entities.CorreoEntity;
 import com.app.silvahnosbe.entities.EmailConfig;
+import com.app.silvahnosbe.entities.FacturaEntity;
+import com.app.silvahnosbe.entities.ParametroEntity;
+import com.app.silvahnosbe.repositories.CorreoRepository;
 import com.app.silvahnosbe.repositories.EmailConfigRepository;
+import com.app.silvahnosbe.repositories.FacturaRepository;
+import com.app.silvahnosbe.repositories.ParametroRepository;
 import com.app.silvahnosbe.services.EmailService;
 
 @ExtendWith(MockitoExtension.class)
 public class EmailServiceTest {
     @Mock
     private EmailConfigRepository emailConfigRepository;
+
+    @Mock
+    private FacturaRepository facturaRepository;
+
+    @Mock
+    private ParametroRepository parametroRepository;
+
+    @Mock
+    private CorreoRepository correoRepository;
 
     @Mock
     private JavaMailSender mailSender;
@@ -51,4 +71,50 @@ public class EmailServiceTest {
         assertEquals("Notificación factura", message.getSubject());
         assertEquals("Factura 131 está por vencer", message.getText());
     }
+
+    /*@Test
+    void testCronEmail() {
+        // Configurar datos de prueba
+        int dias = 5;
+        String destino = "destino@example.com";
+        String textoEmailConfig = "Texto de ejemplo";
+        int numeroFactura = 123;
+        String fechaActual = "20-06-23";
+
+        FacturaEntity factura = new FacturaEntity();
+        factura.setNumero_factura(numeroFactura);
+        String numFac = String.valueOf(factura.getNumero_factura());
+
+        List<FacturaEntity> facturas = new ArrayList<>();
+        facturas.add(factura);
+
+        ParametroEntity parametro = new ParametroEntity();
+        parametro.setValor(String.valueOf(dias));
+
+        CorreoEntity correo = new CorreoEntity();
+        correo.setDireccion(destino);
+
+        EmailConfig emailConfig = new EmailConfig();
+        emailConfig.setTexto(textoEmailConfig);
+
+        // Configurar comportamiento simulado de los repositorios y mailSender
+        when(parametroRepository.findById(anyLong())).thenReturn(Optional.of(parametro));
+        when(correoRepository.findById(anyLong())).thenReturn(Optional.of(correo));
+        when(facturaRepository.facturaV(dias)).thenReturn(facturas);
+        when(emailConfigRepository.findById(anyLong())).thenReturn(Optional.of(emailConfig));
+
+        // Ejecutar el método a probar
+        emailService.cronEmail();
+
+        // Verificar que se envió el correo con los datos esperados
+        verify(mailSender, times(1)).send(any(SimpleMailMessage.class));
+
+        SimpleMailMessage expectedMessage = new SimpleMailMessage();
+        expectedMessage.setFrom(emailConfig.getUsername());
+        expectedMessage.setSubject("facturas proximas a vencer:  " + "  " + fechaActual);
+        expectedMessage.setTo(destino);
+        expectedMessage.setText(textoEmailConfig + "\n" + "n° :" + numFac + "\n");
+
+        verify(mailSender).send(expectedMessage);
+    }*/
 }

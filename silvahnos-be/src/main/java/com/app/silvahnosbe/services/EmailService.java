@@ -2,6 +2,7 @@ package com.app.silvahnosbe.services;
 
 import com.app.silvahnosbe.entities.EmailConfig;
 import com.app.silvahnosbe.entities.FacturaEntity;
+import com.app.silvahnosbe.entities.ParametroEntity;
 import com.app.silvahnosbe.repositories.CorreoRepository;
 import com.app.silvahnosbe.repositories.EmailConfigRepository;
 import com.app.silvahnosbe.repositories.FacturaRepository;
@@ -30,7 +31,7 @@ public class EmailService {
     @Autowired
     private FacturaRepository facturaRepository;
     @Autowired
-    private ParametroRepository parametroRepository;
+    private ParametroService parametroService;
     @Autowired
     private EmailConfigRepository emailConfigRepository;
 
@@ -49,12 +50,14 @@ public class EmailService {
         mailSender.send(message);
     }
 
-
     @Scheduled(cron="0 */5 * * * *")
     public void cronEmail(){
-        int dias = Integer.valueOf(parametroRepository.findById(1l).orElseThrow().getValor());
+        //int dias = Integer.valueOf(parametroRepository.findById(1l).orElseThrow().getValor());
+        ParametroEntity parametro = parametroService.obtenerParametroPorId(1L);
+        String dias = parametro.getValor();
+        int diasInt = Integer.parseInt(dias);
         String destino=correoRepository.findById(1L).get().getDireccion();
-        List <FacturaEntity> facturas= facturaRepository.facturaV(dias);
+        List <FacturaEntity> facturas= facturaRepository.facturaV(diasInt);
         if (facturas==null){
             return ;
         }

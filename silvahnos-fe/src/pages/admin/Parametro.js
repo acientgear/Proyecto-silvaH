@@ -44,8 +44,6 @@ const Parametro = () => {
         getParametro();
     }, []);
 
-    console.log(parametro);
-
     return (
         <div>
             <Card className="cardsH">
