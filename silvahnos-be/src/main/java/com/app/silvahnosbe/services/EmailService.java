@@ -1,8 +1,8 @@
 package com.app.silvahnosbe.services;
 
 import com.app.silvahnosbe.entities.EmailConfig;
+import com.app.silvahnosbe.entities.EstadoEntity;
 import com.app.silvahnosbe.entities.FacturaEntity;
-import com.app.silvahnosbe.entities.ParametroEntity;
 import com.app.silvahnosbe.repositories.CorreoRepository;
 import com.app.silvahnosbe.repositories.EmailConfigRepository;
 import com.app.silvahnosbe.repositories.FacturaRepository;
@@ -31,36 +31,40 @@ public class EmailService {
     @Autowired
     private FacturaRepository facturaRepository;
     @Autowired
-    private ParametroService parametroService;
+    private ParametroRepository parametroRepository;
     @Autowired
     private EmailConfigRepository emailConfigRepository;
 
     SimpleDateFormat formato= new SimpleDateFormat("dd-MM-yy");
     Date fecha= new Date();
     public void sendEmail() {
-        EmailConfig emailConfig = emailConfigRepository.findById(1L)
+       /* EmailConfig emailConfig = emailConfigRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Configuración de correo electrónico no encontrada."));
-
+        */
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(emailConfig.getUsername());
-        message.setTo("luis.toro.f@usach.cl");
+        message.setFrom("acientgear@gmail.com");
+        message.setTo("ppaillao@gmail.com");
         message.setSubject("Notificación factura");
         message.setText("Factura 131 está por vencer");
 
         mailSender.send(message);
     }
 
-    @Scheduled(cron="0 */5 * * * *")
+
+    //@Scheduled(cron="0 4 * * * *")
     public void cronEmail(){
-        //int dias = Integer.valueOf(parametroRepository.findById(1l).orElseThrow().getValor());
-        ParametroEntity parametro = parametroService.obtenerParametroPorId(1L);
-        String dias = parametro.getValor();
-        int diasInt = Integer.parseInt(dias);
+        EstadoEntity estado= new EstadoEntity();
+        estado.setId(2l);
+        int dias = Integer.parseInt(parametroRepository.findById(1l).orElseThrow().getValor());
         String destino=correoRepository.findById(1L).get().getDireccion();
-        List <FacturaEntity> facturas= facturaRepository.facturaV(diasInt);
-        if (facturas==null){
+        List <FacturaEntity> facturas= facturaRepository.facturaV(dias);
+        if (facturas.size()==0){
             return ;
         }
+        facturas.forEach(factura -> {
+            factura.setEstado(estado);
+        });
+        facturaRepository.saveAll(facturas);
         String mensaje="\n";
         int i=0;
         while (i<facturas.size()){
