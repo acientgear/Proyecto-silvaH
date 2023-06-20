@@ -72,8 +72,6 @@ public class EmailService {
         message.setTo(destino);
         message.setText(emailConfig.getTexto()+ mensaje);
         mailSender.send(message);
-       // facturaRepository.updateEstado(dias);
-
     }
 
 

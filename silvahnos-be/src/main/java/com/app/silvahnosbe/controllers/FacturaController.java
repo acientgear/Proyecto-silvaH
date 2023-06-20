@@ -33,7 +33,6 @@ public class FacturaController {
     @PostMapping
     public ResponseEntity<FacturaEntity> createFactura(@RequestBody FacturaEntity factura){
         FacturaEntity facturaGuardada = facturaService.guardarFactura(factura);
-        System.out.println(factura.getFecha_pago());
         return ResponseEntity.ok().body(facturaGuardada);
     }
 
