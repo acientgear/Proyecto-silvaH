@@ -13,8 +13,12 @@ import java.util.Properties;
 @Configuration
 public class MailConfig {
 
+    private final EmailConfigRepository emailConfigRepository;
+
     @Autowired
-    private EmailConfigRepository emailConfigRepository;
+    public MailConfig(EmailConfigRepository emailConfigRepository) {
+        this.emailConfigRepository = emailConfigRepository;
+    }
 
     @Bean
     public JavaMailSender javaMailSender() {
@@ -28,6 +32,6 @@ public class MailConfig {
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.starttls.enable", "true");
 
-        return  mailSender;
+        return mailSender;
     }
 }
