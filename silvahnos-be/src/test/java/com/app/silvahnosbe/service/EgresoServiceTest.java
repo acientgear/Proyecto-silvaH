@@ -7,6 +7,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
+import com.app.silvahnosbe.entities.LocalEntity;
+import com.app.silvahnosbe.entities.MotivoEEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
+import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
 import com.app.silvahnosbe.services.EgresoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,7 +60,7 @@ public class EgresoServiceTest {
         assertThat(egreso1).isNotNull();
     }
 
-    @DisplayName("test para  buscar un ingreso")
+    @DisplayName("test para  buscar un egreso")
     @Test
     void TestObtenerEgreso() {
         // given
@@ -177,6 +181,53 @@ public class EgresoServiceTest {
         // then
         assertThat(egresos).isEqualTo(30000);
 
+    }
+
+    @Test
+    @DisplayName("test de integración creación de egreso con motivo y movimiento")
+    void testCrearEgreso() {
+        // given
+        LocalEntity local = new LocalEntity();
+        local.setId(1l);
+        local.setNombre("local1");
+        local.setDireccion("direccion1");
+        
+        UsuarioEntity usuario = new UsuarioEntity();
+        usuario.setCorreo("correo1@gmail.com");
+        usuario.setContrasenna("pass1");
+        usuario.setNombre("usuario1");
+        
+        MovimientoEntity movimiento = new MovimientoEntity();
+        movimiento.setId(1l);
+        movimiento.setLocal(local);
+        movimiento.setUsuario(usuario);
+
+        MotivoEEntity motivo = new MotivoEEntity();
+        motivo.setId(1l);
+        motivo.setNombre("motivo1");
+        motivo.setDescripcion("descripcion1");
+        motivo.setBorrado(false);
+
+        EgresoEntity egreso = new EgresoEntity();
+        egreso.setId(1l);
+        egreso.setMonto(15000);
+        egreso.setDescripcion("pintura");
+        egreso.setBorrado(false);
+        egreso.setMotivo(motivo);
+        egreso.setMovimiento(movimiento);
+        egreso.setFecha_creacion(fecha);
+        egresoRepository.save(egreso);
+        given(egresoRepository.save(egreso)).willReturn(egreso);
+
+        // when
+        EgresoEntity egreso1 = egresoService.guardarEgreso(egreso);
+
+        // then
+        assertThat(egreso1.getId()).isEqualTo(1l);
+        assertThat(egreso1.getMotivo().getId()).isEqualTo(1l);
+        assertThat(egreso1.getMovimiento().getId()).isEqualTo(1l);
+        assertThat(egreso1.getMovimiento().getLocal().getId()).isEqualTo(1l);
+        assertThat(egreso1.getMovimiento().getUsuario().getCorreo()).isEqualTo("correo1@gmail.com");
     }
 
 }
