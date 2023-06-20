@@ -91,11 +91,11 @@ public class IngresoServiceTest {
     @Test
     void testObtenerIngresoPorId() {
         // given
-        given(ingresoRepository.findById(1l)).willReturn(Optional.of(ingreso));
+        given(ingresoRepository.findById(1L)).willReturn(Optional.of(ingreso));
         // when
-        IngresoEntity ingreso1 = ingresoService.obtenerIngresoPorId(1l);
+        IngresoEntity ingreso1 = ingresoService.obtenerIngresoPorId(1L);
         // then
-        assertThat(ingreso1.getId().equals(1l));
+        assertThat(ingreso1.getId()).isEqualTo(1L);
     }
 
     @DisplayName("test para obtenerlos últimos ingresos - caso ingresos > 3")

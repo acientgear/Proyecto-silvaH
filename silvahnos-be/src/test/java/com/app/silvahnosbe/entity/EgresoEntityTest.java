@@ -53,8 +53,6 @@ public class EgresoEntityTest {
         assertEquals(false, egreso.isBorrado());
     }
 
-
-
     @Test
     void testAllArgsConsstructor(){
         // Given
