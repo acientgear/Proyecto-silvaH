@@ -7,6 +7,7 @@ import com.app.silvahnosbe.repositories.CorreoRepository;
 import com.app.silvahnosbe.repositories.EmailConfigRepository;
 import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.repositories.ParametroRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,7 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,57 +30,66 @@ public class EmailService {
     private CorreoRepository correoRepository;
 
     @Autowired
+    private CorreoService correoService;
+
+    @Autowired
     private FacturaRepository facturaRepository;
     @Autowired
     private ParametroRepository parametroRepository;
     @Autowired
     private EmailConfigRepository emailConfigRepository;
 
-    SimpleDateFormat formato= new SimpleDateFormat("dd-MM-yy");
-    Date fecha= new Date();
+    SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yy");
+    Date fecha = new Date();
+
     public void sendEmail() {
-       /* EmailConfig emailConfig = emailConfigRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("Configuración de correo electrónico no encontrada."));
-        */
+        /*
+         * EmailConfig emailConfig = emailConfigRepository.findById(1L)
+         * .orElseThrow(() -> new
+         * RuntimeException("Configuración de correo electrónico no encontrada."));
+         */
+        String destino = correoService.obtenerCorreoPorId(1L).getDireccion();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("acientgear@gmail.com");
-        message.setTo("ppaillao@gmail.com");
+        message.setTo(destino);
         message.setSubject("Notificación factura");
         message.setText("Factura 131 está por vencer");
 
         mailSender.send(message);
     }
 
-
-    //@Scheduled(cron="0 4 * * * *")
-    public void cronEmail(){
-        EstadoEntity estado= new EstadoEntity();
+    @Scheduled(cron = "0 */1 * * * *")
+    public void cronEmail() {
+        EstadoEntity estado = new EstadoEntity();
         estado.setId(2l);
-        int dias = Integer.parseInt(parametroRepository.findById(1l).orElseThrow().getValor());
-        String destino=correoRepository.findById(1L).get().getDireccion();
-        List <FacturaEntity> facturas= facturaRepository.facturaV(dias);
-        if (facturas.size()==0){
-            return ;
+        String diasS = parametroRepository.findById(1l).orElseThrow().getValor();
+        int dias = Integer.parseInt(diasS);
+        String destino = correoRepository.findById(1L).get().getDireccion();
+        List<FacturaEntity> facturas = facturaRepository.facturaV(dias);
+        if (facturas.size() == 0) {
+            return;
         }
         facturas.forEach(factura -> {
             factura.setEstado(estado);
         });
         facturaRepository.saveAll(facturas);
-        String mensaje="\n";
-        int i=0;
-        while (i<facturas.size()){
-            mensaje=mensaje +"n° :"+ facturas.get(i).getNumero_factura() +"\n " ;
-            i=i+1;
-
+        String mensaje = "\n";
+        int i = 0;
+        while (i < facturas.size()) {
+            Date fechaVencimiento = facturas.get(i).getFecha_vencimiento();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'del' MM 'del' yyyy");
+            String fechaFormateada = dateFormat.format(fechaVencimiento);
+            mensaje = mensaje + "Factura N° :" + facturas.get(i).getNumero_factura() + ", con fecha de vencimiento el "
+                    + fechaFormateada + "\n";
+            i = i + 1;
         }
-        EmailConfig emailConfig=emailConfigRepository.findById(1l).orElseThrow();
-        SimpleMailMessage message =new SimpleMailMessage();
+        EmailConfig emailConfig = emailConfigRepository.findById(1l).orElseThrow();
+        SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(emailConfig.getUsername());
-        message.setSubject("facturas proximas a vencer:  "+"  " + formato.format(fecha));
+        message.setSubject("Facturas a vencer en " + diasS + " días" + ":  " + "  " + formato.format(fecha));
         message.setTo(destino);
-        message.setText(emailConfig.getTexto()+ mensaje);
+        message.setText(emailConfig.getTexto() + mensaje);
         mailSender.send(message);
     }
-
 
 }
