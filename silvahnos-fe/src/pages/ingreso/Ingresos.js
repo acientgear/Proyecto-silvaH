@@ -12,7 +12,7 @@ const Ingresos = () => {
     const pageSize = 6;
 
     const [ingresos, setIngresos] = useState([]);
-    const [mes, setMes] = useState((new Date()).getMonth()+1);
+    const [mes, setMes] = useState((new Date()).getMonth() + 1);
     const [anio, setAnio] = useState((new Date()).getFullYear());
 
     const [showDelete, setShowDelete] = useState(false);
@@ -32,7 +32,7 @@ const Ingresos = () => {
 
 
     const handlePageChange = (page) => {
-        if(page < 1 || page > Math.ceil(ingresos.length / pageSize))
+        if (page < 1 || page > Math.ceil(ingresos.length / pageSize))
             return;
         setCurrentPage(page);
     }
@@ -88,7 +88,7 @@ const Ingresos = () => {
 
     const updateIngreso = async () => {
         try {
-            let url = 'http://'+urlweb+'/ingresos';
+            let url = 'http://' + urlweb + '/ingresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();
@@ -115,7 +115,7 @@ const Ingresos = () => {
 
     const deleteIngreso = async () => {
         try {
-            let url = 'http://'+urlweb+'/ingresos';
+            let url = 'http://' + urlweb + '/ingresos';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseDelete();
@@ -153,22 +153,22 @@ const Ingresos = () => {
 
     const getIngresos = useCallback(async () => {
         try {
-          let url = 'http://'+urlweb+'/ingresos/' + anio + '/' + mes;
-          const response = await axios.get(url);
-          if (response.status === 200) {
-            setIngresos(response.data);
-          }
+            let url = 'http://' + urlweb + '/ingresos/' + anio + '/' + mes;
+            const response = await axios.get(url);
+            if (response.status === 200) {
+                setIngresos(response.data);
+            }
         } catch (err) {
-          console.log(err.message);
+            console.log(err.message);
         }
-      }, [anio, mes]);
-      
+    }, [anio, mes]);
 
-      const formatearFecha = (fecha) => {
+
+    const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);
         return fechaActual.getFullYear() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getDate();
     };
-    
+
 
     let total = 0;
     ingresos.forEach(ingreso => {
@@ -178,7 +178,7 @@ const Ingresos = () => {
     useEffect(() => {
         getIngresos();
         handleAlertCreate();
-    },[getIngresos, handleAlertCreate]);
+    }, [getIngresos, handleAlertCreate]);
 
     return (
         <>
@@ -237,28 +237,28 @@ const Ingresos = () => {
                             </tfoot>
                         </Table>
                         <Pagination>
-                            <Pagination.First onClick={() => handlePageChange(1)}/>
-                            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)}/>
+                            <Pagination.First onClick={() => handlePageChange(1)} />
+                            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
                             {[...Array(Math.ceil(ingresos.length / pageSize)).keys()].map((page) => {
-                                if (page === 0 || page === Math.ceil(ingresos.length / pageSize) - 1 || (currentPage - 2 <= page  && page <= currentPage + 2)){
+                                if (page === 0 || page === Math.ceil(ingresos.length / pageSize) - 1 || (currentPage - 2 <= page && page <= currentPage + 2)) {
                                     return (
                                         <Pagination.Item
                                             key={page + 1}
                                             active={page + 1 === currentPage}
                                             onClick={() => handlePageChange(page + 1)}
-                                            >
+                                        >
                                             {page + 1}
                                         </Pagination.Item>
                                     );
-                                } else if (page === currentPage - 3 || page === currentPage + 3){  
+                                } else if (page === currentPage - 3 || page === currentPage + 3) {
                                     return (
-                                        <Pagination.Ellipsis/>
+                                        <Pagination.Ellipsis />
                                     );
                                 }
                                 return null;
                             })}
-                            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)}/>
-                            <Pagination.Last onClick={() => handlePageChange(Math.ceil(ingresos.length / pageSize))}/>
+                            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
+                            <Pagination.Last onClick={() => handlePageChange(Math.ceil(ingresos.length / pageSize))} />
                         </Pagination>
                     </Col>
                 </Row>
@@ -296,7 +296,7 @@ const Ingresos = () => {
                 </Modal.Footer>
             </Modal>
 
-            {showAlertDelete && (<Alerta mensaje="Ingreso eliminado correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete}/>)}
+            {showAlertDelete && (<Alerta mensaje="Ingreso eliminado correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete} />)}
             {showAlertEdit && (<Alerta mensaje="Ingreso editado correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
             {showAlertCreate && (<Alerta mensaje="Ingreso creado correctamente" tipo="success" show={showAlertCreate} setShow={setShowAlertCreate} />)}
         </>

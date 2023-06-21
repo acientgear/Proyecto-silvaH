@@ -65,8 +65,8 @@ const DoubleBarChart = () => {
             },
             {
                 label: 'Egresos',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(242, 182, 160, 0.2)',
+                borderColor: 'rgba(242, 182, 160, 1)',
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(54, 162, 235, 0.4)',
                 hoverBorderColor: 'rgba(54, 162, 235, 1)',

@@ -10,7 +10,7 @@ import java.util.TimeZone;
 public class SilvahnosBeApplication {
 
 	public static void main(String[] args) {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		//TimeZone.setDefault(TimeZone.getTimeZone("America/Santigo"));
 		SpringApplication.run(SilvahnosBeApplication.class, args);
 	}
 }
