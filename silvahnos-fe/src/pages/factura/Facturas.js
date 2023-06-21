@@ -93,7 +93,7 @@ const Facturas = () => {
     };
 
     const handleCheck = () => {
-        editedItem.estado.id = 2;
+        editedItem.estado.id = 3;
         editedItem.fecha_pago = (() => {
             const fechaActual = new Date();
             const dia = String(fechaActual.getDate()).padStart(2, '0');
