@@ -3,26 +3,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import {BsBoxArrowRight} from "react-icons/bs";
 import FormEmpresa from '../../components/FormEmpresa';
 
 const Empresas = () => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 6;
-
     const [empresas, setempresas] = useState([]);
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
-
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    }
-
-    const paginatedData = empresas.slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
-    );
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -127,11 +116,11 @@ const Empresas = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{width: "100%"}}>
             <Card className="cardsH">
                 <Card.Body>
                     <Card.Title >Empresas registradas</Card.Title>
-                    <Table striped responsive="sm" hover bordered>
+                    <Table  responsive="sm" hover >
                         <thead>
                             <tr>
                                 <th style={{ width: '100px' }}>Rut</th>
@@ -147,8 +136,8 @@ const Empresas = () => {
                                     <td >{empresa.nombre}</td>
                                     <td >{empresa.direccion}</td>
                                     <td>
-                                        <a style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(empresa)}><AiFillEdit /></a>
-                                        <a style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(empresa)}><AiFillDelete /></a>
+                                        <a href="#se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(empresa)}><AiFillEdit /></a>
+                                        <a href="#sd" style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(empresa)}><AiFillDelete /></a>
                                     </td>
 
                                 </tr>
@@ -156,7 +145,9 @@ const Empresas = () => {
                             )}
                         </tbody>
                     </Table>
-                    <Button href="/crearEmpresa">Registrar empresa</Button>
+                    <div className="registrar" >
+                        <a className="registrar-anchor" href="/crearEmpresa">Registrar empresa <BsBoxArrowRight/></a>
+                    </div>
                 </Card.Body>
             </Card>
 

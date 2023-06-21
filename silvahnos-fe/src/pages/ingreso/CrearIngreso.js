@@ -6,7 +6,6 @@ import urlweb from '../../config/config';
 
 const CrearIngreso = () => {
     const [validated, setValidated] = useState(false);
-    const [motivoId, setMotivoId] = useState(0);
 
     const [ingreso, setIngreso] = useState({
         id: null,

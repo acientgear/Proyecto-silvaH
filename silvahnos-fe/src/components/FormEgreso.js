@@ -97,6 +97,7 @@ const FormEgreso = ({ egreso, setEgreso, validated, modal, handleChange, handleS
                     as="textarea" row={3} placeholder="Ingrese descripción" onChange={handleChange}
                     value={egreso.descripcion}
                 />
+                <span style={{color: "#adb5bd"}}>{egreso.descripcion.length + '/255'}</span>
                 <Form.Control.Feedback type="invalid">
                     Ingrese una descripción valida
                 </Form.Control.Feedback>

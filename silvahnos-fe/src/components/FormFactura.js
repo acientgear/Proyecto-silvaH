@@ -114,6 +114,7 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, setFact
                     as="textarea" row={3} placeholder="Ingrese una observación" onChange={handleChange}
                     value={factura.observaciones}
                 />
+                <span style={{color: "#adb5bd"}}>{factura.observaciones.length + '/255'}</span>
                 <Form.Control.Feedback type="invalid">
                     Ingrese una observación valida
                 </Form.Control.Feedback>

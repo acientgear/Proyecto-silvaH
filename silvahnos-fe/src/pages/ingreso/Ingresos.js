@@ -166,9 +166,6 @@ const Ingresos = () => {
 
       const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);
-        let fechaC = fecha.split('T')[0];
-        fechaC = fechaC.split('-');
-        console.log(fechaActual.getDate());
         return fechaActual.getFullYear() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getDate();
     };
     
@@ -222,8 +219,8 @@ const Ingresos = () => {
                                         <td>{ingreso.patente}</td>
                                         <td>{formatoMonto(ingreso.monto)}</td>
                                         <td>
-                                            <a style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(ingreso)}><AiFillEdit/></a>
-                                            <a style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(ingreso)}><AiFillDelete/></a> 
+                                            <a href="#se" style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(ingreso)}><AiFillEdit/></a>
+                                            <a href="#sd" style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(ingreso)}><AiFillDelete/></a> 
                                         </td>
                                     </tr>
                                 ))}

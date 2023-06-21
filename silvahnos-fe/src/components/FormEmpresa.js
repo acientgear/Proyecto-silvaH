@@ -48,7 +48,7 @@ const FormEmpresa = ({ empresa, validated, modal, handleChange, handleSubmit, ha
                         isValid={255 > empresa.nombre.length && empresa.nombre.length > 0}
                         isInvalid={empresa.nombre.length > 255 || empresa.nombre.length === 0}
                         type='text' row={3} value={empresa.nombre} onChange={handleChange} />
-                        {empresa.nombre.length + ' < 256'}
+                        <span style={{color: "#adb5bd"}}>{empresa.nombre.length + '/255'}</span>
                     <Form.Control.Feedback type="invalid">
                         Ingrese un nombre válido
                     </Form.Control.Feedback>
@@ -61,6 +61,7 @@ const FormEmpresa = ({ empresa, validated, modal, handleChange, handleSubmit, ha
                         isValid={255 > empresa.direccion.length && empresa.direccion.length > 0}
                         isInvalid={empresa.direccion.length > 255 || empresa.direccion.length === 0}
                         type='text' row={3} value={empresa.direccion} onChange={handleChange} />
+                        <span style={{color: "#adb5bd"}}>{empresa.direccion.length + '/255'}</span>
                     <Form.Control.Feedback type="invalid">
                         Ingrese una dirección válida
                     </Form.Control.Feedback>

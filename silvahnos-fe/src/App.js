@@ -18,7 +18,7 @@ import CrearEmpresa from './pages/admin/CrearEmpresa';
 function App() {
   return (
     <Layout>
-      <Container style={{ paddingTop: "20px"}}>
+      <Container fluid style={{padding: 0}}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/egresos" element={<Egreso />} />

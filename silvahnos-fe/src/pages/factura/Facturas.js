@@ -117,7 +117,7 @@ const Facturas = () => {
         setAnio(e.target.value);
     };
 
-    const getIva = async () => {
+    const getIva = useCallback( async () => {
         try {
             let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
             const response = await axios.get(url);
@@ -127,7 +127,7 @@ const Facturas = () => {
         } catch (err) {
             console.log(err.message);
         }
-    };
+    }, [anio, mes]);
 
     const getFacturas = useCallback(async () => {
         try {
@@ -221,7 +221,7 @@ const Facturas = () => {
         getFacturas();
         handleAlertCreate();
         getIva();
-    }, [getFacturas, handleAlertCreate]);
+    }, [getFacturas, handleAlertCreate, getIva]);
 
     return (
         <>
@@ -272,9 +272,9 @@ const Facturas = () => {
                                         <td>{factura.estado.nombre}</td>
                                         <td>{factura.observaciones}</td>
                                         <td>
-                                            <a style={{ cursor: "pointer", marginRight: 2, color: "#198754" }} onClick={() => handleShowCheck(factura)}><AiFillCheckCircle /></a>
-                                            <a style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(factura)}><AiFillEdit /></a>
-                                            <a style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(factura)}><AiFillDelete /></a>
+                                            <a href="#sc" style={{ cursor: "pointer", marginRight: 2, color: "#198754" }} onClick={() => handleShowCheck(factura)}><AiFillCheckCircle /></a>
+                                            <a href="#se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(factura)}><AiFillEdit /></a>
+                                            <a href="#sd" style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(factura)}><AiFillDelete /></a>
                                         </td>
                                     </tr>
                                 ))}

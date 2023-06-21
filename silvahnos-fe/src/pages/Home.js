@@ -3,7 +3,6 @@ import { Col, Row, Card, Button, Container, Table, Badge, ListGroup } from "reac
 import { useState, useEffect, useCallback } from 'react';
 import LineChartIngresos from './ingreso/Grafico';
 import LineChartEgresos from './egreso/Grafico';
-import CategoriasEgreso from '../components/data/CategoriasEgreso';
 import urlweb from '../config/config';
 
 const Home = () => {
@@ -82,8 +81,6 @@ const Home = () => {
 
   const formatearFecha = (fecha) => {
     const fechaActual = new Date(fecha);
-    let fechaC = fecha.split('T')[0];
-    fechaC = fechaC.split('-');
     return fechaActual.getFullYear() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getDate();
   };
 

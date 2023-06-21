@@ -3,26 +3,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import {BsBoxArrowRight} from "react-icons/bs";
 import FormMotivoI from '../../components/FormMotivoI';
 
 const MotivoI = () => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 6;
-
     const [motivosI, setMotivosI] = useState([]);
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
-
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    }
-
-    const paginatedData = motivosI.slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
-    );
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -126,11 +115,11 @@ const MotivoI = () => {
 
 
     return (
-        <div>
+        <div style={{width: "100%"}} >
             <Card className="cardsH">
                 <Card.Body>
                     <Card.Title >Motivos de ingresos registrados</Card.Title>
-                    <Table striped responsive="sm" hover bordered>
+                    <Table responsive="sm" hover>
                         <thead>
                             <tr>
                                 <th style={{ width: '100px' }}>Nombre</th>
@@ -144,15 +133,17 @@ const MotivoI = () => {
                                     <td >{motivo.nombre}</td>
                                     <td >{motivo.descripcion}</td>
                                     <td>
-                                        <a style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(motivo)}><AiFillEdit /></a>
-                                        <a style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(motivo)}><AiFillDelete /></a>
+                                        <a href="se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(motivo)}><AiFillEdit /></a>
+                                        <a href="sd" style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(motivo)}><AiFillDelete /></a>
                                     </td>
                                 </tr>
                             )
                             )}
                         </tbody>
                     </Table>
-                    <Button href="/crearMotivoI">Registrar motivo de ingreso</Button>
+                    <div className="registrar" >
+                        <a className="registrar-anchor" href="/crearMotivoI">Registrar ingreso <BsBoxArrowRight/></a>
+                    </div>
                 </Card.Body>
             </Card>
 

@@ -45,7 +45,7 @@ const Correo = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{width: "100%"}}>
             <Card className="cardsH">
                 <Card.Body>
                     <Card.Title >Correo destinatario de notificación</Card.Title>
@@ -54,7 +54,9 @@ const Correo = () => {
                         <ListGroup.Item style={{ fontWeight: "bold" }}>Correo actual: {correoActual}</ListGroup.Item>
                     </ListGroup>
                     <br></br>
-                    <Button onClick={() => setShowModal(true)}>Actualizar correo</Button>
+                    <div>
+                        <Button variant='outline-primary' onClick={() => setShowModal(true)}>Actualizar correo</Button>
+                    </div>
                 </Card.Body>
             </Card>
 

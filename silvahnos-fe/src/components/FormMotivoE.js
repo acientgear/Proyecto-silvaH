@@ -33,6 +33,7 @@ const FormMotivoE = ({ motivoE, validated, modal, handleChange, handleSubmit, ha
                         isValid={255 > motivoE.nombre.length && motivoE.nombre.length > 0}
                         isInvalid={motivoE.nombre.length > 255 || motivoE.nombre.length === 0}
                         type='text' row={3} value={motivoE.nombre} onChange={handleChange} />
+                        <span style={{color: "#adb5bd"}}>{motivoE.nombre.length + '/255'}</span>
                     <Form.Control.Feedback type="invalid">
                         Ingrese un nombre válido
                     </Form.Control.Feedback>
@@ -45,6 +46,7 @@ const FormMotivoE = ({ motivoE, validated, modal, handleChange, handleSubmit, ha
                         isValid={255 > motivoE.descripcion.length && motivoE.descripcion.length > 0}
                         isInvalid={motivoE.descripcion.length > 255 || motivoE.descripcion.length === 0}
                         as='textarea' row={3} value={motivoE.descripcion} onChange={handleChange} />
+                        <span style={{color: "#adb5bd"}}>{motivoE.descripcion.length + '/255'}</span>
                     <Form.Control.Feedback type="invalid">
                         Ingrese una descripcion válida
                     </Form.Control.Feedback>

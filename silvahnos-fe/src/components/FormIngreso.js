@@ -45,6 +45,7 @@ const FormIngreso = ({ ingreso, setIngreso, validated, modal, handleChange, hand
                     isInvalid={ingreso.patente.length > 6 || ingreso.patente.length === 0}
                     type="text" placeholder="Ingrese la patente" value={ingreso.patente} onChange={handleChange}
                 />
+                <span style={{color: "#adb5bd"}}>{ingreso.patente.length + '/6'}</span>
                 <Form.Control.Feedback type="invalid">
                     Ingrese una patente valida
                 </Form.Control.Feedback>
@@ -88,6 +89,7 @@ const FormIngreso = ({ ingreso, setIngreso, validated, modal, handleChange, hand
                     isValid={255 > ingreso.descripcion.length && ingreso.descripcion.length > 0}
                     isInvalid={ingreso.descripcion.length > 255 || ingreso.descripcion.length === 0}
                     as='textarea' row={3} value={ingreso.descripcion} onChange={handleChange} />
+                    <span style={{color: "#adb5bd"}}>{ingreso.descripcion.length + '/255'}</span>
                 <Form.Control.Feedback type="invalid">
                     Ingrese una descripción valida
                 </Form.Control.Feedback>

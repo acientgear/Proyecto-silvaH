@@ -6,7 +6,6 @@ import urlweb from '../../config/config';
 
 function CrearEgreso() {
     const [validated, setValidated] = useState(false);
-    const [motivoId, setMotivoId] = useState(0);
 
     const [egreso, setEgreso] = useState({
         id: null,

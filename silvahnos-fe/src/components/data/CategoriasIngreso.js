@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import urlweb from "../../config/config";
 
 const CategoriaIngresos = () => {
     const [data, setData] = useState([])
 
-    const get = async () => {
+    const get = useCallback( async () => {
         try{
             let url = 'http://' + urlweb + '/motivosI';
             const response = await axios.get(url)
@@ -15,7 +15,7 @@ const CategoriaIngresos = () => {
         }catch(err){
             console.log(err.message)
         }
-    }
+    }, [])
 
     useEffect(() => {
         get();

@@ -149,11 +149,7 @@ const Egresos = () => {
 
 
     const formatearFecha = (fecha) => {
-    
         const fechaActual = new Date(fecha);
-        let fechaC = fecha.split('T')[0];
-        fechaC = fechaC.split('-');
-        console.log(fechaActual.getDate());
         return fechaActual.getFullYear() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getDate();
     };
 

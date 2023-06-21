@@ -45,7 +45,7 @@ const Parametro = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{width: "100%"}}>
             <Card className="cardsH">
                 <Card.Body>
                     <Card.Title >Días previos para notificación de factura por vencer</Card.Title>
@@ -54,7 +54,9 @@ const Parametro = () => {
                         <ListGroup.Item style={{ fontWeight: "bold" }}>Valor del parámetro actual: {parametroActual} días</ListGroup.Item>
                     </ListGroup>
                     <br></br>
-                    <Button onClick={() => setShowModal(true)}>Cambiar parámetro</Button>
+                    <div>
+                        <Button variant='outline-primary' onClick={() => setShowModal(true)}>Cambiar parámetro</Button>
+                    </div>
                 </Card.Body>
             </Card>
 
