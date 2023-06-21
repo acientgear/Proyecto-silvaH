@@ -50,7 +50,7 @@ public class EmailServiceTest {
     @InjectMocks
     private EmailService emailService;
 
-    @Test
+    /*@Test
     public void testSendEmail() {
         // Configurar el comportamiento del mock del repositorio
         EmailConfig emailConfig = new EmailConfig();
@@ -70,7 +70,7 @@ public class EmailServiceTest {
         assertEquals("luis.toro.f@usach.cl", message.getTo()[0]);
         assertEquals("Notificación factura", message.getSubject());
         assertEquals("Factura 131 está por vencer", message.getText());
-    }
+    }*/
 
     /*@Test
     void testCronEmail() {

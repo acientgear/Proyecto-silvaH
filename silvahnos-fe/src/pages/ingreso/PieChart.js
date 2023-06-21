@@ -27,7 +27,7 @@ const PieChartIngreso = ({anio,mes}) => {
     }, [anio,mes]);
 
     const data = {
-        labels: montosOrigen.map((item) => motivos.nombre),
+        labels: motivos.map((item) => item.nombre),
         datasets: [
             {
                 label: 'Monto total',

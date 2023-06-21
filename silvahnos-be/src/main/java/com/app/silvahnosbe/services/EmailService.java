@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -77,10 +78,17 @@ public class EmailService {
         int i = 0;
         while (i < facturas.size()) {
             Date fechaVencimiento = facturas.get(i).getFecha_vencimiento();
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fechaVencimiento);
+            int dia = calendar.get(Calendar.DAY_OF_MONTH);
+            int mes = calendar.get(Calendar.MONTH) + 1;
+            int anio = calendar.get(Calendar.YEAR);
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'del' MM 'del' yyyy");
             String fechaFormateada = dateFormat.format(fechaVencimiento);
             mensaje = mensaje + "Factura N° :" + facturas.get(i).getNumero_factura() + ", con fecha de vencimiento el "
-                    + fechaFormateada + "\n";
+                    + dia + " del " + mes + " del año " + anio + "\n";
             i = i + 1;
         }
         EmailConfig emailConfig = emailConfigRepository.findById(1l).orElseThrow();

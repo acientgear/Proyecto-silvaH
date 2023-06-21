@@ -81,8 +81,8 @@ const Home = () => {
 
   const formatearFecha = (fecha) => {
     const fechaActual = new Date(fecha);
-    return fechaActual.getFullYear() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getDate();
-  };
+    return fechaActual.getDate() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getFullYear();
+};
 
   const calcularDiasPorVencer = (fecha) => {
     let fechaC = fecha.split('T')[0];

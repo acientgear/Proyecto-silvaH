@@ -22,7 +22,7 @@ public interface FacturaRepository extends JpaRepository<FacturaEntity, Long>{
     @Query(value = "SELECT * FROM factura as f WHERE f.estado = 1 AND YEAR(fecha_vencimiento) = :anio AND  MONTH(fecha_vencimiento) = :mes ORDER BY f.fecha_vencimiento LIMIT 3", nativeQuery = true)
     List<FacturaEntity> obtenerProximasVencer(@Param("anio") int anio, @Param("mes") int mes);
 
-    @Query(value="select * from factura where   DATE_ADD(CURDATE(), interval :dias day) > factura.fecha_vencimiento and factura.borrado=0 and factura.estado=1",nativeQuery = true)
+    @Query(value="select * from factura where   DATE_ADD(CURDATE(), interval :dias day) >= factura.fecha_vencimiento and factura.borrado=0 and factura.estado=1",nativeQuery = true)
     List<FacturaEntity>facturaV(@Param("dias")int dias);
 
     @Query(value= "UPDATE  factura set estado =2 where DATE_ADD(CURDATE(), interval :dias day) > factura.fecha_vencimiento and factura.borrado=0 and factura.estado=1",nativeQuery = true)

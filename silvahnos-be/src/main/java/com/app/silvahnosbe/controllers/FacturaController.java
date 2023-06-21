@@ -36,6 +36,12 @@ public class FacturaController {
         return ResponseEntity.ok().body(facturaGuardada);
     }
 
+    @PostMapping("/pagar")
+    public ResponseEntity<FacturaEntity> pagarFactura(@RequestBody FacturaEntity factura){
+        FacturaEntity facturaGuardada = facturaService.pagarFactura(factura);
+        return ResponseEntity.ok().body(facturaGuardada);
+    }
+
     @GetMapping("/iva/{anio}/{mes}")
     public ResponseEntity<Integer> getIva(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
         Integer iva = facturaService.obtenerIva(anio, mes);

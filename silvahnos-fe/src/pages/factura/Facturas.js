@@ -101,7 +101,7 @@ const Facturas = () => {
             const anio = fechaActual.getFullYear();
             return anio + '-' + mes + '-' + dia;
         })();
-        updateFactura();
+        pagarFactura();
     };
 
     const handleDelete = () => {
@@ -145,6 +145,21 @@ const Facturas = () => {
     const updateFactura = async () => {
         try {
             let url = 'http://' + urlweb + '/facturas';
+            const response = await axios.post(url, editedItem);
+            if (response.status === 200) {
+                handleCloseEdit();
+                handleCloseCheck();
+                setShowAlertEdit(true);
+                getFacturas();
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    const pagarFactura = async () => {
+        try {
+            let url = 'http://' + urlweb + '/facturas/pagar';
             const response = await axios.post(url, editedItem);
             if (response.status === 200) {
                 handleCloseEdit();

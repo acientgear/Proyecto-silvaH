@@ -21,7 +21,7 @@ public class FacturaService {
     }
 
     public FacturaEntity guardarFactura(FacturaEntity factura) {
-        Calendar calendar1 = Calendar.getInstance();
+        /*Calendar calendar1 = Calendar.getInstance();
         calendar1.setTime(factura.getFecha_vencimiento());
         calendar1.add(Calendar.DAY_OF_MONTH, 1); // Sumar un día
 
@@ -34,7 +34,19 @@ public class FacturaService {
         Date fecha_e = calendar2.getTime();
 
         factura.setFecha_vencimiento(fecha_v);
-        factura.setFecha_emision(fecha_e);
+        factura.setFecha_emision(fecha_e);*/
+        return facturaRepository.save(factura);
+    }
+
+    public FacturaEntity pagarFactura(FacturaEntity factura) {
+        /*Restar un día a la fecha de pago */
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(factura.getFecha_pago());
+        calendar.add(Calendar.DAY_OF_MONTH, -1); // Restar un día
+
+        Date fecha = calendar.getTime();
+
+        factura.setFecha_pago(fecha);
         return facturaRepository.save(factura);
     }
 

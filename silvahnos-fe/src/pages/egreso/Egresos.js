@@ -150,7 +150,7 @@ const Egresos = () => {
 
     const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);
-        return fechaActual.getFullYear() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getDate();
+        return fechaActual.getDate() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getFullYear();
     };
 
     let total = 0;
