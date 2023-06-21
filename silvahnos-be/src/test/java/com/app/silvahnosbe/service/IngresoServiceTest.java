@@ -20,7 +20,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.entities.IngresoEntity;
+import com.app.silvahnosbe.entities.LocalEntity;
+import com.app.silvahnosbe.entities.MotivoEEntity;
+import com.app.silvahnosbe.entities.MotivoIEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
+import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.IngresoRepository;
 import com.app.silvahnosbe.services.IngresoService;
 
@@ -34,6 +40,8 @@ public class IngresoServiceTest {
     private IngresoService ingresoService;
 
     IngresoEntity ingreso;
+
+    Timestamp fecha = new Timestamp(System.currentTimeMillis());
 
     @BeforeEach
     void setup() {
@@ -214,6 +222,54 @@ public class IngresoServiceTest {
         int saldo = ingresoService.obtenerSaldoCuenta(5);
         // then
         assertThat(saldo).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("test de integración creación de ingreso con motivo y movimiento")
+    void testCrearEgreso() {
+        // given
+        LocalEntity local = new LocalEntity();
+        local.setId(1l);
+        local.setNombre("local1");
+        local.setDireccion("direccion1");
+        
+        UsuarioEntity usuario = new UsuarioEntity();
+        usuario.setCorreo("correo1@gmail.com");
+        usuario.setContrasenna("pass1");
+        usuario.setNombre("usuario1");
+        
+        MovimientoEntity movimiento = new MovimientoEntity();
+        movimiento.setId(1l);
+        movimiento.setLocal(local);
+        movimiento.setUsuario(usuario);
+
+        MotivoIEntity motivo = new MotivoIEntity();
+        motivo.setId(1l);
+        motivo.setNombre("motivo1");
+        motivo.setDescripcion("descripcion1");
+        motivo.setBorrado(false);
+
+        IngresoEntity ingreso = new IngresoEntity();
+        ingreso.setId(1l);
+        ingreso.setMonto(15000);
+        ingreso.setPatente("patente1");
+        ingreso.setDescripcion("pintura");
+        ingreso.setBorrado(false);
+        ingreso.setMotivo(motivo);
+        ingreso.setMovimiento(movimiento);
+        ingreso.setFecha_creacion(fecha);
+        ingresoRepository.save(ingreso);
+        given(ingresoRepository.save(ingreso)).willReturn(ingreso);
+
+        // when
+        IngresoEntity ingreso1 = ingresoService.guardarIngreso(ingreso);
+
+        // then
+        assertThat(ingreso1.getId()).isEqualTo(1l);
+        assertThat(ingreso1.getMotivo().getId()).isEqualTo(1l);
+        assertThat(ingreso1.getMovimiento().getId()).isEqualTo(1l);
+        assertThat(ingreso1.getMovimiento().getLocal().getId()).isEqualTo(1l);
+        assertThat(ingreso1.getMovimiento().getUsuario().getCorreo()).isEqualTo("correo1@gmail.com");
     }
 
 }
