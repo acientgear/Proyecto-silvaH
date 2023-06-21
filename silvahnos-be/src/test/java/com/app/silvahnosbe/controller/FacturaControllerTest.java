@@ -172,5 +172,20 @@ public class FacturaControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    @DisplayName("Test para pagar una factura")
+    @Test
+    void testPagarFactura_FacturaPagada_ReturnsFactura() {
+        // Given
+        FacturaEntity factura = new FacturaEntity();
+        when(facturaService.pagarFactura(factura)).thenReturn(factura);
+
+        // When
+        ResponseEntity<FacturaEntity> response = facturaController.pagarFactura(factura);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(factura, response.getBody());
+    }
+
     
 }
