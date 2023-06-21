@@ -39,14 +39,16 @@ public class FacturaService {
     }
 
     public FacturaEntity pagarFactura(FacturaEntity factura) {
-        /*Restar un día a la fecha de pago */
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(factura.getFecha_pago());
-        calendar.add(Calendar.DAY_OF_MONTH, -1); // Restar un día
+        if (factura.getFecha_pago() != null) {
+            /*Restar un día a la fecha de pago */
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(factura.getFecha_pago());
+            calendar.add(Calendar.DAY_OF_MONTH, -1); // Restar un día
 
-        Date fecha = calendar.getTime();
+            Date fecha = calendar.getTime();
 
-        factura.setFecha_pago(fecha);
+            factura.setFecha_pago(fecha);
+        }
         return facturaRepository.save(factura);
     }
 

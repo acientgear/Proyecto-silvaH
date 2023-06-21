@@ -137,6 +137,17 @@ public class FacturaServiceTest {
         assertThat(facturas1).isNotNull();
     }
     
-
+    @DisplayName("test para pagar factura")
+    @Test
+    void testPagarFactura() {
+        // given
+        FacturaEntity facturaPagada = new FacturaEntity();
+        facturaPagada.setId(1l);
+        given(facturaRepository.save(facturaPagada)).willReturn(facturaPagada);
+        // when
+        FacturaEntity factura1 = facturaService.pagarFactura(facturaPagada);
+        // then
+        assertThat(factura1.getId()).isEqualTo(1l);
+    }
 
 }
