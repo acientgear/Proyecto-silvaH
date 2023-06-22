@@ -1,6 +1,15 @@
 import { Form, Button } from 'react-bootstrap';
+import { checkRut, prettifyRut } from "react-rut-formatter";
 
-const FormEmpresa = ({ empresa, validated, modal, handleChange, handleSubmit, handleCloseEdit }) => {
+const FormEmpresa = ({ empresa, validated, modal, handleChange, handleSubmit, handleCloseEdit, setempresa }) => {
+
+    const handleRut = (e) => {
+        setempresa({
+            ...empresa,
+            rut: prettifyRut(e.target.value)
+        });
+    }
+
     const modalFooter = () => {
         return (
             <div>
@@ -29,11 +38,9 @@ const FormEmpresa = ({ empresa, validated, modal, handleChange, handleSubmit, ha
                 <Form.Group className="mb-3" controlId="formRut">
                     <Form.Label>Rut</Form.Label>
                     <Form.Control name="rut" required
-                        isValid={9000000 > empresa.rut && empresa.rut > 0}
-                        isInvalid={empresa.rut <= 0 || empresa.rut > 1000000000}
-                        min={1}
-                        max={1000000000}
-                        type="number" placeholder="Ingrese rut" onChange={handleChange}
+                        isValid={checkRut(empresa.rut)}
+                        isInvalid={!checkRut(empresa.rut) || empresa.rut.length > 12}
+                        type="text" placeholder="Ingrese un rut" onChange={handleRut}
                         value={empresa.rut}
                     />
                     <Form.Control.Feedback type="invalid">

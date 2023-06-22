@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
 import FormEmpresa from '../../components/FormEmpresa';
+import { checkRut } from 'react-rut-formatter';
 
 const CrearEmpresa = () => {
     const [validated, setValidated] = useState(false);
@@ -21,6 +22,10 @@ const CrearEmpresa = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
+            if(!checkRut(empresa.rut) || empresa.rut.length > 12){
+                e.stopPropagation();
+                return;
+            }
             createEmpresa();
             setValidated(true);
         }
@@ -56,6 +61,7 @@ const CrearEmpresa = () => {
                         modal={false}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
+                        setempresa={setempresa}
                     />
                 </Col>
             </Row>

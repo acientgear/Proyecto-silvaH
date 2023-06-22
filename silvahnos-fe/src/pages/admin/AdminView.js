@@ -71,10 +71,10 @@ const AdminView = () => {
             <aside className='sidebar'>
                 <div className='nav'>
                     <ul className='nav-collapse'>
-                        <li className='link-collapse'><a href='#usuarios' onClick={() => handleSeccion("usuarios")}><AiOutlineUser /></a></li>
-                        <li className='link-collapse'><a href='#motivos' onClick={() => handleSeccion("motivos")}><AiOutlineFall /></a></li>
-                        <li className='link-collapse'><a href='#facturas' onClick={() => handleSeccion("facturas")}><AiOutlineFileText /></a></li>
-                        <li className='link-collapse'><a href='#correos' onClick={() => handleSeccion("correos")}><AiOutlineMail /></a></li>
+                        <li className='link-collapse'><a className="link-anchor-collapse" href='#usuarios' onClick={() => handleSeccion("usuarios")}><AiOutlineUser /></a></li>
+                        <li className='link-collapse'><a className="link-anchor-collapse" href='#motivos' onClick={() => handleSeccion("motivos")}><AiOutlineFall /></a></li>
+                        <li className='link-collapse'><a className="link-anchor-collapse" href='#facturas' onClick={() => handleSeccion("facturas")}><AiOutlineFileText /></a></li>
+                        <li className='link-collapse'><a className="link-anchor-collapse" href='#correos' onClick={() => handleSeccion("correos")}><AiOutlineMail /></a></li>
                     </ul>
                     <ul className='nav-always'>
                         <li className='link-always'>

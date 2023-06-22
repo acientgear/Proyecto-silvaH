@@ -5,6 +5,7 @@ import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import {BsBoxArrowRight} from "react-icons/bs";
 import FormEmpresa from '../../components/FormEmpresa';
+import { checkRut } from 'react-rut-formatter';
 
 const Empresas = () => {
     const [empresas, setempresas] = useState([]);
@@ -47,6 +48,10 @@ const Empresas = () => {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
+            if(!checkRut(editedItem.rut) || editedItem.rut.length > 12){
+                e.stopPropagation();
+                return;
+            }
             updateEmpresa();
             setValidated(true);
         }
@@ -178,6 +183,7 @@ const Empresas = () => {
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         handleCloseEdit={handleCloseEdit}
+                        setempresa={setEditedItem}
                     />
                 </Modal.Body>
             </Modal>
