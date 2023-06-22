@@ -16,8 +16,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.app.silvahnosbe.entities.EmpresaEntity;
 import com.app.silvahnosbe.entities.EstadoEntity;
 import com.app.silvahnosbe.entities.FacturaEntity;
+import com.app.silvahnosbe.entities.LocalEntity;
+import com.app.silvahnosbe.entities.MotivoIEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
+import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.services.FacturaService;
 
@@ -148,6 +153,62 @@ public class FacturaServiceTest {
         FacturaEntity factura1 = facturaService.pagarFactura(facturaPagada);
         // then
         assertThat(factura1.getId()).isEqualTo(1l);
+    }
+
+    @DisplayName("test de integración para creación de factura")
+    @Test
+    void testCrearFactura(){
+        // given
+        LocalEntity local = new LocalEntity();
+        local.setId(1l);
+        local.setNombre("local1");
+        local.setDireccion("direccion1");
+        
+        UsuarioEntity usuario = new UsuarioEntity();
+        usuario.setCorreo("correo1@gmail.com");
+        usuario.setContrasenna("pass1");
+        usuario.setNombre("usuario1");
+        
+        MovimientoEntity movimiento = new MovimientoEntity();
+        movimiento.setId(1l);
+        movimiento.setLocal(local);
+        movimiento.setUsuario(usuario);
+
+        EmpresaEntity empresa = new EmpresaEntity();
+        empresa.setId(1l);
+        empresa.setNombre("empresa1");
+        empresa.setRut("rut1");
+        empresa.setDireccion("direccion1");
+
+        EstadoEntity estado = new EstadoEntity();
+        estado.setId(1l);
+        estado.setNombre("no pagada");
+
+        FacturaEntity factura = new FacturaEntity();    
+        factura.setId(1l);
+        factura.setNumero_factura(1);
+        factura.setFecha_emision(new Date(System.currentTimeMillis()));
+        factura.setFecha_vencimiento(new Date(System.currentTimeMillis()));
+        factura.setFecha_pago(new Date(System.currentTimeMillis()));
+        factura.setMonto(14000);
+        factura.setObservaciones("pintura");
+        factura.setBorrado(false);
+        factura.setEstado(estado);
+        factura.setEmpresa(empresa);
+        factura.setMovimiento(movimiento);
+        factura.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+        given(facturaRepository.save(factura)).willReturn(factura);
+
+        // when
+        FacturaEntity factura1 = facturaService.guardarFactura(factura);
+
+        // then
+        assertThat(factura1.getId()).isEqualTo(1l);
+        assertThat(factura1.getEmpresa().getId()).isEqualTo(1l);
+        assertThat(factura1.getEstado().getId()).isEqualTo(1l);
+        assertThat(factura1.getMovimiento().getId()).isEqualTo(1l);
+        assertThat(factura1.getMovimiento().getLocal().getId()).isEqualTo(1l);
+        assertThat(factura1.getMovimiento().getUsuario().getCorreo()).isEqualTo("correo1@gmail.com");
     }
 
 }
