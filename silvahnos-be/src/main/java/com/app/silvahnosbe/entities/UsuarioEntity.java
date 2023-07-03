@@ -13,8 +13,11 @@ import lombok.NoArgsConstructor;
 public class UsuarioEntity {
     @Id
     @Column(unique = true, nullable = false)
+    private Long id;
+    
     private String correo;
-
+    
+    private String usuario;
     private String contrasenna;
-    private String nombre;
+    private String rol;
 }

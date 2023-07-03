@@ -22,4 +22,9 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public UsuarioEntity obtenerUsuarioPorUsuario(String usuario){
+        //revisar cuando no se encuentra el usuario
+        return usuarioRepository.findByUsuario(usuario);
+    }
+
 }
