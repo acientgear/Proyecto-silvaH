@@ -1,7 +1,7 @@
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Row } from "react-bootstrap"
 import Empresas from './data/Empresas';
 
-const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, setFactura, handleChange, modal }) => {
+const FormFactura = ({ handleCloseEdit, validated, handleSubmit, factura, setFactura, handleChange, modal }) => {
     const handleEmpresa = (e) => {
         setFactura({
             ...factura,
@@ -12,7 +12,7 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, setFact
     }
 
     const empresas = Empresas();
-    
+
     const modalFooter = () => {
         return (
             <div>
@@ -89,13 +89,15 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, setFact
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formFactura">
-                <Form.Label>Fecha emisión</Form.Label>
-                <Form.Control name="fecha_emision" required
-                    type="date" placeholder="Ingrese una fecha de emisión" onChange={handleChange}
-                    value={factura.fecha_emision}
-                />
-            </Form.Group>
+            <Row>
+                <Form.Group className="mb-3" controlId="formFactura">
+                    <Form.Label>Fecha emisión</Form.Label>
+                    <Form.Control name="fecha_emision" required
+                        type="date" placeholder="Ingrese una fecha de emisión" onChange={handleChange}
+                        value={factura.fecha_emision}
+                    />
+                </Form.Group>
+            </Row>
 
             <Form.Group className="mb-3" controlId="formFactura">
                 <Form.Label>Fecha vencimiento</Form.Label>
@@ -114,7 +116,7 @@ const FormFactura = ({handleCloseEdit, validated, handleSubmit, factura, setFact
                     as="textarea" row={3} placeholder="Ingrese una observación" onChange={handleChange}
                     value={factura.observaciones}
                 />
-                <span style={{color: "#adb5bd"}}>{factura.observaciones.length + '/255'}</span>
+                <span style={{ color: "#adb5bd" }}>{factura.observaciones.length + '/255'}</span>
                 <Form.Control.Feedback type="invalid">
                     Ingrese una observación valida
                 </Form.Control.Feedback>

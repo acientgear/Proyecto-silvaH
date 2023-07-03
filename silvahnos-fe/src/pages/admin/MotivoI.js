@@ -142,7 +142,7 @@ const MotivoI = () => {
                         </tbody>
                     </Table>
                     <div className="registrar" >
-                        <a className="registrar-anchor" href="/crearMotivoI">Registrar ingreso <BsBoxArrowRight/></a>
+                        <a className="registrar-anchor" href="/crearMotivoI">Registrar motivo de ingreso <BsBoxArrowRight/></a>
                     </div>
                 </Card.Body>
             </Card>

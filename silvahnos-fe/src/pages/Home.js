@@ -90,7 +90,7 @@ const Home = () => {
     let fechaVencimiento = new Date(fechaC[0], fechaC[1] - 1, fechaC[2]);
     let fechaActual = new Date();
     let diferencia = fechaVencimiento.getTime() - fechaActual.getTime();
-    let dias = Math.round(diferencia / (1000 * 60 * 60 * 24)) + 1;
+    let dias = Math.round(diferencia / (1000 * 60 * 60 * 24));
     return dias;
   };
 
