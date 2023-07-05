@@ -1,5 +1,7 @@
 package com.app.silvahnosbe.entities;
 
+import com.app.silvahnosbe.models.ERole;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +18,6 @@ public class RolEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    private String nombre;
+    @Enumerated(EnumType.STRING)
+    private ERole nombre;
 }

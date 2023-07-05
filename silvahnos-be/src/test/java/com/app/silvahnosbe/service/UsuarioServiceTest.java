@@ -29,7 +29,7 @@ public class UsuarioServiceTest {
     @BeforeEach
     void setup() {
         usuario = new UsuarioEntity();
-        usuario.setNombre("Juan");
+        usuario.setUsuario("Juan");
         usuario.setCorreo("luis@gmail.com");
         usuario.setContrasenna("1234");
         usuarioService.guardarUsuario(usuario);

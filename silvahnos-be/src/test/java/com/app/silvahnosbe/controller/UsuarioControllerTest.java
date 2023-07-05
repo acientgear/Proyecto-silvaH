@@ -64,7 +64,7 @@ public class UsuarioControllerTest {
     public void testCreateUsuario_CreaUsuario_ReturnsUsuario() {
         // Given
         UsuarioEntity usuario = new UsuarioEntity();
-        usuario.setNombre("Nombre");
+        usuario.setUsuario("Nombre");
         usuario.setCorreo("Correo");
         usuario.setContrasenna("Contrasenna");
         when(usuarioService.guardarUsuario(usuario)).thenReturn(usuario);

@@ -33,7 +33,7 @@ public class RolServiceTest {
     void setup() {
         rol = new RolEntity();
         rol.setId(1l);
-        rol.setNombre("Rol 1");
+        //rol.setNombre("Rol 1");
     }
 
     @DisplayName("Test para obtener todos los roles cuando existen roles")
@@ -41,7 +41,7 @@ public class RolServiceTest {
     void testObtenerRoles_ExistenRoles() {
         // Given
         RolEntity rol = new RolEntity();
-        rol.setNombre("Rol 1");
+        //rol.setNombre("Rol 1");
         ArrayList<RolEntity> roles = new ArrayList<>();
         roles.add(rol);
 

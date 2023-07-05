@@ -195,7 +195,7 @@ public class EgresoServiceTest {
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setCorreo("correo1@gmail.com");
         usuario.setContrasenna("pass1");
-        usuario.setNombre("usuario1");
+        usuario.setUsuario("usuario1");
         
         MovimientoEntity movimiento = new MovimientoEntity();
         movimiento.setId(1l);

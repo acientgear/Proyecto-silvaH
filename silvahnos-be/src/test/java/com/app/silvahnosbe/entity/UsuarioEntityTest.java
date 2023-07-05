@@ -40,8 +40,8 @@ public class UsuarioEntityTest {
         UsuarioEntity usuario = new UsuarioEntity();
 
         // When
-        usuario.setNombre("nombre");
-        String nombre = usuario.getNombre();
+        usuario.setUsuario("nombre");
+        String nombre = usuario.getUsuario();
 
         // Then
         assertEquals("nombre", nombre);
