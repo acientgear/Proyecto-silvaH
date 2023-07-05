@@ -26,7 +26,7 @@ function BasicExample() {
             <Nav.Link href="/administracion">Administración{" "}</Nav.Link>
           </Nav>
           <Nav style={{ color: "black", fontWeight: "bold" }}>
-            <Nav.Link href="#logout">Cerrar sesión</Nav.Link>
+            <Nav.Link href="/login">Iniciar sesión</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

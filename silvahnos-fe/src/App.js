@@ -14,6 +14,7 @@ import AdminView from './pages/admin/AdminView';
 import CrearMotivoI from './pages/admin/CrearMotivoI';
 import CrearMotivoE from './pages/admin/CrearMotivoE';
 import CrearEmpresa from './pages/admin/CrearEmpresa';
+import Login from './pages/auth/Login';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/crearMotivoI" element={<CrearMotivoI />} />
           <Route path="/crearMotivoE" element={<CrearMotivoE />} />
           <Route path="/crearEmpresa" element={<CrearEmpresa />} />
+          <Route path="/login" element={<Login/>} />
         </Routes>
       </Container>
     </Layout>

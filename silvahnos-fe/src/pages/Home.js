@@ -150,7 +150,7 @@ const Home = () => {
   }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes]);
 
   return (
-    <Container>
+    <Container style={{paddingTop: 10}}>
       <Row className="justify-content-center">
         <Col xs="auto" >
           <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/flujo">Visualizar resumen</Button>
