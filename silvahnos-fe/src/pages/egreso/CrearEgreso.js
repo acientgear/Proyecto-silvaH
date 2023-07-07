@@ -33,7 +33,6 @@ function CrearEgreso() {
         if (form.checkValidity() === false) {
             e.stopPropagation();
         } else {
-            console.log(egreso)
             createEgreso();
             setValidated(true);
         }

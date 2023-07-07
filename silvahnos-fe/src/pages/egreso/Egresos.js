@@ -7,6 +7,10 @@ import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const Egresos = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    };    
+
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 6;
 
@@ -138,7 +142,7 @@ const Egresos = () => {
     const getEgresos = useCallback(async () => {
         try {
             let url = 'http://' + urlweb + '/egresos/' + anio + '/' + mes;
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setEgresos(response.data);
             }

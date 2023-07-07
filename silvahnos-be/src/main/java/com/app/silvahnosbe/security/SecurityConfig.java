@@ -37,6 +37,8 @@ public class SecurityConfig {
             .csrf(config -> config.disable())
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/login").permitAll();
+                auth.requestMatchers("/iniciar_sesion").permitAll();
+                auth.requestMatchers("/**").authenticated();
                 auth.anyRequest().authenticated();
             })
             .sessionManagement(session -> {

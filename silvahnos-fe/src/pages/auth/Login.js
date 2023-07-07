@@ -1,63 +1,79 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import axios from "axios";
+import urlweb from '../../config/config';
 
 const Login = () => {
-    const [validated, setValidated] = useState(false); 
+    const [validated, setValidated] = useState(false);
     const [seePassword, setSeePassword] = useState(false);
     const [tipo, setTipo] = useState("password");
 
-    const [usuario, setUsuario] = useState({
-        correo: "",
+    const [login, setLogin] = useState({
+        usuario: "",
         password: ""
     });
 
     const handleInputChange = (e) => {
-        setUsuario({
-            ...usuario,
+        setLogin({
+            ...login,
             [e.target.name]: e.target.value
         });
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const form = e.currentTarget;
-        if(form.checkValidity() === false){
-            e.stopPropagation();
-        }else{
-            console.log(usuario);
-            setValidated(true);
-        }
+        handleLogin();
     }
 
     const handleSee = () => {
-        if(seePassword){
+        if (seePassword) {
             setSeePassword(false);
             setTipo("password");
-        }else{
+        } else {
             setSeePassword(true);
             setTipo("text");
         }
     }
 
+    const handleLogin = async () => {
+        try {
+            let url = "http://"+urlweb+"/iniciar_sesion";
+            console.log(login, url)
+            const response = await axios.post(url, login);
+            if (response.status === 200) {
+                localStorage.setItem("token", response.data.jwtToken);
+                window.location.href = "/";
+            }
+
+        } catch (err) {
+            console.log("Credenciales incorrectas");
+            console.error(err.message);
+        }
+    };
+
     return (
-        <div className="d-flex" 
-            style={{height: "calc(100vh - 76px)",
-                    justifyContent: "center",
-                    alignItems:"center"}}>
-            <div style={{width: "auto", 
-                        height: "360px",
-                        backgroundColor: "rgb(217, 217, 217)", 
-                        padding: "50px", 
-                        borderRadius:10}}>
+        <div className="d-flex"
+            style={{
+                height: "calc(100vh - 76px)",
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+            <div style={{
+                width: "auto",
+                height: "360px",
+                backgroundColor: "rgb(217, 217, 217)",
+                padding: "50px",
+                borderRadius: 10
+            }}>
                 <h1>Iniciar Sesion</h1>
-                <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" controlId="formCorreo">
-                        <Form.Label>Correo</Form.Label>
-                        <Form.Control type="email" 
-                            name="correo"
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3" controlId="formUsuario">
+                        <Form.Label>Usuario</Form.Label>
+                        <Form.Control type="text"
+                            name="usuario"
                             onChange={handleInputChange}
-                            placeholder="Ingrese su correo" 
-                            required/>
+                            placeholder="Ingrese su usuario"
+                            required />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formPassword">
                         <Form.Label>Contraseña</Form.Label>
@@ -65,13 +81,13 @@ const Login = () => {
                             name="password"
                             onChange={handleInputChange}
                             placeholder="Ingrese su contraseña"
-                            required/>
-                        <Form.Text className="text-muted" 
-                            style={{cursor: "pointer"}}
+                            required />
+                        <Form.Text className="text-muted"
+                            style={{ cursor: "pointer" }}
                             onClick={handleSee}>Mostrar contraseña</Form.Text>
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Iniciar Sesión
+                    <Button variant="primary" type="submit" style={{ marginRight: '10px' }}>
+                        Ingresar
                     </Button>
                 </Form>
             </div>
