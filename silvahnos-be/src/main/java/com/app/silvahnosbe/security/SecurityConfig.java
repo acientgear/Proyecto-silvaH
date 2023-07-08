@@ -36,10 +36,11 @@ public class SecurityConfig {
         return http
             .csrf(config -> config.disable())
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers("/login").permitAll();
+                auth.requestMatchers("/login","/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
                 auth.requestMatchers("/iniciar_sesion").permitAll();
                 auth.requestMatchers("/**").authenticated();
                 auth.anyRequest().authenticated();
+
             })
             .sessionManagement(session -> {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
