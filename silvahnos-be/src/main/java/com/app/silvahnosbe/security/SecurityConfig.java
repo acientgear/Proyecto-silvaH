@@ -15,7 +15,7 @@ import com.app.silvahnosbe.security.filters.JwtAuthenticationFilter;
 import com.app.silvahnosbe.security.filters.JwtAuthorizationFilter;
 import com.app.silvahnosbe.security.jwt.JwtUtils;
 import com.app.silvahnosbe.services.UserDetailsServiceImpl;
-
+import org.springframework.http.HttpMethod;
 @Configuration
 public class SecurityConfig {
     @Autowired
@@ -38,6 +38,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/login","/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
                 auth.requestMatchers("/iniciar_sesion").permitAll();
+                auth.requestMatchers(HttpMethod.OPTIONS).permitAll();
                 auth.requestMatchers("/**").authenticated();
                 auth.anyRequest().authenticated();
 
