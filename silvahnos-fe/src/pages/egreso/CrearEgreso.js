@@ -5,6 +5,9 @@ import FormEgreso from '../../components/FormEgreso';
 import urlweb from '../../config/config';
 
 function CrearEgreso() {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [validated, setValidated] = useState(false);
 
     const [egreso, setEgreso] = useState({
@@ -41,7 +44,7 @@ function CrearEgreso() {
     const createEgreso = async () => {
         try {
             let url = "http://"+urlweb+"/egresos";
-            let response = await axios.post(url, egreso);
+            let response = await axios.post(url, egreso,config);
             if (response.status === 200) {
                 window.location.href = "/egresos";
             }

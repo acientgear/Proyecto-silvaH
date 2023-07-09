@@ -11,6 +11,9 @@ const idMes = mes.toLocaleString('es-ES', { month: 'long' });
 const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
 
 const TablaMensual = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [montosOrigenIngresos, setMontosOrigenIngresos] = useState([]);
     const [montosOrigenEgresos, setMontosOrigenEgresos] = useState([]);
     const [totalIngresos, setTotalIngresos] = useState(0);
@@ -25,7 +28,7 @@ const TablaMensual = () => {
     const getMontosOrigenIngresos = useCallback(async () => {
         try {
             let url = 'http://'+urlweb+'/montos/ingreso/' + anio + '/' + mes;
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setTotalIngresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
                 setMontosOrigenIngresos(response.data);
@@ -38,7 +41,7 @@ const TablaMensual = () => {
     const getMontosOrigenEgresos = useCallback(async () => {
         try {
             let url = 'http://'+urlweb+'/montos/egreso/' + anio + '/' + mes;
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setTotalEgresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
                 setMontosOrigenEgresos(response.data);

@@ -4,6 +4,9 @@ import urlweb from '../../config/config';
 import { Card, Button, ListGroup, Modal, Form } from 'react-bootstrap';
 
 const Parametro = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [parametro, setParametro] = useState([]);
     const [parametroActual, setParametroActual] = useState('');
 
@@ -13,7 +16,7 @@ const Parametro = () => {
     const getParametro = async () => {
         try {
             let url = 'http://' + urlweb + '/Parametros';
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setParametro(response.data);
                 setParametroActual(response.data[0].valor);
@@ -26,7 +29,7 @@ const Parametro = () => {
     const handleSubmit = async () => {
         try {
             let url = 'http://' + urlweb + '/Parametros/'+nuevoValor;
-            const response = await axios.post(url);
+            const response = await axios.post(url,config);
             if (response.status === 200) {
                 setParametroActual(nuevoValor);
                 setShowModal(false); 

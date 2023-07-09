@@ -4,6 +4,9 @@ import urlweb from '../../config/config';
 import { Card, Button, ListGroup, Modal, Form } from 'react-bootstrap';
 
 const Correo = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [correo, setCorreo] = useState([]);
     const [correoActual, setCorreoActual] = useState('');
 
@@ -13,7 +16,7 @@ const Correo = () => {
     const getCorreo = async () => {
         try {
             let url = 'http://' + urlweb + '/Correos';
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setCorreo(response.data);
                 setCorreoActual(response.data[0].direccion);
@@ -26,7 +29,7 @@ const Correo = () => {
     const handleSubmit = async () => {
         try {
             let url = 'http://' + urlweb + '/Correos/'+nuevoCorreo;
-            const response = await axios.post(url);
+            const response = await axios.post(url,config);
             if (response.status === 200) {
                 setCorreoActual(nuevoCorreo);
                 setShowModal(false); 

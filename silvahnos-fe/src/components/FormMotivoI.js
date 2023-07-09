@@ -24,7 +24,7 @@ const FormMotivoI = ({ motivoI, validated, modal, handleChange, handleSubmit, ha
 
     return (
         <div>
-            <h1>Registrar motivo de ingreso</h1>
+            <h1>Registrar motivo de egreso</h1>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className='mb-3' controlId='formNombre'>
                     <Form.Label>Nombre</Form.Label>

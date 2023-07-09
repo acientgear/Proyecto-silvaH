@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import com.app.silvahnosbe.entities.LocalEntity;
 import com.app.silvahnosbe.services.LocalService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/locales")
 public class LocalController {
     @Autowired

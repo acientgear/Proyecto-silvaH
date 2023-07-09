@@ -5,6 +5,7 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 
 function obtenerNombresUltimos5Dias() {
+
     const dias = ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'];
     const hoy = new Date();
     const nombresDias = [];
@@ -19,10 +20,14 @@ function obtenerNombresUltimos5Dias() {
     return nombresDias;
 }
 
+const config = {
+    headers: { Authorization: `Bearer ${localStorage.token}` }
+}; 
+
 const getMontoPorDia = async (anio, mes, dia) => {
     try {
         let url = 'http://'+urlweb+'/egresos/monto/' + anio + '/' + mes + '/' + dia;
-        const response = await axios.get(url);
+        const response = await axios.get(url,config);
         if (response.status === 200) {
             return response.data;
         }

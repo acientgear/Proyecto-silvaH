@@ -5,10 +5,14 @@ import axios from 'axios';
 import Dias from '../components/data/Dias';
 import urlweb from '../config/config';
 
+const config = {
+    headers: { Authorization: `Bearer ${localStorage.token}` }
+}; 
+
 const getMontoPorDia = async (tipo, anio, mes, dia) => {
     try {
         let url = 'http://'+urlweb+'/' + tipo + '/monto/' + anio + '/' + mes + '/' + dia;
-        const response = await axios.get(url);
+        const response = await axios.get(url,config);
         if (response.status === 200) {
             return response.data;
         }

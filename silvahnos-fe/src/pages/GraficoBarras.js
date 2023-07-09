@@ -5,10 +5,14 @@ import Sem2 from '../components/data/Sem2';
 import axios from 'axios';
 import urlweb from '../config/config';
 
+const config = {
+    headers: { Authorization: `Bearer ${localStorage.token}` }
+}; 
+
 const getTotalPorMes = async (tipo, anio, mes) => {
     try {
         let url = 'http://'+urlweb+'/' + tipo + '/total/' + anio + '/' + mes;
-        const response = await axios.get(url);
+        const response = await axios.get(url,config);
         if (response.status === 200) {
             return response.data;
         }

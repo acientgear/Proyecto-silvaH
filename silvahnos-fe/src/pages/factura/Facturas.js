@@ -8,6 +8,9 @@ import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete, AiFillCheckCircle } from "react-icons/ai";
 
 const Facturas = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [currentPage, setCurrentPage] = useState(1);
     const [iva, setIva] = useState(0);
     const pageSize = 6;
@@ -120,7 +123,7 @@ const Facturas = () => {
     const getIva = useCallback( async () => {
         try {
             let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setIva(response.data);
             }
@@ -133,7 +136,7 @@ const Facturas = () => {
         try {
             let url = 'http://' + urlweb + '/facturas/' + anio + '/' + mes;
             console.log(url);
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setFacturas(response.data);
             }
@@ -145,7 +148,7 @@ const Facturas = () => {
     const updateFactura = async () => {
         try {
             let url = 'http://' + urlweb + '/facturas';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseEdit();
                 handleCloseCheck();
@@ -160,7 +163,7 @@ const Facturas = () => {
     const pagarFactura = async () => {
         try {
             let url = 'http://' + urlweb + '/facturas/pagar';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseEdit();
                 handleCloseCheck();
@@ -175,7 +178,7 @@ const Facturas = () => {
     const deleteFactura = async () => {
         try {
             let url = 'http://' + urlweb + '/facturas';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseDelete();
                 setShowAlertDelete(true);

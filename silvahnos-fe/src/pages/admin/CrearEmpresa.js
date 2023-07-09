@@ -6,6 +6,9 @@ import FormEmpresa from '../../components/FormEmpresa';
 import { checkRut } from 'react-rut-formatter';
 
 const CrearEmpresa = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [validated, setValidated] = useState(false);
 
     const [empresa, setempresa] = useState({
@@ -41,7 +44,7 @@ const CrearEmpresa = () => {
     const createEmpresa = async () => {
         try {
             let url = 'http://' + urlweb + '/empresas';
-            const response = await axios.post(url, empresa);
+            const response = await axios.post(url, empresa,config);
             if (response.status === 200) {
                 console.log(response.data);
                 window.location.href = "/administracion";

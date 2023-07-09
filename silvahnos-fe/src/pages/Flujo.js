@@ -15,6 +15,10 @@ const formatoMonto = (monto) => {
     return montoFormateado;
 };
 
+const config = {
+    headers: { Authorization: `Bearer ${localStorage.token}` }
+}; 
+
 const formatearFecha = (fecha) => {
     let fechaC = fecha.split('T')[0];
     fechaC = fechaC.split('-');
@@ -30,7 +34,7 @@ const Flujo = () => {
     const getTotalPorMes = useCallback(async (tipo, anio, mes) => {
         try {
             let url = 'http://' + urlweb + '/' + tipo + '/total/' + anio + '/' + mes;
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 return response.data;
             }
@@ -57,7 +61,7 @@ const Flujo = () => {
     const getRegistros = useCallback(async () => {
         try {
             let url = 'http://' + urlweb + '/registros/' + anio + '/' + mes;
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setRegistros(response.data);
             }

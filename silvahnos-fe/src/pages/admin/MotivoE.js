@@ -7,6 +7,9 @@ import {BsBoxArrowRight} from "react-icons/bs";
 import FormMotivoI from '../../components/FormMotivoI';
 
 const MotivoE = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    };  
     const [motivosE, setMotivosE] = useState([]);
 
     const [showDelete, setShowDelete] = useState(false);
@@ -55,7 +58,7 @@ const MotivoE = () => {
     const updatemotivoE = async () => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseEdit();
                 getMotivosE();
@@ -73,7 +76,7 @@ const MotivoE = () => {
     const deleteMotivoE = async () => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseDelete();
                 getMotivosE();
@@ -100,7 +103,7 @@ const MotivoE = () => {
     const getMotivosE = async () => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setMotivosE(response.data);
             }

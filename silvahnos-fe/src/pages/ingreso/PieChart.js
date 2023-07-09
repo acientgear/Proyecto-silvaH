@@ -6,6 +6,9 @@ import urlweb from '../../config/config';
 import CategoriasIngreso from '../../components/data/CategoriasIngreso';
 
 const PieChartIngreso = ({anio,mes}) => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
 
     const [montosOrigen, setMontosOrigen] = useState([]);
     const motivos = CategoriasIngreso();
@@ -14,7 +17,7 @@ const PieChartIngreso = ({anio,mes}) => {
         const getMontoOrigen = async () => {
             try {
                 let url = 'http://'+urlweb+'/montos/ingreso/' + anio + '/' + mes;
-                const response = await axios.get(url);
+                const response = await axios.get(url,config);
                 if (response.status === 200) {
                     setMontosOrigen(response.data);
                 }

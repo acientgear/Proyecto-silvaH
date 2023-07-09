@@ -8,6 +8,10 @@ import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const Ingresos = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    };
+
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 6;
 
@@ -89,7 +93,7 @@ const Ingresos = () => {
     const updateIngreso = async () => {
         try {
             let url = 'http://' + urlweb + '/ingresos';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseEdit();
                 setShowAlertEdit(true);
@@ -116,7 +120,7 @@ const Ingresos = () => {
     const deleteIngreso = async () => {
         try {
             let url = 'http://' + urlweb + '/ingresos';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseDelete();
                 setShowAlertDelete(true);
@@ -154,7 +158,7 @@ const Ingresos = () => {
     const getIngresos = useCallback(async () => {
         try {
             let url = 'http://' + urlweb + '/ingresos/' + anio + '/' + mes;
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setIngresos(response.data);
             }

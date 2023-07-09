@@ -5,6 +5,9 @@ import urlweb from '../../config/config';
 import FormMotivoE from '../../components/FormMotivoE';
 
 const CrearMotivoE = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [validated, setValidated] = useState(false);
 
     const [motivoE, setMotivoE] = useState({
@@ -35,7 +38,7 @@ const CrearMotivoE = () => {
     const createMotivoE = async () => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
-            const response = await axios.post(url, motivoE);
+            const response = await axios.post(url, motivoE,config);
             if (response.status === 200) {
                 console.log(response.data);
                 window.location.href = "/administracion";

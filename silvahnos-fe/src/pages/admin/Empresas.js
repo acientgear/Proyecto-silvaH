@@ -8,6 +8,9 @@ import FormEmpresa from '../../components/FormEmpresa';
 import { checkRut } from 'react-rut-formatter';
 
 const Empresas = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [empresas, setempresas] = useState([]);
 
     const [showDelete, setShowDelete] = useState(false);
@@ -60,7 +63,7 @@ const Empresas = () => {
     const updateEmpresa = async () => {
         try {
             let url = 'http://' + urlweb + '/empresas';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseEdit();
                 getEmpresas();
@@ -78,7 +81,7 @@ const Empresas = () => {
     const deleteEmpresa = async () => {
         try {
             let url = 'http://' + urlweb + '/empresas';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseDelete();
                 getEmpresas();
@@ -107,7 +110,7 @@ const Empresas = () => {
     const getEmpresas = async () => {
         try {
             let url = 'http://' + urlweb + '/empresas';
-            const response = await axios.get(url);
+            const response = await axios.get(url,config);
             if (response.status === 200) {
                 setempresas(response.data);
             }

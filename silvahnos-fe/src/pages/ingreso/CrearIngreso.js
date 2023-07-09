@@ -5,6 +5,9 @@ import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
 
 const CrearIngreso = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    };  
     const [validated, setValidated] = useState(false);
 
     const [ingreso, setIngreso] = useState({
@@ -44,7 +47,7 @@ const CrearIngreso = () => {
     const createIngreso = async () => {
         try {
             let url = "http://"+urlweb+"/ingresos";
-            let response = await axios.post(url, ingreso);
+            let response = await axios.post(url, ingreso,config);
             if (response.status === 200) {
                 window.location.href = "/ingresos";
             }

@@ -80,7 +80,7 @@ const Egresos = () => {
     const updateEgreso = async () => {
         try {
             let url = 'http://' + urlweb + '/egresos';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseEdit();
                 getEgresos();
@@ -99,7 +99,7 @@ const Egresos = () => {
     const deleteEgreso = async () => {
         try {
             let url = 'http://' + urlweb + '/egresos';
-            const response = await axios.post(url, editedItem);
+            const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseDelete();
                 getEgresos();

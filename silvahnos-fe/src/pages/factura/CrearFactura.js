@@ -5,6 +5,9 @@ import FormFactura from '../../components/FormFactura';
 import urlweb from '../../config/config';
 
 const CrearFactura = () => {
+    const config = {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+    }; 
     const [validated, setValidated] = useState(false);
 
     const [factura, setFactura] = useState({
@@ -50,7 +53,7 @@ const CrearFactura = () => {
     const createFactura = async () => {
         try {
             let url = "http://"+urlweb+"/facturas";
-            let response = await axios.post(url, factura);
+            let response = await axios.post(url, factura,config);
             if (response.status === 200) {
                 window.location.href = "/facturas";
             }

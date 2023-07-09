@@ -6,6 +6,9 @@ import LineChartEgresos from './egreso/Grafico';
 import urlweb from '../config/config';
 
 const Home = () => {
+  const config = {
+    headers: { Authorization: `Bearer ${localStorage.token}` }
+  };
   const [ingresos, setIngresos] = useState([]);
   const [egresos, setEgresos] = useState([]);
   const [facturas, setFacturas] = useState([]);
@@ -22,7 +25,7 @@ const Home = () => {
   const getIgresos = async () => {
     try {
       let url = 'http://' + urlweb + '/ingresos/ultimos';
-      const response = await axios.get(url);
+      const response = await axios.get(url,config);
       if (response.status === 200) {
         setIngresos(response.data);
       }
@@ -34,7 +37,7 @@ const Home = () => {
   const getEgresos = async () => {
     try {
       let url = 'http://' + urlweb + '/egresos/ultimos';
-      const response = await axios.get(url);
+      const response = await axios.get(url,config);
       if (response.status === 200) {
         setEgresos(response.data);
       }
@@ -46,7 +49,7 @@ const Home = () => {
   const getSaldoCuenta = useCallback(async () => {
     try {
       let url = 'http://' + urlweb + '/ingresos/total/' + mes;
-      const response = await axios.get(url);
+      const response = await axios.get(url,config);
       if (response.status === 200) {
         setSaldo(response.data);
       }
@@ -58,7 +61,7 @@ const Home = () => {
   const getIva = async () => {
     try {
       let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
-      const response = await axios.get(url);
+      const response = await axios.get(url,config);
       if (response.status === 200) {
         setIva(response.data);
       }
@@ -70,7 +73,7 @@ const Home = () => {
   const getProximasFacturasVencer = async () => {
     try {
       let url = 'http://' + urlweb + '/facturas/proximasVencer/' + anio + '/' + mes;
-      const response = await axios.get(url);
+      const response = await axios.get(url,config);
       if (response.status === 200) {
         setFacturas(response.data);
       }
@@ -81,8 +84,8 @@ const Home = () => {
 
   const formatearFecha = (fecha) => {
     const fechaActual = new Date(fecha);
-    return fechaActual.getDate() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getFullYear();
-};
+    return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
+  };
 
   const calcularDiasPorVencer = (fecha) => {
     let fechaC = fecha.split('T')[0];
@@ -102,7 +105,7 @@ const Home = () => {
   const totalIngresosMes = useCallback(async () => {
     try {
       let url = 'http://' + urlweb + '/ingresos/total/' + anio + '/' + mes;
-      const response = await axios.get(url);
+      const response = await axios.get(url,config);
       if (response.status === 200) {
         setTotalIngresos(response.data);
       }
@@ -115,7 +118,7 @@ const Home = () => {
   const totalEgresosMes = useCallback(async () => {
     try {
       let url = 'http://' + urlweb + '/egresos/total/' + anio + '/' + mes;
-      const response = await axios.get(url);
+      const response = await axios.get(url,config);
       if (response.status === 200) {
         setTotalEgresos(response.data);
       }
@@ -150,7 +153,7 @@ const Home = () => {
   }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes]);
 
   return (
-    <Container style={{paddingTop: 10}}>
+    <Container style={{ paddingTop: 10 }}>
       <Row className="justify-content-center">
         <Col xs="auto" >
           <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/flujo">Visualizar resumen</Button>
