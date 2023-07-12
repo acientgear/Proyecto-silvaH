@@ -138,6 +138,12 @@
 			<version>2.1.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.20.5</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

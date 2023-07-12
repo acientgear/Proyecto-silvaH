@@ -9,7 +9,7 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 const Egresos = () => {
     const config = {
         headers: { Authorization: `Bearer ${localStorage.token}` }
-    };    
+    };
 
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 6;
@@ -80,7 +80,7 @@ const Egresos = () => {
     const updateEgreso = async () => {
         try {
             let url = 'http://' + urlweb + '/egresos';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
                 getEgresos();
@@ -99,7 +99,7 @@ const Egresos = () => {
     const deleteEgreso = async () => {
         try {
             let url = 'http://' + urlweb + '/egresos';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
                 getEgresos();
@@ -139,10 +139,34 @@ const Egresos = () => {
         descripcion: '',
     }
 
+    const generarReporte = async () => {
+        try {
+            let url = 'http://' + urlweb + '/egresos/export-pdf/' + anio + '/' + mes;
+            const response = await fetch(url, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.token}`,
+                },
+            });
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'egresos.pdf';
+                link.click();
+                URL.revokeObjectURL(url);
+            } else {
+                console.log('Error al descargar el archivo');
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
     const getEgresos = useCallback(async () => {
         try {
             let url = 'http://' + urlweb + '/egresos/' + anio + '/' + mes;
-            const response = await axios.get(url,config);
+            const response = await axios.get(url, config);
             if (response.status === 200) {
                 setEgresos(response.data);
             }
@@ -154,13 +178,13 @@ const Egresos = () => {
 
     const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);
-        return fechaActual.getDate() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getFullYear();
+        return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
     };
 
-    let total = 0;
+    /*let total = 0;
     egresos.forEach((egreso) => {
         total += egreso.monto;
-    });
+    });*/
 
     useEffect(() => {
         getEgresos();
@@ -171,17 +195,20 @@ const Egresos = () => {
             <Container>
                 <Row>
                     <Col><h1>Egresos</h1></Col>
-                    <Col className='d-flex align-items-center'>
-                        <InputMonth
-                            mes={mes}
-                            anio={anio}
-                            onChangeAnio={handleChangeAnio}
-                            onChangeMes={handleChangeMes}
-                            get={getEgresos}
-                        />
-                    </Col>
-                    <Col className='d-flex align-items-center justify-content-end'><Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar egreso</Button></Col>
+                    <Row className="justify-content-center align-items-center">
+                        <Col className='d-flex align-items-center'>
+                            <InputMonth
+                                mes={mes}
+                                anio={anio}
+                                onChangeAnio={handleChangeAnio}
+                                onChangeMes={handleChangeMes}
+                                get={getEgresos}
+                            />
+                        </Col>
+                    </Row>
+
                 </Row>
+                <p></p>
                 <Row>
                     <Col>
                         <Table striped responsive="sm" hover>
@@ -226,35 +253,42 @@ const Egresos = () => {
                                     <td>Total</td>
                                     <td></td>
                                     <td></td>
-                                    <td>{formatoMonto(total)}</td>
+                                    <td>46545</td>
                                     <td></td>
                                 </tr>
                             </tfoot>
                         </Table>
-                        <Pagination>
-                            <Pagination.First onClick={() => handlePageChange(1)} />
-                            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
-                            {[...Array(Math.ceil(egresos.length / pageSize)).keys()].map((page) => {
-                                if (page === 0 || page === Math.ceil(egresos.length / pageSize) - 1 || (currentPage - 2 <= page && page <= currentPage + 2)) {
-                                    return (
-                                        <Pagination.Item
-                                            key={page + 1}
-                                            active={page + 1 === currentPage}
-                                            onClick={() => handlePageChange(page + 1)}
-                                        >
-                                            {page + 1}
-                                        </Pagination.Item>
-                                    );
-                                } else if (page === currentPage - 3 || page === currentPage + 3) {
-                                    return (
-                                        <Pagination.Ellipsis />
-                                    );
-                                }
-                                return null;
-                            })}
-                            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
-                            <Pagination.Last onClick={() => handlePageChange(Math.ceil(egresos.length / pageSize))} />
-                        </Pagination>
+                        <Row>
+                            <Col>
+                                <Pagination>
+                                    <Pagination.First onClick={() => handlePageChange(1)} />
+                                    <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
+                                    {[...Array(Math.ceil(egresos.length / pageSize)).keys()].map((page) => {
+                                        if (page === 0 || page === Math.ceil(egresos.length / pageSize) - 1 || (currentPage - 2 <= page && page <= currentPage + 2)) {
+                                            return (
+                                                <Pagination.Item
+                                                    key={page + 1}
+                                                    active={page + 1 === currentPage}
+                                                    onClick={() => handlePageChange(page + 1)}
+                                                >
+                                                    {page + 1}
+                                                </Pagination.Item>
+                                            );
+                                        } else if (page === currentPage - 3 || page === currentPage + 3) {
+                                            return (
+                                                <Pagination.Ellipsis />
+                                            );
+                                        }
+                                        return null;
+                                    })}
+                                    <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
+                                    <Pagination.Last onClick={() => handlePageChange(Math.ceil(egresos.length / pageSize))} />
+                                </Pagination>
+                            </Col>
+                            <Col className='d-flex align-items-center justify-content-end'><Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar egreso</Button></Col>
+                            <Col className='d-flex align-items-center justify-content-end'><Button onClick={() => generarReporte()} style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Generar reporte</Button></Col>
+                        </Row>
+
                     </Col>
                 </Row>
             </Container>
