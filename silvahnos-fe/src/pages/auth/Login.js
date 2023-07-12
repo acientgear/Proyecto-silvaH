@@ -65,7 +65,7 @@ const Login = () => {
                 padding: "50px",
                 borderRadius: 10
             }}>
-                <h1>Iniciar Sesion</h1>
+                <h1>Iniciar Sesión</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formUsuario">
                         <Form.Label>Usuario</Form.Label>
