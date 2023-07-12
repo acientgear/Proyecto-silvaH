@@ -29,7 +29,7 @@ const Parametro = () => {
     const handleSubmit = async () => {
         try {
             let url = 'http://' + urlweb + '/Parametros/'+nuevoValor;
-            const response = await axios.post(url,config);
+            const response = await axios.post(url,null,config);
             if (response.status === 200) {
                 setParametroActual(nuevoValor);
                 setShowModal(false); 

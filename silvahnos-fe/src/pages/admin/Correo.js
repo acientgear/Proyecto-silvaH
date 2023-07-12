@@ -29,7 +29,7 @@ const Correo = () => {
     const handleSubmit = async () => {
         try {
             let url = 'http://' + urlweb + '/Correos/'+nuevoCorreo;
-            const response = await axios.post(url,config);
+            const response = await axios.post(url,null,config);
             if (response.status === 200) {
                 setCorreoActual(nuevoCorreo);
                 setShowModal(false); 
