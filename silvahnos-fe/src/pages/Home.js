@@ -158,6 +158,7 @@ const Home = () => {
         <Col xs="auto" >
           <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/flujo">Visualizar resumen</Button>
         </Col>
+        <p></p>
         <Col xs="auto" >
           <ListGroup>
             <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: {formatoMonto(saldo)}</ListGroup.Item>

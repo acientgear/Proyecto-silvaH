@@ -10,7 +10,7 @@ import { AiFillEdit, AiFillDelete, AiFillCheckCircle } from "react-icons/ai";
 const Facturas = () => {
     const config = {
         headers: { Authorization: `Bearer ${localStorage.token}` }
-    }; 
+    };
     const [currentPage, setCurrentPage] = useState(1);
     const [iva, setIva] = useState(0);
     const pageSize = 6;
@@ -37,7 +37,7 @@ const Facturas = () => {
     }, []);
 
     const handlePageChange = (page) => {
-        if(page < 1 || page > Math.ceil(facturas.length / pageSize))
+        if (page < 1 || page > Math.ceil(facturas.length / pageSize))
             return;
         setCurrentPage(page);
     }
@@ -99,7 +99,7 @@ const Facturas = () => {
         editedItem.estado.id = 3;
         editedItem.fecha_pago = (() => {
             const fechaActual = new Date();
-            const dia = String(fechaActual.getDate()+1).padStart(2, '0');
+            const dia = String(fechaActual.getDate() + 1).padStart(2, '0');
             const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
             const anio = fechaActual.getFullYear();
             return anio + '-' + mes + '-' + dia;
@@ -120,10 +120,10 @@ const Facturas = () => {
         setAnio(e.target.value);
     };
 
-    const getIva = useCallback( async () => {
+    const getIva = useCallback(async () => {
         try {
             let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
-            const response = await axios.get(url,config);
+            const response = await axios.get(url, config);
             if (response.status === 200) {
                 setIva(response.data);
             }
@@ -136,7 +136,7 @@ const Facturas = () => {
         try {
             let url = 'http://' + urlweb + '/facturas/' + anio + '/' + mes;
             console.log(url);
-            const response = await axios.get(url,config);
+            const response = await axios.get(url, config);
             if (response.status === 200) {
                 setFacturas(response.data);
             }
@@ -148,7 +148,7 @@ const Facturas = () => {
     const updateFactura = async () => {
         try {
             let url = 'http://' + urlweb + '/facturas';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
                 handleCloseCheck();
@@ -163,7 +163,7 @@ const Facturas = () => {
     const pagarFactura = async () => {
         try {
             let url = 'http://' + urlweb + '/facturas/pagar';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
                 handleCloseCheck();
@@ -178,7 +178,7 @@ const Facturas = () => {
     const deleteFactura = async () => {
         try {
             let url = 'http://' + urlweb + '/facturas';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
                 setShowAlertDelete(true);
@@ -246,22 +246,28 @@ const Facturas = () => {
             <Container>
                 <Row>
                     <Col><h1>Facturas</h1></Col>
-                    <Col className='d-flex align-items-center'>
-                        <InputMonth
-                            mes={mes}
-                            anio={anio}
-                            onChangeAnio={handleChangeAnio}
-                            onChangeMes={handleChangeMes}
-                            get={getFacturas}
-                        />
-                    </Col>
-                    <Col>
-                        <ListGroup>
-                            <ListGroup.Item style={{ fontWeight: "bold" }}>IVA a pagar: {formatoMonto(iva)}</ListGroup.Item>
-                        </ListGroup>
-                    </Col>
-                    <Col className='d-flex align-items-center justify-content-md-end'><Button href="/crearFactura" style={{ backgroundColor: "rgb(165, 192, 221)", color: "black", border: "none", fontWeight: "bold" }}>Registrar una factura</Button></Col>
+                    <p></p>
+                    <Row className="justify-content-center align-items-center">
+                        <Col className='d-flex align-items-center'>
+                            <InputMonth
+                                mes={mes}
+                                anio={anio}
+                                onChangeAnio={handleChangeAnio}
+                                onChangeMes={handleChangeMes}
+                                get={getFacturas}
+                            />
+                        </Col>
+                    </Row>
+                    <p></p>
+                    <Row className="justify-content-center align-items-center">
+                        <Col className='d-flex align-items-center'>
+                            <ListGroup>
+                                <ListGroup.Item style={{ fontWeight: "bold" }}>IVA a pagar: {formatoMonto(iva)}</ListGroup.Item>
+                            </ListGroup>
+                        </Col>
+                    </Row>
                 </Row>
+                <p></p>
                 <Row>
                     <Col>
                         <Table responsive="sm" striped hover>
@@ -298,30 +304,36 @@ const Facturas = () => {
                                 ))}
                             </tbody>
                         </Table>
-                        <Pagination>
-                            <Pagination.First onClick={() => handlePageChange(1)}/>
-                            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)}/>
-                            {[...Array(Math.ceil(facturas.length / pageSize)).keys()].map((page) => {
-                                if (page === 0 || page === Math.ceil(facturas.length / pageSize) - 1 || (currentPage - 2 <= page  && page <= currentPage + 2)){
-                                    return (
-                                        <Pagination.Item
-                                            key={page + 1}
-                                            active={page + 1 === currentPage}
-                                            onClick={() => handlePageChange(page + 1)}
-                                            >
-                                            {page + 1}
-                                        </Pagination.Item>
-                                    );
-                                } else if (page === currentPage - 3 || page === currentPage + 3){  
-                                    return (
-                                        <Pagination.Ellipsis/>
-                                    );
-                                }
-                                return null;
-                            })}
-                            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)}/>
-                            <Pagination.Last onClick={() => handlePageChange(Math.ceil(facturas.length / pageSize))}/>
-                        </Pagination>
+                        <Row>
+                            <Col>
+                                <Pagination>
+                                    <Pagination.First onClick={() => handlePageChange(1)} />
+                                    <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
+                                    {[...Array(Math.ceil(facturas.length / pageSize)).keys()].map((page) => {
+                                        if (page === 0 || page === Math.ceil(facturas.length / pageSize) - 1 || (currentPage - 2 <= page && page <= currentPage + 2)) {
+                                            return (
+                                                <Pagination.Item
+                                                    key={page + 1}
+                                                    active={page + 1 === currentPage}
+                                                    onClick={() => handlePageChange(page + 1)}
+                                                >
+                                                    {page + 1}
+                                                </Pagination.Item>
+                                            );
+                                        } else if (page === currentPage - 3 || page === currentPage + 3) {
+                                            return (
+                                                <Pagination.Ellipsis />
+                                            );
+                                        }
+                                        return null;
+                                    })}
+                                    <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
+                                    <Pagination.Last onClick={() => handlePageChange(Math.ceil(facturas.length / pageSize))} />
+                                </Pagination>
+                            </Col>
+                            <Col className='d-flex align-items-center justify-content-md-end'><Button href="/crearFactura" style={{ backgroundColor: "rgb(165, 192, 221)", color: "black", border: "none", fontWeight: "bold" }}>Registrar una factura</Button></Col>
+                        </Row>
+
                     </Col>
                 </Row>
             </Container >

@@ -16,7 +16,11 @@ public interface FacturaRepository extends JpaRepository<FacturaEntity, Long>{
             "MONTH(f.fecha_creacion) = :mes and f.borrado = 0 ORDER BY f.fecha_creacion DESC", nativeQuery = true)
     List<FacturaEntity> obteberFacturas(@Param("anio") int anio, @Param("mes") int mes);
 
-    @Query(value= "SELECT ROUND(SUM(factura.monto) * 0.19,0) FROM factura WHERE factura.borrado = 0 AND year(factura.fecha_creacion) = :anio AND month(factura.fecha_creacion) = :mes", nativeQuery = true)
+    @Query(value= "SELECT COALESCE(ROUND(SUM(factura.monto) * 0.19, 0), 0)\n" + //
+            "FROM factura\n" + //
+            "WHERE factura.borrado = 0\n" + //
+            "  AND YEAR(factura.fecha_creacion) = :anio\n" + //
+            "  AND MONTH(factura.fecha_creacion) = :mes", nativeQuery = true)
     Integer obtenerIva(@Param("anio") int anio, @Param("mes") int mes);
 
     @Query(value = "SELECT * FROM factura as f WHERE f.estado = 1 AND f.borrado = 0 AND YEAR(fecha_vencimiento) = :anio AND  MONTH(fecha_vencimiento) = :mes ORDER BY f.fecha_vencimiento LIMIT 3", nativeQuery = true)

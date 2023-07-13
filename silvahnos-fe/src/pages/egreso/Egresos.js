@@ -4,6 +4,7 @@ import { Button, Col, Container, Modal, Row, Table, Pagination } from 'react-boo
 import InputMonth from '../../components/InputMonth';
 import FormEgreso from '../../components/FormEgreso';
 import urlweb from '../../config/config';
+import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const Egresos = () => {
@@ -21,6 +22,17 @@ const Egresos = () => {
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
+    const [showAlertDelete, setShowAlertDelete] = useState(false);
+    const [showAlertEdit, setShowAlertEdit] = useState(false);
+    const [showAlertCreate, setShowAlertCreate] = useState(false);
+
+    const handleAlertCreate = useCallback(() => {
+        let showCrear = localStorage.getItem("showCrear");
+        if (showCrear === 'true') {
+            setShowAlertCreate(true);
+        }
+        localStorage.setItem("showCrear", false);
+    }, []);
 
     const handlePageChange = (page) => {
         if (page < 1 || page > Math.ceil(egresos.length / pageSize))
@@ -102,6 +114,7 @@ const Egresos = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
+                setShowAlertDelete(true);
                 getEgresos();
             }
         } catch (err) {
@@ -175,16 +188,15 @@ const Egresos = () => {
         }
     }, [anio, mes]);
 
-
     const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);
         return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
     };
 
-    /*let total = 0;
+    let total = 0;
     egresos.forEach((egreso) => {
         total += egreso.monto;
-    });*/
+    });
 
     useEffect(() => {
         getEgresos();
@@ -206,7 +218,6 @@ const Egresos = () => {
                             />
                         </Col>
                     </Row>
-
                 </Row>
                 <p></p>
                 <Row>
@@ -253,7 +264,7 @@ const Egresos = () => {
                                     <td>Total</td>
                                     <td></td>
                                     <td></td>
-                                    <td>46545</td>
+                                    <td>{formatoMonto(total)}</td>
                                     <td></td>
                                 </tr>
                             </tfoot>
@@ -288,7 +299,6 @@ const Egresos = () => {
                             <Col className='d-flex align-items-center justify-content-end'><Button href="/crearEgreso" style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Registrar egreso</Button></Col>
                             <Col className='d-flex align-items-center justify-content-end'><Button onClick={() => generarReporte()} style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Generar reporte</Button></Col>
                         </Row>
-
                     </Col>
                 </Row>
             </Container>

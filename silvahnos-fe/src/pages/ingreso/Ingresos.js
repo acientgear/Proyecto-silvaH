@@ -34,7 +34,6 @@ const Ingresos = () => {
         localStorage.setItem("showCrear", false);
     }, []);
 
-
     const handlePageChange = (page) => {
         if (page < 1 || page > Math.ceil(ingresos.length / pageSize))
             return;
@@ -93,7 +92,7 @@ const Ingresos = () => {
     const updateIngreso = async () => {
         try {
             let url = 'http://' + urlweb + '/ingresos';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
                 setShowAlertEdit(true);
@@ -109,18 +108,10 @@ const Ingresos = () => {
         deleteIngreso();
     };
 
-    const handleChangeMes = (e) => {
-        setMes(e.target.value);
-    };
-
-    const handleChangeAnio = (e) => {
-        setAnio(e.target.value);
-    };
-
     const deleteIngreso = async () => {
         try {
             let url = 'http://' + urlweb + '/ingresos';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
                 setShowAlertDelete(true);
@@ -129,6 +120,14 @@ const Ingresos = () => {
         } catch (err) {
             console.log(err.message);
         }
+    };
+
+    const handleChangeMes = (e) => {
+        setMes(e.target.value);
+    };
+
+    const handleChangeAnio = (e) => {
+        setAnio(e.target.value);
     };
 
     const [editedItem, setEditedItem] = useState({
@@ -158,7 +157,7 @@ const Ingresos = () => {
     const getIngresos = useCallback(async () => {
         try {
             let url = 'http://' + urlweb + '/ingresos/' + anio + '/' + mes;
-            const response = await axios.get(url,config);
+            const response = await axios.get(url, config);
             if (response.status === 200) {
                 setIngresos(response.data);
             }
@@ -167,12 +166,10 @@ const Ingresos = () => {
         }
     }, [anio, mes]);
 
-
     const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);
-        return fechaActual.getDate() + '/' + (fechaActual.getMonth()+1) + '/' + fechaActual.getFullYear();
+        return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
     };
-
 
     let total = 0;
     ingresos.forEach(ingreso => {
@@ -189,18 +186,19 @@ const Ingresos = () => {
             <Container>
                 <Row>
                     <Col><h1>Ingresos</h1></Col>
-                    <Col className='d-flex align-items-center'>
-                        <InputMonth
-                            mes={mes}
-                            anio={anio}
-                            onChangeAnio={handleChangeAnio}
-                            onChangeMes={handleChangeMes}
-                            get={getIngresos}
-                        />
-                    </Col>
-                    <Col className='d-flex align-items-center justify-content-end'>
-                        <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar ingreso</Button></Col>
+                    <Row className="justify-content-center align-items-center">
+                        <Col className='d-flex align-items-center'>
+                            <InputMonth
+                                mes={mes}
+                                anio={anio}
+                                onChangeAnio={handleChangeAnio}
+                                onChangeMes={handleChangeMes}
+                                get={getIngresos}
+                            />
+                        </Col>
+                    </Row>
                 </Row>
+                <p></p>
                 <Row>
                     <Col>
                         <Table striped responsive="sm" hover>
@@ -223,8 +221,8 @@ const Ingresos = () => {
                                         <td>{ingreso.patente}</td>
                                         <td>{formatoMonto(ingreso.monto)}</td>
                                         <td>
-                                            <a href="#se" style={{cursor: "pointer", marginRight: 2, color: "#0d6efd"}} onClick={() => handleShowEdit(ingreso)}><AiFillEdit/></a>
-                                            <a href="#sd" style={{cursor: "pointer", marginRight: 2, color: "#dc3545"}} onClick={() => handleShowDelete(ingreso)}><AiFillDelete/></a> 
+                                            <a href="#se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(ingreso)}><AiFillEdit /></a>
+                                            <a href="#sd" style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(ingreso)}><AiFillDelete /></a>
                                         </td>
                                     </tr>
                                 ))}
@@ -240,31 +238,38 @@ const Ingresos = () => {
                                 </tr>
                             </tfoot>
                         </Table>
-                        <Pagination>
-                            <Pagination.First onClick={() => handlePageChange(1)} />
-                            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
-                            {[...Array(Math.ceil(ingresos.length / pageSize)).keys()].map((page) => {
-                                if (page === 0 || page === Math.ceil(ingresos.length / pageSize) - 1 || (currentPage - 2 <= page && page <= currentPage + 2)) {
-                                    return (
-                                        <Pagination.Item
-                                            key={page + 1}
-                                            active={page + 1 === currentPage}
-                                            onClick={() => handlePageChange(page + 1)}
-                                        >
-                                            {page + 1}
-                                        </Pagination.Item>
-                                    );
-                                } else if (page === currentPage - 3 || page === currentPage + 3) {
-                                    return (
-                                        <Pagination.Ellipsis />
-                                    );
-                                }
-                                return null;
-                            })}
-                            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
-                            <Pagination.Last onClick={() => handlePageChange(Math.ceil(ingresos.length / pageSize))} />
-                        </Pagination>
+                        <Row>
+                            <Col>
+                                <Pagination>
+                                    <Pagination.First onClick={() => handlePageChange(1)} />
+                                    <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
+                                    {[...Array(Math.ceil(ingresos.length / pageSize)).keys()].map((page) => {
+                                        if (page === 0 || page === Math.ceil(ingresos.length / pageSize) - 1 || (currentPage - 2 <= page && page <= currentPage + 2)) {
+                                            return (
+                                                <Pagination.Item
+                                                    key={page + 1}
+                                                    active={page + 1 === currentPage}
+                                                    onClick={() => handlePageChange(page + 1)}
+                                                >
+                                                    {page + 1}
+                                                </Pagination.Item>
+                                            );
+                                        } else if (page === currentPage - 3 || page === currentPage + 3) {
+                                            return (
+                                                <Pagination.Ellipsis />
+                                            );
+                                        }
+                                        return null;
+                                    })}
+                                    <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
+                                    <Pagination.Last onClick={() => handlePageChange(Math.ceil(ingresos.length / pageSize))} />
+                                </Pagination>
+                            </Col>
+                            <Col className='d-flex align-items-center justify-content-end'>
+                                <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar ingreso</Button></Col>
+                        </Row>
                     </Col>
+
                 </Row>
             </Container>
 
