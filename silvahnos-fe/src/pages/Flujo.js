@@ -17,7 +17,7 @@ const formatoMonto = (monto) => {
 
 const config = {
     headers: { Authorization: `Bearer ${localStorage.token}` }
-}; 
+};
 
 const formatearFecha = (fecha) => {
     let fechaC = fecha.split('T')[0];
@@ -34,7 +34,7 @@ const Flujo = () => {
     const getTotalPorMes = useCallback(async (tipo, anio, mes) => {
         try {
             let url = 'http://' + urlweb + '/' + tipo + '/total/' + anio + '/' + mes;
-            const response = await axios.get(url,config);
+            const response = await axios.get(url, config);
             if (response.status === 200) {
                 return response.data;
             }
@@ -61,7 +61,7 @@ const Flujo = () => {
     const getRegistros = useCallback(async () => {
         try {
             let url = 'http://' + urlweb + '/registros/' + anio + '/' + mes;
-            const response = await axios.get(url,config);
+            const response = await axios.get(url, config);
             if (response.status === 200) {
                 setRegistros(response.data);
             }
@@ -95,7 +95,7 @@ const Flujo = () => {
 
     const tabGraficos = () => {
         return (
-            <Row xs={1} sm={2}>
+            <Row xs={1} sm={3}>
                 <Col>
                     <Card>
                         <Card.Body>
@@ -107,21 +107,11 @@ const Flujo = () => {
                         </Card.Body>
                     </Card>
                     <br></br>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Ingresos y egresos</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Anual</Card.Subtitle>
-                            <div style={{ width: "100%", height: "250px", margin: "auto", justifyContent: "center" }}>
-                                <GraficoBarras />
-                            </div>
-                        </Card.Body>
-                    </Card>
-
                 </Col>
                 <Col>
                     <Card>
                         <Card.Body>
-                            <Card.Title>Porcentaje ingresos y egresos</Card.Title>
+                            <Card.Title>Distribución motivos de ingresos</Card.Title>
                             <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
                             <Tabs justify
                                 defaultActiveKey="Ingresos"
@@ -131,6 +121,20 @@ const Flujo = () => {
                                 <Tab eventKey="Ingresos" title="Ingresos" style={{ color: "black" }}>
                                     <PieChartIngreso anio={anio} mes={mes} />
                                 </Tab>
+                            </Tabs>
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Distribución motivos de egresos</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
+                            <Tabs justify
+                                defaultActiveKey="Egresos"
+                                id="uncontrolled-tab-example"
+                                style={{ justifyContent: "center" }}
+                            >
                                 <Tab eventKey="Egresos" title="Egresos" style={{ color: "black" }}>
                                     <PieChartEgreso anio={anio} mes={mes} />
                                 </Tab>
@@ -172,7 +176,7 @@ const Flujo = () => {
         );
     }
 
-    
+
 
     return (
         <Container fluid >
@@ -181,13 +185,13 @@ const Flujo = () => {
                 <Row>
                     <Col sm={3} style={{ marginTop: "10px" }}>
                         <ListGroup>
-                            <ListGroup.Item action variant="info" href="#resumen_anual" onClick={() => {setTabType('Anual')}}>
+                            <ListGroup.Item action variant="info" href="#resumen_anual" onClick={() => { setTabType('Anual') }}>
                                 Resumen anual
                             </ListGroup.Item>
-                            <ListGroup.Item action variant="info" href="#resumen_mensual" onClick={() => {getRegistros();setTabType('Mensual');}}>
+                            <ListGroup.Item action variant="info" href="#resumen_mensual" onClick={() => { getRegistros(); setTabType('Mensual'); }}>
                                 Resumen mensual
                             </ListGroup.Item>
-                            <ListGroup.Item action variant="info" href="#graficos" onClick={() => {setTabType('Graficos')}}>
+                            <ListGroup.Item action variant="info" href="#graficos" onClick={() => { setTabType('Graficos') }}>
                                 Gráficos
                             </ListGroup.Item>
                         </ListGroup>
@@ -254,6 +258,17 @@ const Flujo = () => {
                                         </tbody>
                                     </Table>
                                     <hr />
+                                </Row>
+                                <Row>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>Ingresos y egresos</Card.Title>
+                                            <Card.Subtitle className="mb-2 text-muted">Anual</Card.Subtitle>
+                                            <div style={{ width: "100%", height: "600px", margin: "auto", justifyContent: "center" }}>
+                                                <GraficoBarras />
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
                                 </Row>
                             </Tab.Pane>
                             <Tab.Pane eventKey="#resumen_mensual">

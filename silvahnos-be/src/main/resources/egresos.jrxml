@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="books" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71104859-cb8c-436d-a51b-f60d990baf82">
 	<property name="template.engine" value="tabular_template"/>
-	<style name="Table_TH" mode="Opaque" backcolor="#8A1C48">
+	<style name="Table_TH" mode="Opaque" backcolor="#D9D9D9">
 		<box>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
 			<bottomPen lineWidth="0.5" lineColor="#000000"/>
@@ -22,11 +22,9 @@
 	</style>
 	<subDataset name="egresosDataSet" uuid="b93e8799-f7aa-4d00-842a-c4e2a600bc8c">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<field name="id" class="java.lang.Long"/>
 		<field name="monto" class="java.lang.Integer"/>
 		<field name="descripcion" class="java.lang.String"/>
 		<field name="fecha_creacion" class="java.sql.Timestamp"/>
-		<sortField name="id"/>
 	</subDataset>
 	<parameter name="egresosData" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<variable name="CantData" class="java.lang.String"/>
@@ -34,20 +32,24 @@
 		<band height="31">
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="50" backcolor="#D9D9D9" uuid="25fef76e-caa9-470c-8255-3aa2b60f3e81"/>
-				<textField pattern="MMM ">
-					<reportElement x="20" y="5" width="555" height="40" forecolor="#030000" uuid="704ce09b-2b18-4a5d-bad6-0ce906e24c46"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
-						<font size="22" isBold="true" isItalic="false"/>
+				<staticText>
+					<reportElement x="20" y="10" width="555" height="30" forecolor="#000000" uuid="eceb496a-d5d0-4b4f-a3bb-1403ee25e2a6"/>
+					<textElement textAlignment="Center">
+						<font size="20" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Egresos de " + new SimpleDateFormat("MMMM").format(new Date())]]></textFieldExpression>
-				</textField>
+					<text><![CDATA[Reporte de egresos]]></text>
+				</staticText>
+				<image>
+					<reportElement x="490" y="2" width="105" height="47" uuid="d992481b-8941-4e3a-bf14-60221b6d5cc5"/>
+					<imageExpression><![CDATA["C:\\Users\\javie\\OneDrive\\Escritorio\\USACH\\Pingeso\\Proyecto-silvaH\\silvahnos-fe\\src\\components\\images\\logo.png"]]></imageExpression>
+				</image>
 			</frame>
 		</band>
 	</title>
 	<detail>
-		<band height="204">
+		<band height="203">
 			<componentElement>
-				<reportElement x="0" y="4" width="555" height="200" forecolor="#FFFFFF" uuid="382837ab-e830-4a98-8ce8-e5d01e399f13">
+				<reportElement x="47" y="50" width="460" height="153" forecolor="#000000" uuid="382837ab-e830-4a98-8ce8-e5d01e399f13">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -59,77 +61,11 @@
 					<datasetRun subDataset="egresosDataSet" uuid="eb6d77e7-0137-4151-b4ab-b4316afe36af">
 						<dataSourceExpression><![CDATA[$P{egresosData}]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column width="90" uuid="355b0a62-48d2-47e9-b8cc-32f7c7dea431">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="90" height="30" forecolor="#FFFFFF" uuid="e0ffbf9a-f51c-41be-955f-48594b331205"/>
-								<box>
-									<pen lineColor="#FFFFFF"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="SansSerif" size="12" isBold="true"/>
-								</textElement>
-								<text><![CDATA[ID]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="90" height="30" uuid="c34423a1-8834-4831-8a3e-d5bc4d2e8da8"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="SansSerif" size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="155" uuid="69f55cb2-9bee-4dde-a79e-46e636be1017">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="155" height="30" forecolor="#FFFFFF" uuid="44e19529-d39a-4330-92a0-24fb4c35e13d"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="SansSerif" size="12" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Monto]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="155" height="30" uuid="050e6310-3782-4a48-a5fd-54574e45bd29"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="155" uuid="6a35055c-20b2-471a-8d13-2a179f5d0162">
+					<jr:column width="153" uuid="9f01f2f4-f55a-46b4-be04-fd41c8de553b">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="155" height="30" forecolor="#FFFFFF" uuid="3001f191-cfd3-4219-8526-222c0c437ed1"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="SansSerif" size="12" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Descripcion]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField isBlankWhenNull="false">
-								<reportElement x="0" y="0" width="155" height="30" forecolor="#000000" uuid="b62f1f1d-caef-4f07-b3bd-b888f6b749d8"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="155" uuid="9f01f2f4-f55a-46b4-be04-fd41c8de553b">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="155" height="30" forecolor="#FFFFFF" uuid="3001f191-cfd3-4219-8526-222c0c437ed1"/>
+								<reportElement x="0" y="0" width="153" height="30" forecolor="#000000" uuid="3001f191-cfd3-4219-8526-222c0c437ed1"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="12" isBold="true"/>
 								</textElement>
@@ -138,7 +74,7 @@
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField isBlankWhenNull="false">
-								<reportElement x="0" y="0" width="155" height="30" forecolor="#000000" uuid="b62f1f1d-caef-4f07-b3bd-b888f6b749d8"/>
+								<reportElement x="0" y="0" width="153" height="30" forecolor="#000000" uuid="b62f1f1d-caef-4f07-b3bd-b888f6b749d8"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="12"/>
 								</textElement>
@@ -146,35 +82,65 @@
 							</textField>
 						</jr:detailCell>
 					</jr:column>
+					<jr:column width="153" uuid="6a35055c-20b2-471a-8d13-2a179f5d0162">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="153" height="30" forecolor="#000000" uuid="3001f191-cfd3-4219-8526-222c0c437ed1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Descripcion]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isBlankWhenNull="false">
+								<reportElement x="0" y="0" width="153" height="30" forecolor="#000000" uuid="b62f1f1d-caef-4f07-b3bd-b888f6b749d8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="154" uuid="69f55cb2-9bee-4dde-a79e-46e636be1017">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="154" height="30" forecolor="#000000" uuid="44e19529-d39a-4330-92a0-24fb4c35e13d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Monto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="154" height="30" uuid="050e6310-3782-4a48-a5fd-54574e45bd29"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA["$ " + new java.text.DecimalFormat("#,###").format($F{monto})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
 				</jr:table>
 			</componentElement>
-			<textField>
-				<reportElement x="0" y="4" width="555" height="66" uuid="b91f66e9-b431-49c5-8b1b-fa30b1237b27">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="24"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{egresosData}.getData().size() == 0 ?  "No hay egresos" : ""]]></textFieldExpression>
-			</textField>
+			<staticText>
+				<reportElement x="47" y="24" width="252" height="26" uuid="83be1cec-ee8e-4e85-90e4-efa53f66fd65"/>
+				<text><![CDATA[Monto total del intervalo de fecha seleccionado: ]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="30">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="520" height="26" backcolor="#E6E6E6" uuid="30c0a284-556e-4d9a-a32d-6b076b547e35"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#D9D9D9" uuid="30c0a284-556e-4d9a-a32d-6b076b547e35"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="520" y="4" width="35" height="26" backcolor="#E6E6E6" uuid="7d23f304-acaa-4007-aabe-cbbfb07c075e"/>
-				<textElement verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#D9D9D9" uuid="7d23f304-acaa-4007-aabe-cbbfb07c075e"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="d/M/yy">

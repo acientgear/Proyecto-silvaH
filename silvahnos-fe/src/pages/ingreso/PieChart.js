@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
 import CategoriasIngreso from '../../components/data/CategoriasIngreso';
+import coloresrgb from '../../components/data/Colores';
 
 const PieChartIngreso = ({anio,mes}) => {
     const config = {
@@ -35,14 +36,8 @@ const PieChartIngreso = ({anio,mes}) => {
             {
                 label: 'Monto total',
                 data: montosOrigen.map((item) => item.monto_total),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(240 , 168, 60, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(240 , 168, 60, 1)',
-                ],
+                backgroundColor: coloresrgb.rgb,
+                borderColor: coloresrgb.rgb,
                 borderWidth: 1,
             },
         ],

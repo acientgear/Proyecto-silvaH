@@ -22,7 +22,7 @@ public class EgresoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    private int monto;
+    private Integer monto;
     private String descripcion;
     private boolean borrado;
 

@@ -13,7 +13,7 @@ public class MontoModelTest {
 
         // When
         monto.setMotivo(1);
-        int motivo = monto.getMotivo();
+        String motivo = monto.getMotivo();
 
         // Then
         assertEquals(1, motivo);   
