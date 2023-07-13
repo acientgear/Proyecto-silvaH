@@ -12,7 +12,6 @@ const PieChartEgreso = ({ anio, mes }) => {
     }; 
 
     const [montosOrigen, setMontosOrigen] = useState([]);
-    const motivos = CategoriasEgreso();
 
     useEffect(() => {
         const getMontoOrigen = async () => {
@@ -30,15 +29,8 @@ const PieChartEgreso = ({ anio, mes }) => {
         getMontoOrigen();
     }, [anio, mes]);
 
-    console.log("motivos:", motivos);
-    console.log("montosOrigen:", montosOrigen);
-
-    // Generate dynamic background and border colors
-    //const backgroundColors = motivos.map((item, index) => `rgba(${index+2 * 100}, ${index+1 * 150}, ${index * 75}, 0.2)`);
-    //const borderColors = motivos.map((item, index) => `rgba(${index+2 * 30}, ${index * 50}, ${index * 70}, 1)`);
-
     const data = {
-        labels: motivos.map((item) => item.nombre),
+        labels: montosOrigen.map((item) => item.motivo),
         datasets: [
             {
                 label: 'Monto total: ',

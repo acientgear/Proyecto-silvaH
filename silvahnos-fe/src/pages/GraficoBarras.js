@@ -7,12 +7,12 @@ import urlweb from '../config/config';
 
 const config = {
     headers: { Authorization: `Bearer ${localStorage.token}` }
-}; 
+};
 
 const getTotalPorMes = async (tipo, anio, mes) => {
     try {
-        let url = 'http://'+urlweb+'/' + tipo + '/total/' + anio + '/' + mes;
-        const response = await axios.get(url,config);
+        let url = 'http://' + urlweb + '/' + tipo + '/total/' + anio + '/' + mes;
+        const response = await axios.get(url, config);
         if (response.status === 200) {
             return response.data;
         }
@@ -84,12 +84,13 @@ const DoubleBarChart = () => {
     return (
         <>
             <div key="grafico-barras">
-                <div>
+                <div style={{ maxWidth: "600px", maxHeight: "400px", margin: "auto" }}>
                     <Bar
                         data={data}
                         options={options}
                     />
                 </div>
+
             </div>
         </>
     );

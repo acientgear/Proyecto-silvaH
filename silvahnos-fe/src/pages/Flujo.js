@@ -259,12 +259,12 @@ const Flujo = () => {
                                     </Table>
                                     <hr />
                                 </Row>
-                                <Row>
-                                    <Card>
+                                <Row style={{ maxWidth: "800px" }}>
+                                    <Card style={{ width: "100%" }}>
                                         <Card.Body>
                                             <Card.Title>Ingresos y egresos</Card.Title>
                                             <Card.Subtitle className="mb-2 text-muted">Anual</Card.Subtitle>
-                                            <div style={{ width: "100%", height: "600px", margin: "auto", justifyContent: "center" }}>
+                                            <div>
                                                 <GraficoBarras />
                                             </div>
                                         </Card.Body>

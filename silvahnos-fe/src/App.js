@@ -15,6 +15,7 @@ import CrearMotivoI from './pages/admin/CrearMotivoI';
 import CrearMotivoE from './pages/admin/CrearMotivoE';
 import CrearEmpresa from './pages/admin/CrearEmpresa';
 import Login from './pages/auth/Login';
+import PruebaGrafico from './pages/PruebaGrafico';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/crearMotivoE" element={<CrearMotivoE />} />
           <Route path="/crearEmpresa" element={<CrearEmpresa />} />
           <Route path="/login" element={<Login/>} />
+          <Route path="/prueba" element={<PruebaGrafico/>} />
         </Routes>
       </Container>
     </Layout>
