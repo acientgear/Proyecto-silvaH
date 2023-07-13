@@ -4,7 +4,7 @@ import axios from "axios";
 import urlweb from '../../config/config';
 
 const Login = () => {
-    const [validated, setValidated] = useState(false);
+    //const [validated, setValidated] = useState(false);
     const [seePassword, setSeePassword] = useState(false);
     const [tipo, setTipo] = useState("password");
 

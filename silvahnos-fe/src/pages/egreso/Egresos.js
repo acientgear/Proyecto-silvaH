@@ -200,7 +200,8 @@ const Egresos = () => {
 
     useEffect(() => {
         getEgresos();
-    }, [getEgresos]);
+        handleAlertCreate();
+    }, [getEgresos, handleAlertCreate]);
 
     return (
         <>
@@ -334,6 +335,9 @@ const Egresos = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal>
+            {showAlertDelete && (<Alerta mensaje="Egreso eliminado correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete} />)}
+            {showAlertEdit && (<Alerta mensaje="Egreso editado correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
+            {showAlertCreate && (<Alerta mensaje="Egreso creado correctamente" tipo="success" show={showAlertCreate} setShow={setShowAlertCreate} />)}
         </>
     );
 }

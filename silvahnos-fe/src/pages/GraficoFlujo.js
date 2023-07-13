@@ -66,15 +66,15 @@ class LineChart extends Component {
                     {
                         label: 'Ingresos',
                         data: montosIngresos,
-                        backgroundColor: 'rgba(184, 231, 225, 0.2)',
+                        backgroundColor: 'rgba(184, 231, 225, 0.6)',
                         borderColor: 'rgba(184, 231, 225, 1)',
                         borderWidth: 1,
                     },
                     {
                         label: 'Egresos',
                         data: montosEgresos,
-                        backgroundColor: 'rgba(242, 182, 160, 0.2)',
-                        borderColor: 'rgba(242, 182, 160, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1,
                     },
                 ],

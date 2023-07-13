@@ -60,19 +60,19 @@ const DoubleBarChart = () => {
         datasets: [
             {
                 label: 'Ingresos',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(184, 231, 225, 0.6)',
+                borderColor: 'rgba(184, 231, 225, 1)',
                 borderWidth: 1,
-                hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
-                hoverBorderColor: 'rgba(255, 99, 132, 1)',
+                hoverBackgroundColor: 'rgba(184, 231, 225, 0.9)',
+                hoverBorderColor: 'rgba(184, 231, 225, 1)',
                 data: montosIngresos
             },
             {
                 label: 'Egresos',
-                backgroundColor: 'rgba(242, 182, 160, 0.2)',
-                borderColor: 'rgba(242, 182, 160, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
-                hoverBackgroundColor: 'rgba(54, 162, 235, 0.4)',
+                hoverBackgroundColor: 'rgba(255, 99, 132, 0.9)',
                 hoverBorderColor: 'rgba(54, 162, 235, 1)',
                 data: montosEgresos
             }

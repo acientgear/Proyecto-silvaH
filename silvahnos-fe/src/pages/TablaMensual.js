@@ -73,7 +73,7 @@ const TablaMensual = () => {
                         </tr>
                         {montosOrigenIngresos.map((montoOrigenIngreso, index) => (
                             <tr key={index}>
-                                <td>{montoOrigenIngreso.origen}</td>
+                                <td style={{textAlign:"center"}}>{montoOrigenIngreso.motivo}</td>
                                 <td>{formatoMonto(montoOrigenIngreso.monto_total)}</td>
                             </tr>
                         ))}
@@ -88,7 +88,7 @@ const TablaMensual = () => {
                         </tr>
                         {montosOrigenEgresos.map((montoOrigenEgreso, index) => (
                             <tr key={index}>
-                                <td>{montoOrigenEgreso.origen}</td>
+                                <td style={{textAlign:"center"}}>{montoOrigenEgreso.motivo}</td>
                                 <td>{formatoMonto(montoOrigenEgreso.monto_total)}</td>
                             </tr>
                         ))}
