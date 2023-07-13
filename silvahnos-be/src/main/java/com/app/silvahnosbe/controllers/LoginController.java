@@ -35,8 +35,8 @@ public class LoginController {
     
     @PostMapping
     public ResponseEntity<TokenInfo> aunthenticate (@RequestBody UserInfo userInfo){
-        System.out.println("Usuario: " + userInfo.getUsuario());
-        System.out.println("Contrasenna: " + userInfo.getPassword());
+        // System.out.println("Usuario: " + userInfo.getUsuario());
+        // System.out.println("Contrasenna: " + userInfo.getPassword());
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(userInfo.getUsuario(), userInfo.getPassword()));
 

@@ -20,15 +20,15 @@
 			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="egresosDataSet" uuid="b93e8799-f7aa-4d00-842a-c4e2a600bc8c">
+	<subDataset name="ingresosDataSet" uuid="b93e8799-f7aa-4d00-842a-c4e2a600bc8c">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<field name="id" class="java.lang.Long"/>
+		<field name="patente" class="java.lang.String"/>
 		<field name="monto" class="java.lang.Integer"/>
 		<field name="descripcion" class="java.lang.String"/>
 		<field name="fecha_creacion" class="java.sql.Timestamp"/>
-		<sortField name="id"/>
+		<sortField name="patente"/>
 	</subDataset>
-	<parameter name="egresosData" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="ingresosData" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<variable name="CantData" class="java.lang.String"/>
 	<title>
 		<band height="31">
@@ -39,7 +39,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
 						<font size="22" isBold="true" isItalic="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Egresos de " + new SimpleDateFormat("MMMM").format(new Date())]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Ingresos de " + new SimpleDateFormat("MMMM").format(new Date())]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -56,8 +56,8 @@
 					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="egresosDataSet" uuid="eb6d77e7-0137-4151-b4ab-b4316afe36af">
-						<dataSourceExpression><![CDATA[$P{egresosData}]]></dataSourceExpression>
+					<datasetRun subDataset="ingresosDataSet" uuid="eb6d77e7-0137-4151-b4ab-b4316afe36af">
+						<dataSourceExpression><![CDATA[$P{ingresosData}]]></dataSourceExpression>
 					</datasetRun>
 					<jr:column width="90" uuid="355b0a62-48d2-47e9-b8cc-32f7c7dea431">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
@@ -70,7 +70,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[ID]]></text>
+								<text><![CDATA[Patente]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
@@ -79,7 +79,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{patente}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -157,7 +157,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="24"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{egresosData}.getData().size() == 0 ?  "No hay egresos" : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ingresosData}.getData().size() == 0 ?  "No hay ingresos" : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
