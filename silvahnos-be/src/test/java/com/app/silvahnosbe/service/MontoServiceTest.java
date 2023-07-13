@@ -32,7 +32,7 @@ public class MontoServiceTest {
     @BeforeEach
     void setup(){
         monto= new Monto();
-        monto.setMotivo(1);
+        monto.setMotivo("Sueldos");
         monto.setMonto_total(150000);
     }
 
@@ -40,11 +40,11 @@ public class MontoServiceTest {
     @Test
     void testObtenerMontoIngreso (){
         Monto monto= new Monto();
-        monto.setMotivo(1);
+        monto.setMotivo("Sueldos");
         monto.setMonto_total(150000);
 
         Monto monto2= new Monto();
-        monto2.setMotivo(2);
+        monto2.setMotivo("Arriendo");
         monto2.setMonto_total(150000);
 
         //given
@@ -60,11 +60,11 @@ public class MontoServiceTest {
     @Test
     void testObtenerMontoEgreso (){
         Monto monto= new Monto();
-        monto.setMotivo(3);
+        monto.setMotivo("Arriendo");
         monto.setMonto_total(150000);
 
         Monto monto2= new Monto();
-        monto2.setMotivo(4);
+        monto2.setMotivo("IVA");
         monto2.setMonto_total(150000);
 
         //given

@@ -12,11 +12,11 @@ public class MontoModelTest {
         Monto monto = new Monto();
 
         // When
-        monto.setMotivo(1);
+        monto.setMotivo("Sueldos");
         String motivo = monto.getMotivo();
 
         // Then
-        assertEquals(1, motivo);   
+        assertEquals("Sueldos", motivo);   
     }
 
     @Test

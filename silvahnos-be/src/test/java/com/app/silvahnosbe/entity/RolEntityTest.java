@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.RolEntity;
+import com.app.silvahnosbe.models.ERole;
 
-public class RolEntotyTest {
+public class RolEntityTest {
 
     @Test
     void testId(){
@@ -23,15 +24,16 @@ public class RolEntotyTest {
 
     @Test
     void testNombre(){
-        // Given
-        RolEntity rol = new RolEntity();
+        //Given
+        RolEntity RolEntity = new RolEntity();
 
-        // When
-       // rol.setNombre("nombre");
-       // String nombre = rol.getNombre();
+        //When
+        ERole nombre = ERole.ADMIN;
+        RolEntity.setNombre(nombre);
+        ERole nombreRol = RolEntity.getNombre();
 
-        // Then
-       // assertEquals("nombre", nombre);
+        //Then
+        assertEquals(nombreRol, nombre);
     }
     
 }

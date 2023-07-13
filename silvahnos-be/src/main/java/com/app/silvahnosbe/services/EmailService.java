@@ -16,7 +16,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -85,8 +84,6 @@ public class EmailService {
             int mes = calendar.get(Calendar.MONTH) + 1;
             int anio = calendar.get(Calendar.YEAR);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'del' MM 'del' yyyy");
-            String fechaFormateada = dateFormat.format(fechaVencimiento);
             mensaje = mensaje + "Factura N° :" + facturas.get(i).getNumero_factura() + ", con fecha de vencimiento el "
                     + dia + " del " + mes + " del año " + anio + "\n";
             i = i + 1;

@@ -20,10 +20,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.entities.IngresoEntity;
 import com.app.silvahnosbe.entities.LocalEntity;
-import com.app.silvahnosbe.entities.MotivoEEntity;
 import com.app.silvahnosbe.entities.MotivoIEntity;
 import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;

@@ -2,15 +2,11 @@ package com.app.silvahnosbe.service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.sql.Date;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +20,6 @@ import com.app.silvahnosbe.entities.EmpresaEntity;
 import com.app.silvahnosbe.entities.EstadoEntity;
 import com.app.silvahnosbe.entities.FacturaEntity;
 import com.app.silvahnosbe.entities.LocalEntity;
-import com.app.silvahnosbe.entities.MotivoIEntity;
 import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.FacturaRepository;
