@@ -36,7 +36,7 @@ function BasicExample() {
             <Nav.Link href="/ingresos">Ingresos{" "}</Nav.Link>
             <Nav.Link href="/egresos">Egresos{" "}</Nav.Link>
             <Nav.Link href="/facturas">Facturas{" "}</Nav.Link>
-            <Nav.Link href="/flujo">Resumen{" "}</Nav.Link>
+            <Nav.Link href="/resumen">Resumen{" "}</Nav.Link>
             <Nav.Link href="/administracion">Administración{" "}</Nav.Link>
           </Nav>
           <Nav style={{ color: "black", fontWeight: "bold" }}>

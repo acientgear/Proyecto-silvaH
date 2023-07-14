@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import LineChartIngresos from './ingreso/Grafico';
 import LineChartEgresos from './egreso/Grafico';
 import urlweb from '../config/config';
+import Sem1 from '../components/data/Sem1';
+import Sem2 from '../components/data/Sem2';
 
 const Home = () => {
   const config = {
@@ -14,6 +16,7 @@ const Home = () => {
   const [facturas, setFacturas] = useState([]);
   const [saldo, setSaldo] = useState(0);
   const [iva, setIva] = useState(0);
+  const [fechaTexto, setFechaTexto] = useState("");
 
   let fechaAcual = new Date();
   let anio = fechaAcual.getFullYear();
@@ -87,6 +90,15 @@ const Home = () => {
     return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
   };
 
+  const textoFecha = () => {
+    const fechaActual = new Date();
+    const mes = new Date().getMonth() + 1;
+    const idMes = mes.toLocaleString('es-ES', { month: 'long' });
+    const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
+    setFechaTexto(fechaActual.getDate() + "de " + nombreMes + "del " + fechaActual.getFullYear())
+    return fechaTexto;
+  }
+
   const calcularDiasPorVencer = (fecha) => {
     let fechaC = fecha.split('T')[0];
     fechaC = fechaC.split('-');
@@ -150,14 +162,16 @@ const Home = () => {
     getSaldoCuenta();
     getIva();
     getProximasFacturasVencer();
+    textoFecha();
   }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes]);
 
   return (
     <Container style={{ paddingTop: 10 }}>
       <Row className="justify-content-center">
         <Col xs="auto" >
-          <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/flujo">Visualizar resumen</Button>
+          <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/resumen">Visualizar resumen</Button>
         </Col>
+        {fechaTexto}
         <p></p>
         <Col xs="auto" >
           <ListGroup>

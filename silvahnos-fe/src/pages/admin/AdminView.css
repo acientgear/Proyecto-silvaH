@@ -58,23 +58,27 @@
         width: 100%;
     }
 
-    .link-always{
+    .link-always {
         font-size: 28px;
-        height: 60px;
         padding: 10px 0 10px 20px;
         text-decoration: none;
         transition: 0.3s ease-in-out; 
-    }
-
-    .link-anchor-always{
+        display: flex;
+        align-items: center;
+      }
+      
+      .link-anchor-always {
+        display: inline-block;
+        flex: 1;
         text-decoration: none;
-        color:rgb(74, 85, 156);
-    }
-
-    .link-always:hover{
+        color: rgb(74, 85, 156);
+      }
+      
+      .link-always:hover {
         background-color: rgb(149, 149, 149);
         transition: 0.3s ease-in-out; 
-    }
+      }
+      
     
 }
 

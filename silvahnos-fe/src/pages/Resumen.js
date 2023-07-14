@@ -35,22 +35,32 @@ const Resumen = () => {
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen anual</h1>
                 <Row>
-                    <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-                        <Row>
-                            <TablaAnual />
-                        </Row>
+                    <Col md={12}>
+                        <Card style={{ width: "100%" }}>
+                            <Card.Body>
+                                <Card.Title>Ingresos y egresos</Card.Title>
+                                <Col style={{ justifyContent: "center", alignItems: "start" }}>
+                                    <Row>
+                                        <TablaAnual />
+                                    </Row>
+                                </Col>
+                            </Card.Body>
+                        </Card>
                     </Col>
                 </Row>
-                <Row style={{ maxWidth: "800px" }}>
-                    <Card style={{ width: "100%" }}>
-                        <Card.Body>
-                            <Card.Title>Ingresos y egresos</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Anual</Card.Subtitle>
-                            <div>
-                                <GraficoAnual />
-                            </div>
-                        </Card.Body>
-                    </Card>
+                <Row>
+                    <p></p>
+                    <Col md={7}>
+                        <Card style={{ width: "100%" }}>
+                            <Card.Body>
+                                <Card.Title>Ingresos y egresos anuales</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
+                                <div>
+                                    <GraficoAnual />
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
                 </Row>
             </div>
         )
@@ -61,17 +71,20 @@ const Resumen = () => {
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen mensual</h1>
                 <Row xs={1} lg={3}>
-                    <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
+                    <Col style={{ justifyContent: "center", alignItems: "start" }}>
                         <TablaMensual />
                     </Col>
-                    <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
+                    <Col style={{ justifyContent: "center", alignItems: "start" }}>
                         <Registros />
                     </Col>
-                    <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-                        <Card>
+
+                    <Col style={{ justifyContent: "center", alignItems: "start" }}>
+                        <p></p>
+                        <Card style={{ width: "100%"}}>
                             <Card.Body>
                                 <Card.Title>Ingresos y egresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
+                                <br></br>
                                 <div style={{ width: "100%", height: "250px", margin: "auto", justifyContent: "center" }}>
                                     <GraficoMensual />
                                 </div>
@@ -82,7 +95,8 @@ const Resumen = () => {
                 <Row xs={1} lg={2}>
                     <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Row>
-                            <Card>
+                            <p></p>
+                            <Card style={{ width: "100%"}}>
                                 <Card.Body>
                                     <Card.Title>Distribución motivos de egresos</Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
@@ -93,7 +107,8 @@ const Resumen = () => {
                     </Col>
                     <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Row>
-                            <Card>
+                            <p></p>
+                            <Card style={{ width: "100%"}}>
                                 <Card.Body>
                                     <Card.Title>Distribución motivos de egresos</Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>

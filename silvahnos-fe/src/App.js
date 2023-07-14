@@ -9,7 +9,7 @@ import Ingresos from './pages/ingreso/Ingresos';
 import CrearIngreso from './pages/ingreso/CrearIngreso';
 import Facturas from './pages/factura/Facturas';
 import CrearFactura from './pages/factura/CrearFactura';
-import Flujo from './pages/Flujo';
+import Resumen from './pages/Resumen';
 import AdminView from './pages/admin/AdminView';
 import CrearMotivoI from './pages/admin/CrearMotivoI';
 import CrearMotivoE from './pages/admin/CrearMotivoE';
@@ -29,7 +29,7 @@ function App() {
           <Route path="/crearEgreso" element={<CrearEgreso />} />
           <Route path="/crearIngreso" element={<CrearIngreso />} />
           <Route path='/crearFactura' element={<CrearFactura />} />
-          <Route path="/flujo" element={<Flujo />} />
+          <Route path="/resumen" element={<Resumen />} />
           <Route path="/administracion" element={<AdminView />} />
           <Route path="/crearMotivoI" element={<CrearMotivoI />} />
           <Route path="/crearMotivoE" element={<CrearMotivoE />} />

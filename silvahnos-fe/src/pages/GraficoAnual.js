@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
@@ -83,15 +84,12 @@ const DoubleBarChart = () => {
 
     return (
         <>
-            <div key="grafico-barras">
-                <div style={{ maxWidth: "600px", maxHeight: "400px", margin: "auto" }}>
-                    <Bar
-                        data={data}
-                        options={options}
-                    />
-                </div>
-
-            </div>
+            <Container>
+                <Bar
+                    data={data}
+                    options={options}
+                />
+            </Container>
         </>
     );
 };
