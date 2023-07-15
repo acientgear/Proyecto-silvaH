@@ -141,14 +141,15 @@ class IngresoControllerTest {
     @Test
     void testGetMontoPorDia_ExistenIngresos_ReturnsMonto() {
         // Given
-        int anio = 2023;
-        int mes = 5;
-        int dia = 10;
-        int monto = 100;
-        when(ingresoService.obtenerMontoPorDia(anio, mes, dia)).thenReturn(monto);
+        Integer anio = 2023;
+        Integer mes = 5;
+        List<Integer> monto = new ArrayList<>();
+        monto.add(1000);
+        monto.add(2000);
+        when(ingresoService.getMontosPorDia(anio, mes)).thenReturn(monto);
 
         // When
-        ResponseEntity<Integer> response = ingresoController.getMontoPorDia(anio, mes, dia);
+        ResponseEntity<List<Integer>> response = ingresoController.getMontoPorDia(anio, mes);
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -159,13 +160,12 @@ class IngresoControllerTest {
     @Test
     void testGetMontoPorDia_NoExistenIngresos_ReturnsNotFound() {
         // Given
-        int anio = 2023;
-        int mes = 5;
-        int dia = 10;
-        when(ingresoService.obtenerMontoPorDia(anio, mes, dia)).thenReturn(null);
+        Integer anio = 2023;
+        Integer mes = 5;
+        when(ingresoService.getMontosPorDia(anio, mes)).thenReturn(null);
 
         // When
-        ResponseEntity<Integer> response = ingresoController.getMontoPorDia(anio, mes, dia);
+        ResponseEntity<List<Integer>> response = ingresoController.getMontoPorDia(anio, mes);
 
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());

@@ -70,9 +70,9 @@ public class IngresoService {
         }
     }
 
-    public ArrayList<Integer> getMontosPorDia(int anio, int mes){
+    public List<Integer> getMontosPorDia(int anio, int mes){
         Integer numeroDias = obtenerDiasMes(mes, anio);
-        ArrayList<Integer> montos = new ArrayList<Integer>();
+        List<Integer> montos = new ArrayList<Integer>();
         for(int i = 1; i <= numeroDias; i++){
             Integer monto = ingresoRepository.obtenerMontoPorDia(anio, mes, i);
             montos.add(monto);

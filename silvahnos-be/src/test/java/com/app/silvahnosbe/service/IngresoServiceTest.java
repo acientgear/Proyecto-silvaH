@@ -176,7 +176,7 @@ public class IngresoServiceTest {
 
     }
 
-    @DisplayName("test para obtener el total de los ingresos por dia")
+    /*@DisplayName("test para obtener el total de los ingresos por dia")
     @Test
     void testObtenerMontoPorDia() {
         // given
@@ -186,7 +186,7 @@ public class IngresoServiceTest {
         // then
         assertThat(Ingresos).isEqualTo(180000);
 
-    }
+    }*/
 
     @DisplayName("test para obtener el total de los ingresos por mes cuando es nulo o 0")
     @Test

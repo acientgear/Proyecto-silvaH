@@ -172,12 +172,13 @@ public class EgresoControllerTest {
         // Given
         Integer anio = 2023;
         Integer mes = 5;
-        Integer dia = 10;
-        Integer monto = 1000;
-        when(egresoService.obtenerMontoPorDia(anio, mes, dia)).thenReturn(monto);
+        List<Integer> monto = new ArrayList<>();
+        monto.add(1000);
+        monto.add(2000);
+        when(egresoService.getMontosPorDia(anio, mes)).thenReturn(monto);
 
         // When
-        ResponseEntity<Integer> response = egresoController.getMontoPorDia(anio, mes, dia);
+        ResponseEntity<List<Integer>> response = egresoController.getMontoPorDia(anio, mes);
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -190,11 +191,10 @@ public class EgresoControllerTest {
         // Given
         Integer anio = 2023;
         Integer mes = 5;
-        Integer dia = 10;
-        when(egresoService.obtenerMontoPorDia(anio, mes, dia)).thenReturn(null);
+        when(egresoService.getMontosPorDia(anio, mes)).thenReturn(null);
 
         // When
-        ResponseEntity<Integer> response = egresoController.getMontoPorDia(anio, mes, dia);
+        ResponseEntity<List<Integer>> response = egresoController.getMontoPorDia(anio, mes);
 
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
