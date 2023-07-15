@@ -184,12 +184,17 @@ const Ingresos = () => {
                     Authorization: `Bearer ${localStorage.token}`,
                 },
             });
+
             if (response.ok) {
+                const contentDisposition = response.headers.get('content-disposition');
+                const filenameMatch = contentDisposition && contentDisposition.match(/filename=(["'])(.*?)\1/);
+                const filename = filenameMatch && filenameMatch[2];
+
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = 'ingresos.pdf';
+                link.download = filename;
                 link.click();
                 URL.revokeObjectURL(url);
             } else {
@@ -291,7 +296,7 @@ const Ingresos = () => {
                             </Col>
                             <Col className='d-flex align-items-center justify-content-end'>
                                 <Button href="/crearIngreso" style={{ backgroundColor: "#B8E7E1", color: "black", border: "none", fontWeight: "bold" }}>Registrar ingreso</Button></Col>
-                                <Col className='d-flex align-items-center justify-content-end'><Button onClick={() => generarReporte()} style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Generar reporte</Button></Col>
+                            <Col className='d-flex align-items-center justify-content-end'><Button onClick={() => generarReporte()} style={{ backgroundColor: "#F2B6A0", fontWeight: "bold", border: "none", color: "black" }}>Generar reporte</Button></Col>
 
                         </Row>
                     </Col>

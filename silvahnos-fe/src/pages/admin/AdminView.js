@@ -6,8 +6,9 @@ import Parametro from './Parametro';
 import Correo from './Correo';
 import './AdminView.css';
 import './CardStyle.css'
-import { AiOutlineUser, AiOutlineFall, AiOutlineFileText, AiOutlineMail } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineFall, AiOutlineFileText, AiOutlineMail, AiOutlineTag } from 'react-icons/ai';
 import { useState } from 'react';
+import Reporte from './Reporte';
 
 const AdminView = () => {
 
@@ -15,6 +16,7 @@ const AdminView = () => {
     const [facturasHTML, setFacturasHTML] = useState(null);
     //const [usuariosHTML, setUsuariosHTML] = useState(null);
     const [correosHTML, setCorreosHTML] = useState(null);
+    const [reporteHTML, setReporteHTML] = useState(null);
     const [seccion, setSeccion] = useState("motivos");
 
     const handleSeccion = (seccion) => {
@@ -74,6 +76,19 @@ const AdminView = () => {
         );
     }
 
+    const getReporte = () => {
+        setReporteHTML(
+            <div style={{ marginTop: "10px" }}>
+                <h1>Reporte</h1>
+                <Row xs={1}>
+                    <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
+                        <Reporte />
+                    </Col>
+                </Row>
+            </div>
+        );
+    }
+
     return (
         <div className='contenedor'>
             <aside className='sidebar'>
@@ -99,6 +114,11 @@ const AdminView = () => {
                                 <AiOutlineMail />
                             </a>
                         </li>
+                        <li active={handleActive("reporte")} className='link-collapse'>
+                            <a className="link-anchor-collapse" href='#reporte' onClick={() => handleSeccion("reporte")}>
+                                <AiOutlineTag />
+                            </a>
+                        </li>
                     </ul>
                     <ul className='nav-always'>
                         <li active={handleActive("usuarios")} className='link-always'>
@@ -121,6 +141,11 @@ const AdminView = () => {
                                 <AiOutlineMail /> Correo
                             </a>
                         </li>
+                        <li active={handleActive("reporte")} className='link-always'>
+                            <a className='link-anchor-always' href='#reporte' onClick={() => handleSeccion("reporte")}>
+                                <AiOutlineTag /> Reporte
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </aside>
@@ -130,6 +155,7 @@ const AdminView = () => {
                     {seccion === "motivos" ? (motivosHTML !== null ? motivosHTML : getMotivos()) : null}
                     {seccion === "facturas" ? (facturasHTML !== null ? facturasHTML : getFacturas()) : null}
                     {seccion === "correos" ? (correosHTML !== null ? correosHTML : getCorreos()) : null}
+                    {seccion === "reporte" ? (reporteHTML !== null ? reporteHTML : getReporte()) : null}
                 </Container>
             </main>
         </div>

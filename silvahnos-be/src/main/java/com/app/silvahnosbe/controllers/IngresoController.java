@@ -1,7 +1,12 @@
 package com.app.silvahnosbe.controllers;
 
 import java.io.FileNotFoundException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -88,9 +93,11 @@ public class IngresoController {
         byte[] pdfBytes = ingresoInterface.exportPdf(anio, mes);
         ByteArrayResource resource = new ByteArrayResource(pdfBytes);
         HttpHeaders headers = new HttpHeaders();
-        String filename = "ingresos " + anio + "-" + mes + ".pdf";
+        String date = new SimpleDateFormat("dd-MM-yyyy HH-mm").format(new Timestamp(System.currentTimeMillis()));
+        String filename = "Ingresos Desde=" + anio + "-" + mes +" Hasta=null Generado="+date+".pdf";
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDispositionFormData("attachment", filename);
+        headers.setAccessControlExposeHeaders(List.of("Content-Disposition"));
         return ResponseEntity.ok().headers(headers).body(resource);
     }
 }
