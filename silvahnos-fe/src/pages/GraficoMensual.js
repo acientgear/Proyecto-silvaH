@@ -9,11 +9,12 @@ const config = {
     headers: { Authorization: `Bearer ${localStorage.token}` }
 }; 
 
-const getMontoPorDia = async (tipo, anio, mes, dia) => {
+const getMontoPorDia = async (tipo, anio, mes) => {
     try {
-        let url = 'http://'+urlweb+'/' + tipo + '/monto/' + anio + '/' + mes + '/' + dia;
+        let url = 'http://'+urlweb+'/' + tipo + '/monto/' + anio + '/' + mes;
         const response = await axios.get(url,config);
         if (response.status === 200) {
+            console.log(response.data);
             return response.data;
         }
     } catch (err) {
@@ -26,11 +27,9 @@ async function obtenerMontosMes(tipo) {
     const fecha = new Date();
     const dias = Dias(fecha.getFullYear(), fecha.getMonth());
 
-    for (let i = 1; i <= dias.length; i++) {
-        const monto = getMontoPorDia(tipo, fecha.getFullYear(), fecha.getMonth() + 1, i);
-        montos.push(monto);
-    }
-
+    const monto = getMontoPorDia(tipo, fecha.getFullYear(), fecha.getMonth() + 1);
+    montos.push(monto);
+    
     const datos = await Promise.all(montos);
 
     return datos;
@@ -51,8 +50,11 @@ class LineChart extends Component {
 
         let tipo1 = 'ingresos';
         let tipo2 = 'egresos';
-        const montosIngresos = await obtenerMontosMes(tipo1);
-        const montosEgresos = await obtenerMontosMes(tipo2);
+        const montosIngresos = await getMontoPorDia(tipo1,year,month+1);
+        const montosEgresos = await getMontoPorDia(tipo2,year,month+1);
+
+        //console.log(montosIngresos);
+        //console.log(montosEgresos);
 
         if (this.myChart) {
             this.myChart.destroy();

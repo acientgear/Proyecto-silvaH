@@ -69,9 +69,9 @@ public class IngresoController {
         return ResponseEntity.ok().body(total);
     }
 
-    @GetMapping("/monto/{anio}/{mes}/{dia}")
-    public ResponseEntity<Integer> getMontoPorDia(@PathVariable("anio") int anio, @PathVariable("mes") int mes, @PathVariable("dia") int dia){
-        Integer total = ingresoService.obtenerMontoPorDia(anio,mes,dia);
+    @GetMapping("/monto/{anio}/{mes}")
+    public ResponseEntity<List<Integer>> getMontoPorDia(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
+        List<Integer> total = ingresoService.getMontosPorDia(anio,mes);
         if(total == null){
             return ResponseEntity.notFound().build();
         }

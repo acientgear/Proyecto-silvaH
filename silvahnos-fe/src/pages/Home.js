@@ -90,15 +90,6 @@ const Home = () => {
     return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
   };
 
-  const textoFecha = () => {
-    const fechaActual = new Date();
-    const mes = new Date().getMonth() + 1;
-    const idMes = mes.toLocaleString('es-ES', { month: 'long' });
-    const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
-    setFechaTexto(fechaActual.getDate() + "de " + nombreMes + "del " + fechaActual.getFullYear())
-    return fechaTexto;
-  }
-
   const calcularDiasPorVencer = (fecha) => {
     let fechaC = fecha.split('T')[0];
     fechaC = fechaC.split('-');
@@ -162,7 +153,6 @@ const Home = () => {
     getSaldoCuenta();
     getIva();
     getProximasFacturasVencer();
-    textoFecha();
   }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes]);
 
   return (
