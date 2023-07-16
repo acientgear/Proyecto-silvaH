@@ -85,6 +85,15 @@ public class EgresoController {
         return ResponseEntity.ok().body(total);
     }
 
+    @GetMapping("/monto-5-dias/")
+    public ResponseEntity<List<Integer>> getMontos5dias() {
+        List<Integer> total = egresoService.getMontosUltimos5Dias();
+        if (total == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(total);
+    }
+
     @GetMapping("/export-pdf/{anio}/{mes}")
     public ResponseEntity<Resource> exportPdf(@PathVariable("anio") int anio, @PathVariable("mes") int mes)
             throws JRException, FileNotFoundException {

@@ -3,10 +3,7 @@ package com.app.silvahnosbe.controllers;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -99,5 +96,14 @@ public class IngresoController {
         headers.setContentDispositionFormData("attachment", filename);
         headers.setAccessControlExposeHeaders(List.of("Content-Disposition"));
         return ResponseEntity.ok().headers(headers).body(resource);
+    }
+
+    @GetMapping("/monto-5-dias/")
+    public ResponseEntity<List<Integer>> getMontos5dias() {
+        List<Integer> total = ingresoService.getMontosUltimos5Dias();
+        if (total == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(total);
     }
 }

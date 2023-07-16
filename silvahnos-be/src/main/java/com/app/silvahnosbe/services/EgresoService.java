@@ -1,6 +1,8 @@
 package com.app.silvahnosbe.services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +75,22 @@ public class EgresoService {
             Integer monto = egresoRepository.obtenerMontoPorDia(anio, mes, i);
             montos.add(monto);
         }
+        return montos;
+    }
+
+    public List<Integer> getMontosUltimos5Dias() {
+        List<Integer> montos = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+
+        for (int i = 0; i < 5; i++) {
+            Integer dia = calendar.get(Calendar.DAY_OF_MONTH);
+            Integer mes = calendar.get(Calendar.MONTH) + 1; // Mes se indexa desde 0 en Calendar, por eso se suma 1
+            Integer anio = calendar.get(Calendar.YEAR);
+            Integer monto = egresoRepository.obtenerMontoPorDia(anio, mes, dia);
+            montos.add(monto);
+            calendar.add(Calendar.DAY_OF_MONTH, -1); // Restamos un día al calendario
+        }
+
         return montos;
     }
 

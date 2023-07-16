@@ -24,9 +24,9 @@ const config = {
     headers: { Authorization: `Bearer ${localStorage.token}` }
 }; 
 
-const getMontoPorDia = async (anio, mes, dia) => {
+const getMontoPorDia = async () => {
     try {
-        let url = 'http://'+urlweb+'/egresos/monto/' + anio + '/' + mes + '/' + dia;
+        let url = 'http://'+urlweb+'/egresos/monto-5-dias/';
         const response = await axios.get(url,config);
         if (response.status === 200) {
             return response.data;
@@ -40,13 +40,10 @@ async function obtenerMontos5Dias() {
     const hoy = new Date();
     const montos = [];
 
-    for (let i = 0; i <= 4; i++) {
-        const fecha = new Date();
-        fecha.setDate(hoy.getDate() - i);
+    const fecha = new Date();
 
-        const monto = getMontoPorDia(fecha.getFullYear(), fecha.getMonth() + 1, fecha.getDate());
-        montos.push(monto);
-    }
+    const monto = getMontoPorDia(fecha.getFullYear(), fecha.getMonth() + 1);
+    montos.push(monto);
 
     const datos = await Promise.all(montos);
 
@@ -76,7 +73,7 @@ class LineChart extends Component {
                 datasets: [
                     {
                         label: 'Egresos',
-                        data: [montos[4], montos[3], montos[2], montos[1], montos[0]],
+                        data: [montos[0][4], montos[0][3], montos[0][2], montos[0][1], montos[0][0]],
                         backgroundColor: 'rgba(242, 182, 160, 0.2)',
                         borderColor: 'rgba(242, 182, 160, 1)',
                         borderWidth: 1,
