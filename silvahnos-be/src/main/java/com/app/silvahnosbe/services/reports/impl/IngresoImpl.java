@@ -14,13 +14,19 @@ import com.app.silvahnosbe.util.IngresosReportGenerator;
 import net.sf.jasperreports.engine.JRException;
 
 @Service
-public class IgresoImpl implements IngresoInterface {
+public class IngresoImpl implements IngresoInterface {
     
     @Autowired
     private IngresoRepository ingresoRepository;
 
     @Autowired
     private IngresosReportGenerator ingresosReportGenerator;
+
+    //constructor
+    public IngresoImpl(IngresoRepository ingresoRepository, IngresosReportGenerator ingresosReportGenerator) {
+        this.ingresoRepository = ingresoRepository;
+        this.ingresosReportGenerator = ingresosReportGenerator;
+    }
 
     @Override
     public byte[] exportPdf(String fechaInicio, String fechaFin) throws JRException, FileNotFoundException {

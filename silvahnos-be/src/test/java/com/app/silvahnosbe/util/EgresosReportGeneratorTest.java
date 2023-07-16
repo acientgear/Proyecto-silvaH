@@ -1,7 +1,6 @@
 package com.app.silvahnosbe.util;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRPart;
 import net.sf.jasperreports.engine.JRPrintElement;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRPrintPage;
@@ -9,20 +8,15 @@ import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.design.JRDesignBand;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.fill.JRVerticalFiller;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.util.ArrayList;

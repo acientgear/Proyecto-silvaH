@@ -224,7 +224,7 @@ public class IngresoServiceTest {
 
     @Test
     @DisplayName("test de integración creación de ingreso con motivo y movimiento")
-    void testCrearEgreso() {
+    void testCrearIngreso() {
         // given
         LocalEntity local = new LocalEntity();
         local.setId(1l);

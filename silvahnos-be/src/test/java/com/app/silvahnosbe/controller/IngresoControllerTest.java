@@ -6,13 +6,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.app.silvahnosbe.controllers.IngresoController;
 import com.app.silvahnosbe.entities.IngresoEntity;
 import com.app.silvahnosbe.services.IngresoService;
+import com.app.silvahnosbe.services.reports.IngresoInterface;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +29,9 @@ class IngresoControllerTest {
 
     @InjectMocks
     private IngresoController ingresoController;
+    
+    @Mock
+    private IngresoInterface ingresoInterface;
 
     @Mock
     private IngresoService ingresoService;
@@ -199,6 +207,41 @@ class IngresoControllerTest {
 
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+        @DisplayName("Test para método exportPdf")
+    @Test
+    public void testExportPdf() throws Exception {
+        // Mock input parameters
+        String fechaInicio = "2023-01-01";
+        String fechaFin = "2023-01-31";
+
+        // Mocked output
+        byte[] pdfBytes = "Mocked PDF Content".getBytes();
+
+        // Obtener hora y minutos actuales del sistema u hora local
+        Timestamp fecha = new Timestamp(System.currentTimeMillis());
+        String horaMin = fecha.toString().substring(11, 16).replace(":", "-");
+        System.out.println(horaMin);
+
+        // Stub the behavior of ingresoInterface.exportPdf()
+        when(ingresoInterface.exportPdf("2023-01-01 00:00:00", "2023-01-31 23:59:59"))
+                .thenReturn(pdfBytes);
+
+        // Perform the test
+        ResponseEntity<Resource> response = ingresoController.exportPdf(fechaInicio, fechaFin);
+
+        // Verify the response
+        String parte1 = "form-data; name=\"attachment\"; filename=\"Ingresos Desde=01-01-2023 Hasta=31-01-2023 Generado=16-07-2023 ";
+        String parte2 = horaMin + ".pdf\"";
+        assertEquals(MediaType.APPLICATION_PDF, response.getHeaders().getContentType());
+        assertEquals(parte1 + parte2,
+                response.getHeaders().getContentDisposition().toString());
+        assertEquals(List.of("Content-Disposition"), response.getHeaders().getAccessControlExposeHeaders());
+
+        ByteArrayResource resource = (ByteArrayResource) response.getBody();
+        assertEquals(pdfBytes.length, resource.contentLength());
+        assertEquals(new String(pdfBytes), new String(resource.getByteArray()));
     }
 
 

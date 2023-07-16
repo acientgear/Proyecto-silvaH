@@ -1,5 +1,6 @@
 package com.app.silvahnosbe.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -218,8 +219,10 @@ public class EgresoControllerTest {
         // Mocked output
         byte[] pdfBytes = "Mocked PDF Content".getBytes();
 
-        // Mocked date format
-        String mockedDate = "16-07-2023 01:24";
+        // Obtener hora y minutos actuales del sistema u hora local
+        Timestamp fecha = new Timestamp(System.currentTimeMillis());
+        String horaMin = fecha.toString().substring(11, 16).replace(":", "-");
+        System.out.println(horaMin);
 
         // Stub the behavior of egresoInterface.exportPdf()
         when(egresoInterface.exportPdf("2023-01-01 00:00:00", "2023-01-31 23:59:59"))
@@ -229,8 +232,10 @@ public class EgresoControllerTest {
         ResponseEntity<Resource> response = egresoController.exportPdf(fechaInicio, fechaFin);
 
         // Verify the response
+        String parte1 = "form-data; name=\"attachment\"; filename=\"Egresos Desde=01-01-2023 Hasta=31-01-2023 Generado=16-07-2023 ";
+        String parte2 = horaMin + ".pdf\"";
         assertEquals(MediaType.APPLICATION_PDF, response.getHeaders().getContentType());
-        assertEquals("form-data; name=\"attachment\"; filename=\"Egresos Desde=01-01-2023 Hasta=31-01-2023 Generado=16-07-2023 01-28.pdf\"",
+        assertEquals(parte1 + parte2,
                 response.getHeaders().getContentDisposition().toString());
         assertEquals(List.of("Content-Disposition"), response.getHeaders().getAccessControlExposeHeaders());
 
