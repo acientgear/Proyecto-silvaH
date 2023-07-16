@@ -21,8 +21,8 @@ public class IgresoImpl implements IngresoInterface {
     private IngresosReportGenerator ingresosReportGenerator;
 
     @Override
-    public byte[] exportPdf(int anio, int mes) throws JRException, FileNotFoundException {
-        return ingresosReportGenerator.exportToPdf(ingresoRepository.obtenerIngresos(anio,mes));
+    public byte[] exportPdf(String fechaInicio, String fechaFin) throws JRException, FileNotFoundException {
+        return ingresosReportGenerator.exportToPdf(ingresoRepository.obtenerIngresosEntre(fechaInicio, fechaFin));
     }
     
 }

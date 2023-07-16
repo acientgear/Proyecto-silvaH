@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { startOfMonth, endOfMonth, format } from 'date-fns';
+import urlweb from "../../config/config";
+import { ca } from "date-fns/locale";
+import axios from "axios";
 
 const Reporte = () => {
     const config = {
@@ -11,10 +14,50 @@ const Reporte = () => {
     const [fechaI, setFechaI] = useState(format(startOfMonth(new Date()), 'yyyy-MM-dd'));
     const [fechaF, setFechaF] = useState(format(endOfMonth(new Date()), 'yyyy-MM-dd'));
 
-    const handleReport = () => {
-        console.log(tipo);
-        console.log(fechaI);
-        console.log(fechaF);
+    const handleFechaInicioChange = (e) => {
+        const fecha = e.target.value;
+        setFechaI(fecha);
+        setFechaF((value) => {
+            if (fecha > value) {
+                return fecha;
+            }
+            return value;
+        });
+    };
+
+    const handleFechaFinChange = (e) => {
+        const fecha = e.target.value;
+        setFechaF(fecha);
+        setFechaI((value) => {
+            if (fecha < value) {
+                return fecha;
+            }
+            return value;
+        });
+    };
+
+    const handleReport = async (web, tipo, fi, ff) => {
+        try{
+            const url = `http://${web}/${tipo}/export-pdf/${fi}/${ff}`;
+            const response = await fetch(url, config);
+            if (response.ok) {
+                const contentDisposition = response.headers.get('content-disposition');
+                const filenameMatch = contentDisposition && contentDisposition.match(/filename=(["'])(.*?)\1/);
+                const filename = filenameMatch && filenameMatch[2];
+
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                link.click();
+                URL.revokeObjectURL(url);
+            } else {
+                console.log('Error al descargar el archivo');
+            }
+        }catch(error){
+            console.log(error);
+        }
     }
 
     return (
@@ -23,54 +66,50 @@ const Reporte = () => {
                 <Card.Body>
                     <Card.Title>Seleccione el rango de fecha</Card.Title>
                     <br></br>
-                    <Row style={{ gap: 10 }}>
-                        <Col xs={12} sm={3}>
-                            <Form.Select onChange={(e) => setTipo(e.target.value)}
-                                aria-label="tipo"
-                                value={tipo}
-                            >
-                                <option value="ingresos">Ingresos</option>
-                                <option value="egresos">Egresos</option>
-                                <option value="facturas">Facturas</option>
-                            </Form.Select>
-                        </Col>
-                        <Col xs={12} sm={9}>
-                            <Row>
-                                <Col xs={3} style={{paddingRight: 0}}>
-                                    <InputGroup.Text id="basic-addon1">Desde</InputGroup.Text>
-                                </Col>
-                                <Col xs={9} sm={3} style={{padding: (window.innerWidth < 576 ? "0 12px 0 0" : "0 0 0 0")}}>
-                                    <Form.Control
-                                        type="date"
-                                        placeholder="Fecha Inicial"
-                                        aria-label="Fecha Inicial"
-                                        aria-describedby="basic-addon1"
-                                        value={fechaI}
-                                        onChange={(e) => setFechaI(e.target.value)}
-                                    />
-                                </Col>
-                                <Col xs={3} style={{padding: (window.innerWidth < 576 ? "0 0 0 12px" : "0 0 0 0")}}>
-                                    <InputGroup.Text id="basic-addon1">Hasta</InputGroup.Text>
-                                </Col>
-                                <Col xs={9} sm={3} style={{paddingLeft: 0}}>
-                                    <Form.Control
-                                        type="date"
-                                        placeholder="Fecha Final"
-                                        aria-label="Fecha Final"
-                                        aria-describedby="basic-addon1"
-                                        value={fechaF}
-                                        onChange={(e) => setFechaF(e.target.value)}
-                                    />
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <br></br>
-                    <Row>
-                        <Col>
-                            <Button onClick={handleReport} variant="primary">Generar reporte</Button>
-                        </Col>
-                    </Row>
+                    <Form onSubmit={() => handleReport(urlweb, tipo, fechaI, fechaF)}>
+                        <Row className="justify-content-center">
+                            <Col xs={12} sm="auto">
+                                <Form.Group className="text-left">
+                                    <Form.Label>Tipo de reporte</Form.Label>
+                                    <Form.Select onChange={(e) => setTipo(e.target.value)}
+                                        aria-label="tipo"
+                                        value={tipo}
+                                        label="tipo"
+                                    >
+                                        <option value="ingresos">Ingresos</option>
+                                        <option value="egresos">Egresos</option>
+                                        <option value="facturas">Facturas</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={12} sm="auto">
+                                <Form.Group className="text-left">
+                                    <Form.Label>Fechas</Form.Label>
+                                    <InputGroup>
+                                        <InputGroup.Text id="basic-addon1">Desde</InputGroup.Text>
+                                        <Form.Control
+                                            type="date"
+                                            value={fechaI}
+                                            onChange={handleFechaInicioChange}
+                                        />
+                                        <InputGroup.Text id="basic-addon1">Hasta</InputGroup.Text>
+                                        <Form.Control
+                                            type="date"
+                                            placeholder="Fecha Final"
+                                            aria-label="Fecha Final"
+                                            aria-describedby="basic-addon1"
+                                            value={fechaF}
+                                            onChange={handleFechaFinChange}
+                                        />
+
+                                    </InputGroup>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Button className="mt-3" variant="primary" type="submit">
+                            Generar reporte
+                        </Button>
+                    </Form>
                 </Card.Body>
             </Card>
         </div>
