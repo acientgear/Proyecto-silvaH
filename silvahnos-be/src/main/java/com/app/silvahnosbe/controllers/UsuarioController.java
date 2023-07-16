@@ -20,6 +20,7 @@ import com.app.silvahnosbe.services.UsuarioService;
 @CrossOrigin
 @RequestMapping("/usuarios")
 public class UsuarioController {
+    
     @Autowired
     UsuarioService usuarioService;
 
@@ -28,6 +29,20 @@ public class UsuarioController {
 
     @Autowired
     UserDetailsService userDetailsService;
+
+    public UsuarioController(PasswordEncoder passwordEncoder, UsuarioService usuarioService) {
+        this.passwordEncoder = passwordEncoder;
+        this.usuarioService = usuarioService;
+    }
+
+    // setters
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public void setUsuarioService(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
 
     @GetMapping("")

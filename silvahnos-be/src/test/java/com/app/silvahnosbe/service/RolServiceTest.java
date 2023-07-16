@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.app.silvahnosbe.entities.RolEntity;
+import com.app.silvahnosbe.models.ERole;
 import com.app.silvahnosbe.repositories.RolRepository;
 import com.app.silvahnosbe.services.RolService;
 
@@ -41,7 +42,8 @@ public class RolServiceTest {
     void testObtenerRoles_ExistenRoles() {
         // Given
         RolEntity rol = new RolEntity();
-        //rol.setNombre("Rol 1");
+        ERole nombre = ERole.ADMIN;
+        rol.setNombre(nombre);
         ArrayList<RolEntity> roles = new ArrayList<>();
         roles.add(rol);
 
@@ -53,7 +55,7 @@ public class RolServiceTest {
         // Then
         assertThat(resultado).isNotNull();
         assertThat(resultado).hasSize(1);
-        assertThat(resultado.get(0).getNombre()).isEqualTo("Rol 1");
+        assertThat(resultado.get(0).getNombre()).isEqualTo(nombre);
     }
 
     @DisplayName("Test para obtener todos los roles cuando no existen roles")
