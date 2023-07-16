@@ -20,13 +20,14 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 public class IngresosReportGenerator {
-    public byte[] exportToPdf(List<IngresoEntity> list) throws JRException, FileNotFoundException{
-        return JasperExportManager.exportReportToPdf(getReport(list));
+    public byte[] exportToPdf(List<IngresoEntity> list, Integer total) throws JRException, FileNotFoundException{
+        return JasperExportManager.exportReportToPdf(getReport(list, total));
     }
 
-    private JasperPrint getReport(List<IngresoEntity> list) throws FileNotFoundException, JRException {
+    private JasperPrint getReport(List<IngresoEntity> list, Integer total) throws FileNotFoundException, JRException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("ingresosData", new JRBeanCollectionDataSource(list));
+        params.put("total", total);
 
         JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
                 ResourceUtils.getFile("classpath:ingresos.jrxml")
