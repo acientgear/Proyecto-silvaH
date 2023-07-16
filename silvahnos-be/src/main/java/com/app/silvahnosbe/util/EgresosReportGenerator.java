@@ -21,13 +21,14 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 public class EgresosReportGenerator {
     
-    public byte[] exportToPdf(List<EgresoEntity> list) throws JRException, FileNotFoundException{
-        return JasperExportManager.exportReportToPdf(getReport(list));
+    public byte[] exportToPdf(List<EgresoEntity> list, Integer total) throws JRException, FileNotFoundException{
+        return JasperExportManager.exportReportToPdf(getReport(list, total));
     }
 
-    private JasperPrint getReport(List<EgresoEntity> list) throws FileNotFoundException, JRException {
+    private JasperPrint getReport(List<EgresoEntity> list, Integer total) throws FileNotFoundException, JRException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("egresosData", new JRBeanCollectionDataSource(list));
+        params.put("total", total);
 
         JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
                 ResourceUtils.getFile("classpath:egresos.jrxml")

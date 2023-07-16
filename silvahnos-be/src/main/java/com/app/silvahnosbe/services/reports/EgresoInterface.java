@@ -5,5 +5,5 @@ import java.io.FileNotFoundException;
 import net.sf.jasperreports.engine.JRException;
 
 public interface EgresoInterface {
-    byte[] exportPdf(int anio, int mes) throws JRException, FileNotFoundException;
+    byte[] exportPdf(String fechaInicio, String fechaFin) throws JRException, FileNotFoundException;
 }

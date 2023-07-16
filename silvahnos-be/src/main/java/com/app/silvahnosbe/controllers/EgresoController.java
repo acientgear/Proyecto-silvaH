@@ -1,7 +1,13 @@
 package com.app.silvahnosbe.controllers;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,6 +26,7 @@ import com.app.silvahnosbe.services.EgresoService;
 import com.app.silvahnosbe.services.reports.EgresoInterface;
 
 import net.sf.jasperreports.engine.JRException;
+
 import org.springframework.http.*;
 
 @RestController
@@ -94,14 +101,24 @@ public class EgresoController {
         return ResponseEntity.ok().body(total);
     }
 
-    @GetMapping("/export-pdf/{anio}/{mes}")
-    public ResponseEntity<Resource> exportPdf(@PathVariable("anio") int anio, @PathVariable("mes") int mes)
+    @GetMapping("/export-pdf/{fi}/{ff}")
+    public ResponseEntity<Resource> exportPdf(@PathVariable("fi") String fechaInicio, @PathVariable("ff") String fechaFin)
             throws JRException, FileNotFoundException {
-        byte[] pdfBytes = egresoInterface.exportPdf(anio, mes);
+        String fi = fechaInicio + " 00:00:00";
+        String ff = fechaFin + " 23:59:59";
+        byte[] pdfBytes = egresoInterface.exportPdf(fi, ff);
+        String[] fiS = fechaInicio.split("-"); 
+        String[] ffS = fechaFin.split("-");
+        fi = fiS[2] + "-" + fiS[1] + "-" + fiS[0];
+        ff = ffS[2] + "-" + ffS[1] + "-" + ffS[0];
         ByteArrayResource resource = new ByteArrayResource(pdfBytes);
         HttpHeaders headers = new HttpHeaders();
+        String date = new SimpleDateFormat("dd-MM-yyyy HH-mm").format(new Timestamp(System.currentTimeMillis()));
+        String filename = "Egresos Desde="+ fi +" Hasta="+ ff + " Generado="+date+".pdf";
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "egresos.pdf");
+        headers.setContentDispositionFormData("attachment", filename);
+        headers.setAccessControlExposeHeaders(List.of("Content-Disposition"));
         return ResponseEntity.ok().headers(headers).body(resource);
     }
+
 }

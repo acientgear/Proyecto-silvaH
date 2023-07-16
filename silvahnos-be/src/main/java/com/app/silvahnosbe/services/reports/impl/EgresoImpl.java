@@ -1,10 +1,12 @@
 package com.app.silvahnosbe.services.reports.impl;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
 import com.app.silvahnosbe.services.reports.EgresoInterface;
 import com.app.silvahnosbe.util.EgresosReportGenerator;
@@ -21,7 +23,9 @@ public class EgresoImpl implements EgresoInterface{
     private EgresosReportGenerator egresosReportGenerator;
 
     @Override
-    public byte[] exportPdf(int anio, int mes) throws JRException, FileNotFoundException {
-        return egresosReportGenerator.exportToPdf(egresoRepository.obtenerEgresosPorAnioAndMes(anio,mes));
+    public byte[] exportPdf(String fechaInicio, String fechaFin) throws JRException, FileNotFoundException {
+        List<EgresoEntity> list = egresoRepository.obtenerEgresosEntre(fechaInicio, fechaFin);
+        Integer total = egresoRepository.obtenerTotalEntre(fechaInicio, fechaFin);
+        return egresosReportGenerator.exportToPdf(list, total);
     }
 }
