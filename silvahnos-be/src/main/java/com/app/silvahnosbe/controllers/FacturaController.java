@@ -1,8 +1,13 @@
 package com.app.silvahnosbe.controllers;
 
+import java.io.FileNotFoundException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.FacturaEntity;
 import com.app.silvahnosbe.services.FacturaService;
+import com.app.silvahnosbe.services.reports.FacturaInterface;
+
+import net.sf.jasperreports.engine.JRException;
+import org.springframework.http.*;
 
 @RestController
 @CrossOrigin
@@ -22,6 +31,9 @@ import com.app.silvahnosbe.services.FacturaService;
 public class FacturaController {
     @Autowired
     FacturaService facturaService;
+
+    @Autowired
+    FacturaInterface facturaInterface;
 
     @GetMapping("/{anio}/{mes}")
     public ResponseEntity<List<FacturaEntity>> getFacturas(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
@@ -69,6 +81,26 @@ public class FacturaController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(facturas);
+    }
+
+    @GetMapping("/export-pdf/{fi}/{ff}")
+    public ResponseEntity<Resource> exportPdf(@PathVariable("fi") String fechaInicio, @PathVariable("ff") String fechaFin)
+            throws JRException, FileNotFoundException {
+        String fi = fechaInicio + " 00:00:00";
+        String ff = fechaFin + " 23:59:59";
+        byte[] pdfBytes = facturaInterface.exportPdf(fi, ff);
+        String[] fiS = fechaInicio.split("-"); 
+        String[] ffS = fechaFin.split("-");
+        fi = fiS[2] + "-" + fiS[1] + "-" + fiS[0];
+        ff = ffS[2] + "-" + ffS[1] + "-" + ffS[0];
+        ByteArrayResource resource = new ByteArrayResource(pdfBytes);
+        HttpHeaders headers = new HttpHeaders();
+        String date = new SimpleDateFormat("dd-MM-yyyy HH-mm").format(new Timestamp(System.currentTimeMillis()));
+        String filename = "Ingresos Desde="+ fi +" Hasta="+ ff + " Generado="+date+".pdf";
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", filename);
+        headers.setAccessControlExposeHeaders(List.of("Content-Disposition"));
+        return ResponseEntity.ok().headers(headers).body(resource);
     }
 
 }

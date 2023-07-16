@@ -32,4 +32,17 @@ public interface FacturaRepository extends JpaRepository<FacturaEntity, Long>{
     @Query(value= "UPDATE  factura set estado =2 where DATE_ADD(CURDATE(), interval :dias day) > factura.fecha_vencimiento and factura.borrado=0 and factura.estado=1",nativeQuery = true)
     void updateEstado(@Param("dias") int dias);
 
+    @Query(value="SELECT * " + 
+                 "FROM factura f " +
+                 "WHERE f.borrado = 0 AND " +
+                 ":fi <= f.fecha_creacion AND " +
+                 "f.fecha_creacion <= :ff", nativeQuery = true)
+    List<FacturaEntity> obtenerFacturasEntre(@Param("fi") String fechaInicio, @Param("ff") String fechaFin);
+
+    @Query(value="SELECT sum(f.monto) " + 
+                 "FROM factura f " +
+                 "WHERE f.borrado = 0 AND " +
+                 ":fi <= f.fecha_creacion AND " +
+                 "f.fecha_creacion <= :ff", nativeQuery = true)
+    Integer obtenerTotalEntre(@Param("fi") String fechaInicio, @Param("ff") String fechaFin);
 }
