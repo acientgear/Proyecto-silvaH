@@ -9,21 +9,28 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.app.silvahnosbe.controllers.EgresoController;
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.services.EgresoService;
+import com.app.silvahnosbe.services.reports.EgresoInterface;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import org.springframework.http.MediaType;
 
 @ExtendWith(MockitoExtension.class)
 public class EgresoControllerTest {
     
     @InjectMocks
     private EgresoController egresoController;
+
+    @Mock
+    private EgresoInterface egresoInterface;
 
     @Mock
     private EgresoService egresoService;
@@ -200,6 +207,37 @@ public class EgresoControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+
+    @DisplayName("Test para método exportPdf")
+    @Test
+    public void testExportPdf() throws Exception {
+        // Mock input parameters
+        String fechaInicio = "2023-01-01";
+        String fechaFin = "2023-01-31";
+
+        // Mocked output
+        byte[] pdfBytes = "Mocked PDF Content".getBytes();
+
+        // Mocked date format
+        String mockedDate = "16-07-2023 01:24";
+
+        // Stub the behavior of egresoInterface.exportPdf()
+        when(egresoInterface.exportPdf("2023-01-01 00:00:00", "2023-01-31 23:59:59"))
+                .thenReturn(pdfBytes);
+
+        // Perform the test
+        ResponseEntity<Resource> response = egresoController.exportPdf(fechaInicio, fechaFin);
+
+        // Verify the response
+        assertEquals(MediaType.APPLICATION_PDF, response.getHeaders().getContentType());
+        assertEquals("form-data; name=\"attachment\"; filename=\"Egresos Desde=01-01-2023 Hasta=31-01-2023 Generado=16-07-2023 01-28.pdf\"",
+                response.getHeaders().getContentDisposition().toString());
+        assertEquals(List.of("Content-Disposition"), response.getHeaders().getAccessControlExposeHeaders());
+
+        ByteArrayResource resource = (ByteArrayResource) response.getBody();
+        assertEquals(pdfBytes.length, resource.contentLength());
+        assertEquals(new String(pdfBytes), new String(resource.getByteArray()));
+    }
 
 
 }

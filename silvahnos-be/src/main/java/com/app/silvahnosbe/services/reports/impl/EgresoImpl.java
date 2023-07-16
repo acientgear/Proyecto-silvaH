@@ -22,6 +22,12 @@ public class EgresoImpl implements EgresoInterface{
     @Autowired
     private EgresosReportGenerator egresosReportGenerator;
 
+    //constructor
+    public EgresoImpl(EgresoRepository egresoRepository, EgresosReportGenerator egresosReportGenerator) {
+        this.egresoRepository = egresoRepository;
+        this.egresosReportGenerator = egresosReportGenerator;
+    }
+
     @Override
     public byte[] exportPdf(String fechaInicio, String fechaFin) throws JRException, FileNotFoundException {
         List<EgresoEntity> list = egresoRepository.obtenerEgresosEntre(fechaInicio, fechaFin);
