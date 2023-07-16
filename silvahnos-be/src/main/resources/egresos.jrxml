@@ -43,10 +43,10 @@
 					</textElement>
 					<text><![CDATA[Reporte de egresos]]></text>
 				</staticText>
-				<image>
+				<!--<image>
 					<reportElement x="490" y="2" width="105" height="47" uuid="d992481b-8941-4e3a-bf14-60221b6d5cc5"/>
 					<imageExpression><![CDATA["C:\\Users\\javie\\OneDrive\\Escritorio\\USACH\\Pingeso\\Proyecto-silvaH\\silvahnos-fe\\src\\components\\images\\logo.png"]]></imageExpression>
-				</image>
+				</image>-->
 			</frame>
 		</band>
 	</title>
