@@ -41,21 +41,4 @@ public class MovimientoController {
         return ResponseEntity.ok().body(movimientos);
     }
     
-    @PostMapping
-    public ResponseEntity<MovimientoEntity> createMovimiento(@RequestBody MovimientoEntity movimiento) {
-        
-        // Obtener el id del usuario logueado
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        System.out.println("Usuario logueado: " + username);
-        
-        //obtener el usuario logueado
-        UsuarioEntity usuario = usuarioService.obtenerUsuarioPorUsuario(username);
-        movimiento.setUsuario(usuario);
-    
-        // Guardar el movimiento y devolver la respuesta
-        MovimientoEntity movimientoGuardado = movimientoService.guardarMovimiento(movimiento);
-        return ResponseEntity.ok().body(movimientoGuardado);
-    }
-    
 }

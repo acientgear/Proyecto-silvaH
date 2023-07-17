@@ -35,6 +35,15 @@ CREATE TABLE IF NOT EXISTS `correo` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `contrasenna` varchar(255) DEFAULT NULL,
+  `correo` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `usuario` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) 
+
 -- Insert data
 INSERT INTO silvahnos.configuracion_email
 (id,
@@ -71,6 +80,18 @@ INSERT INTO `silvahnos`.`correo`
 VALUES 
 ('1', 'javiertoroflores@gmail.com');
 
+INSERT INTO `silvahnos`.`usuario`
+(`id`,
+`contrasenna`,
+`correo`,
+`nombre`,
+`usuario`)
+VALUES
+(2,
+"$2a$10$pru/P8Ryn1aaLDwW7d945up08gqyn0.jmnyKD/u31g66NYjxyYwYu",
+"luis@gmail.com",
+"luis",
+"admin");
 
 
 

@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.EgresoService;
+import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.reports.EgresoInterface;
 
 import net.sf.jasperreports.engine.JRException;
@@ -39,6 +41,9 @@ public class EgresoController {
     @Autowired
     EgresoInterface egresoInterface;
 
+    @Autowired
+    MovimientoService movimientoService;
+
     @GetMapping("/{anio}/{mes}")
     public ResponseEntity<List<EgresoEntity>> getEgresoByAnioAndMes(@PathVariable("anio") int anio,
             @PathVariable("mes") int mes) {
@@ -51,7 +56,19 @@ public class EgresoController {
 
     @PostMapping
     public ResponseEntity<EgresoEntity> createEgreso(@RequestBody EgresoEntity egreso) {
+        String tipo = "";
+        if(egreso.getId() == null){
+            tipo = "Creación";
+        }else{
+            if(egreso.isBorrado() == true){
+                tipo = "Eliminación";
+            }else{
+                tipo = "Modificación";
+            }
+        }
         EgresoEntity egresoGuardado = egresoService.guardarEgreso(egreso);
+        MovimientoEntity movimiento = new MovimientoEntity(null, null, tipo, egresoGuardado, null, null);
+        movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(egresoGuardado);
     }
 
