@@ -203,6 +203,8 @@ const Egresos = () => {
         handleAlertCreate();
     }, [getEgresos, handleAlertCreate]);
 
+    console.log(egresos);
+
     return (
         <>
             <Container>

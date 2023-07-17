@@ -33,10 +33,10 @@ public class EgresoEntity {
     private MotivoEEntity motivo;
 
     // Relacion con movimientos
-    @OneToOne
+    /*@ManyToOne
     @JoinColumn(name = "movimiento")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private MovimientoEntity movimiento;
+    private MovimientoEntity movimiento;*/
     
     // Tiempo de acciones
     @CreationTimestamp
