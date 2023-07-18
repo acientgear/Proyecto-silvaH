@@ -20,5 +20,5 @@ public class EmpresaEntity {
     private String nombre;
     private String direccion ;
 
-    private Boolean borrado;
+    private boolean borrado;
 }

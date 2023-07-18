@@ -67,7 +67,7 @@ public class EgresoController {
             }
         }
         EgresoEntity egresoGuardado = egresoService.guardarEgreso(egreso);
-        MovimientoEntity movimiento = new MovimientoEntity(null, null, tipo, egresoGuardado, null, null);
+        MovimientoEntity movimiento = new MovimientoEntity(null, null, tipo, egresoGuardado,null, null, null);
         movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(egresoGuardado);
     }

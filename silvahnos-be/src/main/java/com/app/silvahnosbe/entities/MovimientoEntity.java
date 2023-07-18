@@ -54,6 +54,9 @@ public class MovimientoEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private FacturaEntity factura;  
 
+    private String nombre_tabla;
+    private Long id_admin;
+
     @CreationTimestamp
     private Timestamp fecha_creacion;
 }

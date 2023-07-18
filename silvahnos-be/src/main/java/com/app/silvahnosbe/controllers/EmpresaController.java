@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.EmpresaEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.EmpresaService;
+import com.app.silvahnosbe.services.MovimientoService;
 
 @RestController
 @CrossOrigin
@@ -22,9 +24,24 @@ public class EmpresaController {
     @Autowired
     EmpresaService empresaService;
 
+    @Autowired
+    MovimientoService movimientoService;
+
     @PostMapping
     public ResponseEntity<EmpresaEntity> createEmpresa(@RequestBody EmpresaEntity empresa){
+        String tipo = ""; 
+        if(empresa.getId() == null){ 
+            tipo = "Creación"; 
+        }else{ 
+            if(empresa.isBorrado() == true){ 
+                tipo = "Eliminación"; 
+            }else{ 
+                tipo = "Modificación"; 
+            } 
+        } 
         EmpresaEntity empresaGuardado = empresaService.guardarEmpresa(empresa);
+        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,null,null,null,"empresa",empresa.getId(),null);
+        movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(empresaGuardado);
     }
 
