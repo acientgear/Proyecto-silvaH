@@ -49,10 +49,10 @@ public class MovimientoEntity {
     private IngresoEntity ingreso;
 
     // Relación con factura
-    /*@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "id_factura")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private FacturaEntity factura; */    
+    private FacturaEntity factura;  
 
     @CreationTimestamp
     private Timestamp fecha_creacion;

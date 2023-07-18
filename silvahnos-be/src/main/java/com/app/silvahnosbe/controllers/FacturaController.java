@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.FacturaEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.FacturaService;
+import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.reports.FacturaInterface;
 
 import net.sf.jasperreports.engine.JRException;
@@ -35,6 +36,9 @@ public class FacturaController {
     @Autowired
     FacturaInterface facturaInterface;
 
+    @Autowired
+    MovimientoService movimientoService;
+
     @GetMapping("/{anio}/{mes}")
     public ResponseEntity<List<FacturaEntity>> getFacturas(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
         List<FacturaEntity> facturas= facturaService.obtenerFacturas(anio, mes);
@@ -46,7 +50,19 @@ public class FacturaController {
 
     @PostMapping
     public ResponseEntity<FacturaEntity> createFactura(@RequestBody FacturaEntity factura){
+        String tipo = ""; 
+        if(factura.getId() == null){ 
+            tipo = "Creación"; 
+        }else{ 
+            if(factura.isBorrado() == true){ 
+                tipo = "Eliminación"; 
+            }else{ 
+                tipo = "Modificación"; 
+            } 
+        } 
         FacturaEntity facturaGuardada = facturaService.guardarFactura(factura);
+        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,null,null,facturaGuardada,null);
+        movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(facturaGuardada);
     }
 
