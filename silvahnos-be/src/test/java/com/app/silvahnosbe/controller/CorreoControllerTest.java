@@ -1,6 +1,7 @@
 package com.app.silvahnosbe.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,10 +19,15 @@ import org.springframework.http.ResponseEntity;
 
 import com.app.silvahnosbe.controllers.CorreoController;
 import com.app.silvahnosbe.entities.CorreoEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.CorreoService;
+import com.app.silvahnosbe.services.MovimientoService;
 
 @ExtendWith(MockitoExtension.class)
 public class CorreoControllerTest {
+
+    @Mock
+    private MovimientoService movimientoService;
     
     @InjectMocks
     private CorreoController correoController;
@@ -72,6 +79,14 @@ public class CorreoControllerTest {
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(correo, response.getBody());
+
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Modificación", capturedMovimiento.getTipo());
+        assertEquals("correo", capturedMovimiento.getNombre_tabla());
+        assertEquals(correo.getId(), capturedMovimiento.getId_objeto());
     }
 
 }

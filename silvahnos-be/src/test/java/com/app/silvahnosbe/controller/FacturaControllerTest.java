@@ -128,7 +128,7 @@ public class FacturaControllerTest {
         assertEquals(factura.getId(), capturedMovimiento.getId_objeto());
     }
 
-    @DisplayName("Test para crear una factura con tipo modificación")
+    @DisplayName("Test para crear una factura con tipo eliminacion")
     @Test
     void testCreateFactura_FacturaCreada_ReturnsFactura_Factura_Eliminacion() {
         // Given
