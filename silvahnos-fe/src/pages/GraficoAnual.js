@@ -5,6 +5,7 @@ import Sem1 from '../components/data/Sem1';
 import Sem2 from '../components/data/Sem2';
 import axios from 'axios';
 import urlweb from '../config/config';
+import coloresrgb from '../components/data/Colores';
 
 const config = {
     headers: { Authorization: `Bearer ${localStorage.token}` }
@@ -61,20 +62,20 @@ const DoubleBarChart = () => {
         datasets: [
             {
                 label: 'Ingresos',
-                backgroundColor: 'rgba(184, 231, 225, 0.6)',
-                borderColor: 'rgba(184, 231, 225, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.9)',
+                borderColor: 'rgba(75, 192, 192, 0.9)',
                 borderWidth: 1,
-                hoverBackgroundColor: 'rgba(184, 231, 225, 0.9)',
-                hoverBorderColor: 'rgba(184, 231, 225, 1)',
+                hoverBackgroundColor: 'rgba(75, 192, 192, 0.9)',
+                hoverBorderColor: 'rgba(75, 192, 192, 0.9)',
                 data: montosIngresos
             },
             {
                 label: 'Egresos',
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                backgroundColor: 'rgba(255, 99, 132, 0.9)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(255, 99, 132, 0.9)',
-                hoverBorderColor: 'rgba(54, 162, 235, 1)',
+                hoverBorderColor: 'rgba(255, 99, 132, 1)',
                 data: montosEgresos
             }
         ]
