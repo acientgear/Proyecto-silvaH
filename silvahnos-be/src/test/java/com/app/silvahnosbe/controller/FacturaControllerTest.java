@@ -1,6 +1,7 @@
 package com.app.silvahnosbe.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -9,15 +10,23 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.app.silvahnosbe.controllers.FacturaController;
 import com.app.silvahnosbe.entities.FacturaEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.FacturaService;
+import com.app.silvahnosbe.services.MovimientoService;
+import com.app.silvahnosbe.services.reports.FacturaInterface;
+
+import org.springframework.http.MediaType;
 
 @ExtendWith(MockitoExtension.class)
 public class FacturaControllerTest {
@@ -27,6 +36,12 @@ public class FacturaControllerTest {
 
     @InjectMocks
     private FacturaController facturaController;
+
+    @Mock
+    private MovimientoService movimientoService;
+
+    @Mock
+    private FacturaInterface facturaInterface;
 
     @DisplayName("Test para obtener todas las facturas")
     @Test
@@ -61,11 +76,12 @@ public class FacturaControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-    @DisplayName("Test para crear una factura")
+    @DisplayName("Test para crear una factura con tipo creación")
     @Test
-    void testCreateFactura_FacturaCreada_ReturnsFactura() {
+    void testCreateFactura_FacturaCreada_ReturnsFactura_Creación() {
         // Given
         FacturaEntity factura = new FacturaEntity();
+        factura.setId(null);
         when(facturaService.guardarFactura(factura)).thenReturn(factura);
 
         // When
@@ -74,7 +90,69 @@ public class FacturaControllerTest {
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(factura, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Creación", capturedMovimiento.getTipo());
+        assertEquals("factura", capturedMovimiento.getNombre_tabla());
+        assertEquals(factura.getId(), capturedMovimiento.getId_objeto());
     }
+
+    @DisplayName("Test para crear una factura con tipo modificación")
+    @Test
+    void testCreateFactura_FacturaCreada_ReturnsFactura_Factura_Modificacion() {
+        // Given
+        FacturaEntity factura = new FacturaEntity();
+        factura.setId(1l);
+        factura.setBorrado(false);
+        when(facturaService.guardarFactura(factura)).thenReturn(factura);
+
+        // When
+        ResponseEntity<FacturaEntity> response = facturaController.createFactura(factura);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(factura, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Modificación", capturedMovimiento.getTipo());
+        assertEquals("factura", capturedMovimiento.getNombre_tabla());
+        assertEquals(factura.getId(), capturedMovimiento.getId_objeto());
+    }
+
+    @DisplayName("Test para crear una factura con tipo modificación")
+    @Test
+    void testCreateFactura_FacturaCreada_ReturnsFactura_Factura_Eliminacion() {
+        // Given
+        FacturaEntity factura = new FacturaEntity();
+        factura.setId(1l);
+        factura.setBorrado(true);
+        when(facturaService.guardarFactura(factura)).thenReturn(factura);
+
+        // When
+        ResponseEntity<FacturaEntity> response = facturaController.createFactura(factura);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(factura, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Eliminación", capturedMovimiento.getTipo());
+        assertEquals("factura", capturedMovimiento.getNombre_tabla());
+        assertEquals(factura.getId(), capturedMovimiento.getId_objeto());
+    }
+
 
     @DisplayName("Test para obtener el iva")
     @Test
@@ -185,6 +263,37 @@ public class FacturaControllerTest {
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(factura, response.getBody());
+    }
+
+    @DisplayName("Test para método exportPdf")
+    @Test
+    public void testExportPdf() throws Exception {
+        // Mock input parameters
+        String fechaInicio = "2023-01-01";
+        String fechaFin = "2023-01-31";
+
+        // Mocked output
+        byte[] pdfBytes = "Mocked PDF Content".getBytes();
+
+        // Mocked date format
+        String mockedDate = "16-07-2023 01:24";
+
+        // Stub the behavior of egresoInterface.exportPdf()
+        when(facturaInterface.exportPdf("2023-01-01 00:00:00", "2023-01-31 23:59:59"))
+                .thenReturn(pdfBytes);
+
+        // Perform the test
+        ResponseEntity<Resource> response = facturaController.exportPdf(fechaInicio, fechaFin);
+
+        // Verify the response
+        assertEquals(MediaType.APPLICATION_PDF, response.getHeaders().getContentType());
+        assertEquals("form-data; name=\"attachment\"; filename=\"Egresos Desde=01-01-2023 Hasta=31-01-2023 Generado=16-07-2023 01-28.pdf\"",
+                response.getHeaders().getContentDisposition().toString());
+        assertEquals(List.of("Content-Disposition"), response.getHeaders().getAccessControlExposeHeaders());
+
+        ByteArrayResource resource = (ByteArrayResource) response.getBody();
+        assertEquals(pdfBytes.length, resource.contentLength());
+        assertEquals(new String(pdfBytes), new String(resource.getByteArray()));
     }
 
     
