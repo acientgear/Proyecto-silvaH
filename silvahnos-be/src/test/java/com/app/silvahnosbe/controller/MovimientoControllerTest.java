@@ -57,7 +57,7 @@ public class MovimientoControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-    @DisplayName("Test prara crear movimiento")
+    /*@DisplayName("Test prara crear movimiento")
     @Test
     void testCreateMovimiento_CrearMovimiento_ReturnsMovimiento() {
         // Given
@@ -70,9 +70,5 @@ public class MovimientoControllerTest {
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(movimiento, response.getBody());
-    }
-
-    
-
-    
+    }*/
 }

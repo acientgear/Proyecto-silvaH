@@ -43,7 +43,7 @@ public class MotivoEController {
         MovimientoEntity movimiento = new MovimientoEntity(null,
                                                            null,
                                                            tipo,
-                                                           "motivoe",
+                                                           "motivoE",
                                                            motivoEGuardado.getId(),
                                                            null);
         movimientoService.guardarMovimiento(movimiento);

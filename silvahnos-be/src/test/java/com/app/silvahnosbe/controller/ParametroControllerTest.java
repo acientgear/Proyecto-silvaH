@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.app.silvahnosbe.controllers.ParametroController;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.entities.ParametroEntity;
+import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.ParametroService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -27,6 +31,9 @@ public class ParametroControllerTest {
 
     @Mock
     private ParametroService parametroService;
+
+    @Mock
+    private MovimientoService movimientoService;
 
     @DisplayName("Test para obtener todos los parametros")
     @Test
@@ -75,21 +82,29 @@ public class ParametroControllerTest {
         assertEquals(parametro, response.getBody());
     }
 
-    @DisplayName("Test para actualizar un parametro")
+    @DisplayName("Test para actualizar Parametro")
     @Test
-    void testActualizarParametro_ActualizaParametro_ReturnsParametro() {
+    public void testActualizarParametro_ParametroActualizado_ReturnsParametroActualizado() {
         // Given
+        String nuevoParametro = "nuevoParametro";
         ParametroEntity parametro = new ParametroEntity();
-        parametro.setId(1L);
-        parametro.setValor("valor1");
-        when(parametroService.actualizarParametro("valor2")).thenReturn(parametro);
+        parametro.setValor(nuevoParametro);
+        when(parametroService.actualizarParametro(nuevoParametro)).thenReturn(parametro);
 
         // When
-        ResponseEntity<ParametroEntity> response = parametroController.actualizarParametro("valor2");
+        ResponseEntity<ParametroEntity> response = parametroController.actualizarParametro(nuevoParametro);
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(parametro, response.getBody());
+
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Modificación", capturedMovimiento.getTipo());
+        assertEquals("parametro", capturedMovimiento.getNombre_tabla());
+        assertEquals(parametro.getId(), capturedMovimiento.getId_objeto());
     }
 
 }
