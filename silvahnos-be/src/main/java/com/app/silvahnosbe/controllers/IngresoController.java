@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.IngresoEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.IngresoService;
+import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.reports.IngresoInterface;
 
 import net.sf.jasperreports.engine.JRException;
@@ -33,6 +35,9 @@ public class IngresoController {
     @Autowired
     IngresoInterface ingresoInterface;
 
+    @Autowired
+    MovimientoService movimientoService;
+
     @GetMapping("/{anio}/{mes}")
     public ResponseEntity<List<IngresoEntity>> getAllIngresos(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
         List<IngresoEntity> ingresos= ingresoService.obtenerIngresos(anio, mes);
@@ -44,7 +49,19 @@ public class IngresoController {
 
     @PostMapping
     public ResponseEntity<IngresoEntity> createIngreso(@RequestBody IngresoEntity ingreso){
+        String tipo = ""; 
+        if(ingreso.getId() == null){ 
+            tipo = "Creación"; 
+        }else{ 
+            if(ingreso.isBorrado() == true){ 
+                tipo = "Eliminación"; 
+            }else{ 
+                tipo = "Modificación"; 
+            } 
+        } 
         IngresoEntity ingresoGuardado = ingresoService.guardarIngreso(ingreso);
+        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,"ingreso",ingresoGuardado.getId(),null);
+        movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(ingresoGuardado);
     }
 
