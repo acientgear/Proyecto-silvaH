@@ -68,8 +68,9 @@
       }
       
       .link-anchor-always {
-        display: inline-block;
-        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         text-decoration: none;
         color: rgb(74, 85, 156);
       }

@@ -56,7 +56,7 @@ const CrearIngreso = () => {
     }
 
     return (
-        <Container>
+        <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
             <Row>
                 <Col>
                     <h1>Crear Ingreso</h1>

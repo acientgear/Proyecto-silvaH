@@ -156,13 +156,8 @@ const Home = () => {
   }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes]);
 
   return (
-    <Container style={{ paddingTop: 10 }}>
+    <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
       <Row className="justify-content-center">
-        <Col xs="auto" >
-          <Button style={{ backgroundColor: "#D8E482", border: "none", color: "black", fontWeight: "bold" }} href="/resumen">Visualizar resumen</Button>
-        </Col>
-        {fechaTexto}
-        <p></p>
         <Col xs="auto" >
           <ListGroup>
             <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: {formatoMonto(saldo)}</ListGroup.Item>

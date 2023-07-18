@@ -6,7 +6,7 @@ import Parametro from './Parametro';
 import Correo from './Correo';
 import './AdminView.css';
 import './CardStyle.css'
-import { AiOutlineUser, AiOutlineFall, AiOutlineFileText, AiOutlineMail, AiOutlineTag } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineBarChart, AiOutlineFileText, AiOutlineMail, AiOutlineTag } from 'react-icons/ai';
 import { useState } from 'react';
 import Reporte from './Reporte';
 
@@ -101,7 +101,7 @@ const AdminView = () => {
                         </li>
                         <li active={handleActive("motivos")} className='link-collapse'>
                             <a className="link-anchor-collapse" href='#motivos' onClick={() => handleSeccion("motivos")}>
-                                <AiOutlineFall />
+                                <AiOutlineTag />
                             </a>
                         </li>
                         <li active={handleActive("facturas")} className='link-collapse'>
@@ -116,7 +116,7 @@ const AdminView = () => {
                         </li>
                         <li active={handleActive("reporte")} className='link-collapse'>
                             <a className="link-anchor-collapse" href='#reporte' onClick={() => handleSeccion("reporte")}>
-                                <AiOutlineTag />
+                                <AiOutlineBarChart />
                             </a>
                         </li>
                     </ul>
@@ -128,7 +128,7 @@ const AdminView = () => {
                         </li>
                         <li active={handleActive("motivos")} className='link-always'>
                             <a className='link-anchor-always' href='#motivos' onClick={() => handleSeccion("motivos")}>
-                                <AiOutlineFall /> Motivos
+                                <AiOutlineTag /> Motivo
                             </a>
                         </li>
                         <li active={handleActive("facturas")} className='link-always'>
@@ -143,14 +143,14 @@ const AdminView = () => {
                         </li>
                         <li active={handleActive("reporte")} className='link-always'>
                             <a className='link-anchor-always' href='#reporte' onClick={() => handleSeccion("reporte")}>
-                                <AiOutlineTag /> Reporte
+                                <AiOutlineBarChart /> Reporte
                             </a>
                         </li>
                     </ul>
                 </div>
             </aside>
             <main className='contenido'>
-                <Container>
+                <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
                     {/*Falta el de usuarios*/}
                     {seccion === "motivos" ? (motivosHTML !== null ? motivosHTML : getMotivos()) : null}
                     {seccion === "facturas" ? (facturasHTML !== null ? facturasHTML : getFacturas()) : null}

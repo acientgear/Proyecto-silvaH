@@ -54,7 +54,7 @@ function CrearEgreso() {
     }
 
     return (
-        <Container>
+        <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
             <Row>
                 <Col>
                     <h1>Crear Egreso</h1>

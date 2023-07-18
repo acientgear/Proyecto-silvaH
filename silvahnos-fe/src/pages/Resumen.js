@@ -158,7 +158,7 @@ const Resumen = () => {
                 </div>
             </aside>
             <main className='contenido'>
-                <Container>
+                <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
                     {seccion === "resumen_anual" ? (resumenAnualHTML !== null ? resumenAnualHTML : getResumenAnual()) : null}
                     {seccion === "resumen_mensual" ? (resumenMensualHTML !== null ? resumenMensualHTML : getResumenMensual()) : null}
                 </Container>

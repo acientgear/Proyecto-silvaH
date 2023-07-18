@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `nombre` varchar(255) DEFAULT NULL,
   `usuario` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) 
+);
 
 -- Insert data
 INSERT INTO silvahnos.configuracion_email

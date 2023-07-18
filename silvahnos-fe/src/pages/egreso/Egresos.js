@@ -183,7 +183,7 @@ const Egresos = () => {
 
     return (
         <>
-            <Container>
+            <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
                 <Row>
                     <Col><h1>Egresos</h1></Col>
                     <Row className="justify-content-center align-items-center">
