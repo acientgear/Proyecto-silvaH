@@ -1,13 +1,10 @@
 package com.app.silvahnosbe.controllers;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -67,7 +64,12 @@ public class EgresoController {
             }
         }
         EgresoEntity egresoGuardado = egresoService.guardarEgreso(egreso);
-        MovimientoEntity movimiento = new MovimientoEntity(null, null, tipo, egresoGuardado,null, null, null);
+        MovimientoEntity movimiento = new MovimientoEntity(null, 
+                                                            null, 
+                                                            tipo,
+                                                            "egreso", 
+                                                            egresoGuardado.getId(),
+                                                            null);
         movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(egresoGuardado);
     }
