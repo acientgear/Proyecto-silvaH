@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.CorreoEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.CorreoService;
+import com.app.silvahnosbe.services.MovimientoService;
 
 @RestController
 @CrossOrigin
@@ -20,6 +22,9 @@ import com.app.silvahnosbe.services.CorreoService;
 public class CorreoController {
     @Autowired
     CorreoService correoService;
+
+    @Autowired
+    MovimientoService movimientoService;
 
     @GetMapping("")
     public ResponseEntity<List<CorreoEntity>> getCorreos(){
@@ -33,6 +38,13 @@ public class CorreoController {
     @PostMapping("/{nuevoCorreo}")
     public ResponseEntity<CorreoEntity> actualizarCorreo(@PathVariable("nuevoCorreo") String nuevoCorreo){
         CorreoEntity correoActualizado = correoService.actualizarCorreo(nuevoCorreo);
+        MovimientoEntity movimiento = new MovimientoEntity(null, 
+                                                        null,
+                                                        "Modificación",
+                                                        "correo",
+                                                        correoActualizado.getId(),
+                                                        null);
+        movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(correoActualizado);
     }
 }
