@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,10 +18,13 @@ import org.springframework.http.ResponseEntity;
 
 import com.app.silvahnosbe.controllers.EgresoController;
 import com.app.silvahnosbe.entities.EgresoEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.EgresoService;
+import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.reports.EgresoInterface;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.springframework.http.MediaType;
 
@@ -32,6 +36,9 @@ public class EgresoControllerTest {
 
     @Mock
     private EgresoInterface egresoInterface;
+
+    @Mock
+    private MovimientoService movimientoService;
 
     @Mock
     private EgresoService egresoService;
@@ -69,11 +76,12 @@ public class EgresoControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-    @DisplayName("Test para crear un egreso")
+@DisplayName("Test para crear una Egreso con tipo creación")
     @Test
-    void testCreateEgreso_EgresoCreado_ReturnsEgreso() {
+    void testCreateEgreso_EgresoCreada_ReturnsEgreso_Creación() {
         // Given
         EgresoEntity egreso = new EgresoEntity();
+        egreso.setId(null);
         when(egresoService.guardarEgreso(egreso)).thenReturn(egreso);
 
         // When
@@ -82,6 +90,67 @@ public class EgresoControllerTest {
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(egreso, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Creación", capturedMovimiento.getTipo());
+        assertEquals("egreso", capturedMovimiento.getNombre_tabla());
+        assertEquals(egreso.getId(), capturedMovimiento.getId_objeto());
+    }
+
+    @DisplayName("Test para crear una Egreso con tipo modificación")
+    @Test
+    void testCreateEgreso_EgresoCreada_ReturnsEgreso_Egreso_Modificacion() {
+        // Given
+        EgresoEntity egreso = new EgresoEntity();
+        egreso.setId(1l);
+        egreso.setBorrado(false);
+        when(egresoService.guardarEgreso(egreso)).thenReturn(egreso);
+
+        // When
+        ResponseEntity<EgresoEntity> response = egresoController.createEgreso(egreso);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(egreso, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Modificación", capturedMovimiento.getTipo());
+        assertEquals("egreso", capturedMovimiento.getNombre_tabla());
+        assertEquals(egreso.getId(), capturedMovimiento.getId_objeto());
+    }
+
+    @DisplayName("Test para crear una Egreso con tipo eliminacion")
+    @Test
+    void testCreateEgreso_EgresoCreada_ReturnsEgreso_Egreso_Eliminacion() {
+        // Given
+        EgresoEntity egreso = new EgresoEntity();
+        egreso.setId(1l);
+        egreso.setBorrado(true);
+        when(egresoService.guardarEgreso(egreso)).thenReturn(egreso);
+
+        // When
+        ResponseEntity<EgresoEntity> response = egresoController.createEgreso(egreso);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(egreso, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Eliminación", capturedMovimiento.getTipo());
+        assertEquals("egreso", capturedMovimiento.getNombre_tabla());
+        assertEquals(egreso.getId(), capturedMovimiento.getId_objeto());
     }
 
     @DisplayName("Test para eliminar un egreso")
