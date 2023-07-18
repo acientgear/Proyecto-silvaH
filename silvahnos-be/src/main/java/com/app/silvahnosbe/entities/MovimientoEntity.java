@@ -22,12 +22,6 @@ public class MovimientoEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    // Relacion con local
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private LocalEntity local;*/
-
     // Relacion con usuario
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario")
@@ -36,26 +30,8 @@ public class MovimientoEntity {
 
     private String tipo;
 
-    // Relacion con egreso
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "id_egreso")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private EgresoEntity egreso;
-
-    // Relación con ingreso
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "id_ingreso")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private IngresoEntity ingreso;
-
-    // Relación con factura
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "id_factura")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private FacturaEntity factura;  
-
     private String nombre_tabla;
-    private Long id_admin;
+    private Long id_objeto;
 
     @CreationTimestamp
     private Timestamp fecha_creacion;
