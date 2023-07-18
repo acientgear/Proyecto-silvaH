@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.silvahnosbe.entities.MotivoEEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.MotivoEService;
+import com.app.silvahnosbe.services.MovimientoService;
 
 @RestController
 @CrossOrigin
@@ -22,9 +24,24 @@ public class MotivoEController {
     @Autowired
     MotivoEService motivoEService;
 
+    @Autowired
+    MovimientoService movimientoService;
+
     @PostMapping
     public ResponseEntity<MotivoEEntity> createMotivoE(@RequestBody MotivoEEntity motivoE){
+        String tipo = ""; 
+        if(motivoE.getId() == null){ 
+            tipo = "Creación"; 
+        }else{ 
+            if(motivoE.isBorrado() == true){ 
+                tipo = "Eliminación"; 
+            }else{ 
+                tipo = "Modificación"; 
+            } 
+        } 
         MotivoEEntity motivoEGuardado = motivoEService.guardarMotivoE(motivoE);
+        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,null,null,null,"moivoE",motivoE.getId(),null);
+        movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(motivoEGuardado);
     }
 
