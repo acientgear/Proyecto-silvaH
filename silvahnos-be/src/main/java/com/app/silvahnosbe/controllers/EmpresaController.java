@@ -40,7 +40,7 @@ public class EmpresaController {
             } 
         } 
         EmpresaEntity empresaGuardado = empresaService.guardarEmpresa(empresa);
-        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,null,null,null,"empresa",empresa.getId(),null);
+        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,"empresa",empresaGuardado.getId(),null);
         movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(empresaGuardado);
     }
