@@ -63,7 +63,7 @@ const AdminView = () => {
     const getCorreos = () => {
         setCorreosHTML(
             <div style={{ marginTop: "10px" }}>
-                <h1>Correos</h1>
+                <h1>Correo</h1>
                 <Row xs={1} lg={2}>
                     <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Parametro />

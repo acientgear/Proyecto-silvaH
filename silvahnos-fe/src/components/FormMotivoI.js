@@ -1,12 +1,12 @@
 import { Form, Button } from 'react-bootstrap';
 
-const FormMotivoI = ({ motivoI, validated, modal, handleChange, handleSubmit, handleCloseEdit }) => {
+const FormMotivoI = ({ motivoI, validated, modal, handleChange, handleSubmit, handleClose }) => {
     const modalFooter = () => {
         return (
             <div>
                 <hr></hr>
                 <div style={{ display: "flex", justifyContent: "end" }}>
-                    <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleCloseEdit}>Cerrar</Button>
+                    <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleClose}>Cerrar</Button>
                     <Button variant='primary' type='submit'>Guardar</Button>
                 </div>
             </div>
@@ -24,7 +24,6 @@ const FormMotivoI = ({ motivoI, validated, modal, handleChange, handleSubmit, ha
 
     return (
         <div>
-            <h1>Registrar motivo de egreso</h1>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className='mb-3' controlId='formNombre'>
                     <Form.Label>Nombre</Form.Label>

@@ -11,10 +11,21 @@ const MotivoI = () => {
         headers: { Authorization: `Bearer ${localStorage.token}` }
     };  
     const [motivosI, setMotivosI] = useState([]);
-
+    const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
+
+    const handleCloseCreate = () => {
+        setEditedItem(defaultItem);
+        setShowCreate(false);
+    }
+
+    const handleShowCreate = () => {
+        setValidated(false);
+        setEditedItem(defaultItem);
+        setShowCreate(true);
+    }
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -61,6 +72,7 @@ const MotivoI = () => {
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseEdit();
+                handleCloseCreate();
                 getMotivosI();
             }
         } catch (err) {
@@ -145,7 +157,11 @@ const MotivoI = () => {
                         </tbody>
                     </Table>
                     <div className="registrar" >
-                        <a className="registrar-anchor" href="/crearMotivoI">Registrar motivo de ingreso <BsBoxArrowRight/></a>
+                        <a className="registrar-anchor" 
+                            href="#" 
+                            onClick={() => handleShowCreate()}>
+                                Registrar motivo de ingreso <BsBoxArrowRight/>
+                        </a>
                     </div>
                 </Card.Body>
             </Card>
@@ -164,6 +180,23 @@ const MotivoI = () => {
                 </Modal.Footer>
             </Modal>
 
+            {/*Modal para crear*/}
+            <Modal show={showCreate} onHide={handleCloseCreate}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear motivo de ingreso</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <FormMotivoI
+                        motivoI={editedItem}
+                        validated={validated}
+                        modal={true}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        handleClose={handleCloseCreate}
+                    />
+                </Modal.Body>
+            </Modal>
+
             {/*Modal para editar*/}
             <Modal show={showEdit} onHide={handleCloseEdit}>
                 <Modal.Header closeButton>
@@ -176,7 +209,7 @@ const MotivoI = () => {
                         modal={true}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
-                        handleCloseEdit={handleCloseEdit}
+                        handleClose={handleCloseEdit}
                     />
                 </Modal.Body>
             </Modal>
