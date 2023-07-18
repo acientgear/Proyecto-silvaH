@@ -4,17 +4,28 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import {BsBoxArrowRight} from "react-icons/bs";
-import FormMotivoI from '../../components/FormMotivoI';
+import FormMotivo from '../../components/FormMotivo';
 
 const MotivoE = () => {
     const config = {
         headers: { Authorization: `Bearer ${localStorage.token}` }
     };  
     const [motivosE, setMotivosE] = useState([]);
-
+    const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
+
+    const handleCloseCreate = () => {
+        setEditedItem(defaultItem);
+        setShowCreate(false);
+    }
+
+    const handleShowCreate = () => {
+        setValidated(false);
+        setEditedItem(defaultItem);
+        setShowCreate(true);
+    }
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -51,6 +62,8 @@ const MotivoE = () => {
             e.stopPropagation();
         } else {
             updatemotivoE();
+            handleCloseEdit();
+            handleCloseCreate();
             setValidated(true);
         }
     };
@@ -60,7 +73,6 @@ const MotivoE = () => {
             let url = 'http://' + urlweb + '/motivosE';
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
-                handleCloseEdit();
                 getMotivosE();
             }
         } catch (err) {
@@ -135,8 +147,22 @@ const MotivoE = () => {
                                     <td >{motivo.nombre}</td>
                                     <td >{motivo.descripcion}</td>
                                     <td>
-                                        <a href="#se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(motivo)}><AiFillEdit /></a>
-                                        <a href="#sd" style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(motivo)}><AiFillDelete /></a>
+                                        <a href="#se"
+                                            onClick={() => handleShowEdit(motivo)} 
+                                            style={{ cursor: "pointer",
+                                                    marginRight: 2, 
+                                                    color: "#0d6efd" }} 
+                                        >
+                                            <AiFillEdit />
+                                        </a>
+                                        <a href="#sd"
+                                            onClick={() => handleShowDelete(motivo)} 
+                                            style={{ cursor: "pointer", 
+                                                    marginRight: 2, 
+                                                    color: "#dc3545" }} 
+                                        >
+                                            <AiFillDelete />
+                                        </a>
                                     </td>
                                 </tr>
                             )
@@ -144,7 +170,11 @@ const MotivoE = () => {
                         </tbody>
                     </Table>
                     <div className="registrar" >
-                        <a className="registrar-anchor" href="/crearMotivoE">Registrar motivo de egreso <BsBoxArrowRight/></a>
+                        <a className="registrar-anchor" 
+                            href="#"
+                            onClick={handleShowCreate}>
+                                Registrar motivo de egreso <BsBoxArrowRight/>
+                        </a>
                     </div>
                     </Card.Body>
             </Card>
@@ -152,10 +182,10 @@ const MotivoE = () => {
             {/*Modal para eliminar*/}
             <Modal show={showDelete} onHide={handleCloseDelete}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Eliminar motivo de ingreso</Modal.Title>
+                    <Modal.Title>Eliminar motivo de egreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>¿Está seguro que desea eliminar el motivo de ingreso?</p>
+                    <p>¿Está seguro que desea eliminar el motivo de egreso?</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' onClick={handleCloseDelete}>Cerrar</Button>
@@ -163,19 +193,34 @@ const MotivoE = () => {
                 </Modal.Footer>
             </Modal>
 
+            {/*Modal para crear*/}
+            <Modal show={showCreate} onHide={handleCloseCreate}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear motivo de egreso</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <FormMotivo
+                        motivo={editedItem}
+                        validated={validated}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        handleClose={handleCloseCreate}
+                    />
+                </Modal.Body>
+            </Modal>
+
             {/*Modal para editar*/}
             <Modal show={showEdit} onHide={handleCloseEdit}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Editar motivo de ingreso</Modal.Title>
+                    <Modal.Title>Editar motivo de egreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormMotivoI
-                        motivoI={editedItem}
+                    <FormMotivo
+                        motivo={editedItem}
                         validated={validated}
-                        modal={true}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
-                        handleCloseEdit={handleCloseEdit}
+                        handleClose={handleCloseEdit}
                     />
                 </Modal.Body>
             </Modal>

@@ -4,7 +4,7 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import {BsBoxArrowRight} from "react-icons/bs";
-import FormMotivoI from '../../components/FormMotivoI';
+import FormMotivo from '../../components/FormMotivo';
 
 const MotivoI = () => {
     const config = {
@@ -148,8 +148,20 @@ const MotivoI = () => {
                                     <td >{motivo.nombre}</td>
                                     <td >{motivo.descripcion}</td>
                                     <td>
-                                        <a href="#se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(motivo)}><AiFillEdit /></a>
-                                        <a href="#sd" style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(motivo)}><AiFillDelete /></a>
+                                        <a href="#se"
+                                            onClick={() => handleShowEdit(motivo)} 
+                                            style={{ cursor: "pointer", 
+                                                    marginRight: 2, 
+                                                    color: "#0d6efd" }} >
+                                                <AiFillEdit />
+                                        </a>
+                                        <a href="#sd"
+                                            onClick={() => handleShowDelete(motivo)} 
+                                            style={{ cursor: "pointer", 
+                                                    marginRight: 2, 
+                                                    color: "#dc3545" }}>
+                                                        <AiFillDelete />
+                                        </a>
                                     </td>
                                 </tr>
                             )
@@ -159,7 +171,7 @@ const MotivoI = () => {
                     <div className="registrar" >
                         <a className="registrar-anchor" 
                             href="#" 
-                            onClick={() => handleShowCreate()}>
+                            onClick={handleShowCreate}>
                                 Registrar motivo de ingreso <BsBoxArrowRight/>
                         </a>
                     </div>
@@ -186,10 +198,9 @@ const MotivoI = () => {
                     <Modal.Title>Crear motivo de ingreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormMotivoI
-                        motivoI={editedItem}
+                    <FormMotivo
+                        motivo={editedItem}
                         validated={validated}
-                        modal={true}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         handleClose={handleCloseCreate}
@@ -203,10 +214,9 @@ const MotivoI = () => {
                     <Modal.Title>Editar motivo de ingreso</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormMotivoI
-                        motivoI={editedItem}
+                    <FormMotivo
+                        motivo={editedItem}
                         validated={validated}
-                        modal={true}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         handleClose={handleCloseEdit}
