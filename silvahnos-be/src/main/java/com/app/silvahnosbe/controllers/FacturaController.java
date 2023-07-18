@@ -112,7 +112,7 @@ public class FacturaController {
         ByteArrayResource resource = new ByteArrayResource(pdfBytes);
         HttpHeaders headers = new HttpHeaders();
         String date = new SimpleDateFormat("dd-MM-yyyy HH-mm").format(new Timestamp(System.currentTimeMillis()));
-        String filename = "Facturas desde ="+ fi +" Hasta="+ ff + " Generado="+date+".pdf";
+        String filename = "Facturas Desde="+ fi +" Hasta="+ ff + " Generado="+date+".pdf";
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDispositionFormData("attachment", filename);
         headers.setAccessControlExposeHeaders(List.of("Content-Disposition"));

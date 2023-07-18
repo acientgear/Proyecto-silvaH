@@ -221,8 +221,10 @@ public class EgresoControllerTest {
 
         // Obtener hora y minutos actuales del sistema u hora local
         Timestamp fecha = new Timestamp(System.currentTimeMillis());
+        String dia = fecha.toString().substring(8, 10);
+        String mes = fecha.toString().substring(5, 7);
+        String anio = fecha.toString().substring(0, 4);
         String horaMin = fecha.toString().substring(11, 16).replace(":", "-");
-        System.out.println(horaMin);
 
         // Stub the behavior of egresoInterface.exportPdf()
         when(egresoInterface.exportPdf("2023-01-01 00:00:00", "2023-01-31 23:59:59"))
@@ -232,7 +234,7 @@ public class EgresoControllerTest {
         ResponseEntity<Resource> response = egresoController.exportPdf(fechaInicio, fechaFin);
 
         // Verify the response
-        String parte1 = "form-data; name=\"attachment\"; filename=\"Egresos Desde=01-01-2023 Hasta=31-01-2023 Generado=16-07-2023 ";
+        String parte1 = "form-data; name=\"attachment\"; filename=\"Egresos Desde=01-01-2023 Hasta=31-01-2023 Generado="+dia+"-"+mes+"-"+anio+" ";
         String parte2 = horaMin + ".pdf\"";
         assertEquals(MediaType.APPLICATION_PDF, response.getHeaders().getContentType());
         assertEquals(parte1 + parte2,
