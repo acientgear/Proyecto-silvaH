@@ -61,7 +61,7 @@ public class FacturaController {
             } 
         } 
         FacturaEntity facturaGuardada = facturaService.guardarFactura(factura);
-        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,null,null,facturaGuardada,null,null,null);
+        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,"factura",facturaGuardada.getId(),null);
         movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(facturaGuardada);
     }
