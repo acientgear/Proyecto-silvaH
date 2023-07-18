@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.entities.ParametroEntity;
+import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.ParametroService;
 
 @RestController
@@ -21,6 +23,9 @@ import com.app.silvahnosbe.services.ParametroService;
 public class ParametroController {
     @Autowired
     ParametroService parametroService;
+
+    @Autowired
+    MovimientoService movimientoService;
 
     @GetMapping("")
     public ResponseEntity<List<ParametroEntity>> getParametros(){
@@ -39,7 +44,10 @@ public class ParametroController {
 
     @PostMapping("/{nuevoValor}")
     public ResponseEntity<ParametroEntity> actualizarParametro(@PathVariable("nuevoValor") String nuevoValor){
+        String tipo = "Modificación";
         ParametroEntity parametroActualizado = parametroService.actualizarParametro(nuevoValor);
+        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,"parametro",parametroActualizado.getId(),null);
+        movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(parametroActualizado);
     }
 
