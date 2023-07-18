@@ -3,6 +3,7 @@ package com.app.silvahnosbe.controller;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -14,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 
 import com.app.silvahnosbe.controllers.IngresoController;
 import com.app.silvahnosbe.entities.IngresoEntity;
+import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.IngresoService;
+import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.reports.IngresoInterface;
 
 import java.sql.Timestamp;
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +36,9 @@ class IngresoControllerTest {
     
     @Mock
     private IngresoInterface ingresoInterface;
+
+    @Mock
+    private MovimientoService movimientoService;
 
     @Mock
     private IngresoService ingresoService;
@@ -69,11 +76,12 @@ class IngresoControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-    @DisplayName("Test para crear uun ingreso")
+    @DisplayName("Test para crear una Ingreso con tipo creación")
     @Test
-    void testCreateIngreso() {
+    void testCreateIngreso_IngresoCreada_ReturnsIngreso_Creación() {
         // Given
         IngresoEntity ingreso = new IngresoEntity();
+        ingreso.setId(null);
         when(ingresoService.guardarIngreso(ingreso)).thenReturn(ingreso);
 
         // When
@@ -82,6 +90,67 @@ class IngresoControllerTest {
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ingreso, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Creación", capturedMovimiento.getTipo());
+        assertEquals("ingreso", capturedMovimiento.getNombre_tabla());
+        assertEquals(ingreso.getId(), capturedMovimiento.getId_objeto());
+    }
+
+    @DisplayName("Test para crear una Ingreso con tipo modificación")
+    @Test
+    void testCreateIngreso_IngresoCreada_ReturnsIngreso_Ingreso_Modificacion() {
+        // Given
+        IngresoEntity ingreso = new IngresoEntity();
+        ingreso.setId(1l);
+        ingreso.setBorrado(false);
+        when(ingresoService.guardarIngreso(ingreso)).thenReturn(ingreso);
+
+        // When
+        ResponseEntity<IngresoEntity> response = ingresoController.createIngreso(ingreso);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ingreso, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Modificación", capturedMovimiento.getTipo());
+        assertEquals("ingreso", capturedMovimiento.getNombre_tabla());
+        assertEquals(ingreso.getId(), capturedMovimiento.getId_objeto());
+    }
+
+    @DisplayName("Test para crear una Ingreso con tipo eliminacion")
+    @Test
+    void testCreateIngreso_IngresoCreada_ReturnsIngreso_Ingreso_Eliminacion() {
+        // Given
+        IngresoEntity ingreso = new IngresoEntity();
+        ingreso.setId(1l);
+        ingreso.setBorrado(true);
+        when(ingresoService.guardarIngreso(ingreso)).thenReturn(ingreso);
+
+        // When
+        ResponseEntity<IngresoEntity> response = ingresoController.createIngreso(ingreso);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ingreso, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Eliminación", capturedMovimiento.getTipo());
+        assertEquals("ingreso", capturedMovimiento.getNombre_tabla());
+        assertEquals(ingreso.getId(), capturedMovimiento.getId_objeto());
     }
 
     @DisplayName("Test para obtener últimos ingresos")
@@ -234,7 +303,7 @@ class IngresoControllerTest {
         ResponseEntity<Resource> response = ingresoController.exportPdf(fechaInicio, fechaFin);
 
         // Verify the response
-        String parte1 = "form-data; name=\"attachment\"; filename=\"Egresos Desde=01-01-2023 Hasta=31-01-2023 Generado="+dia+"-"+mes+"-"+anio+" ";
+        String parte1 = "form-data; name=\"attachment\"; filename=\"Ingresos Desde=01-01-2023 Hasta=31-01-2023 Generado="+dia+"-"+mes+"-"+anio+" ";
         String parte2 = horaMin + ".pdf\"";
         assertEquals(MediaType.APPLICATION_PDF, response.getHeaders().getContentType());
         assertEquals(parte1 + parte2,
