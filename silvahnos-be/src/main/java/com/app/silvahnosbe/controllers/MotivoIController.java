@@ -40,7 +40,12 @@ public class MotivoIController {
             } 
         } 
         MotivoIEntity motivoIGuardado = motivoIService.guardarMotivoI(motivoI);
-        MovimientoEntity movimiento = new MovimientoEntity(null,null,tipo,null,null,null,"moivoI",motivoI.getId(),null);
+        MovimientoEntity movimiento = new MovimientoEntity(null,
+                                                           null,
+                                                           tipo,
+                                                           "motivoi",
+                                                           motivoIGuardado.getId(),
+                                                           null);
         movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(motivoIGuardado);
     }
