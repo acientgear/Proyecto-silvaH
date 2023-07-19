@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { startOfMonth, endOfMonth, format } from 'date-fns';
 import urlweb from "../../config/config";
-import { ca } from "date-fns/locale";
-import axios from "axios";
 
 const Reporte = () => {
     const config = {
@@ -95,9 +93,6 @@ const Reporte = () => {
                                         <InputGroup.Text id="basic-addon1">Hasta</InputGroup.Text>
                                         <Form.Control
                                             type="date"
-                                            placeholder="Fecha Final"
-                                            aria-label="Fecha Final"
-                                            aria-describedby="basic-addon1"
                                             value={fechaF}
                                             onChange={handleFechaFinChange}
                                         />

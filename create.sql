@@ -67,8 +67,8 @@ VALUES
 INSERT INTO silvahnos.estado
 (nombre)
 VALUES('No pagada'),
-('Pagada'),
-('Notificada');
+('Notificada'),
+('Pagada');
 
 INSERT INTO `silvahnos`.`parametro`
 (`valor`)
@@ -87,7 +87,7 @@ INSERT INTO `silvahnos`.`usuario`
 `nombre`,
 `usuario`)
 VALUES
-(2,
+(1,
 "$2a$10$pru/P8Ryn1aaLDwW7d945up08gqyn0.jmnyKD/u31g66NYjxyYwYu",
 "luis@gmail.com",
 "luis",
