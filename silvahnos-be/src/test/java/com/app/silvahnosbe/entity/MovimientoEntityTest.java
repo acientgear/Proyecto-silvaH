@@ -22,19 +22,6 @@ public class MovimientoEntityTest {
     }
 
     @Test
-    void testLocal(){
-        // Given
-        MovimientoEntity movimiento = new MovimientoEntity();
-
-        // When
-        movimiento.setLocal(null);
-        Object local = movimiento.getLocal();
-
-        // Then
-        assertEquals(null, local);
-    }
-
-    @Test
     void testUsuario(){
         // Given
         MovimientoEntity movimiento = new MovimientoEntity();
@@ -45,5 +32,57 @@ public class MovimientoEntityTest {
 
         // Then
         assertEquals(null, usuario);
+    }
+
+    @Test
+    void testTipo(){
+        // Given
+        MovimientoEntity movimiento = new MovimientoEntity();
+
+        // When
+        movimiento.setTipo("tipo");
+        String tipo = movimiento.getTipo();
+
+        // Then
+        assertEquals("tipo", tipo);
+    }
+
+    @Test
+    void testNombreTabla(){
+        // Given
+        MovimientoEntity movimiento = new MovimientoEntity();
+
+        // When
+        movimiento.setNombre_tabla("nombre_tabla");
+        String nombre_tabla = movimiento.getNombre_tabla();
+
+        // Then
+        assertEquals("nombre_tabla", nombre_tabla);
+    }
+
+    @Test
+    void testIdObjeto(){
+        // Given
+        MovimientoEntity movimiento = new MovimientoEntity();
+
+        // When
+        movimiento.setId_objeto(1l);
+        Long id_objeto = movimiento.getId_objeto();
+
+        // Then
+        assertEquals(1, id_objeto);
+    }
+
+    @Test
+    void testFechaCreacion(){
+        // Given
+        MovimientoEntity movimiento = new MovimientoEntity();
+
+        // When
+        movimiento.setFecha_creacion(null);
+        Object fecha_creacion = movimiento.getFecha_creacion();
+
+        // Then
+        assertEquals(null, fecha_creacion);
     }
 }

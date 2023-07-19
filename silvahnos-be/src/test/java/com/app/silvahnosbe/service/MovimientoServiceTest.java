@@ -5,6 +5,7 @@ import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,13 +13,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.app.silvahnosbe.entities.LocalEntity;
 import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.MovimientoRepository;
 import com.app.silvahnosbe.services.MovimientoService;
+import com.app.silvahnosbe.services.UsuarioService;
 
 @ExtendWith(SpringExtension.class)
 public class MovimientoServiceTest {
@@ -28,6 +33,9 @@ public class MovimientoServiceTest {
 
     @InjectMocks
     private MovimientoService movimientoService;
+
+    @Mock 
+    private UsuarioService usuarioService;
 
     MovimientoEntity movimiento;
 
@@ -75,46 +83,73 @@ public class MovimientoServiceTest {
 
     @DisplayName("Test para guardar un movimiento")
     @Test
-    void testGuardarMovimiento() {
+    void testGuardarMovimiento_ReturnsMovimiento() {
         // Given
-        given(movimientoRepository.save(movimiento)).willReturn(movimiento);
-
+        MovimientoEntity movimiento = new MovimientoEntity();
+        
+        // Mocking SecurityContextHolder
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        SecurityContextHolder.setContext(securityContext);
+        
+        // Mocking Authentication
+        Authentication authentication = Mockito.mock(Authentication.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        
+        // Mocking username
+        String username = "testUser";
+        Mockito.when(authentication.getName()).thenReturn(username);
+        
+        // Mocking UsuarioEntity
+        UsuarioEntity usuario = new UsuarioEntity();
+        Mockito.when(usuarioService.obtenerUsuarioPorUsuario(username)).thenReturn(usuario);
+        
+        // Mocking movimientoRepository
+        Mockito.when(movimientoRepository.save(movimiento)).thenReturn(movimiento);
+        
         // When
-        MovimientoEntity resultado = movimientoService.guardarMovimiento(movimiento);
-
+        MovimientoEntity result = movimientoService.guardarMovimiento(movimiento);
+        
         // Then
-        assertThat(resultado).isNotNull();
-        assertThat(resultado.getId()).isEqualTo(1l);
+        assertEquals(usuario, result.getUsuario());
+        Mockito.verify(movimientoRepository).save(movimiento);
     }
 
     @DisplayName("test de integración creación de movimiento")
     @Test
-    void testCrearMovimiento(){
-        // given
-        LocalEntity local = new LocalEntity();
-        local.setId(1l);
-        local.setNombre("local1");
-        local.setDireccion("direccion1");
-        
+    void testCrearMovimiento() {
+        // Given
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setCorreo("correo1@gmail.com");
         usuario.setContrasenna("pass1");
         usuario.setUsuario("usuario1");
-        
+    
         MovimientoEntity movimiento = new MovimientoEntity();
-        movimiento.setId(1l);
-        movimiento.setLocal(local);
+        movimiento.setId(1L);
         movimiento.setUsuario(usuario);
         given(movimientoRepository.save(movimiento)).willReturn(movimiento);
-
-        // when
+    
+        // Mocking SecurityContextHolder
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        SecurityContextHolder.setContext(securityContext);
+    
+        // Mocking Authentication
+        Authentication authentication = Mockito.mock(Authentication.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+    
+        // Mocking username
+        String username = "testUser";
+        Mockito.when(authentication.getName()).thenReturn(username);
+    
+        // Mocking usuarioService
+        Mockito.when(usuarioService.obtenerUsuarioPorUsuario(username)).thenReturn(usuario);
+    
+        // When
         MovimientoEntity movimiento1 = movimientoService.guardarMovimiento(movimiento);
-
-        // then
-        assertThat(movimiento1.getId()).isEqualTo(1l);
-        assertThat(movimiento1.getLocal().getId()).isEqualTo(1l);
+    
+        // Then
+        assertThat(movimiento1.getId()).isEqualTo(1L);
         assertThat(movimiento1.getUsuario().getCorreo()).isEqualTo("correo1@gmail.com");
-
     }
+    
 
 }

@@ -29,7 +29,6 @@ public class MovimientoService {
         // Obtener el id del usuario logueado
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        // System.out.println("Usuario logueado: " + username);
         
         //obtener el usuario logueado
         UsuarioEntity usuario = usuarioService.obtenerUsuarioPorUsuario(username);

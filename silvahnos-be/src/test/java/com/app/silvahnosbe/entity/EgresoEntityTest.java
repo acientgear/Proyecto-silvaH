@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.entities.MotivoEEntity;
-import com.app.silvahnosbe.entities.MovimientoEntity;
 
 public class EgresoEntityTest {
 
@@ -32,7 +31,7 @@ public class EgresoEntityTest {
         // Then
         assertEquals(egreso1, egreso2);
         assertEquals(egreso1.hashCode(), egreso2.hashCode());
-        assertEquals("EgresoEntity(id=1, monto=12345, descripcion=descripcion, borrado=false, motivo=null, movimiento=null, fecha_creacion=null, fecha_modificacion=null, fecha_borrado=null)", egreso1.toString());
+        assertEquals("EgresoEntity(id=1, monto=12345, descripcion=descripcion, borrado=false, motivo=null, fecha_creacion=null, fecha_modificacion=null, fecha_borrado=null)", egreso1.toString());
     }
 
    @Test
@@ -56,7 +55,7 @@ public class EgresoEntityTest {
     @Test
     void testAllArgsConsstructor(){
         // Given
-        EgresoEntity egreso = new EgresoEntity(1L, 12345, "descripcion", false, new MotivoEEntity(), new MovimientoEntity(), new Timestamp(0), new Timestamp(0), new Timestamp(0));
+        EgresoEntity egreso = new EgresoEntity(1L, 12345, "descripcion", false, new MotivoEEntity(), new Timestamp(0), new Timestamp(0), new Timestamp(0));
 
         // When
         Long id = egreso.getId();
@@ -64,7 +63,6 @@ public class EgresoEntityTest {
         String descripcion = egreso.getDescripcion();
         boolean borrado = egreso.isBorrado();
         MotivoEEntity motivo = egreso.getMotivo();
-        MovimientoEntity movimiento = egreso.getMovimiento();
         Timestamp fechaCreacion = egreso.getFecha_creacion();
         Timestamp fechaModificacion = egreso.getFecha_modificacion();
         Timestamp fechaBorrado = egreso.getFecha_borrado();
@@ -75,7 +73,6 @@ public class EgresoEntityTest {
         assertEquals("descripcion", descripcion);
         assertEquals(false, borrado);
         assertEquals(new MotivoEEntity(), motivo);
-        assertEquals(new MovimientoEntity(), movimiento);
         assertEquals(new Timestamp(0), fechaCreacion);
         assertEquals(new Timestamp(0), fechaModificacion);
         assertEquals(new Timestamp(0), fechaBorrado);
@@ -131,19 +128,6 @@ public class EgresoEntityTest {
 
         // Then
         assertEquals(null, motivoE);
-    }
-
-    @Test
-    void testMovimiento(){
-        // Given
-        EgresoEntity egreso = new EgresoEntity();
-
-        // When
-        egreso.setMovimiento(null);
-        Object movimiento = egreso.getMovimiento();
-
-        // Then
-        assertEquals(null, movimiento);
     }
 
     @Test

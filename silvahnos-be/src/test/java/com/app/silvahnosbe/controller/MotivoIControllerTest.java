@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.app.silvahnosbe.controllers.MotivoIController;
-import com.app.silvahnosbe.entities.MotivoEEntity;
 import com.app.silvahnosbe.entities.MotivoIEntity;
 import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.MotivoIService;

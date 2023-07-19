@@ -238,7 +238,6 @@ public class IngresoServiceTest {
         
         MovimientoEntity movimiento = new MovimientoEntity();
         movimiento.setId(1l);
-        movimiento.setLocal(local);
         movimiento.setUsuario(usuario);
 
         MotivoIEntity motivo = new MotivoIEntity();
@@ -254,7 +253,6 @@ public class IngresoServiceTest {
         ingreso.setDescripcion("pintura");
         ingreso.setBorrado(false);
         ingreso.setMotivo(motivo);
-        ingreso.setMovimiento(movimiento);
         ingreso.setFecha_creacion(fecha);
         ingresoRepository.save(ingreso);
         given(ingresoRepository.save(ingreso)).willReturn(ingreso);
@@ -265,9 +263,6 @@ public class IngresoServiceTest {
         // then
         assertThat(ingreso1.getId()).isEqualTo(1l);
         assertThat(ingreso1.getMotivo().getId()).isEqualTo(1l);
-        assertThat(ingreso1.getMovimiento().getId()).isEqualTo(1l);
-        assertThat(ingreso1.getMovimiento().getLocal().getId()).isEqualTo(1l);
-        assertThat(ingreso1.getMovimiento().getUsuario().getCorreo()).isEqualTo("correo1@gmail.com");
     }
 
 }

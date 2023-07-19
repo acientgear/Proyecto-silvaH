@@ -171,7 +171,6 @@ public class FacturaServiceTest {
         
         MovimientoEntity movimiento = new MovimientoEntity();
         movimiento.setId(1l);
-        movimiento.setLocal(local);
         movimiento.setUsuario(usuario);
 
         EmpresaEntity empresa = new EmpresaEntity();
@@ -195,7 +194,6 @@ public class FacturaServiceTest {
         factura.setBorrado(false);
         factura.setEstado(estado);
         factura.setEmpresa(empresa);
-        factura.setMovimiento(movimiento);
         factura.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
         given(facturaRepository.save(factura)).willReturn(factura);
 

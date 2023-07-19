@@ -9,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.entities.LocalEntity;
 import com.app.silvahnosbe.entities.MotivoEEntity;
-import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
 import com.app.silvahnosbe.services.EgresoService;
@@ -196,11 +195,6 @@ public class EgresoServiceTest {
         usuario.setCorreo("correo1@gmail.com");
         usuario.setContrasenna("pass1");
         usuario.setUsuario("usuario1");
-        
-        MovimientoEntity movimiento = new MovimientoEntity();
-        movimiento.setId(1l);
-        movimiento.setLocal(local);
-        movimiento.setUsuario(usuario);
 
         MotivoEEntity motivo = new MotivoEEntity();
         motivo.setId(1l);
@@ -214,7 +208,6 @@ public class EgresoServiceTest {
         egreso.setDescripcion("pintura");
         egreso.setBorrado(false);
         egreso.setMotivo(motivo);
-        egreso.setMovimiento(movimiento);
         egreso.setFecha_creacion(fecha);
         egresoRepository.save(egreso);
         given(egresoRepository.save(egreso)).willReturn(egreso);
@@ -225,9 +218,6 @@ public class EgresoServiceTest {
         // then
         assertThat(egreso1.getId()).isEqualTo(1l);
         assertThat(egreso1.getMotivo().getId()).isEqualTo(1l);
-        assertThat(egreso1.getMovimiento().getId()).isEqualTo(1l);
-        assertThat(egreso1.getMovimiento().getLocal().getId()).isEqualTo(1l);
-        assertThat(egreso1.getMovimiento().getUsuario().getCorreo()).isEqualTo("correo1@gmail.com");
     }
 
 }

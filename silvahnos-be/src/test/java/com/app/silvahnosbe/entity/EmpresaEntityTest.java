@@ -67,7 +67,7 @@ public class EmpresaEntityTest {
 
         // When
         empresa.setBorrado(true);
-        Boolean borrado = empresa.getBorrado();
+        boolean borrado = empresa.isBorrado();
 
         // Then
         assertEquals(true, borrado);
