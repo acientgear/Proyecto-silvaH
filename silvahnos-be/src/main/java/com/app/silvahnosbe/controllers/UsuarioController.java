@@ -61,7 +61,7 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarioGuardado);
     }
 
-    @GetMapping("/test")
+    /*@GetMapping("/test")
     public ResponseEntity<UsuarioEntity> getUsuario(){
         UsuarioEntity usuarios = usuarioService.obtenerUsuarioPorUsuario("admin");
         if(usuarios == null){
@@ -73,7 +73,7 @@ public class UsuarioController {
     @GetMapping("/test2")
     public ResponseEntity<UsuarioEntity> hol(){
         return ResponseEntity.ok().body(null);
-    }    
+    } */   
 
 
 

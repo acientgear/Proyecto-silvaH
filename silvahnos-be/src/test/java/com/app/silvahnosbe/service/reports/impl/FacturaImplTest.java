@@ -53,7 +53,7 @@ public class FacturaImplTest {
         assertEquals(mockFacturasReportGenerator, facturaImpl.getFacturasReportGenerator());
     }
 
-    /*@Test
+    @Test
     public void testExportPdf() throws Exception {
         // Mock input parameters
         String fechaInicio = "2023-01-01";
@@ -67,7 +67,7 @@ public class FacturaImplTest {
 
         // Mocked total
         Integer mockedTotal = 100;
-        Double ivaTotal = 0.19;
+        Double ivaTotal = 19.0;
 
         // Mocked PDF content
         byte[] mockedPdfBytes = "Mocked PDF Content".getBytes();
@@ -91,5 +91,5 @@ public class FacturaImplTest {
         System.out.println("result: " + result);
         System.out.println("mockedPdfByadsadsafdsklafsdfdstes: " + mockedPdfBytes);
         assertArrayEquals(mockedPdfBytes, result);
-    }*/
+    }
 }
