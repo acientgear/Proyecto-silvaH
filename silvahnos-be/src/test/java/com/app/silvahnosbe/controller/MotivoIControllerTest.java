@@ -119,5 +119,56 @@ public class MotivoIControllerTest {
         assertEquals("motivoI", capturedMovimiento.getNombre_tabla());
         assertEquals(motivoI.getId(), capturedMovimiento.getId_objeto());
     }
+
+    @DisplayName("Test para crear una MotivoI con tipo Modificación")
+    @Test
+    void testCreateMotivoI_MotivoICreada_ReturnsMotivoI_Modificación() {
+        // Given
+        MotivoIEntity motivoI = new MotivoIEntity();
+        motivoI.setId(1l);
+        when(motivoIService.guardarMotivoI(motivoI)).thenReturn(motivoI);
+
+        // When
+        ResponseEntity<MotivoIEntity> response = motivoIController.createMotivoI(motivoI);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(motivoI, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Modificación", capturedMovimiento.getTipo());
+        assertEquals("motivoI", capturedMovimiento.getNombre_tabla());
+        assertEquals(motivoI.getId(), capturedMovimiento.getId_objeto());
+    }
+
+    @DisplayName("Test para crear una MotivoI con tipo Eliminación")
+    @Test
+    void testCreateMotivoI_MotivoICreada_ReturnsMotivoI_Eliminación() {
+        // Given
+        MotivoIEntity motivoI = new MotivoIEntity();
+        motivoI.setId(1l);
+        motivoI.setBorrado(true);
+        when(motivoIService.guardarMotivoI(motivoI)).thenReturn(motivoI);
+
+        // When
+        ResponseEntity<MotivoIEntity> response = motivoIController.createMotivoI(motivoI);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(motivoI, response.getBody());
+
+        // Verify movimientoService.guardarMovimiento() is called with the correct arguments
+        ArgumentCaptor<MovimientoEntity> movimientoCaptor = ArgumentCaptor.forClass(MovimientoEntity.class);
+        verify(movimientoService).guardarMovimiento(movimientoCaptor.capture());
+
+        MovimientoEntity capturedMovimiento = movimientoCaptor.getValue();
+        assertEquals("Eliminación", capturedMovimiento.getTipo());
+        assertEquals("motivoI", capturedMovimiento.getNombre_tabla());
+        assertEquals(motivoI.getId(), capturedMovimiento.getId_objeto());
+    }
     
 }
