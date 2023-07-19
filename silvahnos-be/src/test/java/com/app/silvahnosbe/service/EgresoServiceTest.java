@@ -2,6 +2,9 @@ package com.app.silvahnosbe.service;
 
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,6 +15,7 @@ import com.app.silvahnosbe.entities.MotivoEEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
 import com.app.silvahnosbe.services.EgresoService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -218,6 +222,91 @@ public class EgresoServiceTest {
         // then
         assertThat(egreso1.getId()).isEqualTo(1l);
         assertThat(egreso1.getMotivo().getId()).isEqualTo(1l);
+    }
+
+        @Test
+    public void testEsBisiesto_AnioNoBisiesto_ReturnsFalse() {
+        // Given
+        int anio = 2023;
+
+        // When
+        boolean result = EgresoService.esBisiesto(anio);
+
+        // Then
+        assertFalse(result);
+    }
+
+    @Test
+    public void testEsBisiesto_AnioBisiestoDivisiblePor4_ReturnsTrue() {
+        // Given
+        int anio = 2024;
+
+        // When
+        boolean result = EgresoService.esBisiesto(anio);
+
+        // Then
+        assertTrue(result);
+    }
+
+    @Test
+    public void testEsBisiesto_AnioBisiestoDivisiblePor100_ReturnsFalse() {
+        // Given
+        int anio = 1900;
+
+        // When
+        boolean result = EgresoService.esBisiesto(anio);
+
+        // Then
+        assertFalse(result);
+    }
+
+    @Test
+    public void testEsBisiesto_AnioBisiestoDivisiblePor400_ReturnsTrue() {
+        // Given
+        int anio = 2000;
+
+        // When
+        boolean result = EgresoService.esBisiesto(anio);
+
+        // Then
+        assertTrue(result);
+    }
+
+        @Test
+    public void testObtenerDiasMes_FebreroAnioBisiesto_Returns29() {
+        // Given
+        int mes = 2;
+        int anio = 2024;
+
+        // When
+        int result = EgresoService.obtenerDiasMes(mes, anio);
+
+        // Then
+        assertEquals(29, result);
+    }
+
+    @Test
+    public void testObtenerDiasMes_MesesCon31Dias_Returns31() {
+        // Given
+        int[] mesesCon31Dias = {1, 3, 5, 7, 8, 10, 12};
+
+        // When
+        for (int mes : mesesCon31Dias) {
+            int result = EgresoService.obtenerDiasMes(mes, 2023);
+            assertEquals(31, result);
+        }
+    }
+
+    @Test
+    public void testObtenerDiasMes_MesesCon30Dias_Returns30() {
+        // Given
+        int[] mesesCon30Dias = {4, 6, 9, 11};
+
+        // When
+        for (int mes : mesesCon30Dias) {
+            int result = EgresoService.obtenerDiasMes(mes, 2023);
+            assertEquals(30, result);
+        }
     }
 
 }
