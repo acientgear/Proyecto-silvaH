@@ -13,7 +13,15 @@ import com.app.silvahnosbe.repositories.UsuarioRepository;
 import com.app.silvahnosbe.services.UsuarioService;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 public class UsuarioServiceTest {
@@ -54,5 +62,22 @@ public class UsuarioServiceTest {
     void testGuardarUsuario() {
         given(usuarioRepository.save(usuario)).willReturn(usuario);
         assertThat(usuarioService.guardarUsuario(usuario)).isNotNull();
+    }
+
+        @Test
+    public void testObtenerUsuarioPorUsuario_UsuarioExistente_ReturnsUsuarioEntity() {
+        // Given
+        String usuario = "testuser";
+        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        usuarioEntity.setUsuario(usuario);
+        when(usuarioRepository.findByUsuario(usuario)).thenReturn(Optional.of(usuarioEntity));
+
+        // When
+        UsuarioEntity result = usuarioService.obtenerUsuarioPorUsuario(usuario);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(usuario, result.getUsuario());
+        verify(usuarioRepository).findByUsuario(usuario);
     }
 }
