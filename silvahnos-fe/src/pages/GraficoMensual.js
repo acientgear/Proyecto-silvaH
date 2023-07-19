@@ -14,7 +14,6 @@ const getMontoPorDia = async (tipo, anio, mes) => {
         let url = 'http://'+urlweb+'/' + tipo + '/monto/' + anio + '/' + mes;
         const response = await axios.get(url,config);
         if (response.status === 200) {
-            console.log(response.data);
             return response.data;
         }
     } catch (err) {

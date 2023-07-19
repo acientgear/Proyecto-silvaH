@@ -179,8 +179,6 @@ const Egresos = () => {
         handleAlertCreate();
     }, [getEgresos, handleAlertCreate]);
 
-    console.log(egresos);
-
     return (
         <>
             <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
