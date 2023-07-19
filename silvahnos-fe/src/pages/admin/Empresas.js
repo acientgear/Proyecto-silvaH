@@ -12,10 +12,21 @@ const Empresas = () => {
         headers: { Authorization: `Bearer ${localStorage.token}` }
     }; 
     const [empresas, setempresas] = useState([]);
-
+    const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [validated, setValidated] = useState(false);
+
+    const handleCloseCreate = () => {
+        setEditedItem(defaultItem);
+        setShowCreate(false);
+    }
+
+    const handleShowCreate = () => {
+        setValidated(false);
+        setEditedItem(defaultItem);
+        setShowCreate(true);
+    }
 
     const handleCloseDelete = () => {
         setEditedItem(defaultItem);
@@ -56,6 +67,8 @@ const Empresas = () => {
                 return;
             }
             updateEmpresa();
+            handleCloseEdit();
+            handleCloseCreate();
             setValidated(true);
         }
     };
@@ -65,7 +78,6 @@ const Empresas = () => {
             let url = 'http://' + urlweb + '/empresas';
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
-                handleCloseEdit();
                 getEmpresas();
             }
         } catch (err) {
@@ -144,8 +156,22 @@ const Empresas = () => {
                                     <td >{empresa.nombre}</td>
                                     <td >{empresa.direccion}</td>
                                     <td>
-                                        <a href="#se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(empresa)}><AiFillEdit /></a>
-                                        <a href="#sd" style={{ cursor: "pointer", marginRight: 2, color: "#dc3545" }} onClick={() => handleShowDelete(empresa)}><AiFillDelete /></a>
+                                        <a href="#se" 
+                                            onClick={() => handleShowEdit(empresa)}
+                                            style={{ cursor: "pointer", 
+                                                    marginRight: 2, 
+                                                    color: "#0d6efd" }}
+                                        >
+                                            <AiFillEdit />
+                                        </a>
+                                        <a href="#sd"
+                                            onClick={() => handleShowDelete(empresa)} 
+                                            style={{ cursor: "pointer", 
+                                                    marginRight: 2, 
+                                                    color: "#dc3545" }} 
+                                        >
+                                            <AiFillDelete />
+                                        </a>
                                     </td>
 
                                 </tr>
@@ -154,7 +180,12 @@ const Empresas = () => {
                         </tbody>
                     </Table>
                     <div className="registrar" >
-                        <a className="registrar-anchor" href="/crearEmpresa">Registrar empresa <BsBoxArrowRight/></a>
+                        <a className="registrar-anchor" 
+                            href="#"
+                            onClick={handleShowCreate}  
+                        >
+                            Registrar empresa <BsBoxArrowRight/>
+                        </a>
                     </div>
                 </Card.Body>
             </Card>
@@ -173,6 +204,23 @@ const Empresas = () => {
                 </Modal.Footer>
             </Modal>
 
+            {/*Modal para crear*/}
+            <Modal show={showCreate} onHide={handleCloseCreate}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear Empresa</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <FormEmpresa
+                        empresa={editedItem}
+                        validated={validated}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        handleClose={handleCloseCreate}
+                        setEmpresa={setEditedItem}
+                    />
+                </Modal.Body>
+            </Modal>
+                                
             {/*Modal para editar*/}
             <Modal show={showEdit} onHide={handleCloseEdit}>
                 <Modal.Header closeButton>
@@ -182,11 +230,10 @@ const Empresas = () => {
                     <FormEmpresa
                         empresa={editedItem}
                         validated={validated}
-                        modal={true}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
-                        handleCloseEdit={handleCloseEdit}
-                        setempresa={setEditedItem}
+                        handleClose={handleCloseEdit}
+                        setEmpresa={setEditedItem}
                     />
                 </Modal.Body>
             </Modal>

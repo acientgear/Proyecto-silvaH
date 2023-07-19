@@ -11,7 +11,6 @@ import Facturas from './pages/factura/Facturas';
 import CrearFactura from './pages/factura/CrearFactura';
 import Resumen from './pages/Resumen';
 import AdminView from './pages/admin/AdminView';
-import CrearEmpresa from './pages/admin/CrearEmpresa';
 import Login from './pages/auth/Login';
 import PruebaGrafico from './pages/PruebaGrafico';
 
@@ -29,7 +28,6 @@ function App() {
           <Route path='/crearFactura' element={<CrearFactura />} />
           <Route path="/resumen" element={<Resumen />} />
           <Route path="/administracion" element={<AdminView />} />
-          <Route path="/crearEmpresa" element={<CrearEmpresa />} />
           <Route path="/login" element={<Login/>} />
           <Route path="/prueba" element={<PruebaGrafico/>} />
         </Routes>
