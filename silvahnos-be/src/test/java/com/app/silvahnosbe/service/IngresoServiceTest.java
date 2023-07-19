@@ -1,12 +1,20 @@
 package com.app.silvahnosbe.service;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -264,5 +272,143 @@ public class IngresoServiceTest {
         assertThat(ingreso1.getId()).isEqualTo(1l);
         assertThat(ingreso1.getMotivo().getId()).isEqualTo(1l);
     }
+
+    @Test
+    public void testEsBisiesto_AnioNoBisiesto_ReturnsFalse() {
+        // Given
+        int anio = 2023;
+
+        // When
+        boolean result = IngresoService.esBisiesto(anio);
+
+        // Then
+        assertFalse(result);
+    }
+
+    @Test
+    public void testEsBisiesto_AnioBisiestoDivisiblePor4_ReturnsTrue() {
+        // Given
+        int anio = 2024;
+
+        // When
+        boolean result = IngresoService.esBisiesto(anio);
+
+        // Then
+        assertTrue(result);
+    }
+
+    @Test
+    public void testEsBisiesto_AnioBisiestoDivisiblePor100_ReturnsFalse() {
+        // Given
+        int anio = 1900;
+
+        // When
+        boolean result = IngresoService.esBisiesto(anio);
+
+        // Then
+        assertFalse(result);
+    }
+
+    @Test
+    public void testEsBisiesto_AnioBisiestoDivisiblePor400_ReturnsTrue() {
+        // Given
+        int anio = 2000;
+
+        // When
+        boolean result = IngresoService.esBisiesto(anio);
+
+        // Then
+        assertTrue(result);
+    }
+
+        @Test
+    public void testObtenerDiasMes_FebreroAnioBisiesto_Returns29() {
+        // Given
+        int mes = 2;
+        int anio = 2024;
+
+        // When
+        int result = IngresoService.obtenerDiasMes(mes, anio);
+
+        // Then
+        assertEquals(29, result);
+    }
+
+    @Test
+    public void testObtenerDiasMes_MesesCon31Dias_Returns31() {
+        // Given
+        int[] mesesCon31Dias = {1, 3, 5, 7, 8, 10, 12};
+
+        // When
+        for (int mes : mesesCon31Dias) {
+            int result = IngresoService.obtenerDiasMes(mes, 2023);
+            assertEquals(31, result);
+        }
+    }
+
+    @Test
+    public void testObtenerDiasMes_MesesCon30Dias_Returns30() {
+        // Given
+        int[] mesesCon30Dias = {4, 6, 9, 11};
+
+        // When
+        for (int mes : mesesCon30Dias) {
+            int result = IngresoService.obtenerDiasMes(mes, 2023);
+            assertEquals(30, result);
+        }
+    }
+
+    /*@Test
+    public void testGetMontosPorDia_ValidParameters_ReturnsMontosList() {
+        // Given
+        int anio = 2023;
+        int mes = 5;
+        int numeroDias = 31;
+
+        IngresoRepository ingresoRepositoryMock = mock(IngresoRepository.class);
+
+        // Configurar el comportamiento del mock utilizando doAnswer
+        doAnswer(invocation -> {
+            int dia = invocation.getArgument(2);
+            // Devolver un monto diferente según el día
+            if (dia == 1) {
+                return 100;
+            } else if (dia == 2) {
+                return 200;
+            } else {
+                return 0; // Resto de los días devuelven 0
+            }
+        }).when(ingresoRepositoryMock).obtenerMontoPorDia(anyInt(), anyInt(), anyInt());
+
+        // When
+        List<Integer> result = ingresoService.getMontosPorDia(anio, mes);
+
+        // Then
+        assertEquals(numeroDias, result.size());
+        assertEquals(Arrays.asList(100, 200), result);
+        verify(ingresoRepositoryMock, times(numeroDias)).obtenerMontoPorDia(anio, mes, anyInt());
+    }*/
+
+    /*@Test
+    public void testGetMontosUltimos5Dias() {
+        // Given
+        List<Integer> montosEsperados = Arrays.asList(100, 200, 300, 400, 500);
+        IngresoRepository ingresoRepositoryMock = mock(IngresoRepository.class);
+
+        // Configurar el comportamiento del mock para devolver los montos esperados
+        when(ingresoRepositoryMock.obtenerMontoPorDia(anyInt(), anyInt(), anyInt()))
+                .thenReturn(100)
+                .thenReturn(200)
+                .thenReturn(300)
+                .thenReturn(400)
+                .thenReturn(500);
+
+        // When
+        List<Integer> result = ingresoService.getMontosUltimos5Dias();
+
+        // Then
+        assertEquals(montosEsperados, result);
+        verify(ingresoRepositoryMock, times(5)).obtenerMontoPorDia(anyInt(), anyInt(), anyInt());
+    }*/
 
 }
