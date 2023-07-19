@@ -9,14 +9,20 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.silvahnosbe.entities.FacturaEntity;
 import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.services.reports.impl.FacturaImpl;
 import com.app.silvahnosbe.util.FacturasReportGenerator;
 
+import jakarta.inject.Inject;
+
+@ExtendWith(MockitoExtension.class)
 public class FacturaImplTest {
     @Mock
     private FacturaRepository facturaRepository;
@@ -24,6 +30,7 @@ public class FacturaImplTest {
     @Mock
     private FacturasReportGenerator facturasReportGenerator;
 
+    @InjectMocks
     private FacturaImpl facturaImpl;
 
     @BeforeEach

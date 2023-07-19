@@ -34,6 +34,14 @@ public class FacturaImpl implements FacturaInterface {
         Integer total = facturaRepository.obtenerTotalEntre(fechaInicio, fechaFin);
         return facturasReportGenerator.exportToPdf(list, total, (total*0.19));
     }
+
+    public FacturaRepository getFacturaRepository() {
+        return facturaRepository;
+    }
+
+    public FacturasReportGenerator getFacturasReportGenerator() {
+        return facturasReportGenerator;
+    }
     
 }
 
