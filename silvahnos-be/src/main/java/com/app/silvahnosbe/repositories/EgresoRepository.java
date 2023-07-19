@@ -27,10 +27,6 @@ public interface EgresoRepository extends JpaRepository<EgresoEntity,Long>{
                  "e.fecha_creacion <= :ff", nativeQuery = true)
     List<EgresoEntity> obtenerEgresosEntre(@Param("fi") String fechaInicio, @Param("ff") String fechaFin);
 
-    @Query(value="SELECT sum(e.monto) " + 
-                 "FROM egreso e " +
-                 "WHERE e.borrado = 0 AND " +
-                 ":fi <= e.fecha_creacion AND " +
-                 "e.fecha_creacion <= :ff", nativeQuery = true)
+    @Query(value="SELECT COALESCE(SUM(e.monto), 0) FROM egreso e WHERE e.borrado = 0 AND :fi <= e.fecha_creacion AND e.fecha_creacion <= :ff", nativeQuery = true)
     Integer obtenerTotalEntre(@Param("fi") String fechaInicio, @Param("ff") String fechaFin);
 }
