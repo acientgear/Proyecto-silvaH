@@ -36,7 +36,7 @@ public class SecurityConfig {
         return http
             .csrf(config -> config.disable())
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers("/login","/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
+                auth.requestMatchers("/login","/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/back/backup").permitAll();
                 auth.requestMatchers("/iniciar_sesion").permitAll();
                 auth.requestMatchers(HttpMethod.OPTIONS).permitAll();
                 auth.requestMatchers("/**").authenticated();
