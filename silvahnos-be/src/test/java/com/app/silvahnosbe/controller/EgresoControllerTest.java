@@ -23,7 +23,10 @@ import com.app.silvahnosbe.services.EgresoService;
 import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.reports.EgresoInterface;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.springframework.http.MediaType;
@@ -313,6 +316,41 @@ public class EgresoControllerTest {
         ByteArrayResource resource = (ByteArrayResource) response.getBody();
         assertEquals(pdfBytes.length, resource.contentLength());
         assertEquals(new String(pdfBytes), new String(resource.getByteArray()));
+    }
+
+    
+    @DisplayName("Test para obtener los montos de los últimos 5 días")
+    @Test
+    void testGetMontos5dias_ExistenMontos_ReturnsList() {
+        // Given
+        List<EgresoEntity> egresos = new ArrayList<>();
+        egresos.add(new EgresoEntity());
+        List<Integer> montos = new ArrayList<>();
+        montos.add(1000);
+        montos.add(2000);
+        when(egresoService.getMontosUltimos5Dias()).thenReturn(montos);
+    
+        // When
+        ResponseEntity<List<Integer>> response = egresoController.getMontos5dias();
+    
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(montos, response.getBody());
+    }
+    
+
+    @DisplayName("Test para obtener los montos de los últimos 5 días - Montos nulos")
+    @Test
+    void testGetMontos5dias_MontosNull_ReturnsNotFound() {
+        // Given
+        when(egresoService.getMontosUltimos5Dias()).thenReturn(null);
+
+        // When
+        ResponseEntity<List<Integer>> response = egresoController.getMontos5dias();
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
     }
 
 
