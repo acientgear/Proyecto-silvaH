@@ -2,11 +2,17 @@ package com.app.silvahnosbe.service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.sql.Date;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -240,5 +246,49 @@ public class FacturaServiceTest {
         // Verificar que el método save del repositorio fue llamado
         verify(facturaRepository).save(factura);
     }*/
+
+
+    @Test
+    public void testPagarFactura_FechaPagoNotNull_ReturnsUpdatedFacturaEntity() {
+        // Given
+        FacturaEntity factura = new FacturaEntity();
+        java.util.Date fechaPago = new java.util.Date();
+        factura.setFecha_pago(fechaPago);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaPago);
+        calendar.add(Calendar.DAY_OF_MONTH, -1); // Restar un día
+        java.util.Date expectedFecha = calendar.getTime();
+
+        when(facturaRepository.save(factura)).thenReturn(factura);
+
+        // When
+        FacturaEntity result = facturaService.pagarFactura(factura);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(expectedFecha, result.getFecha_pago());
+        verify(facturaRepository).save(factura);
+    }
+
+    @Test
+    public void testPagarFactura_FechaPagoNull_ReturnsSameFacturaEntity() {
+        // Given
+        FacturaEntity factura = new FacturaEntity();
+
+        when(facturaRepository.save(factura)).thenReturn(factura);
+
+        // When
+        FacturaEntity result = facturaService.pagarFactura(factura);
+
+        // Then
+        assertNotNull(result);
+        assertNull(result.getFecha_pago());
+        verify(facturaRepository).save(factura);
+    }
+
+       
+
+
 
 }
