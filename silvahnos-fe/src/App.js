@@ -29,7 +29,6 @@ function App() {
           <Route path="/resumen" element={<Resumen />} />
           <Route path="/administracion" element={<AdminView />} />
           <Route path="/login" element={<Login/>} />
-          <Route path="/prueba" element={<PruebaGrafico/>} />
         </Routes>
       </Container>
     </Layout>

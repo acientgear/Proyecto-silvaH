@@ -69,6 +69,8 @@ public class FacturaController {
     @PostMapping("/pagar")
     public ResponseEntity<FacturaEntity> pagarFactura(@RequestBody FacturaEntity factura){
         FacturaEntity facturaGuardada = facturaService.pagarFactura(factura);
+        MovimientoEntity movimiento = new MovimientoEntity(null,null,"Pago","factura",facturaGuardada.getId(),null);
+        movimientoService.guardarMovimiento(movimiento);
         return ResponseEntity.ok().body(facturaGuardada);
     }
 
