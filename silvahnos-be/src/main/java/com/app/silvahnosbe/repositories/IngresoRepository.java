@@ -32,7 +32,7 @@ public interface IngresoRepository extends JpaRepository<IngresoEntity, Long>{
                  "i.fecha_creacion <= :ff", nativeQuery = true)
     List<IngresoEntity> obtenerIngresosEntre(@Param("fi") String fechaInicio, @Param("ff") String fechaFin);
 
-    @Query(value="SELECT COALESCE(SUM(e.monto), 0) " + 
+    @Query(value="SELECT COALESCE(SUM(i.monto), 0) " + 
                  "FROM ingreso i " +
                  "WHERE i.borrado = 0 AND " +
                  ":fi <= i.fecha_creacion AND " +

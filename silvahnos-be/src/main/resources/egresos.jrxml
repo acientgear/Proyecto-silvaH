@@ -52,6 +52,17 @@
 	</title>
 	<detail>
 		<band height="203">
+			<textField>
+				<reportElement x="47" y="21" width="460" height="66" uuid="b91f66e9-b431-49c5-8b1b-fa30b1237b27">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{egresosData}.getData().size() == 0 ?  "No hay egresos en este intervalo de fecha" : ""]]></textFieldExpression>
+			</textField>
 			<componentElement>
 				<reportElement x="47" y="50" width="460" height="153" forecolor="#000000" uuid="382837ab-e830-4a98-8ce8-e5d01e399f13">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>

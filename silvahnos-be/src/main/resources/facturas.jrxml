@@ -49,7 +49,7 @@
 	<detail>
 		<band height="203">
 			<componentElement>
-				<reportElement x="0" y="30" width="555" height="153" forecolor="#000000" uuid="382837ab-e830-4a98-8ce8-e5d01e399f13">
+				<reportElement x="47" y="21" width="555" height="153" forecolor="#000000" uuid="382837ab-e830-4a98-8ce8-e5d01e399f13">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -170,7 +170,7 @@
 				</jr:table>
 			</componentElement>
 			<textField>
-				<reportElement x="60" y="-1" width="460" height="66" uuid="c4fd9c2a-b835-4b0e-b00f-b240222aad72">
+				<reportElement x="47" y="21" width="460" height="66" uuid="c4fd9c2a-b835-4b0e-b00f-b240222aad72">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -181,14 +181,14 @@
 				<textFieldExpression><![CDATA[$P{facturasData}.getData().size() == 0 ?  "No hay facturas en este intervalo de fecha" : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="154" height="30" uuid="bc013ee4-acc6-4428-a588-53579c8ecf43"/>
+				<reportElement x="47" y="20" width="154" height="30" uuid="bc013ee4-acc6-4428-a588-53579c8ecf43"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Total: $" + new java.text.DecimalFormat("#,###").format($P{total})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="421" y="0" width="154" height="30" uuid="d52ab0f6-8b16-4c8a-a3fd-5588769a4fdc"/>
+				<reportElement x="421" y="20" width="154" height="30" uuid="d52ab0f6-8b16-4c8a-a3fd-5588769a4fdc"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
@@ -212,7 +212,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" Hasta el "+ new SimpleDateFormat("d/M/yy").format(new Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+ new SimpleDateFormat("d/M/yy").format(new Date())]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
