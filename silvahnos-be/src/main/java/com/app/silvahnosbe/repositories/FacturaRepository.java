@@ -39,7 +39,7 @@ public interface FacturaRepository extends JpaRepository<FacturaEntity, Long>{
                  "f.fecha_creacion <= :ff", nativeQuery = true)
     List<FacturaEntity> obtenerFacturasEntre(@Param("fi") String fechaInicio, @Param("ff") String fechaFin);
 
-    @Query(value="SELECT sum(f.monto) " + 
+    @Query(value="SELECT COALESCE(SUM(e.monto), 0) " + 
                  "FROM factura f " +
                  "WHERE f.borrado = 0 AND " +
                  ":fi <= f.fecha_creacion AND " +
