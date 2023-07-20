@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
-import * as yup from 'yup';
 
 const CrearIngreso = () => {
     const config = {
         headers: { Authorization: `Bearer ${localStorage.token}` }
     };  
 
-    const [ingreso, setIngreso] = useState({
+    const ingreso = {
         id: null,
         borrado: false,
         fecha_creacion: null,
@@ -22,7 +20,7 @@ const CrearIngreso = () => {
             id: 0
         },
         descripcion: '',
-    });
+    }
 
     const createIngreso = async (ingreso) => {
         try {
@@ -47,7 +45,6 @@ const CrearIngreso = () => {
                 <Col>
                     <FormIngreso
                         ingreso={ingreso}
-                        setIngreso={setIngreso}
                         postIngreso={createIngreso}
                         modal={false}
                     />

@@ -21,7 +21,6 @@ const Ingresos = () => {
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [validated, setValidated] = useState(false);
     const [showAlertDelete, setShowAlertDelete] = useState(false);
     const [showAlertEdit, setShowAlertEdit] = useState(false);
     const [showAlertCreate, setShowAlertCreate] = useState(false);
@@ -68,14 +67,6 @@ const Ingresos = () => {
     const handleShowEdit = (ingreso) => {
         setEditedItem(ingreso);
         setShowEdit(true);
-        setValidated(false);
-    };
-
-    const handleChange = (e) => {
-        setEditedItem({
-            ...editedItem,
-            [e.target.name]: e.target.value,
-        });
     };
 
     const updateIngreso = async (editedItem) => {
@@ -272,9 +263,9 @@ const Ingresos = () => {
                 <Modal.Body>
                     <FormIngreso
                         ingreso={editedItem}
-                        setIngreso={setEditedItem} 
                         postIngreso={updateIngreso}
-                        modal={false}
+                        modal={true}
+                        handleClose={handleCloseEdit}
                     />
                 </Modal.Body>
             </Modal>

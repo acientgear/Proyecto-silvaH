@@ -1,17 +1,17 @@
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import CategoriasEgreso from './data/CategoriasEgreso';
+import * as yup from 'yup';
+import * as formik from 'formik';
 
-const FormEgreso = ({ egreso, setEgreso, validated, modal, handleChange, handleSubmit, handleCloseEdit }) => {
-    const handleMotivo = (e) => {
-        setEgreso({
-            ...egreso,
-            "motivo": {
-                "id": e.target.value
-            }
-        });
-    }
-
+const FormEgreso = ({ egreso, postEgreso, modal, handleClose }) => {
+    const { Formik } = formik;
     const motivos = CategoriasEgreso();
+
+    const formSchema = yup.object().shape({
+        monto: yup.number().required('Ingrese un monto valido').min(1, 'Mínimo $1 CLP').max(1000000000, 'Máximo $1000000000 CLP'),
+        motivo: yup.number().required('Seleccione una opción valida').min(1, 'Seleccione una opción valida'),
+        descripcion: yup.string().required('Ingrese una descripción valida').min(10, 'Mínimo 10 carácter').max(255, 'Máximo 255 caracteres')
+    });
 
     const modalFooter = () => {
         return (
@@ -19,7 +19,7 @@ const FormEgreso = ({ egreso, setEgreso, validated, modal, handleChange, handleS
                 <Col>
                     <hr></hr>
                     <div className='d-flex justify-content-end'>
-                        <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleCloseEdit}>Cerrar</Button>
+                        <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleClose}>Cerrar</Button>
                         <Button variant='primary' type='submit'>Guardar</Button>
                     </div>
                 </Col>
@@ -39,66 +39,84 @@ const FormEgreso = ({ egreso, setEgreso, validated, modal, handleChange, handleS
     }
 
     return (
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Row xs={1} sm={2}>
-                <Col>
-                    <Form.Group className="mb-3" controlId="formEgreso">
-                        <Form.Label>Motivo</Form.Label>
-                        <Form.Select
-                            aria-label="select"
-                            required
-                            onChange={handleMotivo}
-                            value={egreso.motivo.id}
-                        >
-                            <option value="0" >Seleccione una opción</option>
-                            {motivos.map((categoria) => (
-                                <option key={categoria.id} value={categoria.id}>
-                                    {categoria.nombre}
-                                </option>
-                            ))}
-                        </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                            Seleccione una opción.
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Col>
-                <Col>
-                    <Form.Group className="mb-3" controlId="formEgreso">
-                        <Form.Label>Monto</Form.Label>
-                        <Form.Control name="monto" required
-                            isValid={1000000000 > egreso.monto && egreso.monto > 0}
-                            isInvalid={egreso.monto <= 0 || egreso.monto > 1000000000}
-                            min={1}
-                            max={1000000000}
-                            type="number" placeholder="Ingrese monto" onChange={handleChange}
-                            value={egreso.monto}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            El monto debe ser mayor a $ 0 y menor a $ 1.000.000.000
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Descripción</Form.Label>
-                        <Form.Control name="descripcion"
-                            required
-                            isValid={255 > egreso.descripcion.length && egreso.descripcion.length > 0}
-                            isInvalid={egreso.descripcion.length > 255 || egreso.descripcion.length === 0}
-                            as="textarea" placeholder="Ingrese descripción" onChange={handleChange}
-                            value={egreso.descripcion}
-                        />
-                        <span style={{ color: "#adb5bd" }}>{egreso.descripcion.length + '/255'}</span>
-                        <Form.Control.Feedback type="invalid">
-                            Ingrese una descripción valida
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Col>
-            </Row>
-            {modal ? modalFooter() : formFooter()}
-        </Form>
+        <Formik
+            validationSchema={formSchema}
+            onSubmit={(values) => {
+                const objetoActualizado = { ...egreso, ...values };
+                objetoActualizado.motivo = { id: values.motivo };
+                postEgreso(objetoActualizado);
+            }}
+            initialValues={{
+                monto: egreso.monto,
+                motivo: egreso.motivo.id,
+                descripcion: egreso.descripcion,
+            }}
+        >
+            {({ handleSubmit, handleChange, values, errors }) => (
+                <Form noValidate onSubmit={handleSubmit}>
+                    <Row xs={1} sm={2}>
+                        <Col>
+                            <Form.Group className="mb-3" controlId="formEgreso">
+                                <Form.Label>Motivo</Form.Label>
+                                <Form.Select
+                                    name="motivo"
+                                    aria-label="select"
+                                    onChange={handleChange}
+                                    value={values.motivo}
+                                    isInvalid={!!errors.motivo}
+                                >
+                                    <option key={0} value={0}>Seleccione una opción</option>
+                                    {motivos.map((categoria) => (
+                                        <option key={categoria.id} value={categoria.id}>
+                                            {categoria.nombre}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.motivo}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group className="mb-3" controlId="formEgreso">
+                                <Form.Label>Monto</Form.Label>
+                                <Form.Control 
+                                    name="monto" 
+                                    type="number"
+                                    value={values.monto}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.monto}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.monto}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label>Descripción</Form.Label>
+                                <Form.Control 
+                                    name="descripcion"
+                                    required
+                                    as="textarea" 
+                                    placeholder="Ingrese una descripción" 
+                                    onChange={handleChange}
+                                    value={values.descripcion}
+                                    isInvalid={!!errors.descripcion}
+                                />
+                                <span style={{ color: "#adb5bd" }}>{values.descripcion.length + '/255'}</span>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.descripcion}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    {modal ? modalFooter() : formFooter()}
+                </Form>
+            )}
+        </Formik>
     )
 }
 

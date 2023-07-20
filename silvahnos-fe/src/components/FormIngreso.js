@@ -7,7 +7,7 @@ import axios from "axios";
 import urlweb from "../config/config";
 import { set } from "date-fns";
 
-const FormIngreso = ({ ingreso, setIngreso, postIngreso, modal, handleCloseEdit }) => {
+const FormIngreso = ({ ingreso, postIngreso, modal, handleClose }) => {
     const { Formik } = formik;
     const motivos = CategoriasIngreso();
 
@@ -24,7 +24,7 @@ const FormIngreso = ({ ingreso, setIngreso, postIngreso, modal, handleCloseEdit 
                 <Col>
                     <hr></hr>
                     <div className="d-flex justify-content-end">
-                        <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleCloseEdit}>Cerrar</Button>
+                        <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleClose}>Cerrar</Button>
                         <Button variant='primary' type='submit'>Guardar</Button>
                     </div>
                 </Col>
@@ -43,11 +43,6 @@ const FormIngreso = ({ ingreso, setIngreso, postIngreso, modal, handleCloseEdit 
         )
     }
 
-    useEffect(() => {
-        console.log("Dentro del componente: ", ingreso)
-    }, [ingreso])
-
-
     return (
         <Formik
             validationSchema={formSchema}
@@ -55,15 +50,6 @@ const FormIngreso = ({ ingreso, setIngreso, postIngreso, modal, handleCloseEdit 
                 const objetoActualizado = {...ingreso, ...values};
                 objetoActualizado.motivo = {id: values.motivo};
                 postIngreso(objetoActualizado);
-                // setIngreso({
-                //     ...ingreso,
-                //     patente: values.patente,
-                //     monto: values.monto,
-                //     motivo: {
-                //         id: values.motivo
-                //     },
-                //     descripcion: values.descripcion,
-                // });
             }}
             initialValues={{
                 patente: ingreso.patente,

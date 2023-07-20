@@ -21,7 +21,6 @@ const Egresos = () => {
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [validated, setValidated] = useState(false);
     const [showAlertDelete, setShowAlertDelete] = useState(false);
     const [showAlertEdit, setShowAlertEdit] = useState(false);
     const [showAlertCreate, setShowAlertCreate] = useState(false);
@@ -66,30 +65,11 @@ const Egresos = () => {
     };
 
     const handleShowEdit = (egreso) => {
-        setValidated(false);
         setEditedItem(egreso);
         setShowEdit(true);
     };
 
-    const handleChange = (e) => {
-        setEditedItem({
-            ...editedItem,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            updateEgreso();
-            setValidated(true);
-        }
-    };
-
-    const updateEgreso = async () => {
+    const updateEgreso = async (editedItem) => {
         try {
             let url = 'http://' + urlweb + '/egresos';
             const response = await axios.post(url, editedItem, config);
@@ -286,12 +266,9 @@ const Egresos = () => {
                 <Modal.Body>
                     <FormEgreso
                         egreso={editedItem}
-                        setEgreso={setEditedItem}
-                        validated={validated}
+                        postEgreso={updateEgreso}
                         modal={true}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
-                        handleCloseEdit={handleCloseEdit}
+                        handleClose={handleCloseEdit}
                     />
                 </Modal.Body>
             </Modal>
