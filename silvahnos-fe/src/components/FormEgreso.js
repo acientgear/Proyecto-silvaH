@@ -8,9 +8,9 @@ const FormEgreso = ({ egreso, postEgreso, modal, handleClose }) => {
     const motivos = CategoriasEgreso();
 
     const formSchema = yup.object().shape({
-        monto: yup.number().required('Ingrese un monto valido').min(1, 'Mínimo $1 CLP').max(1000000000, 'Máximo $1000000000 CLP'),
-        motivo: yup.number().required('Seleccione una opción valida').min(1, 'Seleccione una opción valida'),
-        descripcion: yup.string().required('Ingrese una descripción valida').min(10, 'Mínimo 10 carácter').max(255, 'Máximo 255 caracteres')
+        monto: yup.number().required('Ingrese un monto válido').min(1, 'Mínimo $1 CLP').max(1000000000, 'Máximo $1000000000 CLP'),
+        motivo: yup.number().required('Seleccione una opción válida').min(1, 'Seleccione una opción válida'),
+        descripcion: yup.string().required('Ingrese una descripción válida').min(5, 'Mínimo 5 carácter').max(255, 'Máximo 255 caracteres')
     });
 
     const modalFooter = () => {

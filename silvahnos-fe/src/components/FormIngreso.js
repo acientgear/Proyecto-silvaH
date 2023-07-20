@@ -8,10 +8,10 @@ const FormIngreso = ({ ingreso, postIngreso, modal, handleClose }) => {
     const motivos = CategoriasIngreso();
 
     const formSchema = yup.object().shape({
-        patente: yup.string().required("Ingrese una patente valida").min(6, "Son 6 caracteres").max(6, "Son 6 caracteres"),
-        monto: yup.number().required("Ingrese un monto valido").min(1, "Mínimo $1 CLP").max(1000000000, "Máximo $1.000.000.000 CLP"),
-        motivo: yup.number().required("Seleccione una opción valida").min(1, "Seleccione una opción valida"),
-        descripcion: yup.string().required("Ingrese una descripción valida").min(10, "Mínimo 10 carácter").max(255, "Máximo 255 caracteres")
+        patente: yup.string().required("Ingrese una patente válida").min(6, "Son 6 caracteres").max(6, "Son 6 caracteres"),
+        monto: yup.number().required("Ingrese un monto válido").min(1, "Mínimo $1 CLP").max(1000000000, "Máximo $1.000.000.000 CLP"),
+        motivo: yup.number().required("Seleccione una opción válida").min(1, "Seleccione una opción válida"),
+        descripcion: yup.string().required("Ingrese una descripción válida").min(5, "Mínimo 5 carácter").max(255, "Máximo 255 caracteres")
     });
 
     const modalFooter = () => {

@@ -6,9 +6,9 @@ import * as formik from 'formik';
 const FormEmpresa = ({ empresa, postEmpresa, handleClose }) => {
     const { Formik } = formik;
     const formSchema = yup.object().shape({
-        rut: yup.string().required('Ingrese un rut valido').min(12, 'Ingrese un rut valido').max(12, 'Ingrese un rut valido').test('Rut valido', 'Ingrese un rut valido', (rut) => checkRut(rut)),
-        nombre: yup.string().required('Ingrese un nombre valido').min(1, 'Mínimo 1 carácter').max(255, 'Máximo 255 caracteres'),
-        direccion: yup.string().required('Ingrese una dirección valida').min(10, 'Mínimo 10 carácter').max(255, 'Máximo 255 caracteres')
+        rut: yup.string().required('Ingrese un rut válido').min(12, 'Ingrese un rut válido').max(12, 'Ingrese un rut válido').test('Rut valido', 'Ingrese un rut válido', (rut) => checkRut(rut)),
+        nombre: yup.string().required('Ingrese un nombre válido').min(1, 'Mínimo 1 carácter').max(255, 'Máximo 255 caracteres'),
+        direccion: yup.string().required('Ingrese una dirección válida').min(5, 'Mínimo 5 carácter').max(255, 'Máximo 255 caracteres')
     });
 
     return (

@@ -6,8 +6,8 @@ const FormMotivo = ({ motivo, postMotivo, handleClose }) => {
     const { Formik } = formik;
 
     const formSchema = yup.object().shape({
-        nombre: yup.string().required('Ingrese un nombre valido').min(1, 'Mínimo 1 carácter').max(255, 'Máximo 255 caracteres'),
-        descripcion: yup.string().required('Ingrese una descripción valida').min(10, 'Mínimo 10 carácter').max(255, 'Máximo 255 caracteres')
+        nombre: yup.string().required('Ingrese un nombre válido').min(1, 'Mínimo 1 carácter').max(255, 'Máximo 255 caracteres'),
+        descripcion: yup.string().required('Ingrese una descripción válida').min(5, 'Mínimo 5 caracteres').max(255, 'Máximo 255 caracteres')
     });
 
     return (

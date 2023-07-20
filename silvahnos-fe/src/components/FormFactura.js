@@ -8,22 +8,22 @@ const FormFactura = ({ factura, postFactura, modal, handleClose }) => {
     const empresas = Empresas();
 
     const formSchema = yup.object().shape({
-        numero_factura: yup.number().required("Ingrese un número de factura valido").min(1, "Mínimo 1 carácter"),
-        empresa: yup.number().required("Seleccione una opción valida").min(1, "Seleccione una opción valida"),
-        monto: yup.number().required("Ingrese un monto valido").min(1, "Mínimo $1 CLP").max(1000000000, "Máximo $1.000.000.000 CLP"),
-        fecha_emision: yup.date().required("Ingrese una fecha de emisión valida")
+        numero_factura: yup.number().required("Ingrese un número de factura válido").min(1, "Mínimo 1 carácter"),
+        empresa: yup.number().required("Seleccione una opción válida").min(1, "Seleccione una opción válida"),
+        monto: yup.number().required("Ingrese un monto válido").min(1, "Mínimo $1 CLP").max(1000000000, "Máximo $1.000.000.000 CLP"),
+        fecha_emision: yup.date().required("Ingrese una fecha de emisión válida")
             .test('Fecha de emisión',
                 'La fecha de emisión debe ser menor a la fecha de vencimiento',
                 function (value) {
                     return new Date(value) < new Date(this.parent.fecha_vencimiento);
                 }),
-        fecha_vencimiento: yup.date().required("Ingrese una fecha de vencimiento valida")
+        fecha_vencimiento: yup.date().required("Ingrese una fecha de vencimiento válida")
             .test('Fecha de vencimiento',
                 'La fecha de vencimiento debe ser mayor a la fecha de emisión',
                 function (value) {
                     return new Date(value) > new Date(this.parent.fecha_emision);
                 }),
-        observaciones: yup.string().required("Ingrese una observación valida").min(5, "Mínimo 5 caracteres").max(255, "Máximo 255 caracteres")
+        observaciones: yup.string().required("Ingrese una observación válida").min(5, "Mínimo 5 caracteres").max(255, "Máximo 255 caracteres")
     });
 
     const modalFooter = () => {
