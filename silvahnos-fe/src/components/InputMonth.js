@@ -3,7 +3,7 @@ import { Form, InputGroup, Button } from 'react-bootstrap';
 const InputMonth = ({ mes, anio, onChangeMes, onChangeAnio, get }) => {
     return (
         <Form className='d-flex gap-3'>
-            <InputGroup size='sm'>
+            <InputGroup size='sm' hasValidation>
                 <Form.Select aria-label="mes" value={mes} onChange={onChangeMes}>
                     <option value="1">Enero</option>
                     <option value="2">Febrero</option>
@@ -19,7 +19,7 @@ const InputMonth = ({ mes, anio, onChangeMes, onChangeAnio, get }) => {
                     <option value="12" >Diciembre</option>
                 </Form.Select>
                 <InputGroup.Text id="inputGroup-sizing-sm">de</InputGroup.Text>
-                <Form.Control type='number' value={anio} onChange={onChangeAnio} />
+                <Form.Control type='number' min={1900} value={anio} onChange={onChangeAnio} />
             </InputGroup>
             <Button variant='primary' size='sm' onClick={get}>
                 Buscar

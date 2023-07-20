@@ -2,10 +2,6 @@ import CategoriasIngreso from "./data/CategoriasIngreso";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import * as yup from 'yup';
 import * as formik from 'formik';
-import { useEffect, useState } from "react";
-import axios from "axios";
-import urlweb from "../config/config";
-import { set } from "date-fns";
 
 const FormIngreso = ({ ingreso, postIngreso, modal, handleClose }) => {
     const { Formik } = formik;

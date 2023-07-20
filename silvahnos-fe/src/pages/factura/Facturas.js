@@ -22,7 +22,6 @@ const Facturas = () => {
     const [showCheck, setShowCheck] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [validated, setValidated] = useState(false);
     const [showAlertDelete, setShowAlertDelete] = useState(false);
     const [showAlertEdit, setShowAlertEdit] = useState(false);
     const [showAlertCreate, setShowAlertCreate] = useState(false);
@@ -77,24 +76,6 @@ const Facturas = () => {
         setShowEdit(true);
     };
 
-    const handleChange = (e) => {
-        setEditedItem({
-            ...editedItem,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            updateFactura();
-            setValidated(true);
-        }
-    };
-
     const handleCheck = () => {
         editedItem.estado.id = 3;
         editedItem.fecha_pago = (() => {
@@ -135,7 +116,6 @@ const Facturas = () => {
     const getFacturas = useCallback(async () => {
         try {
             let url = 'http://' + urlweb + '/facturas/' + anio + '/' + mes;
-            console.log(url);
             const response = await axios.get(url, config);
             if (response.status === 200) {
                 setFacturas(response.data);
@@ -145,7 +125,7 @@ const Facturas = () => {
         }
     }, [anio, mes]);
 
-    const updateFactura = async () => {
+    const updateFactura = async (editedItem) => {
         try {
             let url = 'http://' + urlweb + '/facturas';
             const response = await axios.post(url, editedItem, config);
@@ -360,12 +340,9 @@ const Facturas = () => {
                 <Modal.Body>
                     <FormFactura
                         factura={editedItem}
-                        setFactura={setEditedItem}
-                        validated={validated}
+                        postFactura={updateFactura}
                         modal={true}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
-                        handleCloseEdit={handleCloseEdit}
+                        handleClose={handleCloseEdit}
                     />
                 </Modal.Body>
             </Modal >

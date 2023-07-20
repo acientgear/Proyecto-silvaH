@@ -8,9 +8,8 @@ const CrearFactura = () => {
     const config = {
         headers: { Authorization: `Bearer ${localStorage.token}` }
     }; 
-    const [validated, setValidated] = useState(false);
 
-    const [factura, setFactura] = useState({
+    const facturaDefault = {
         id: null,
         numero_factura: 0,
         fecha_emision: '',
@@ -28,29 +27,9 @@ const CrearFactura = () => {
         fecha_creacion: '',
         fecha_modificacion: '',
         fecha_borrado: ''
-    });
+    }
 
-    const handleChange = (e) => {
-        setFactura({
-            ...factura,
-            [e.target.name]: e.target.value,
-        });
-        setValidated(false);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            console.log(factura)
-            createFactura();
-            setValidated(true);
-        }
-    };
-
-    const createFactura = async () => {
+    const createFactura = async (factura) => {
         try {
             let url = "http://"+urlweb+"/facturas";
             let response = await axios.post(url, factura,config);
@@ -72,12 +51,9 @@ const CrearFactura = () => {
             <Row>
                 <Col>
                     <FormFactura
-                        factura={factura}
-                        setFactura={setFactura}
-                        validated={validated}
+                        factura={facturaDefault}
+                        postFactura={createFactura}
                         modal={false}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
                     />
                 </Col>
             </Row>
