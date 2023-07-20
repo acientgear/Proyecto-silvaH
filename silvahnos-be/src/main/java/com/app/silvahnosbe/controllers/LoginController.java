@@ -1,5 +1,9 @@
 package com.app.silvahnosbe.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +22,7 @@ import com.app.silvahnosbe.security.jwt.JwtUtils;
 @RestController
 @CrossOrigin
 @RequestMapping("/iniciar_sesion")
+@Tag(name="login",description = "controlador login")
 public class LoginController {
 
     
@@ -29,7 +34,12 @@ public class LoginController {
 
     @Autowired
     private JwtUtils jwtUtilService;
-    
+
+    @Operation(summary = "auntentica a un usuario ",description = "permite a un usuario identificarse en el sistema retorna un token")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @PostMapping
     public ResponseEntity<TokenInfo> aunthenticate (@RequestBody UserInfo userInfo){
         // System.out.println("Usuario: " + userInfo.getUsuario());

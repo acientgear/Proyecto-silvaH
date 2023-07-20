@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.UsuarioRepository;
 
+/**
+ *servicios userDetails
+ * @author Ignacio Grez
+ */
 
 
 @Service
@@ -24,6 +28,14 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+
+    /**
+     *funcion que permite cargar los datos de un usuario segun su nombre
+     * esta funcion es necesaria para el funcionamiento de login
+     *
+     * @param username
+     * @return una entidad user
+     */
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

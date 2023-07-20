@@ -5,6 +5,10 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -29,6 +33,7 @@ import org.springframework.http.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/facturas")
+@Tag(name="Factura", description = "controladores de la entidad factura ")
 public class FacturaController {
     @Autowired
     FacturaService facturaService;
@@ -39,6 +44,12 @@ public class FacturaController {
     @Autowired
     MovimientoService movimientoService;
 
+
+    @Operation(summary = "obtiene una lista de facturas del mes ",description = "retorna una lista con todas las facturas del mes")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/{anio}/{mes}")
     public ResponseEntity<List<FacturaEntity>> getFacturas(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
         List<FacturaEntity> facturas= facturaService.obtenerFacturas(anio, mes);
@@ -48,6 +59,12 @@ public class FacturaController {
         return ResponseEntity.ok().body(facturas);
     }
 
+
+    @Operation(summary = "registra una factura ",description = "registra una factura y la retorna")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos guardados correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no guardados ")
+    })
     @PostMapping
     public ResponseEntity<FacturaEntity> createFactura(@RequestBody FacturaEntity factura){
         String tipo = ""; 
@@ -66,6 +83,12 @@ public class FacturaController {
         return ResponseEntity.ok().body(facturaGuardada);
     }
 
+    @Operation(summary = "paga una factura ",description = "cambia el estado de una factura a pagado")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
+
     @PostMapping("/pagar")
     public ResponseEntity<FacturaEntity> pagarFactura(@RequestBody FacturaEntity factura){
         FacturaEntity facturaGuardada = facturaService.pagarFactura(factura);
@@ -74,6 +97,11 @@ public class FacturaController {
         return ResponseEntity.ok().body(facturaGuardada);
     }
 
+    @Operation(summary = "obtiene el iva de las facturas del mes ",description = "suma el total de las facturas del mes y obtiene el iva")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/iva/{anio}/{mes}")
     public ResponseEntity<Integer> getIva(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
         Integer iva = facturaService.obtenerIva(anio, mes);
@@ -82,6 +110,12 @@ public class FacturaController {
         }
         return ResponseEntity.ok().body(iva);
     }
+
+    @Operation(summary = "obtiene una lista de facturas proximas a vencer ",description = "retorna una lista con facturas proximas a vencer segun un parametro en la base de datos")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
 
     @GetMapping("/proximasVencer/{anio}/{mes}")
     public ResponseEntity<List<FacturaEntity>> getProximasVencer(@PathVariable("anio") int anio, @PathVariable("mes") int mes){
@@ -92,6 +126,12 @@ public class FacturaController {
         return ResponseEntity.ok().body(facturas);
     }
 
+
+    @Operation(summary = "obtiene una lista de facturas proximas a vencer ",description = "retorna una lista con facturas proximas a vencer segun un parametro en la base de datos")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/vencer")
     public ResponseEntity<List<FacturaEntity>> facturasV(@Param("dias") int dias){
         List<FacturaEntity> facturas= facturaService.facturaV(dias);
@@ -100,6 +140,12 @@ public class FacturaController {
         }
         return ResponseEntity.ok().body(facturas);
     }
+
+    @Operation(summary = "genera un reporte ",description = "retorna un reporte en PDF con las facturas de un periodo de tiempo")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
 
     @GetMapping("/export-pdf/{fi}/{ff}")
     public ResponseEntity<Resource> exportPdf(@PathVariable("fi") String fechaInicio, @PathVariable("ff") String fechaFin)

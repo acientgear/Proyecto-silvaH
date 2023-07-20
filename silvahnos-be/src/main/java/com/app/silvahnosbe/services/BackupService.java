@@ -12,6 +12,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
+/**
+ * servicio encargado de realizar respaldos a la base de datos de manera automatica
+ *
+ * @author IgnacioGrez
+ *
+ */
+
+
 
 @Service
 public class BackupService {
@@ -29,7 +37,16 @@ public class BackupService {
 	@Value("${backup.pathname}")///debe ser definido en el aplication.propertires. ruta donde se guardaran los backups
 	private String backupPath;
 
-    ///@Scheduled(cron = "0 */1 * * * *")
+
+	/**
+	 * funcion que crea los backup de manera automatica
+	 * @params ninguno
+	 * @return null
+	 */
+
+
+
+	///@Scheduled(cron = "0 */1 * * * *")
     public void makeBackup() throws ClassNotFoundException, IOException, SQLException{
         System.out.println("Backup Started at " + new Date());
 		
