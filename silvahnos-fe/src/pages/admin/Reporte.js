@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { startOfMonth, endOfMonth, format } from 'date-fns';
 import urlweb from "../../config/config";
+import FileSaver from "file-saver";
 
 const Reporte = () => {
     const config = {
@@ -34,7 +35,8 @@ const Reporte = () => {
         });
     };
 
-    const handleReport = async (web, tipo, fi, ff) => {
+    const handleReport = async (e, web, tipo, fi, ff) => {
+        e.preventDefault();
         try{
             const url = `http://${web}/${tipo}/export-pdf/${fi}/${ff}`;
             const response = await fetch(url, config);
@@ -42,14 +44,9 @@ const Reporte = () => {
                 const contentDisposition = response.headers.get('content-disposition');
                 const filenameMatch = contentDisposition && contentDisposition.match(/filename=(["'])(.*?)\1/);
                 const filename = filenameMatch && filenameMatch[2];
-
+                
                 const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = filename;
-                link.click();
-                URL.revokeObjectURL(url);
+                FileSaver.saveAs(blob, filename);
             } else {
                 console.log('Error al descargar el archivo');
             }
@@ -64,7 +61,7 @@ const Reporte = () => {
                 <Card.Body>
                     <Card.Title>Seleccione el rango de fecha</Card.Title>
                     <br></br>
-                    <Form onSubmit={() => handleReport(urlweb, tipo, fechaI, fechaF)}>
+                    <Form onSubmit={(e) => handleReport(e, urlweb, tipo, fechaI, fechaF)}>
                         <Row className="justify-content-center">
                             <Col xs={12} sm="auto">
                                 <Form.Group className="text-left">
