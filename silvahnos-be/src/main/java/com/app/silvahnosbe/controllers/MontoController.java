@@ -2,6 +2,10 @@ package com.app.silvahnosbe.controllers;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,10 +21,16 @@ import com.app.silvahnosbe.services.MontoService;
 @RestController
 @CrossOrigin
 @RequestMapping("/montos")
+@Tag(name="monto",description = "controladores de entidad monto")
 public class MontoController {
     @Autowired
     MontoService montoService;
 
+    @Operation(summary = "obtiene los montos de los ingresos ",description = "retorna una lista con los montos de los ingresos por mes")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/ingreso/{anio}/{mes}")
     public ResponseEntity<List<Monto>> obtenerMontosIngreso(@PathVariable("anio") Integer anio, @PathVariable("mes") Integer mes){
         List<Monto> montos = montoService.obtenerMontoIngreso(anio, mes);
@@ -29,6 +39,12 @@ public class MontoController {
         }
         return ResponseEntity.ok().body(montos);
     }
+
+    @Operation(summary = "obtiene los montos de los egresos ",description = "retorna una lista con los montos de los egresos por mes")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
 
     @GetMapping("/egreso/{anio}/{mes}")
     public ResponseEntity<List<Monto>> obtenerMontosEgreso(@PathVariable("anio") Integer anio, @PathVariable("mes") Integer mes){

@@ -10,31 +10,85 @@ import org.springframework.stereotype.Service;
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
 
+
+/**
+ * servicios de egreso
+ * @author Luis toro
+ *
+ */
+
 @Service
 public class EgresoService {
     
     @Autowired
     EgresoRepository egresoRepository;
 
+
+    /**
+    * esta funcion permite obtener un egreso segun su ID
+    * @param id long
+    * @return retorna el egreso si lo encuentra , en caso contrario retorna null
+    *
+    */
+
     public EgresoEntity obtenerEgresoPorId(Long id){
         return egresoRepository.findById(id).orElse(null);
     }
+
+
+    /**
+     *funcion que permite el registrar un nuevo egreso
+     * @param entidad egreso
+     * @return retorna la entidad si se guardo correctamente
+     *
+     */
 
     public EgresoEntity guardarEgreso(EgresoEntity egreso){
         return egresoRepository.save((egreso));
     }
 
+
+    /**
+     * esta funcion permite eliminar un egreso
+     * @param id long
+     * @return no tiene retorno si borra correctamente
+     */
+
     public void eliminarEgreso(EgresoEntity egreso){
         egresoRepository.deleteById(egreso.getId());
     }
+
+    /**
+     * funcion que lista los egresos por mes y año
+     * @author leo Vergara
+     * @param int anio mes
+     * @return retorna una lista con las entidades encontradas
+     */
+
+
 
     public List<EgresoEntity> obtenerEgresoPorAnioAndMes(int anio, int mes){
         return (List<EgresoEntity>) egresoRepository.obtenerEgresosPorAnioAndMes(anio, mes);
     }
 
+    /**
+     *funcion que obtiene una lista con los ultimos egresos registrados
+     * @author Leo Vergara
+     * @param null
+     * @return  lista con los ultimos 3 egresos
+     */
+
+
     public List<EgresoEntity> obtenerUltimosEgresos(){
         return (List<EgresoEntity>) egresoRepository.obtenerUltimosEgresos();
     }
+
+    /**
+     *funcion que obtiene el total de los egresos por mes
+     * @param int anio mes
+     * @return retorna un int con la suma de los egresos
+     */
+
 
     public Integer obtenerTotalEgresosPorMes(int anio, int mes){
         List<EgresoEntity> egresos = (List<EgresoEntity>) egresoRepository.obtenerEgresosPorAnioAndMes(anio, mes);
@@ -53,10 +107,25 @@ public class EgresoService {
         return monto;
     }*/
 
+
+    /**
+     * funcion que revisa si un año es bisiesto
+     * @author Luis Toro
+     * @param int año
+     * @return boleano
+     */
+
     public static boolean esBisiesto(int año) {
         return (año % 4 == 0 && año % 100 != 0) || (año % 400 == 0);
     }
 
+
+    /**
+     * esta funcion obtiene los dias de un mes , con ayuda de la funcion esBisiesto setea los dias de febrero en ese año en 29 dias
+     * para el resto se determinan segun lo normal
+     * @param int mes año
+     * @return retorna un int representando la cantidad de dias del mes
+     */
     public static int obtenerDiasMes(int mes, int año) {
         int[] diasPorMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
@@ -67,6 +136,14 @@ public class EgresoService {
         }
     }
 
+    /**
+     * esta funcion retorna una lista del total por dia de un mes
+     * @param int anio mes
+     * @return retorna una lista donde cada elemento representa un dia y contiene el total del dia
+     * @author Luis Toro
+     */
+
+
     public List<Integer> getMontosPorDia(int anio, int mes){
         Integer numeroDias = obtenerDiasMes(mes, anio);
         List<Integer> montos = new ArrayList<Integer>();
@@ -76,6 +153,15 @@ public class EgresoService {
         }
         return montos;
     }
+
+    /**
+     *esta funcion obtiene los montos de los ultimos 5 dias
+     *
+     * @param null
+     * @return retorna una lista donde cada elemento es un monto de los ultimos 5 dias
+     * @author Luis Toro
+     */
+
 
     public List<Integer> getMontosUltimos5Dias() {
         List<Integer> montos = new ArrayList<>();

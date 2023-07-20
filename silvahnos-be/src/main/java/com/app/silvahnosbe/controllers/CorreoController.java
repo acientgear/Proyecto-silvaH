@@ -2,6 +2,10 @@ package com.app.silvahnosbe.controllers;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +22,7 @@ import com.app.silvahnosbe.services.MovimientoService;
 
 @RestController
 @CrossOrigin
+@Tag(name ="Correo" ,description="controladores de la clase correo" )
 @RequestMapping("/Correos")
 public class CorreoController {
     @Autowired
@@ -25,6 +30,13 @@ public class CorreoController {
 
     @Autowired
     MovimientoService movimientoService;
+
+
+    @Operation(summary = "obtiene los correos ",description = "retorna una lista de correos")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
 
     @GetMapping("")
     public ResponseEntity<List<CorreoEntity>> getCorreos(){
@@ -34,6 +46,13 @@ public class CorreoController {
         }
         return ResponseEntity.ok().body(correos);
     }
+
+
+    @Operation(summary = "guarda un correo ",description = "retorna un correo ")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos guardados correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no guardados ")
+    })
 
     @PostMapping("/{nuevoCorreo}")
     public ResponseEntity<CorreoEntity> actualizarCorreo(@PathVariable("nuevoCorreo") String nuevoCorreo){

@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+
+import com.app.silvahnosbe.entities.UsuarioEntity;
+import com.app.silvahnosbe.services.UsuarioService;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.silvahnosbe.entities.UsuarioEntity;
-import com.app.silvahnosbe.services.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @CrossOrigin
+@Tag(name ="usuario" ,description="controladores de la clase usuario" )
 @RequestMapping("/usuarios")
 public class UsuarioController {
     
@@ -44,7 +53,13 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-
+    @Operation(summary = "obtiene todos los usuarios ",description = "retorna una lista de usuarios")
+    @ApiResponses(value={
+        @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+        @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
+        
+       
     @GetMapping("")
     public ResponseEntity<List<UsuarioEntity>> getUsuarios(){
         List<UsuarioEntity> usuarios = usuarioService.obtenerUsuarios();
@@ -53,6 +68,14 @@ public class UsuarioController {
         }
         return ResponseEntity.ok().body(usuarios);
     }
+
+    @Operation(summary = "crea o edita un usuario ",description = "retorna un usuario")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos guardados correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no guardados  ")
+    })
+
+
     @PostMapping
     public ResponseEntity<UsuarioEntity> createUsuario(@RequestBody UsuarioEntity usuario){
 
@@ -61,20 +84,29 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuarioGuardado);
     }
 
-    /*@GetMapping("/test")
+
+ /*
+     @Operation(summary = "busca un usuario por nombre ",description = "retorna un usuario")
+    @ApiResponses(value={
+        @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+        @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
+    @Parameter
+    @GetMapping("/test")
     public ResponseEntity<UsuarioEntity> getUsuario(){
         UsuarioEntity usuarios = usuarioService.obtenerUsuarioPorUsuario("admin");
         if(usuarios == null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(usuarios);
-    }
+    } */
 
+    /*
     @GetMapping("/test2")
     public ResponseEntity<UsuarioEntity> hol(){
         return ResponseEntity.ok().body(null);
-    } */   
+    }    
 
-
+    */
 
 }

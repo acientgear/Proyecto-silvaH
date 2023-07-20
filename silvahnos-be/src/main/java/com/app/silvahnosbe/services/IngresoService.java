@@ -10,27 +10,71 @@ import org.springframework.stereotype.Service;
 import com.app.silvahnosbe.entities.IngresoEntity;
 import com.app.silvahnosbe.repositories.IngresoRepository;
 
+/**
+ * servicios de ingreso
+ * @author Luis Toro
+ * @author Leo Vergara
+ *
+ */
+
 @Service
 public class IngresoService {
     
     @Autowired
     IngresoRepository ingresoRepository;
 
+    /**
+     * obtiene los ingresos segun año y mes y devuelve una lista
+     * @param int anio int mes
+     * @return retorna una lista con los ingresos del mes y año escogidos
+     */
+
     public List<IngresoEntity> obtenerIngresos(int anio, int mes){
         return (List<IngresoEntity>) ingresoRepository.obtenerIngresos(anio, mes);
     }
+
+
+    /**
+     * funcion que permite obtiener un ingreso mediante su id
+     * @param id lon
+     * @return retorna el egreso si lo encuentra , en caso contrario retorna null
+     *
+     */
 
     public IngresoEntity obtenerIngresoPorId(Long id){
         return ingresoRepository.findById(id).orElse(null);
     }
 
+
+    /**
+     *funcion que permite guarda un ingreso
+     * @param ingreso
+     * @return si fue guardado correctamente lo retorna
+     *
+     */
+
     public IngresoEntity guardarIngreso(IngresoEntity ingreso){
         return ingresoRepository.save(ingreso);
     }
 
+    /**
+     *
+     * funcion que permite obtiener los ultimos ingresos
+     * @param null
+     * @return devuelve una lista con los ultimos 3 ingresos
+     *
+     */
+
     public List<IngresoEntity> obtenerUltimosIngresos(){
         return (List<IngresoEntity>) ingresoRepository.obtenerUltimosIngresos();
     }
+
+
+    /**
+     * esta funcion permite obtener el total de los ingresos de un mes
+     * @param int anio mes
+     * @return returna el total de los ingresos del mes como int
+     */
 
     public Integer obtenerTotalIngresosPorMes(int anio, int mes){
         List<IngresoEntity> ingresos = (List<IngresoEntity>) ingresoRepository.obtenerIngresos(anio, mes);
@@ -48,7 +92,16 @@ public class IngresoService {
         }
         return monto;
     }*/
-    
+
+    /**
+     * funcion obtenerSaldoCuenta
+     * obtiene  el saldo de la cuenta de un mes
+     * @param int mes
+     * @return retorna un monto
+     *
+     */
+
+
     public Integer obtenerSaldoCuenta(int mes){
         Integer monto = ingresoRepository.obtenerSaldoCuenta(mes);
         if (monto == null){
@@ -57,9 +110,27 @@ public class IngresoService {
         return monto;
     }
 
+
+     /**
+      * funcion que revisa si un año es bisiesto
+      * @author Luis Toro
+      * @param int año
+       * @return boleano
+      */
+
+
+
     public static boolean esBisiesto(int año) {
         return (año % 4 == 0 && año % 100 != 0) || (año % 400 == 0);
     }
+
+
+    /**
+     * esta funcion obtiene los dias de un mes , con ayuda de la funcion esBisiesto setea los dias de febrero en ese año en 29 dias
+     * para el resto se determinan segun lo normal
+     * @param int mes año
+     * @return retorna un int representando la cantidad de dias del mes
+     */
 
     public static int obtenerDiasMes(int mes, int año) {
         int[] diasPorMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -71,6 +142,13 @@ public class IngresoService {
         }
     }
 
+    /**
+     *funcion que obtiene los montos totales de los ingresos por dia
+     * @param int anio mes
+     * @return retorna una lista con los montos totales de los dias del mes
+     */
+
+
     public List<Integer> getMontosPorDia(int anio, int mes){
         Integer numeroDias = obtenerDiasMes(mes, anio);
         List<Integer> montos = new ArrayList<Integer>();
@@ -80,6 +158,14 @@ public class IngresoService {
         }
         return montos;
     }
+
+
+    /**
+     *funcion que obtiene los montos de los ultimos 5 dias
+     * @param null
+     * @return retorn una lista con los montos de los ultimos  5 dias
+     */
+
 
     public List<Integer> getMontosUltimos5Dias() {
         List<Integer> montos = new ArrayList<>();

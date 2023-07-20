@@ -20,6 +20,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * servicio email
+ *  este servicio se centra en el envio automatizado de notificaciones de facturas
+ * @author acientgear
+ */
+
+
+
+
+
 @Service
 public class EmailService {
 
@@ -42,6 +52,14 @@ public class EmailService {
     SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yy");
     Date fecha = new Date();
 
+
+    /**
+     *
+     * esta funcion envia un email a un destinarario , su funcionanmiento es solo de prueba de conexion
+     * @param null
+     * @return null
+     */
+
     public void sendEmail() {
         /*
          * EmailConfig emailConfig = emailConfigRepository.findById(1L)
@@ -57,6 +75,14 @@ public class EmailService {
 
         mailSender.send(message);
     }
+
+    /**
+     * esta funcion envia un email con las facturas sin cobrar en un intervalo de tiempo mediante cron job
+     * se comprueba su funcionamiento con la funcion sendEmail
+     * @param null
+     * @return no tiene retorno,
+     */
+
 
     @Scheduled(cron = "0 */1 * * * *")
     public void cronEmail() {

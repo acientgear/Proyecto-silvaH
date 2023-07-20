@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -31,6 +35,7 @@ import org.springframework.http.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/egresos")
+@Tag(name="Egresos",description="controladores de la entidad egreso")
 public class EgresoController {
     @Autowired
     EgresoService egresoService;
@@ -41,6 +46,11 @@ public class EgresoController {
     @Autowired
     MovimientoService movimientoService;
 
+    @Operation(summary = "obtiene egresos de un mes ",description = "retorna una lista de egresos segun un año y mes")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/{anio}/{mes}")
     public ResponseEntity<List<EgresoEntity>> getEgresoByAnioAndMes(@PathVariable("anio") int anio,
             @PathVariable("mes") int mes) {
@@ -50,6 +60,12 @@ public class EgresoController {
         }
         return ResponseEntity.ok().body(egresos);
     }
+
+    @Operation(summary = "registra un egreso ",description = "registra un egreso en la base de datos y retorna el egreso creado ")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="se guardo de manera exitosa "),
+            @ApiResponse(responseCode = "404", description = "datos no guarados ")
+    })
 
     @PostMapping
     public ResponseEntity<EgresoEntity> createEgreso(@RequestBody EgresoEntity egreso) {
@@ -74,6 +90,13 @@ public class EgresoController {
         return ResponseEntity.ok().body(egresoGuardado);
     }
 
+
+    @Operation(summary = "borra un egreso ",description = "elimina un egreso segun un id")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos borrados "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
+
     @DeleteMapping("/{id}")
     public ResponseEntity<EgresoEntity> deleteEgreso(@PathVariable("id") Long id) {
         EgresoEntity egreso = egresoService.obtenerEgresoPorId(id);
@@ -84,6 +107,12 @@ public class EgresoController {
         return ResponseEntity.ok().build();
     }
 
+
+    @Operation(summary = "obtiene los ultigmos egresos registrados",description = "retorna  los ultimo egresos registrados como una lista")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/ultimos")
     public ResponseEntity<List<EgresoEntity>> getUltimosEgresos() {
         List<EgresoEntity> egresos = egresoService.obtenerUltimosEgresos();
@@ -93,6 +122,12 @@ public class EgresoController {
         return ResponseEntity.ok().body(egresos);
     }
 
+
+    @Operation(summary = "obtiene el total de los egresos del mes ",description = "retorna la suma de todos los egresos del mes")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/total/{anio}/{mes}")
     public ResponseEntity<Integer> getTotalEgresosPorMes(@PathVariable("anio") int anio, @PathVariable("mes") int mes) {
         Integer total = egresoService.obtenerTotalEgresosPorMes(anio, mes);
@@ -102,6 +137,12 @@ public class EgresoController {
         return ResponseEntity.ok().body(total);
     }
 
+
+    @Operation(summary = "obtiene el total de egresos del dia ",description = "retorna el total de los egresos registrados en el dia")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/monto/{anio}/{mes}")
     public ResponseEntity<List<Integer>> getMontoPorDia(@PathVariable("anio") int anio, @PathVariable("mes") int mes) {
         List<Integer> total = egresoService.getMontosPorDia(anio, mes);
@@ -111,6 +152,12 @@ public class EgresoController {
         return ResponseEntity.ok().body(total);
     }
 
+
+    @Operation(summary = "obtiene el total de egresos de los ultimos 5 dias ",description = "retorna el total de los egresos registrados en los ultimos 5 dias")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
     @GetMapping("/monto-5-dias/")
     public ResponseEntity<List<Integer>> getMontos5dias() {
         List<Integer> total = egresoService.getMontosUltimos5Dias();
@@ -119,6 +166,12 @@ public class EgresoController {
         }
         return ResponseEntity.ok().body(total);
     }
+
+    @Operation(summary = "genera un reporte en PDF ",description = "retorna un reporte PDF con los datos requeridos por el usuario")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
 
     @GetMapping("/export-pdf/{fi}/{ff}")
     public ResponseEntity<Resource> exportPdf(@PathVariable("fi") String fechaInicio, @PathVariable("ff") String fechaFin)
