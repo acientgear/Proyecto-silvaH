@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.entities.LocalEntity;
@@ -22,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Timestamp;
@@ -307,6 +309,32 @@ public class EgresoServiceTest {
             int result = EgresoService.obtenerDiasMes(mes, 2023);
             assertEquals(30, result);
         }
+    }
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testGetMontosPorDia() {
+        // Given
+        int anio = 2023;
+        int mes = 7;
+        int numeroDias = 31;
+        List<Integer> expectedMontos = new ArrayList<>();
+        for (int i = 1; i <= numeroDias; i++) {
+            // Add some dummy data for the montos list
+            expectedMontos.add(i * 100);
+            // Stub the ingresoRepository.obtenerMontoPorDia method
+            when(egresoRepository.obtenerMontoPorDia(anio, mes, i)).thenReturn(i * 100);
+        }
+
+        // When
+        List<Integer> result = egresoService.getMontosPorDia(anio, mes);
+
+        // Then
+        assertEquals(expectedMontos, result);
     }
 
 }
