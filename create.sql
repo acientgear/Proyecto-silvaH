@@ -44,6 +44,14 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS `motivoE` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `borrado` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+);
+
 -- Insert data
 INSERT INTO silvahnos.configuracion_email
 (id,
@@ -92,6 +100,53 @@ VALUES
 "luis@gmail.com",
 "luis",
 "admin");
+
+INSERT INTO `silvahnos`.`motivoe`
+(`id`,
+`borrado`,
+`descripcion`,
+`nombre`)
+VALUES
+(1,
+0,
+"Egresos Astara",
+"Astara"),
+(2,
+0,
+"Contadora",
+"Contadora"),
+(3,
+0,
+"Cromocar",
+"Cromocar"),
+(4,
+0,
+"Pago IVA",
+"IVA"),
+(5,
+0,
+"Outlet",
+"Outlet"),
+(6,
+0,
+"Pago de SII",
+"SII"),
+(7,
+0,
+"Pago de sueldos",
+"Sueldos"),
+(8,
+0,
+"Gastos taller",
+"Taller"),
+(9,
+0,
+"Pago de arriendo",
+"Arriendo"),
+(10,
+0,
+"Creditos",
+"Créditos");
 
 
 
