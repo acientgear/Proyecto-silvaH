@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.silvahnosbe.entities.IngresoEntity;
@@ -410,5 +411,31 @@ public class IngresoServiceTest {
         assertEquals(montosEsperados, result);
         verify(ingresoRepositoryMock, times(5)).obtenerMontoPorDia(anyInt(), anyInt(), anyInt());
     }*/
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testGetMontosPorDia() {
+        // Given
+        int anio = 2023;
+        int mes = 7;
+        int numeroDias = 31;
+        List<Integer> expectedMontos = new ArrayList<>();
+        for (int i = 1; i <= numeroDias; i++) {
+            // Add some dummy data for the montos list
+            expectedMontos.add(i * 100);
+            // Stub the ingresoRepository.obtenerMontoPorDia method
+            when(ingresoRepository.obtenerMontoPorDia(anio, mes, i)).thenReturn(i * 100);
+        }
+
+        // When
+        List<Integer> result = ingresoService.getMontosPorDia(anio, mes);
+
+        // Then
+        assertEquals(expectedMontos, result);
+    }
 
 }
