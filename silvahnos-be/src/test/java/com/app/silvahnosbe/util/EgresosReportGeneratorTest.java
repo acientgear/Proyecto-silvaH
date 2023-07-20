@@ -8,9 +8,13 @@ import net.sf.jasperreports.engine.JRPrintText;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.util.ResourceUtils;
 
@@ -18,12 +22,14 @@ import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
@@ -79,5 +85,62 @@ public class EgresosReportGeneratorTest {
 
         return report;
     }
+
+    /*@InjectMocks
+    private EgresosReportGenerator egresosReportGenerator;
+
+    @Mock
+    private JasperCompileManager jasperCompileManager;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testExportToPdf() throws JRException, IOException {
+        // Given
+        List<EgresoEntity> list = new ArrayList<>();
+        EgresoEntity egreso = new EgresoEntity();
+        egreso.setId(1l);
+        egreso.setMonto(15000);
+        egreso.setDescripcion("pintura");
+        egreso.setBorrado(false);
+        egreso.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+        list.add(egreso);
+
+        EgresoEntity egreso2 = new EgresoEntity();
+        egreso2.setId(1l);
+        egreso2.setMonto(15000);
+        egreso2.setDescripcion("pintura");
+        egreso2.setBorrado(false);
+        egreso2.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+        list.add(egreso2);
+
+        EgresoEntity egreso3 = new EgresoEntity();
+        egreso3.setId(1l);
+        egreso3.setMonto(15000);
+        egreso3.setDescripcion("pintura");
+        egreso3.setBorrado(false);
+        egreso3.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+        list.add(egreso3);
+        // Add some dummy data to the list
+
+        Integer total = 1989989879; // Some dummy total value
+
+        // You can use an actual list of EgresoEntity here or create some dummy data
+        // for the report
+
+        // When
+        byte[] actualPdf = egresosReportGenerator.exportToPdf(list, total);
+
+        // Load the expected PDF from the resources folder
+        byte[] expectedPdf = ResourceUtils
+                .getFile("classpath:egresos.jrxml").toURI().toURL().openStream()
+                .readAllBytes();
+
+        // Then
+        assertArrayEquals(expectedPdf, actualPdf);
+    }*/
     
 }

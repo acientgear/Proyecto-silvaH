@@ -1,6 +1,9 @@
 package com.app.silvahnosbe.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -66,5 +71,37 @@ public class LoginControllerTest {
 
         // You can add more verification if needed for other method calls
     }
-    
+
+    @Mock
+    private JwtUtils jwtUtils;
+
+    /*@Test
+    public void testAuthenticate_ValidCredentials_ReturnsTokenInfo() {
+        // Given
+        String username = "testuser";
+        String password = "testpassword";
+        String jwtToken = "testJWTToken";
+        
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsuario(username);
+        userInfo.setPassword(password);
+
+        Authentication authentication = mock(Authentication.class);
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
+
+        UserDetails userDetails = mock(UserDetails.class);
+        when(userDetailsService.loadUserByUsername(username)).thenReturn(userDetails);
+
+        when(jwtUtils.generarTokenAcceso(username)).thenReturn(jwtToken);
+
+        // When
+        ResponseEntity<TokenInfo> response = loginController.aunthenticate(userInfo);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(jwtToken, response.getBody().getJwtToken());
+        // Puedes realizar más aserciones según tus necesidades
+    }
+    */
 }

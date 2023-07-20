@@ -1,4 +1,5 @@
 import { Row, Col, Container } from 'react-bootstrap'
+import Usuario from './Usuario';
 import MotivoI from './MotivoI';
 import MotivoE from './MotivoE';
 import Empresas from './Empresas';
@@ -14,7 +15,7 @@ const AdminView = () => {
 
     const [motivosHTML, setMotivosHTML] = useState(null);
     const [facturasHTML, setFacturasHTML] = useState(null);
-    //const [usuariosHTML, setUsuariosHTML] = useState(null);
+    const [usuariosHTML, setUsuariosHTML] = useState(null);
     const [correosHTML, setCorreosHTML] = useState(null);
     const [reporteHTML, setReporteHTML] = useState(null);
     const [seccion, setSeccion] = useState("motivos");
@@ -29,6 +30,19 @@ const AdminView = () => {
         } else {
             return "false";
         }
+    }
+
+    const getUsuarios = () => {
+        setUsuariosHTML(
+            <div style={{ marginTop: "10px" }}>
+                <h1>Usuarios</h1>
+                <Row xs={1} lg={2}>
+                    <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
+                        <Usuario />
+                    </Col>
+                </Row>
+            </div>
+        );
     }
 
     const getMotivos = () => {
@@ -152,6 +166,7 @@ const AdminView = () => {
             <main className='contenido'>
                 <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
                     {/*Falta el de usuarios*/}
+                    {seccion === "usuarios" ? (usuariosHTML !== null ? usuariosHTML : getUsuarios()) : null}
                     {seccion === "motivos" ? (motivosHTML !== null ? motivosHTML : getMotivos()) : null}
                     {seccion === "facturas" ? (facturasHTML !== null ? facturasHTML : getFacturas()) : null}
                     {seccion === "correos" ? (correosHTML !== null ? correosHTML : getCorreos()) : null}

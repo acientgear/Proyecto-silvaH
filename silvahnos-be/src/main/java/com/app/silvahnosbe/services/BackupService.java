@@ -42,7 +42,7 @@ public class BackupService {
 	 * @return null
 	 */
 
-	@Scheduled(cron = "0 */1 * * * *")
+	//@Scheduled(cron = "0 */1 * * * *")
 	public void makeBackup() throws ClassNotFoundException, IOException, SQLException {
 		System.out.println("Backup Started at " + new Date());
 
