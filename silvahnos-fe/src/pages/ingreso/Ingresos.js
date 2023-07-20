@@ -153,6 +153,22 @@ const Ingresos = () => {
         return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
     };
 
+    const formatearObservacion = (observacion) => {
+        return (
+            <div 
+                style={{ 
+                    maxWidth: "100px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap"
+                    }}
+                title={observacion}
+                >
+                {observacion}
+            </div>
+        );
+    };
+
     let total = 0;
     ingresos.forEach(ingreso => {
         total += ingreso.monto;
@@ -198,7 +214,7 @@ const Ingresos = () => {
                                 {paginatedData.map((ingreso) => (
                                     <tr key={ingreso.id}>
                                         <td>{formatearFecha(ingreso.fecha_creacion)}</td>
-                                        <td>{ingreso.descripcion}</td>
+                                        <td>{formatearObservacion(ingreso.descripcion)}</td>
                                         <td>{ingreso.motivo.nombre}</td>
                                         <td>{ingreso.patente}</td>
                                         <td>{formatoMonto(ingreso.monto)}</td>

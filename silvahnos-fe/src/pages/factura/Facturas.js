@@ -183,6 +183,22 @@ const Facturas = () => {
         return montoFormateado;
     };
 
+    const formatearObservacion = (observacion) => {
+        return (
+            <div 
+                style={{ 
+                    maxWidth: "100px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap"
+                    }}
+                title={observacion}
+                >
+                {observacion}
+            </div>
+        );
+    };
+
     const [editedItem, setEditedItem] = useState({
         id: null,
         numero_factura: 0,
@@ -274,7 +290,7 @@ const Facturas = () => {
                                         <td>{formatearFecha(factura.fecha_vencimiento)}</td>
                                         <td>{factura.fecha_pago ? formatearFecha(factura.fecha_pago) : '---'}</td>
                                         <td>{factura.estado.nombre}</td>
-                                        <td>{factura.observaciones}</td>
+                                        <td>{formatearObservacion(factura.observaciones)}</td>
                                         <td>
                                             <a href="#sc" style={{ cursor: "pointer", marginRight: 2, color: "#198754" }} onClick={() => handleShowCheck(factura)}><AiFillCheckCircle /></a>
                                             <a href="#se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(factura)}><AiFillEdit /></a>

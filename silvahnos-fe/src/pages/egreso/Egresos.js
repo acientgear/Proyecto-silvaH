@@ -149,6 +149,22 @@ const Egresos = () => {
         return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
     };
 
+    const formatearObservacion = (observacion) => {
+        return (
+            <div 
+                style={{ 
+                    maxWidth: "100px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap"
+                    }}
+                title={observacion}
+                >
+                {observacion}
+            </div>
+        );
+    };
+
     let total = 0;
     egresos.forEach((egreso) => {
         total += egreso.monto;
@@ -193,7 +209,7 @@ const Egresos = () => {
                                 {paginatedData.map((egreso) => (
                                     <tr key={egreso.id}>
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
-                                        <td>{egreso.descripcion}</td>
+                                        <td>{formatearObservacion(egreso.descripcion)}</td>
                                         <td>{egreso.motivo.nombre}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>

@@ -60,6 +60,22 @@ const MotivoI = () => {
         }
     };
 
+    const formatearObservacion = (observacion) => {
+        return (
+            <div 
+                style={{ 
+                    maxWidth: "100px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap"
+                    }}
+                title={observacion}
+                >
+                {observacion}
+            </div>
+        );
+    };
+
     const handleDelete = () => {
         editedItem.borrado = true;
         deleteMotivoI();
@@ -126,7 +142,7 @@ const MotivoI = () => {
                             {motivosI.map((motivo, index) => (
                                 <tr key={motivo.id}>
                                     <td >{motivo.nombre}</td>
-                                    <td >{motivo.descripcion}</td>
+                                    <td >{formatearObservacion(motivo.descripcion)}</td>
                                     <td>
                                         <a href="#se"
                                             onClick={() => handleShowEdit(motivo)} 
