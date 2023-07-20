@@ -336,6 +336,19 @@ public class IngresoServiceTest {
     }
 
     @Test
+    public void testObtenerDiasMes_FebreroAnioBisiesto_Returns292() {
+        // Given
+        int mes = 2;
+        int anio = 400;
+
+        // When
+        int result = IngresoService.obtenerDiasMes(mes, anio);
+
+        // Then
+        assertEquals(29, result);
+    }
+
+    @Test
     public void testObtenerDiasMes_MesesCon31Dias_Returns31() {
         // Given
         int[] mesesCon31Dias = {1, 3, 5, 7, 8, 10, 12};
