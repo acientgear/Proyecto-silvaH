@@ -1,5 +1,6 @@
 package com.app.silvahnosbe.service;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -335,6 +336,28 @@ public class EgresoServiceTest {
 
         // Then
         assertEquals(expectedMontos, result);
+    }
+
+    @Test
+    public void testGetMontosUltimos5Dias() {
+        // Given
+        List<Integer> expectedMontos = new ArrayList<>();
+        expectedMontos.add(100); // Dummy data for the first day
+        expectedMontos.add(200); // Dummy data for the second day
+        expectedMontos.add(300); // Dummy data for the third day
+        expectedMontos.add(400); // Dummy data for the fourth day
+        expectedMontos.add(500); // Dummy data for the fifth day
+
+        // Mock the behavior of egresoRepository.obtenerMontoPorDia
+        when(egresoRepository.obtenerMontoPorDia(anyInt(), anyInt(), anyInt()))
+                .thenReturn(100, 200, 300, 400, 500);
+
+        // When
+        List<Integer> actualMontos = egresoService.getMontosUltimos5Dias();
+
+        // Then
+        assertEquals(expectedMontos, actualMontos);
+        // You can add more specific assertions as per your requirements
     }
 
 }
