@@ -43,13 +43,17 @@
 					</textElement>
 					<text><![CDATA[Reporte de facturas]]></text>
 				</staticText>
+				<image>
+					<reportElement x="490" y="2" width="105" height="47" uuid="d992481b-8941-4e3a-bf14-60221b6d5cc5"/>
+					<imageExpression><![CDATA["silvahnos-be\\src\\main\\resources\\logo.png"]]></imageExpression>
+				</image>
 			</frame>
 		</band>
 	</title>
 	<detail>
 		<band height="203">
 			<componentElement>
-				<reportElement x="47" y="21" width="555" height="153" forecolor="#000000" uuid="382837ab-e830-4a98-8ce8-e5d01e399f13">
+				<reportElement x="0" y="50" width="555" height="153" forecolor="#000000" uuid="382837ab-e830-4a98-8ce8-e5d01e399f13">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>

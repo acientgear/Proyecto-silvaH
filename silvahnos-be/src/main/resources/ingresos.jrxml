@@ -44,6 +44,10 @@
 					</textElement>
 					<text><![CDATA[Reporte de ingresos]]></text>
 				</staticText>
+				<image>
+					<reportElement x="490" y="2" width="105" height="47" uuid="d992481b-8941-4e3a-bf14-60221b6d5cc5"/>
+					<imageExpression><![CDATA["silvahnos-be\\src\\main\\resources\\logo.png"]]></imageExpression>
+				</image>
 			</frame>
 		</band>
 	</title>

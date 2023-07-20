@@ -31,7 +31,7 @@ public class EgresosReportGenerator {
         params.put("total", total);
 
         JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
-                ResourceUtils.getFile("classpath:egresos.jrxml")
+                ResourceUtils.getFile("silvahnos-be\\src\\main\\resources\\egresos.jrxml")
                         .getAbsolutePath()), params, new JREmptyDataSource());
 
         return report;

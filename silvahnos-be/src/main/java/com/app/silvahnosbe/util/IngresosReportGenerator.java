@@ -30,7 +30,7 @@ public class IngresosReportGenerator {
         params.put("total", total);
 
         JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
-                ResourceUtils.getFile("classpath:ingresos.jrxml")
+                ResourceUtils.getFile("silvahnos-be\\src\\main\\resources\\ingresos.jrxml")
                         .getAbsolutePath()), params, new JREmptyDataSource());
 
         return report;

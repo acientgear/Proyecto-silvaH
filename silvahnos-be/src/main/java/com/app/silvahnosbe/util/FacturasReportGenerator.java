@@ -31,7 +31,7 @@ public class FacturasReportGenerator {
         params.put("iva_total", iva_total);
 
         JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
-                ResourceUtils.getFile("classpath:facturas.jrxml")
+                ResourceUtils.getFile("silvahnos-be\\src\\main\\resources\\facturas.jrxml")
                         .getAbsolutePath()), params, new JREmptyDataSource());
 
         return report;
