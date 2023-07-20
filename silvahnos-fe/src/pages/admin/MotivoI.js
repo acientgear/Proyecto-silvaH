@@ -181,7 +181,7 @@ const MotivoI = () => {
                     <FormMotivo
                         motivo={editedItem}
                         postMotivo={updatemotivoI}
-                        handleClose={handleCloseEdit}
+                        handleClose={handleCloseCreate}
                     />
                 </Modal.Body>
             </Modal>

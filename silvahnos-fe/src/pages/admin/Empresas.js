@@ -15,7 +15,6 @@ const Empresas = () => {
     const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [validated, setValidated] = useState(false);
 
     const handleCloseCreate = () => {
         setEditedItem(defaultItem);
@@ -23,7 +22,6 @@ const Empresas = () => {
     }
 
     const handleShowCreate = () => {
-        setValidated(false);
         setEditedItem(defaultItem);
         setShowCreate(true);
     }
@@ -44,40 +42,17 @@ const Empresas = () => {
     };
 
     const handleShowEdit = (empresa) => {
-        setValidated(false);
         setEditedItem(empresa);
         setShowEdit(true);
     };
 
-    const handleChange = (e) => {
-        setEditedItem({
-            ...editedItem,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            if(!checkRut(editedItem.rut) || editedItem.rut.length > 12){
-                e.stopPropagation();
-                return;
-            }
-            updateEmpresa();
-            handleCloseEdit();
-            handleCloseCreate();
-            setValidated(true);
-        }
-    };
-
-    const updateEmpresa = async () => {
+    const updateEmpresa = async (editedItem) => {
         try {
             let url = 'http://' + urlweb + '/empresas';
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
+                handleCloseCreate();
+                handleCloseEdit();
                 getEmpresas();
             }
         } catch (err) {
@@ -133,7 +108,7 @@ const Empresas = () => {
 
     useEffect(() => {
         getEmpresas();
-    }, []);
+    });
 
     return (
         <div style={{width: "100%"}}>
@@ -212,11 +187,8 @@ const Empresas = () => {
                 <Modal.Body>
                     <FormEmpresa
                         empresa={editedItem}
-                        validated={validated}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
+                        postEmpresa={updateEmpresa}
                         handleClose={handleCloseCreate}
-                        setEmpresa={setEditedItem}
                     />
                 </Modal.Body>
             </Modal>
@@ -229,11 +201,8 @@ const Empresas = () => {
                 <Modal.Body>
                     <FormEmpresa
                         empresa={editedItem}
-                        validated={validated}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
+                        postEmpresa={updateEmpresa}
                         handleClose={handleCloseEdit}
-                        setEmpresa={setEditedItem}
                     />
                 </Modal.Body>
             </Modal>

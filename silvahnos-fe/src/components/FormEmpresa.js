@@ -1,65 +1,90 @@
 import { Form, Button } from 'react-bootstrap';
 import { checkRut, prettifyRut } from "react-rut-formatter";
+import * as yup from 'yup';
+import * as formik from 'formik';
 
-const FormEmpresa = ({ empresa, validated, handleChange, handleSubmit, handleClose, setEmpresa }) => {
-
-    const handleRut = (e) => {
-        setEmpresa({
-            ...empresa,
-            rut: prettifyRut(e.target.value)
-        });
-    }
+const FormEmpresa = ({ empresa, postEmpresa, handleClose }) => {
+    const { Formik } = formik;
+    const formSchema = yup.object().shape({
+        rut: yup.string().required('Ingrese un rut valido').min(12, 'Ingrese un rut valido').max(12, 'Ingrese un rut valido').test('Rut valido', 'Ingrese un rut valido', (rut) => checkRut(rut)),
+        nombre: yup.string().required('Ingrese un nombre valido').min(1, 'Mínimo 1 carácter').max(255, 'Máximo 255 caracteres'),
+        direccion: yup.string().required('Ingrese una dirección valida').min(10, 'Mínimo 10 carácter').max(255, 'Máximo 255 caracteres')
+    });
 
     return (
         <div>
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formRut">
-                    <Form.Label>Rut</Form.Label>
-                    <Form.Control name="rut" required
-                        isValid={checkRut(empresa.rut)}
-                        isInvalid={!checkRut(empresa.rut) || empresa.rut.length > 12}
-                        type="text" placeholder="Ingrese un rut" onChange={handleRut}
-                        value={empresa.rut}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        Ingrese un rut válido
-                    </Form.Control.Feedback>
-                </Form.Group>
+            <Formik
+                validationSchema={formSchema}
+                onSubmit={(values) => {
+                    const objetoActualizado = { ...empresa, ...values };
+                    objetoActualizado.rut = prettifyRut(values.rut);
+                    postEmpresa(objetoActualizado);
+                }}
+                initialValues={{
+                    rut: empresa.rut,
+                    nombre: empresa.nombre,
+                    direccion: empresa.direccion,
+                }}
+            >
+                {({ handleSubmit, handleChange, values, errors, setFieldValue }) => (
+                    <Form noValidate onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="formRut">
+                            <Form.Label>Rut</Form.Label>
+                            <Form.Control 
+                                name="rut"
+                                type="text" 
+                                placeholder="Ingrese un rut" 
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    setFieldValue("rut", prettifyRut(e.target.value));
+                                }}
+                                value={values.rut}
+                                isInvalid={!!errors.rut}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.rut}
+                            </Form.Control.Feedback>
+                        </Form.Group>
 
-                <Form.Group className='mb-3' controlId='formNombre'>
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control name="nombre"
-                        required
-                        isValid={255 > empresa.nombre.length && empresa.nombre.length > 0}
-                        isInvalid={empresa.nombre.length > 255 || empresa.nombre.length === 0}
-                        type='text' row={3} value={empresa.nombre} onChange={handleChange} />
-                    <span style={{ color: "#adb5bd" }}>{empresa.nombre.length + '/255'}</span>
-                    <Form.Control.Feedback type="invalid">
-                        Ingrese un nombre válido
-                    </Form.Control.Feedback>
-                </Form.Group>
+                        <Form.Group className='mb-3' controlId='formNombre'>
+                            <Form.Label>Nombre</Form.Label>
+                            <Form.Control 
+                                name="nombre"
+                                type='text' 
+                                value={values.nombre} 
+                                onChange={handleChange} 
+                                isInvalid={!!errors.nombre}
+                                />
+                            <span style={{ color: "#adb5bd" }}>{values.nombre.length + '/255'}</span>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.nombre}
+                            </Form.Control.Feedback>
+                        </Form.Group>
 
-                <Form.Group className='mb-3' controlId='formDirección'>
-                    <Form.Label>Dirección</Form.Label>
-                    <Form.Control name="direccion"
-                        required
-                        isValid={255 > empresa.direccion.length && empresa.direccion.length > 0}
-                        isInvalid={empresa.direccion.length > 255 || empresa.direccion.length === 0}
-                        type='text' row={3} value={empresa.direccion} onChange={handleChange} />
-                    <span style={{ color: "#adb5bd" }}>{empresa.direccion.length + '/255'}</span>
-                    <Form.Control.Feedback type="invalid">
-                        Ingrese una dirección válida
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <div>
-                    <hr></hr>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                        <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleClose}>Cerrar</Button>
-                        <Button variant='primary' type='submit'>Guardar</Button>
-                    </div>
-                </div>
-            </Form>
-
+                        <Form.Group className='mb-3' controlId='formDirección'>
+                            <Form.Label>Dirección</Form.Label>
+                            <Form.Control 
+                                name="direccion"
+                                type='text' 
+                                value={values.direccion} 
+                                onChange={handleChange} 
+                                isInvalid={!!errors.direccion}
+                                />
+                            <span style={{ color: "#adb5bd" }}>{values.direccion.length + '/255'}</span>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.direccion}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <div>
+                            <hr></hr>
+                            <div style={{ display: "flex", justifyContent: "end" }}>
+                                <Button variant='secondary' style={{ marginRight: 2 }} onClick={handleClose}>Cerrar</Button>
+                                <Button variant='primary' type='submit'>Guardar</Button>
+                            </div>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 }

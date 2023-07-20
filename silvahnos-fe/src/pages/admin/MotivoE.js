@@ -14,7 +14,6 @@ const MotivoE = () => {
     const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [validated, setValidated] = useState(false);
 
     const handleCloseCreate = () => {
         setEditedItem(defaultItem);
@@ -22,7 +21,6 @@ const MotivoE = () => {
     }
 
     const handleShowCreate = () => {
-        setValidated(false);
         setEditedItem(defaultItem);
         setShowCreate(true);
     }
@@ -43,36 +41,18 @@ const MotivoE = () => {
     };
 
     const handleShowEdit = (motivoE) => {
-        setValidated(false);
         setEditedItem(motivoE);
         setShowEdit(true);
     };
 
-    const handleChange = (e) => {
-        setEditedItem({
-            ...editedItem,
-            [e.target.name]: e.target.value,
-        });
-    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            updatemotivoE();
-            handleCloseEdit();
-            handleCloseCreate();
-            setValidated(true);
-        }
-    };
-
-    const updatemotivoE = async () => {
+    const updatemotivoE = async (editedItem) => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
+                handleCloseEdit();
+                handleCloseCreate();
                 getMotivosE();
             }
         } catch (err) {
@@ -126,7 +106,7 @@ const MotivoE = () => {
 
     useEffect(() => {
         getMotivosE();
-    }, []);
+    });
 
     return (
         <div style={{width: "100%"}}>
@@ -201,9 +181,7 @@ const MotivoE = () => {
                 <Modal.Body>
                     <FormMotivo
                         motivo={editedItem}
-                        validated={validated}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
+                        postMotivo={updatemotivoE}
                         handleClose={handleCloseCreate}
                     />
                 </Modal.Body>
@@ -217,9 +195,7 @@ const MotivoE = () => {
                 <Modal.Body>
                     <FormMotivo
                         motivo={editedItem}
-                        validated={validated}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
+                        postMotivo={updatemotivoE}
                         handleClose={handleCloseEdit}
                     />
                 </Modal.Body>
