@@ -451,4 +451,26 @@ public class IngresoServiceTest {
         assertEquals(expectedMontos, result);
     }
 
+    @Test
+    public void testGetMontosUltimos5Dias() {
+        // Given
+        List<Integer> expectedMontos = new ArrayList<>();
+        expectedMontos.add(100); // Dummy data for the first day
+        expectedMontos.add(200); // Dummy data for the second day
+        expectedMontos.add(300); // Dummy data for the third day
+        expectedMontos.add(400); // Dummy data for the fourth day
+        expectedMontos.add(500); // Dummy data for the fifth day
+
+        // Mock the behavior of ingresoRepository.obtenerMontoPorDia
+        when(ingresoRepository.obtenerMontoPorDia(anyInt(), anyInt(), anyInt()))
+                .thenReturn(100, 200, 300, 400, 500);
+
+        // When
+        List<Integer> actualMontos = ingresoService.getMontosUltimos5Dias();
+
+        // Then
+        assertEquals(expectedMontos, actualMontos);
+        // You can add more specific assertions as per your requirements
+    }
+
 }
