@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
+import * as yup from 'yup';
 
 const CrearIngreso = () => {
     const config = {
         headers: { Authorization: `Bearer ${localStorage.token}` }
     };  
-    const [validated, setValidated] = useState(false);
 
     const [ingreso, setIngreso] = useState({
         id: null,
@@ -17,36 +17,17 @@ const CrearIngreso = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
-        monto: 0,
+        monto: 1,
         motivo: {
             id: 0
         },
         descripcion: '',
     });
 
-    const handleChange = (e) => {
-        setIngreso({
-            ...ingreso,
-            [e.target.name]: e.target.value,
-        });
-        setValidated(false);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            createIngreso();
-            setValidated(true);
-        }
-    };
-
-    const createIngreso = async () => {
+    const createIngreso = async (ingreso) => {
         try {
             let url = "http://"+urlweb+"/ingresos";
-            let response = await axios.post(url, ingreso,config);
+            let response = await axios.post(url,ingreso,config);
             if (response.status === 200) {
                 window.location.href = "/ingresos";
             }
@@ -67,10 +48,8 @@ const CrearIngreso = () => {
                     <FormIngreso
                         ingreso={ingreso}
                         setIngreso={setIngreso}
-                        validated={validated}
+                        postIngreso={createIngreso}
                         modal={false}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
                     />
                 </Col>
             </Row>

@@ -1,18 +1,22 @@
 import CategoriasIngreso from "./data/CategoriasIngreso";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import * as yup from 'yup';
+import * as formik from 'formik';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import urlweb from "../config/config";
+import { set } from "date-fns";
 
-const FormIngreso = ({ ingreso, setIngreso, validated, modal, handleChange, handleCloseEdit, handleSubmit }) => {
-
-    const handleMotivo = (e) => {
-        setIngreso({
-            ...ingreso,
-            "motivo": {
-                "id": e.target.value
-            }
-        });
-    }
-
+const FormIngreso = ({ ingreso, setIngreso, postIngreso, modal, handleCloseEdit }) => {
+    const { Formik } = formik;
     const motivos = CategoriasIngreso();
+
+    const formSchema = yup.object().shape({
+        patente: yup.string().required("Ingrese una patente valida").min(6, "Son 6 caracteres").max(6, "Son 6 caracteres"),
+        monto: yup.number().required("Ingrese un monto valido").min(1, "Mínimo $1 CLP").max(1000000000, "Máximo $1.000.000.000 CLP"),
+        motivo: yup.number().required("Seleccione una opción valida").min(1, "Seleccione una opción valida"),
+        descripcion: yup.string().required("Ingrese una descripción valida").min(10, "Mínimo 10 carácter").max(255, "Máximo 255 caracteres")
+    });
 
     const modalFooter = () => {
         return (
@@ -39,84 +43,114 @@ const FormIngreso = ({ ingreso, setIngreso, validated, modal, handleChange, hand
         )
     }
 
+    useEffect(() => {
+        console.log("Dentro del componente: ", ingreso)
+    }, [ingreso])
+
+
     return (
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Row xs={1} sm={3}>
-                <Col>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Patente</Form.Label>
-                        <Form.Control name="patente"
-                            required
-                            isValid={6 > ingreso.patente.length && ingreso.patente.length > 0}
-                            isInvalid={ingreso.patente.length > 6 || ingreso.patente.length === 0}
-                            type="text"
-                            placeholder="Ingrese la patente"
-                            value={ingreso.patente}
-                            onChange={handleChange}
-                        />
-                        <span style={{ color: "#adb5bd" }}>{ingreso.patente.length + '/6'}</span>
-                        <Form.Control.Feedback type="invalid">
-                            Ingrese una patente valida
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Col>
-
-                <Col>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Motivo</Form.Label>
-                        <Form.Select name="motivo"
-                            required
-                            aria-label="select"
-                            onChange={handleMotivo}
-                            value={ingreso.motivo.id}
-                        >
-                            <option key={0} value="">Seleccione una opción</option>
-                            {motivos.map((categoria) => (
-                                <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
-                            ))}
-                        </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                            Seleccione una opción valida
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Col>
-
-                <Col>
-                    <Form.Group className='mb-3' controlId='formMonto'>
-                        <Form.Label>Monto</Form.Label>
-                        <Form.Control name="monto"
-                            required
-                            isValid={1000000000 > ingreso.monto && ingreso.monto > 0}
-                            isInvalid={ingreso.monto <= 0 || ingreso.monto > 1000000000}
-                            min={1}
-                            max={1000000000}
-                            type='number'
-                            value={ingreso.monto}
-                            onChange={handleChange} />
-                        <Form.Control.Feedback type="invalid">
-                            Ingrese un monto entre $1 y $1.000.000.000
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <Form.Group className='mb-3' controlId='formDescripcion'>
-                        <Form.Label>Descripción</Form.Label>
-                        <Form.Control name="descripcion"
-                            required
-                            isValid={255 > ingreso.descripcion.length && ingreso.descripcion.length > 0}
-                            isInvalid={ingreso.descripcion.length > 255 || ingreso.descripcion.length === 0}
-                            as='textarea' row={3} value={ingreso.descripcion} onChange={handleChange} />
-                        <span style={{ color: "#adb5bd" }}>{ingreso.descripcion.length + '/255'}</span>
-                        <Form.Control.Feedback type="invalid">
-                            Ingrese una descripción valida
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Col>
-            </Row>
-            {modal ? modalFooter() : formFooter()}
-        </Form>
+        <Formik
+            validationSchema={formSchema}
+            onSubmit={(values) => {
+                const objetoActualizado = {...ingreso, ...values};
+                objetoActualizado.motivo = {id: values.motivo};
+                postIngreso(objetoActualizado);
+                // setIngreso({
+                //     ...ingreso,
+                //     patente: values.patente,
+                //     monto: values.monto,
+                //     motivo: {
+                //         id: values.motivo
+                //     },
+                //     descripcion: values.descripcion,
+                // });
+            }}
+            initialValues={{
+                patente: ingreso.patente,
+                monto: ingreso.monto,
+                motivo: ingreso.motivo.id,
+                descripcion: ingreso.descripcion,
+            }}
+        >
+            {({ handleSubmit, handleChange, values, errors}) => (
+                <Form noValidate onSubmit={handleSubmit}>
+                <Row xs={1} sm={3}>
+                    <Col>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Patente</Form.Label>
+                            <Form.Control 
+                                type="text"
+                                name="patente"
+                                placeholder="Ingrese una patente"
+                                value={values.patente}
+                                onChange={handleChange}
+                                isInvalid={!!errors.patente}
+                            />
+                            <span style={{ color: "#adb5bd" }}>{values.patente.length + '/6'}</span>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.patente}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Col>
+    
+                    <Col>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Motivo</Form.Label>
+                            <Form.Select 
+                                name="motivo"
+                                aria-label="select"
+                                onChange={handleChange}
+                                value={values.motivo}
+                                isInvalid={!!errors.motivo}
+                            >
+                                <option key={0} value={0}>Seleccione una opción</option>
+                                {motivos.map((categoria) => (
+                                    <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
+                                ))}
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.motivo}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Col>
+    
+                    <Col>
+                        <Form.Group className='mb-3' controlId='formMonto'>
+                            <Form.Label>Monto</Form.Label>
+                            <Form.Control 
+                                name="monto"
+                                type='number'
+                                value={values.monto}
+                                onChange={handleChange} 
+                                isInvalid={!!errors.monto}/>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.monto}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group className='mb-3' controlId='formDescripcion'>
+                            <Form.Label>Descripción</Form.Label>
+                            <Form.Control 
+                                name="descripcion"
+                                as='textarea' 
+                                placeholder="Ingrese una descripción"
+                                value={values.descripcion} 
+                                onChange={handleChange} 
+                                isInvalid={!!errors.descripcion}/>
+                            <span style={{ color: "#adb5bd" }}>{values.descripcion.length + '/255'}</span>
+                            <Form.Control.Feedback type="invalid">
+                                {errors.descripcion}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                {modal ? modalFooter() : formFooter()}
+            </Form>
+            )}
+        </Formik>
     )
 }
 

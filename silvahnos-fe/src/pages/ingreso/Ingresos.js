@@ -78,18 +78,7 @@ const Ingresos = () => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            updateIngreso();
-            setValidated(true);
-        }
-    };
-
-    const updateIngreso = async () => {
+    const updateIngreso = async (editedItem) => {
         try {
             let url = 'http://' + urlweb + '/ingresos';
             const response = await axios.post(url, editedItem, config);
@@ -137,7 +126,9 @@ const Ingresos = () => {
         fecha_modificacion: null,
         fecha_borrado: null,
         patente: '',
-        motivo: {},
+        motivo: {
+            id: 0
+        },
         monto: '',
         descripcion: '',
     });
@@ -281,12 +272,9 @@ const Ingresos = () => {
                 <Modal.Body>
                     <FormIngreso
                         ingreso={editedItem}
-                        setIngreso={setEditedItem}
-                        validated={validated}
-                        modal={true}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
-                        handleCloseEdit={handleCloseEdit}
+                        setIngreso={setEditedItem} 
+                        postIngreso={updateIngreso}
+                        modal={false}
                     />
                 </Modal.Body>
             </Modal>
