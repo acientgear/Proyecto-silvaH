@@ -33,18 +33,6 @@ public class IngresoEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private MotivoIEntity motivo;
 
-    // Relacion con movimientos
-    @OneToOne
-    @JoinColumn(name = "movimiento")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private MovimientoEntity movimiento;
-
-    // Relacion con factura
-    @ManyToOne
-    @JoinColumn(name = "factura")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private FacturaEntity factura;
-
     // Tiempo de acciones
     @CreationTimestamp
     private Timestamp fecha_creacion;

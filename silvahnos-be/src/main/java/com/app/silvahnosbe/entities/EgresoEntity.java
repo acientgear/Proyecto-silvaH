@@ -31,12 +31,6 @@ public class EgresoEntity {
     @JoinColumn(name = "motivo")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private MotivoEEntity motivo;
-
-    // Relacion con movimientos
-    /*@ManyToOne
-    @JoinColumn(name = "movimiento")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private MovimientoEntity movimiento;*/
     
     // Tiempo de acciones
     @CreationTimestamp
