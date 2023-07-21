@@ -1,5 +1,6 @@
 package com.app.silvahnosbe.services;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -54,7 +55,14 @@ public class IngresoService {
      */
 
     public IngresoEntity guardarIngreso(IngresoEntity ingreso){
-        return ingresoRepository.save(ingreso);
+        ingresoRepository.save(ingreso);
+        Timestamp fechaActual = ingreso.getFecha_creacion();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(fechaActual);
+        calendar1.add(Calendar.HOUR_OF_DAY, -4); // Restar 4 horas
+        fechaActual = new Timestamp(calendar1.getTimeInMillis());   
+        ingreso.setFecha_creacion(fechaActual);
+        return ingreso;
     }
 
     /**

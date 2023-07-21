@@ -1,5 +1,6 @@
 package com.app.silvahnosbe.services;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -38,13 +39,20 @@ public class EgresoService {
 
     /**
      *funcion que permite el registrar un nuevo egreso
-     * @param entidad egreso
+     * @param egreso
      * @return retorna la entidad si se guardo correctamente
      *
      */
 
     public EgresoEntity guardarEgreso(EgresoEntity egreso){
-        return egresoRepository.save((egreso));
+        egresoRepository.save((egreso));
+        Timestamp fechaActual = egreso.getFecha_creacion();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(fechaActual);
+        calendar1.add(Calendar.HOUR_OF_DAY, -4); // Restar 4 horas
+        fechaActual = new Timestamp(calendar1.getTimeInMillis());   
+        egreso.setFecha_creacion(fechaActual);
+        return egreso;
     }
 
 

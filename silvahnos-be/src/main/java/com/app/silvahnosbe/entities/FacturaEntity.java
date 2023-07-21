@@ -1,6 +1,6 @@
 package com.app.silvahnosbe.entities;
 
-import java.util.Date;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,9 +26,9 @@ public class FacturaEntity {
 
     // Datos
     private int numero_factura;
-    private Date fecha_emision;
-    private Date fecha_vencimiento;
-    private Date fecha_pago;
+    private Timestamp fecha_emision;
+    private Timestamp fecha_vencimiento;
+    private Timestamp fecha_pago;
     private Integer monto;
     private String observaciones;
     private boolean borrado;
@@ -44,12 +44,6 @@ public class FacturaEntity {
     @JoinColumn(name = "empresa")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private EmpresaEntity empresa;
-
-    // Relaciones con movimiento
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movimiento")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private MovimientoEntity movimiento;
 
     // Fechas de acciones
     @CreationTimestamp

@@ -1,6 +1,7 @@
 package com.app.silvahnosbe.services;
 
 import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,21 +43,14 @@ public class FacturaService {
      */
 
     public FacturaEntity guardarFactura(FacturaEntity factura) {
-        /*Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(factura.getFecha_vencimiento());
-        calendar1.add(Calendar.DAY_OF_MONTH, 1); // Sumar un día
-
-        Date fecha_v = calendar1.getTime();
-
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.setTime(factura.getFecha_emision());
-        calendar2.add(Calendar.DAY_OF_MONTH, 1); // Sumar un día
-
-        Date fecha_e = calendar2.getTime();
-
-        factura.setFecha_vencimiento(fecha_v);
-        factura.setFecha_emision(fecha_e);*/
-        return facturaRepository.save(factura);
+        facturaRepository.save(factura);
+        Timestamp fechaActual = factura.getFecha_creacion();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(fechaActual);
+        calendar1.add(Calendar.HOUR_OF_DAY, -4); // Restar 4 horas
+        fechaActual = new Timestamp(calendar1.getTimeInMillis());   
+        factura.setFecha_creacion(fechaActual);
+        return factura;
     }
 
 
@@ -68,16 +62,21 @@ public class FacturaService {
      */
 
     public FacturaEntity pagarFactura(FacturaEntity factura) {
+        /*
         if (factura.getFecha_pago() != null) {
             /*Restar un día a la fecha de pago */
-            Calendar calendar = Calendar.getInstance();
+            /*Calendar calendar = Calendar.getInstance();
             calendar.setTime(factura.getFecha_pago());
             calendar.add(Calendar.DAY_OF_MONTH, -1); // Restar un día
 
             Date fecha = calendar.getTime();
 
             factura.setFecha_pago(fecha);
-        }
+        } */
+        
+        java.sql.Timestamp fecha = new java.sql.Timestamp(new Date().getTime());
+        factura.setFecha_pago(fecha);
+
         return facturaRepository.save(factura);
     }
 
