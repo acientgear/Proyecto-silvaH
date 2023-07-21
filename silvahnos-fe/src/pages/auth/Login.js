@@ -37,14 +37,14 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
+            const body = {usuario: login.usuario.trim(), password: login.password};
             let url = "http://"+urlweb+"/iniciar_sesion";
-            const response = await axios.post(url, login);
+            const response = await axios.post(url, body);
             if (response.status === 200) {
                 const expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 12);
                 Cookies.set("token", response.data.jwtToken, {expires: expirationTime});
                 window.location.href = "/";
             }
-
         } catch (err) {
             console.log("Credenciales incorrectas");
             console.error(err.message);
@@ -60,10 +60,11 @@ const Login = () => {
             }}>
             <div style={{
                 width: "auto",
-                height: "360px",
+                height: "390px",
                 backgroundColor: "rgb(217, 217, 217)",
                 padding: "50px",
-                borderRadius: 10
+                borderRadius: 10,
+                boxShadow: "0px 0px 6px 3px rgba(0,0,0,0.5)"
             }}>
                 <h1>Iniciar Sesión</h1>
                 <Form onSubmit={handleSubmit}>

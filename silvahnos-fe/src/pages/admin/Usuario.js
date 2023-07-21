@@ -16,7 +16,6 @@ const Usuario = () => {
             const response = await axios.get(url, config);
             if (response.status === 200) {
                 setUsuarios(response.data);
-                console.log(response.data);
             }
         } catch (err) {
             console.log(err.message);
