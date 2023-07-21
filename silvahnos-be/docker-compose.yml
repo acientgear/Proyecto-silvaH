@@ -17,25 +17,12 @@ services:
       DB_DIALECT: MySQL8Dialect
     ports:
       - 3307:3306
-
-  periodic-backup:
-    build: ./periodic-backup
-    container_name: database-backup
-    environment:
-      MYSQL_CONTAINER_NAME: mysql-db
-      MYSQL_DATABASE: silvahnos
-      MYSQL_ROOT_PASSWORD: password
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /opt/mysql/backup:/opt/mysql/backup
-    comand: crond -f -d 8
-    restart: always  
-
   app:
     container_name: silvahnos-be
     image: luistoro17/silvahnos-be:latest
     ports:
       - '8090:8090'
+      -  '587:587'
     environment:
       - DB_URL=jdbc:mysql://mysql-db:3306/silvahnos?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - DB_USERNAME=root
