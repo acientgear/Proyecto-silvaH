@@ -4,8 +4,6 @@ import { useState, useEffect, useCallback } from 'react';
 import LineChartIngresos from './ingreso/Grafico';
 import LineChartEgresos from './egreso/Grafico';
 import urlweb from '../config/config';
-import Sem1 from '../components/data/Sem1';
-import Sem2 from '../components/data/Sem2';
 
 const Home = () => {
   const config = {
@@ -16,7 +14,6 @@ const Home = () => {
   const [facturas, setFacturas] = useState([]);
   const [saldo, setSaldo] = useState(0);
   const [iva, setIva] = useState(0);
-  const [fechaTexto, setFechaTexto] = useState("");
 
   let fechaAcual = new Date();
   let anio = fechaAcual.getFullYear();
@@ -238,7 +235,7 @@ const Home = () => {
         <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
           <Card className="cardsH">
             <Card.Body>
-              <Card.Title>Facturas más próximas a vencer</Card.Title>
+              <Card.Title>Facturas no pagadas próximas a vencer</Card.Title>
               <ListGroup numbered>
                 {facturas.map((factura) => (
                   <ListGroup.Item
