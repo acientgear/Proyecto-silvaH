@@ -1,10 +1,15 @@
 package com.app.silvahnosbe.util;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -20,6 +25,14 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 public class FacturasReportGenerator {
+
+    private final ResourceLoader resourceLoader;
+
+    @Autowired
+    public FacturasReportGenerator(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+    
     public byte[] exportToPdf(List<FacturaEntity> list, Integer total, Double iva_total) throws JRException, FileNotFoundException{
         return JasperExportManager.exportReportToPdf(getReport(list, total,iva_total));
     }
@@ -30,10 +43,20 @@ public class FacturasReportGenerator {
         params.put("total", total);
         params.put("iva_total", iva_total);
 
-        JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
-                ResourceUtils.getFile("silvahnos-be\\src\\main\\resources\\facturas.jrxml")
-                        .getAbsolutePath()), params, new JREmptyDataSource());
+        // Cargar el archivo utilizando ResourceLoader
+        Resource resource = resourceLoader.getResource("classpath:facturas.jrxml");
+        try {
+            InputStream inputStream = resource.getInputStream();
 
-        return report;
+            JasperPrint report = JasperFillManager.fillReport(
+                JasperCompileManager.compileReport(inputStream),
+                params,
+                new JREmptyDataSource()
+            );
+
+            return report;
+        } catch (IOException e) {
+            throw new JRException("Error al leer el archivo jrxml", e);
+        }
     }
 }

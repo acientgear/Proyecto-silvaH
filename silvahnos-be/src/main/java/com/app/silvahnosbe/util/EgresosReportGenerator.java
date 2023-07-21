@@ -1,12 +1,16 @@
 package com.app.silvahnosbe.util;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
 
@@ -20,21 +24,37 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 public class EgresosReportGenerator {
-    
-    public byte[] exportToPdf(List<EgresoEntity> list, Integer total) throws JRException, FileNotFoundException{
+
+    private final ResourceLoader resourceLoader;
+
+    @Autowired
+    public EgresosReportGenerator(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
+    public byte[] exportToPdf(List<EgresoEntity> list, Integer total) throws JRException, FileNotFoundException {
         return JasperExportManager.exportReportToPdf(getReport(list, total));
     }
 
     private JasperPrint getReport(List<EgresoEntity> list, Integer total) throws FileNotFoundException, JRException {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("egresosData", new JRBeanCollectionDataSource(list));
         params.put("total", total);
 
-        JasperPrint report = JasperFillManager.fillReport(JasperCompileManager.compileReport(
-                ResourceUtils.getFile("silvahnos-be\\src\\main\\resources\\egresos.jrxml")
-                        .getAbsolutePath()), params, new JREmptyDataSource());
+        // Cargar el archivo utilizando ResourceLoader
+        Resource resource = resourceLoader.getResource("classpath:egresos.jrxml");
+        try {
+            InputStream inputStream = resource.getInputStream();
 
-        return report;
+            JasperPrint report = JasperFillManager.fillReport(
+                JasperCompileManager.compileReport(inputStream),
+                params,
+                new JREmptyDataSource()
+            );
+
+            return report;
+        } catch (IOException e) {
+            throw new JRException("Error al leer el archivo jrxml", e);
+        }
     }
-    
 }
