@@ -7,7 +7,7 @@ import Parametro from './Parametro';
 import Correo from './Correo';
 import './AdminView.css';
 import './CardStyle.css'
-import { AiOutlineUser, AiOutlineBarChart, AiOutlineFileText, AiOutlineMail, AiOutlineTag } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineBarChart, AiOutlineFileText, AiOutlineMail, AiOutlineTag, AiFillShop } from 'react-icons/ai';
 import { useState } from 'react';
 import Reporte from './Reporte';
 
@@ -64,7 +64,7 @@ const AdminView = () => {
     const getFacturas = () => {
         setFacturasHTML(
             <div style={{ marginTop: "10px" }}>
-                <h1>Facturas</h1>
+                <h1>Empresas</h1>
                 <Row >
                     <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Empresas />
@@ -120,7 +120,7 @@ const AdminView = () => {
                         </li>
                         <li active={handleActive("facturas")} className='link-collapse'>
                             <a className="link-anchor-collapse" href='#facturas' onClick={() => handleSeccion("facturas")}>
-                                <AiOutlineFileText />
+                                <AiFillShop />
                             </a>
                         </li>
                         <li active={handleActive("correos")} className='link-collapse'>
@@ -147,7 +147,7 @@ const AdminView = () => {
                         </li>
                         <li active={handleActive("facturas")} className='link-always'>
                             <a className='link-anchor-always' href='#facturas' onClick={() => handleSeccion("facturas")}>
-                                <AiOutlineFileText /> Factura
+                                <AiFillShop /> Empresas
                             </a>
                         </li>
                         <li active={handleActive("correos")} className='link-always'>

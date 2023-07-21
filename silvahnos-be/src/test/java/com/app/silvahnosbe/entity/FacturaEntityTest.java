@@ -140,19 +140,6 @@ public class FacturaEntityTest {
     }
 
     @Test
-    void testMovimiento() {
-        // Given
-        FacturaEntity factura = new FacturaEntity();
-        
-        // When
-        factura.setMovimiento(null);
-        Object movimiento = factura.getMovimiento();
-        
-        // Then
-        assertEquals(null, movimiento);
-    }
-
-    @Test
     void testFechaCreacion() {
         // Given
         FacturaEntity factura = new FacturaEntity();

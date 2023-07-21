@@ -74,19 +74,6 @@ public class IngresoEntityTest {
     }
 
     @Test
-    void testFactura(){
-        // Given
-        IngresoEntity ingreso = new IngresoEntity();
-
-        // When
-        ingreso.setFactura(null);
-        Object factura = ingreso.getFactura();
-
-        // Then
-        assertEquals(null, factura);
-    }
-
-    @Test
     void testMotivoE() {
         // Given
         IngresoEntity ingreso = new IngresoEntity();
@@ -97,19 +84,6 @@ public class IngresoEntityTest {
 
         // Then
         assertEquals(null, motivoE);
-    }
-
-    @Test
-    void testMovimiento(){
-        // Given
-        IngresoEntity ingreso = new IngresoEntity();
-
-        // When
-        ingreso.setMovimiento(null);
-        Object movimiento = ingreso.getMovimiento();
-
-        // Then
-        assertEquals(null, movimiento);
     }
 
     @Test

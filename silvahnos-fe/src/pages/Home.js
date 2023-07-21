@@ -26,7 +26,7 @@ const Home = () => {
   const getIgresos = async () => {
     try {
       let url = 'http://' + urlweb + '/ingresos/ultimos';
-      const response = await axios.get(url,config);
+      const response = await axios.get(url, config);
       if (response.status === 200) {
         setIngresos(response.data);
       }
@@ -38,7 +38,7 @@ const Home = () => {
   const getEgresos = async () => {
     try {
       let url = 'http://' + urlweb + '/egresos/ultimos';
-      const response = await axios.get(url,config);
+      const response = await axios.get(url, config);
       if (response.status === 200) {
         setEgresos(response.data);
       }
@@ -50,7 +50,7 @@ const Home = () => {
   const getSaldoCuenta = useCallback(async () => {
     try {
       let url = 'http://' + urlweb + '/ingresos/total/' + mes;
-      const response = await axios.get(url,config);
+      const response = await axios.get(url, config);
       if (response.status === 200) {
         setSaldo(response.data);
       }
@@ -62,7 +62,7 @@ const Home = () => {
   const getIva = async () => {
     try {
       let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
-      const response = await axios.get(url,config);
+      const response = await axios.get(url, config);
       if (response.status === 200) {
         setIva(response.data);
       }
@@ -74,7 +74,7 @@ const Home = () => {
   const getProximasFacturasVencer = async () => {
     try {
       let url = 'http://' + urlweb + '/facturas/proximasVencer/' + anio + '/' + mes;
-      const response = await axios.get(url,config);
+      const response = await axios.get(url, config);
       if (response.status === 200) {
         setFacturas(response.data);
       }
@@ -84,8 +84,12 @@ const Home = () => {
   };
 
   const formatearFecha = (fecha) => {
-    const fechaActual = new Date(fecha);
-    return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
+    if (fecha === null) {
+      return "---"
+    }
+    let fechaC = fecha.split('T')[0];
+    fechaC = fechaC.split('-');
+    return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
   };
 
   const calcularDiasPorVencer = (fecha) => {
@@ -95,7 +99,21 @@ const Home = () => {
     let fechaActual = new Date();
     let diferencia = fechaVencimiento.getTime() - fechaActual.getTime();
     let dias = Math.round(diferencia / (1000 * 60 * 60 * 24));
-    return dias;
+    dias = dias + 1;
+    console.log("venc", fechaVencimiento)
+    console.log("act", fechaActual);
+    if (dias == 0) {
+      return "Vence hoy";
+    } else if (dias < 0) {
+      return "Vencida";
+    }
+    else {
+      if (dias == 1) {
+        return "Vence en " + dias + " día";
+      } else {
+        return "Vence en " + dias + " días";
+      }
+    }
   };
 
   const formatoMonto = (monto) => {
@@ -106,7 +124,7 @@ const Home = () => {
   const totalIngresosMes = useCallback(async () => {
     try {
       let url = 'http://' + urlweb + '/ingresos/total/' + anio + '/' + mes;
-      const response = await axios.get(url,config);
+      const response = await axios.get(url, config);
       if (response.status === 200) {
         setTotalIngresos(response.data);
       }
@@ -119,7 +137,7 @@ const Home = () => {
   const totalEgresosMes = useCallback(async () => {
     try {
       let url = 'http://' + urlweb + '/egresos/total/' + anio + '/' + mes;
-      const response = await axios.get(url,config);
+      const response = await axios.get(url, config);
       if (response.status === 200) {
         setTotalEgresos(response.data);
       }
@@ -249,7 +267,7 @@ const Home = () => {
                       Fecha de vencimiento: {formatearFecha(factura.fecha_vencimiento)}
                     </div>
                     <Badge bg="warning" pill style={{ color: "black" }}>
-                      Vence en {calcularDiasPorVencer(factura.fecha_vencimiento)} día(s)
+                      {calcularDiasPorVencer(factura.fecha_vencimiento)}
                     </Badge>
                   </ListGroup.Item>
                 ))}
