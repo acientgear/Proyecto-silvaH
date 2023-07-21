@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import urlweb from '../../config/config';
+import Cookies from "js-cookie";
 
 const Login = () => {
     //const [validated, setValidated] = useState(false);
@@ -41,7 +42,7 @@ const Login = () => {
             console.log(login, url)
             const response = await axios.post(url, login);
             if (response.status === 200) {
-                localStorage.setItem("token", response.data.jwtToken);
+                localStorage.setItem("token", response.data.token);
                 window.location.href = "/";
             }
 

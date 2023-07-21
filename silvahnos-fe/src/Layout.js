@@ -1,9 +1,9 @@
 import Navbar from "./components/Navbar";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, token }) => {
     return (
         <>
-            <Navbar/>
+            <Navbar logged={token}/>
             <main style={{backgroundColor:"#f7f7f8"}}>{children}</main>
         </>
     );

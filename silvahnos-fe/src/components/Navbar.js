@@ -1,21 +1,13 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
 import Logo from "./images/logo.png";
-import { useEffect, useState } from "react";
 
-function BasicExample() {
-  const [logged, setLogged] = useState(false);
-
+function BasicExample({logged}) {
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    if(logged){
+      localStorage.removeItem("token");
+    }
     window.location.href = "/login";
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setLogged(true);
-    }
-  }, []);
 
   return (
     <Navbar collapseOnSelect expand="md" style={{ background: "#D9D9D9", color: "red", boxShadow: "0px 2px 6px 0px rgba(0,0,0,0.5)"}}>
@@ -40,12 +32,7 @@ function BasicExample() {
             <Nav.Link href="/administracion">Administración{" "}</Nav.Link>
           </Nav>
           <Nav style={{ color: "black", fontWeight: "bold" }}>
-            {logged ? (
-              <Nav.Link onClick={handleLogout}>Cerrar sesión</Nav.Link>
-            ) : (
-              <Nav.Link href="/login">Iniciar sesión</Nav.Link>
-            )  
-            }
+            <Nav.Link onClick={handleLogout}>{logged ? "Cerrar sesión" : "Iniciar sesión"}</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
