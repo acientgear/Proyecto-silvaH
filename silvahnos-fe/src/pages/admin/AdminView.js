@@ -36,7 +36,7 @@ const AdminView = () => {
         setUsuariosHTML(
             <div style={{ marginTop: "10px" }}>
                 <h1>Usuarios</h1>
-                <Row xs={1} lg={2}>
+                <Row>
                     <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Usuario />
                     </Col>

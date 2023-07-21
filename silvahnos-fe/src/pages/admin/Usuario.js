@@ -3,12 +3,24 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
+import FormUsuario from '../../components/FormUsuario';
 
 const Usuario = () => {
     const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
     const [usuarios, setUsuarios] = useState([]);
+    const [show, setShow] = useState(false);
+    const usuario = {
+        id: null,
+        correo: '',
+        nombre: '',
+        usuario: '',
+        contrasena: ''
+    };
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const getUsuarios = async () => {
         try {
@@ -16,6 +28,19 @@ const Usuario = () => {
             const response = await axios.get(url, config);
             if (response.status === 200) {
                 setUsuarios(response.data);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    const createUsuario = async (usuario) => {
+        try {
+            let url = 'http://' + urlweb + '/usuarios';
+            const response = await axios.post(url, usuario, config);
+            if (response.status === 200) {
+                handleClose();
+                getUsuarios();
             }
         } catch (err) {
             console.log(err.message);
@@ -36,7 +61,7 @@ const Usuario = () => {
                             <tr>
                                 <th style={{ width: '100px' }}>Correo</th>
                                 <th style={{ width: '100px' }}>Nombre</th>
-                                <th style={{ width: '100px' }}>Usuario ??</th>
+                                <th style={{ width: '100px' }}>Rol</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,7 +76,24 @@ const Usuario = () => {
                         </tbody>
                     </Table>
                 </Card.Body>
+                <Card.Footer>
+                    <Button variant="primary" onClick={handleShow}>Crear usuario</Button>
+                </Card.Footer>
             </Card>
+
+            {/* Modal para crear*/}
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear usuario</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <FormUsuario
+                        usuario={usuario}
+                        postUsuario={createUsuario}
+                        handleClose={handleClose}
+                    />
+                </Modal.Body>
+            </Modal>
         </div >
     )
 }
