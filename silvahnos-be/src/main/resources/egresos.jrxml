@@ -23,7 +23,7 @@
 	<subDataset name="egresosDataSet" uuid="b93e8799-f7aa-4d00-842a-c4e2a600bc8c">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 		<field name="monto" class="java.lang.Integer"/>
-		<field name="descripcion" class="java.lang.String"/>
+		<field name="motivo" class="com.app.silvahnosbe.entities.MotivoEEntity"/>
 		<field name="fecha_creacion" class="java.sql.Timestamp"/>
 		<sortField name="fecha_creacion"/>
 		<variable name="Total" class="java.lang.Integer" calculation="Sum">
@@ -105,7 +105,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="SansSerif" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Descripcion]]></text>
+								<text><![CDATA[Motivo]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
@@ -114,7 +114,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{motivo}.getNombre()]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

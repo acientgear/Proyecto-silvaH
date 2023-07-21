@@ -117,7 +117,9 @@ const Egresos = () => {
         fecha_creacion: null,
         fecha_modificacion: null,
         fecha_borrado: null,
-        motivo: {},
+        motivo: {
+            id: 0
+        },
         monto: '',
         descripcion: '',
     });
@@ -128,7 +130,9 @@ const Egresos = () => {
         fecha_creacion: null,
         fecha_modificacion: null,
         fecha_borrado: null,
-        motivo: {},
+        motivo: {
+            id: 0
+        },
         monto: '',
         descripcion: '',
     }
