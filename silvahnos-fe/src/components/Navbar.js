@@ -1,10 +1,11 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
 import Logo from "./images/logo.png";
+import Cookies from "js-cookie";
 
 function BasicExample({logged}) {
   const handleLogout = () => {
     if(logged){
-      localStorage.removeItem("token");
+      Cookies.remove("token");
     }
     window.location.href = "/login";
   };

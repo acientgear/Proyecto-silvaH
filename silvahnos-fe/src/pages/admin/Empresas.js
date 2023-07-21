@@ -6,10 +6,11 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import {BsBoxArrowRight} from "react-icons/bs";
 import FormEmpresa from '../../components/FormEmpresa';
 import { checkRut } from 'react-rut-formatter';
+import Cookies from 'js-cookie';
 
 const Empresas = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     }; 
     const [empresas, setempresas] = useState([]);
     const [showCreate, setShowCreate] = useState(false);

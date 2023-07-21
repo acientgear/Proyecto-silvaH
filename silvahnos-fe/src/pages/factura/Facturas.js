@@ -6,10 +6,11 @@ import InputMonth from '../../components/InputMonth';
 import FormFactura from '../../components/FormFactura';
 import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete, AiFillCheckCircle } from "react-icons/ai";
+import Cookies from 'js-cookie';
 
 const Facturas = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
     const [currentPage, setCurrentPage] = useState(1);
     const [iva, setIva] = useState(0);

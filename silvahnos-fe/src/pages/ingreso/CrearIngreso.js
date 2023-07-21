@@ -2,10 +2,11 @@ import axios from 'axios';
 import { Col, Container, Row } from 'react-bootstrap';
 import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
+import Cookies from 'js-cookie';
 
 const CrearIngreso = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };  
 
     const ingreso = {

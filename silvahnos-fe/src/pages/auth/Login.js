@@ -5,7 +5,6 @@ import urlweb from '../../config/config';
 import Cookies from "js-cookie";
 
 const Login = () => {
-    //const [validated, setValidated] = useState(false);
     const [seePassword, setSeePassword] = useState(false);
     const [tipo, setTipo] = useState("password");
 
@@ -39,10 +38,10 @@ const Login = () => {
     const handleLogin = async () => {
         try {
             let url = "http://"+urlweb+"/iniciar_sesion";
-            console.log(login, url)
             const response = await axios.post(url, login);
             if (response.status === 200) {
-                localStorage.setItem("token", response.data.jwtToken);
+                const expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 12);
+                Cookies.set("token", response.data.jwtToken, {expires: expirationTime});
                 window.location.href = "/";
             }
 

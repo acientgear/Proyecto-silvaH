@@ -9,13 +9,13 @@ import Ingresos from './pages/ingreso/Ingresos';
 import CrearIngreso from './pages/ingreso/CrearIngreso';
 import Facturas from './pages/factura/Facturas';
 import CrearFactura from './pages/factura/CrearFactura';
-import Resumen from './pages/Resumen';
+import Resumen from './pages/resumen/Resumen';
 import AdminView from './pages/admin/AdminView';
 import Login from './pages/auth/Login';
 import Cookies from 'js-cookie';
 
 function App() {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   return (
     <Layout token={token}>

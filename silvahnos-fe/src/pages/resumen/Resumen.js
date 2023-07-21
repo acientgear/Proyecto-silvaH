@@ -1,16 +1,14 @@
 
-import { useState, useCallback } from 'react';
-import { ListGroup, Col, Row, Container, Badge, Tab, Tabs, Card } from 'react-bootstrap';
-import PieChartIngreso from './ingreso/PieChart';
-import PieChartEgreso from './egreso/PieChart';
+import { useState } from 'react';
+import { Col, Row, Container, Card } from 'react-bootstrap';
+import PieChartIngreso from '../ingreso/PieChart';
+import PieChartEgreso from '../egreso/PieChart';
 import GraficoMensual from './GraficoMensual';
 import GraficoAnual from './GraficoAnual';
 import TablaMensual from './TablaMensual';
 import TablaAnual from './TablaAnual';
 import Registros from './Registros';
-import urlweb from '../config/config';
-import axios from 'axios';
-import { AiOutlineUser, AiOutlineFall, AiOutlineFileText, AiOutlineMail } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineFall } from 'react-icons/ai';
 
 const Resumen = () => {
     const [resumenAnualHTML, setResumenAnualHTML] = useState(null);
@@ -124,7 +122,6 @@ const Resumen = () => {
 
     const mes = new Date().getMonth() + 1;
     const anio = new Date().getFullYear();
-    const [tabType, setTabType] = useState('Anual');
 
     return (
         <div className='contenedor'>

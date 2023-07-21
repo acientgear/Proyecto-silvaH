@@ -1,13 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
-import Sem1 from '../components/data/Sem1';
-import Sem2 from '../components/data/Sem2';
-import urlweb from '../config/config';
+import Sem1 from '../../components/data/Sem1';
+import Sem2 from '../../components/data/Sem2';
+import urlweb from '../../config/config';
+import Cookies from 'js-cookie';
 
 const TablaAnual = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
 
     const [montosIngresosSem1, setMontosIngresosSem1] = useState([]);

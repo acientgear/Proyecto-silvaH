@@ -4,10 +4,11 @@ import { useState, useEffect, useCallback } from 'react';
 import LineChartIngresos from './ingreso/Grafico';
 import LineChartEgresos from './egreso/Grafico';
 import urlweb from '../config/config';
+import Cookies from 'js-cookie';
 
 const Home = () => {
   const config = {
-    headers: { Authorization: `Bearer ${localStorage.token}` }
+    headers: { Authorization: `Bearer ${Cookies.get("token")}` }
   };
   const [ingresos, setIngresos] = useState([]);
   const [egresos, setEgresos] = useState([]);

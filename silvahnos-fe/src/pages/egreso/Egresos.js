@@ -6,10 +6,11 @@ import FormEgreso from '../../components/FormEgreso';
 import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import Cookies from 'js-cookie';
 
 const Egresos = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
 
     const [currentPage, setCurrentPage] = useState(1);

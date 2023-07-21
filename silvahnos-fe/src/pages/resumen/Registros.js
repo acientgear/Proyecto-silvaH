@@ -1,13 +1,14 @@
 import { React, useCallback, useEffect, useState } from 'react'
 import { Card, ListGroup, Badge } from 'react-bootstrap'
-import urlweb from '../config/config';
+import urlweb from '../../config/config';
 import axios from 'axios';
-import Sem1 from '../components/data/Sem1';
-import Sem2 from '../components/data/Sem2';
+import Sem1 from '../../components/data/Sem1';
+import Sem2 from '../../components/data/Sem2';
+import Cookies from 'js-cookie';
 
 const Registros = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
 
     let fechaAcual = new Date();

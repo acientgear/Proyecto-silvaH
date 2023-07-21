@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import axios from 'axios';
-import Dias from '../components/data/Dias';
-import urlweb from '../config/config';
+import Dias from '../../components/data/Dias';
+import urlweb from '../../config/config';
+import Cookies from 'js-cookie';
 
 const config = {
-    headers: { Authorization: `Bearer ${localStorage.token}` }
+    headers: { Authorization: `Bearer ${Cookies.get("token")}` }
 }; 
 
 const getMontoPorDia = async (tipo, anio, mes) => {

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
 import { Card, Button, ListGroup, Modal, Form } from 'react-bootstrap';
+import Cookies from 'js-cookie';
 
 const Correo = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     }; 
     const [correo, setCorreo] = useState([]);
     const [correoActual, setCorreoActual] = useState('');

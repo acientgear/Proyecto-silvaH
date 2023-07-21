@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback } from 'react';
 import { Table, Card } from 'react-bootstrap';
-import Sem1 from '../components/data/Sem1';
-import Sem2 from '../components/data/Sem2';
+import Sem1 from '../../components/data/Sem1';
+import Sem2 from '../../components/data/Sem2';
 import { useState } from 'react';
 import axios from 'axios';
-import urlweb from '../config/config';
+import urlweb from '../../config/config';
+import Cookies from 'js-cookie';
 
 const mes = new Date().getMonth() + 1;
 const idMes = mes.toLocaleString('es-ES', { month: 'long' });
@@ -12,7 +13,7 @@ const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
 
 const TablaMensual = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
     const [montosOrigenIngresos, setMontosOrigenIngresos] = useState([]);
     const [montosOrigenEgresos, setMontosOrigenEgresos] = useState([]);

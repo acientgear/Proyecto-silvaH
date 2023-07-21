@@ -3,12 +3,12 @@ import { Pie } from 'react-chartjs-2';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
-import CategoriasEgreso from '../../components/data/CategoriasEgreso';
 import coloresrgb from '../../components/data/Colores';
+import Cookies from 'js-cookie';
 
 const PieChartEgreso = ({ anio, mes }) => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     }; 
 
     const [montosOrigen, setMontosOrigen] = useState([]);

@@ -3,10 +3,11 @@ import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { startOfMonth, endOfMonth, format } from 'date-fns';
 import urlweb from "../../config/config";
 import FileSaver from "file-saver";
+import Cookies from "js-cookie";
 
 const Reporte = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
 
     const [tipo, setTipo] = useState("ingresos");

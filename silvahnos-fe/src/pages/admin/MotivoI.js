@@ -5,10 +5,11 @@ import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import {BsBoxArrowRight} from "react-icons/bs";
 import FormMotivo from '../../components/FormMotivo';
+import Cookies from 'js-cookie';
 
 const MotivoI = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };  
     const [motivosI, setMotivosI] = useState([]);
     const [showCreate, setShowCreate] = useState(false);

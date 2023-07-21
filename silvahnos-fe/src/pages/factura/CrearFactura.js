@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import FormFactura from '../../components/FormFactura';
 import urlweb from '../../config/config';
+import Cookies from 'js-cookie';
 
 const CrearFactura = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     }; 
 
     const facturaDefault = {

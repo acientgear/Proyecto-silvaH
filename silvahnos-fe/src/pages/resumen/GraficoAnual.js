@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
-import Sem1 from '../components/data/Sem1';
-import Sem2 from '../components/data/Sem2';
+import Sem1 from '../../components/data/Sem1';
+import Sem2 from '../../components/data/Sem2';
 import axios from 'axios';
-import urlweb from '../config/config';
-import coloresrgb from '../components/data/Colores';
+import urlweb from '../../config/config';
+import Cookies from 'js-cookie';
 
 const config = {
-    headers: { Authorization: `Bearer ${localStorage.token}` }
+    headers: { Authorization: `Bearer ${Cookies.get("token")}` }
 };
 
 const getTotalPorMes = async (tipo, anio, mes) => {

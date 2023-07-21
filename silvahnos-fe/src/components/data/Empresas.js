@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import urlweb from "../../config/config";
+import Cookies from "js-cookie";
 
 const Empresas = () => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     }; 
     const [data, setData] = useState([])
 

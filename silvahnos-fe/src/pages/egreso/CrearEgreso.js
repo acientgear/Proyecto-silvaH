@@ -2,10 +2,11 @@ import axios from 'axios';
 import { Col, Container, Row } from 'react-bootstrap';
 import FormEgreso from '../../components/FormEgreso';
 import urlweb from '../../config/config';
+import Cookies from 'js-cookie';
 
 function CrearEgreso() {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     }; 
 
     const egreso = {

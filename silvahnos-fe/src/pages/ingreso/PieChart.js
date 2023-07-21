@@ -5,10 +5,11 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import CategoriasIngreso from '../../components/data/CategoriasIngreso';
 import coloresrgb from '../../components/data/Colores';
+import Cookies from 'js-cookie';
 
 const PieChartIngreso = ({anio,mes}) => {
     const config = {
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     }; 
 
     const [montosOrigen, setMontosOrigen] = useState([]);

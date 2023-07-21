@@ -3,6 +3,7 @@ import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import axios from 'axios';
 import urlweb from '../../config/config';
+import Cookies from 'js-cookie';
 
 function obtenerNombresUltimos5Dias() {
  
@@ -21,7 +22,7 @@ function obtenerNombresUltimos5Dias() {
 }
 
 const config = {
-    headers: { Authorization: `Bearer ${localStorage.token}` }
+    headers: { Authorization: `Bearer ${Cookies.get("token")}` }
 }; 
 
 const getMontoPorDia = async () => {
