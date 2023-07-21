@@ -42,7 +42,7 @@ const Login = () => {
             console.log(login, url)
             const response = await axios.post(url, login);
             if (response.status === 200) {
-                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("token", response.data.jwtToken);
                 window.location.href = "/";
             }
 
