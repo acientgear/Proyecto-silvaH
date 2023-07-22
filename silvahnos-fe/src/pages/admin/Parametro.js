@@ -3,6 +3,7 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import { Card, Button, ListGroup, Modal, Form } from 'react-bootstrap';
 import Cookies from 'js-cookie';
+import Alerta from '../../components/Alerta';
 
 const Parametro = () => {
     const config = {
@@ -34,6 +35,10 @@ const Parametro = () => {
             if (response.status === 200) {
                 setParametroActual(nuevoValor);
                 setShowModal(false); 
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Parámetro actualizado exitosamente'
+                });
             }
         } catch (err) {
             console.log(err.message);

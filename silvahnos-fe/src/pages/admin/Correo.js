@@ -3,6 +3,7 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import { Card, Button, ListGroup, Modal, Form } from 'react-bootstrap';
 import Cookies from 'js-cookie';
+import Alerta from '../../components/Alerta';
 
 const Correo = () => {
     const config = {
@@ -34,6 +35,10 @@ const Correo = () => {
             if (response.status === 200) {
                 setCorreoActual(nuevoCorreo);
                 setShowModal(false); 
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Correo actualizado exitosamente'
+                });
             }
         } catch (err) {
             console.log(err.message);
