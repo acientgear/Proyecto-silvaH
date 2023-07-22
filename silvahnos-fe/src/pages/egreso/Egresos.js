@@ -22,17 +22,6 @@ const Egresos = () => {
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [showAlertDelete, setShowAlertDelete] = useState(false);
-    const [showAlertEdit, setShowAlertEdit] = useState(false);
-    const [showAlertCreate, setShowAlertCreate] = useState(false);
-
-    const handleAlertCreate = useCallback(() => {
-        let showCrear = localStorage.getItem("showCrear");
-        if (showCrear === 'true') {
-            setShowAlertCreate(true);
-        }
-        localStorage.setItem("showCrear", false);
-    }, []);
 
     const handlePageChange = (page) => {
         if (page < 1 || page > Math.ceil(egresos.length / pageSize))
@@ -77,7 +66,10 @@ const Egresos = () => {
             if (response.status === 200) {
                 handleCloseEdit();
                 getEgresos();
-
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Egreso editado correctamente',
+                });
             }
         } catch (err) {
             console.log(err.message);
@@ -95,8 +87,12 @@ const Egresos = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
-                setShowAlertDelete(true);
                 getEgresos();
+                Alerta.fire({
+                    icon: 'success',
+                    width: '400px',
+                    title: 'Egreso eliminado correctamente',
+                });
             }
         } catch (err) {
             console.log(err.message);
@@ -177,8 +173,18 @@ const Egresos = () => {
 
     useEffect(() => {
         getEgresos();
-        handleAlertCreate();
-    }, [getEgresos, handleAlertCreate]);
+        const alert = JSON.parse(localStorage.getItem("alert"));
+        if (alert !== null && alert.show && alert.type === "egreso") {
+            Alerta.fire({
+                icon: 'success',
+                title: 'Egreso creado correctamente',
+            });
+            localStorage.setItem("alert", JSON.stringify({
+                show: false,
+                type: ""
+            }));
+        }    
+    }, [getEgresos]);
 
     return (
         <>
@@ -307,9 +313,7 @@ const Egresos = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal>
-            {showAlertDelete && (<Alerta mensaje="Egreso eliminado correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete} />)}
-            {showAlertEdit && (<Alerta mensaje="Egreso editado correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
-            {showAlertCreate && (<Alerta mensaje="Egreso creado correctamente" tipo="success" show={showAlertCreate} setShow={setShowAlertCreate} />)}
+
         </>
     );
 }
