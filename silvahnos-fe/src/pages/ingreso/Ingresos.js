@@ -22,17 +22,6 @@ const Ingresos = () => {
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [showAlertDelete, setShowAlertDelete] = useState(false);
-    const [showAlertEdit, setShowAlertEdit] = useState(false);
-    const [showAlertCreate, setShowAlertCreate] = useState(false);
-
-    const handleAlertCreate = useCallback(() => {
-        let showCrear = localStorage.getItem("showCrear");
-        if (showCrear === 'true') {
-            setShowAlertCreate(true);
-        }
-        localStorage.setItem("showCrear", false);
-    }, []);
 
     const handlePageChange = (page) => {
         if (page < 1 || page > Math.ceil(ingresos.length / pageSize))
@@ -76,8 +65,11 @@ const Ingresos = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
-                setShowAlertEdit(true);
                 getIngresos();
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Ingreso editado exitosamente',
+                });
             }
         } catch (err) {
             console.log(err.message);
@@ -95,8 +87,12 @@ const Ingresos = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
-                setShowAlertDelete(true);
                 getIngresos();
+                Alerta.fire({
+                    icon: 'success',
+                    width: '400px',
+                    title: 'Ingreso eliminado exitosamente',
+                });
             }
         } catch (err) {
             console.log(err.message);
@@ -177,8 +173,18 @@ const Ingresos = () => {
 
     useEffect(() => {
         getIngresos();
-        handleAlertCreate();
-    }, [getIngresos, handleAlertCreate]);
+        const alert = JSON.parse(localStorage.getItem("alert"));
+        if (alert !== null && alert.show === true && alert.type === "ingreso") {    
+            Alerta.fire({
+                icon: 'success',
+                title: 'Ingreso creado exitosamente',
+            });
+            localStorage.setItem("alert", JSON.stringify({
+                show: false,
+                type: ""
+            }));
+        }
+    }, [getIngresos]);
 
     return (
         <>
@@ -300,10 +306,6 @@ const Ingresos = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal>
-
-            {showAlertDelete && (<Alerta mensaje="Ingreso eliminado correctamente" tipo="danger" show={showAlertDelete} setShow={setShowAlertDelete} />)}
-            {showAlertEdit && (<Alerta mensaje="Ingreso editado correctamente" tipo="primary" show={showAlertEdit} setShow={setShowAlertEdit} />)}
-            {showAlertCreate && (<Alerta mensaje="Ingreso creado correctamente" tipo="success" show={showAlertCreate} setShow={setShowAlertCreate} />)}
         </>
     );
 };
