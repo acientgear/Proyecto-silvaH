@@ -174,12 +174,12 @@ const Home = () => {
   return (
     <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
       <Row className="justify-content-center">
-        <Col xs="auto" >
+        <Col xs="auto" style={{paddingTop:"7px"}}>
           <ListGroup>
             <ListGroup.Item style={{ fontWeight: "bold" }}>Saldo cuenta: {formatoMonto(saldo)}</ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col xs="auto" >
+        <Col xs="auto" style={{paddingTop:"7px"}}>
           <ListGroup>
             <ListGroup.Item style={{ fontWeight: "bold" }}>IVA a pagar: {formatoMonto(iva)}</ListGroup.Item>
           </ListGroup>
@@ -210,7 +210,7 @@ const Home = () => {
                 </tbody>
               </Table>
               <ListGroup>
-                <ListGroup.Item>Total ingresos: {formatoMonto(totalIngresos)}</ListGroup.Item>
+                <ListGroup.Item>Total ingresos de este mes: {formatoMonto(totalIngresos)}</ListGroup.Item>
               </ListGroup>
               <ListGroup>
                 <LineChartIngresos />
@@ -242,7 +242,7 @@ const Home = () => {
                 </tbody>
               </Table>
               <ListGroup>
-                <ListGroup.Item>Total egresos: {formatoMonto(totalEgresos)}</ListGroup.Item>
+                <ListGroup.Item>Total egresos de este mes: {formatoMonto(totalEgresos)}</ListGroup.Item>
               </ListGroup>
               <ListGroup>
                 <LineChartEgresos />
