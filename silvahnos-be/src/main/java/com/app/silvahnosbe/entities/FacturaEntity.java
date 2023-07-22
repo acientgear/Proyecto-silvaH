@@ -40,7 +40,7 @@ public class FacturaEntity {
     private EstadoEntity estado;
 
     // Relaciones con empresa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "empresa")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private EmpresaEntity empresa;

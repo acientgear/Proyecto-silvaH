@@ -8,6 +8,7 @@ import com.app.silvahnosbe.repositories.EmailConfigRepository;
 import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.repositories.ParametroRepository;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,20 +16,20 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * servicio email
- *  este servicio se centra en el envio automatizado de notificaciones de facturas
+ * este servicio se centra en el envio automatizado de notificaciones de
+ * facturas
+ * 
  * @author acientgear
  */
-
-
-
-
 
 @Service
 public class EmailService {
@@ -52,10 +53,15 @@ public class EmailService {
     SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yy");
     Date fecha = new Date();
 
+    // arreglo que contiene los nombres de los meses del año
+    String[] meses = { "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+            "agosto", "septiembre", "octubre", "noviembre", "diciembre" };
 
     /**
      *
-     * esta funcion envia un email a un destinarario , su funcionanmiento es solo de prueba de conexion
+     * esta funcion envia un email a un destinarario , su funcionanmiento es solo de
+     * prueba de conexion
+     * 
      * @param null
      * @return null
      */
@@ -71,18 +77,19 @@ public class EmailService {
         message.setFrom("acientgear@gmail.com");
         message.setTo(destino);
         message.setSubject("Notificación factura");
-        message.setText("Factura 131 está por vencer");
+        message.setText("Factura 131 está por vencer: \n");
 
         mailSender.send(message);
     }
 
     /**
-     * esta funcion envia un email con las facturas sin cobrar en un intervalo de tiempo mediante cron job
+     * esta funcion envia un email con las facturas sin cobrar en un intervalo de
+     * tiempo mediante cron job
      * se comprueba su funcionamiento con la funcion sendEmail
+     * 
      * @param null
      * @return no tiene retorno,
      */
-
 
     @Scheduled(cron = "0 */1 * * * *")
     public void cronEmail() {
@@ -99,10 +106,10 @@ public class EmailService {
             factura.setEstado(estado);
         });
         facturaRepository.saveAll(facturas);
-        String mensaje = "\n";
+        String mensaje = "\n\n";
         int i = 0;
         while (i < facturas.size()) {
-            Date fechaVencimiento = facturas.get(i).getFecha_vencimiento();
+            java.sql.Timestamp fechaVencimiento = facturas.get(i).getFecha_vencimiento();
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(fechaVencimiento);
@@ -110,17 +117,32 @@ public class EmailService {
             int mes = calendar.get(Calendar.MONTH) + 1;
             int anio = calendar.get(Calendar.YEAR);
 
-            mensaje = mensaje + "Factura N° :" + facturas.get(i).getNumero_factura() + ", con fecha de vencimiento el "
-                    + dia + " del " + mes + " del año " + anio + "\n";
+            int diaE = calendar.get(Calendar.DAY_OF_MONTH);
+            int mesE = calendar.get(Calendar.MONTH) + 1;
+            int anioE = calendar.get(Calendar.YEAR);
+
+            mensaje = mensaje + "Factura N° " + facturas.get(i).getNumero_factura() + ", con fecha de vencimiento el "
+                    + dia + " del " + meses[mes - 1] + " del " + anio + " \nemitida el " + diaE + " del "
+                    + meses[mesE - 1] + " del " + anioE
+                    + " a la empresa " + facturas.get(i).getEmpresa().getNombre() + " por un monto de "
+                    + formatearMonto(facturas.get(i).getMonto()) + "\n\n";
             i = i + 1;
         }
         EmailConfig emailConfig = emailConfigRepository.findById(1l).orElseThrow();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(emailConfig.getUsername());
-        message.setSubject("Facturas a vencer en " + diasS + " días" + ":  " + "  " + formato.format(fecha));
+        message.setSubject("Facturas no cobradas que vencen en menos de " + diasS + " días" + ":  " + "  "
+                + formato.format(fecha));
         message.setTo(destino);
         message.setText(emailConfig.getTexto() + mensaje);
         mailSender.send(message);
+    }
+
+    private String formatearMonto(double monto) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+        format.setMinimumFractionDigits(0); // Establece el número mínimo de decimales
+        format.setMaximumFractionDigits(2); // Establece el número máximo de decimales
+        return format.format(monto);
     }
 
 }
