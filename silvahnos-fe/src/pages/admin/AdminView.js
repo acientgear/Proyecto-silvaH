@@ -7,7 +7,7 @@ import Parametro from './Parametro';
 import Correo from './Correo';
 import './AdminView.css';
 import './CardStyle.css'
-import { AiOutlineUser, AiOutlineBarChart, AiOutlineFileText, AiOutlineMail, AiOutlineTag, AiFillShop } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineBarChart, AiOutlineMail, AiOutlineTag, AiFillShop } from 'react-icons/ai';
 import { useState } from 'react';
 import Reporte from './Reporte';
 

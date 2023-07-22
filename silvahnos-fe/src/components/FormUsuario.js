@@ -49,7 +49,6 @@ const FormUsuario = ({usuario, postUsuario, handleClose}) => {
               value={values.usuario}
               onChange={handleChange}
               isInvalid={!!errors.usuario}
-              autoComplete='off'
             />
             <Form.Control.Feedback type="invalid">
               {errors.usuario}
@@ -89,7 +88,6 @@ const FormUsuario = ({usuario, postUsuario, handleClose}) => {
               value={values.contrasenna}
               onChange={handleChange}
               isInvalid={!!errors.contrasenna}
-              autoComplete='off'
             />
             <Form.Control.Feedback type="invalid">
               {errors.contrasenna}

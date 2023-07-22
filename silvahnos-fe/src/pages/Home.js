@@ -102,13 +102,13 @@ const Home = () => {
     dias = dias + 1;
     console.log("venc", fechaVencimiento)
     console.log("act", fechaActual);
-    if (dias == 0) {
+    if (dias === 0) {
       return "Vence hoy";
     } else if (dias < 0) {
       return "Vencida";
     }
     else {
-      if (dias == 1) {
+      if (dias === 1) {
         return "Vence en " + dias + " día";
       } else {
         return "Vence en " + dias + " días";
