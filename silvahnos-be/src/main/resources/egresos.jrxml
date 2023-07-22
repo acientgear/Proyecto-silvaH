@@ -53,7 +53,7 @@
 	<detail>
 		<band height="203">
 			<textField>
-				<reportElement x="47" y="21" width="460" height="66" uuid="b91f66e9-b431-49c5-8b1b-fa30b1237b27">
+				<reportElement x="47" y="50" width="460" height="66" uuid="b91f66e9-b431-49c5-8b1b-fa30b1237b27">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
