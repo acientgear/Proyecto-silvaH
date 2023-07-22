@@ -6,6 +6,7 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import {BsBoxArrowRight} from "react-icons/bs";
 import FormMotivo from '../../components/FormMotivo';
 import Cookies from 'js-cookie';
+import Alerta from '../../components/Alerta';
 
 const MotivoE = () => {
     const config = {
@@ -46,6 +47,23 @@ const MotivoE = () => {
         setShowEdit(true);
     };
 
+    const createMotivoE = async (editedItem) => {
+        try {
+            let url = 'http://' + urlweb + '/motivosE';
+            const response = await axios.post(url, editedItem,config);
+            if (response.status === 200) {
+                handleCloseCreate();
+                getMotivosE();
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Motivo de egreso creado exitosamente'
+                });
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
 
     const updatemotivoE = async (editedItem) => {
         try {
@@ -53,8 +71,11 @@ const MotivoE = () => {
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseEdit();
-                handleCloseCreate();
                 getMotivosE();
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Motivo de egreso editado exitosamente'
+                });
             }
         } catch (err) {
             console.log(err.message);
@@ -73,6 +94,10 @@ const MotivoE = () => {
             if (response.status === 200) {
                 handleCloseDelete();
                 getMotivosE();
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Motivo de egreso eliminado exitosamente'
+                });
             }
         } catch (err) {
             console.log(err.message);
@@ -198,7 +223,7 @@ const MotivoE = () => {
                 <Modal.Body>
                     <FormMotivo
                         motivo={editedItem}
-                        postMotivo={updatemotivoE}
+                        postMotivo={createMotivoE}
                         handleClose={handleCloseCreate}
                     />
                 </Modal.Body>
