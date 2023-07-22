@@ -35,10 +35,7 @@ const CrearFactura = () => {
             let url = "http://"+urlweb+"/facturas";
             let response = await axios.post(url, factura,config);
             if (response.status === 200) {
-                localStorage.setItem("alert", JSON.stringify({
-                    show: true,
-                    type: "factura"
-                }));
+                localStorage.setItem("alert", true);
                 window.location.href = "/facturas";
             }
         } catch (err) {

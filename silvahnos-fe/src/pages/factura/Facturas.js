@@ -231,16 +231,13 @@ const Facturas = () => {
     useEffect(() => {
         getFacturas();
         getIva();
-        const alert = JSON.parse(localStorage.getItem("alert"));
-        if (alert !== null && alert.show && alert.type === "factura"){
+        const alert = localStorage.getItem("alert");
+        if (alert === "true"){
+            localStorage.setItem("alert", false);
             Alerta.fire({
                 icon: 'success',
                 title: 'Factura creada correctamente',
             });
-            localStorage.setItem("alert", JSON.stringify({
-                show: false,
-                type: ""
-            }));
         }
     }, [getFacturas, getIva]);
 

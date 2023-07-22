@@ -173,16 +173,13 @@ const Ingresos = () => {
 
     useEffect(() => {
         getIngresos();
-        const alert = JSON.parse(localStorage.getItem("alert"));
-        if (alert !== null && alert.show === true && alert.type === "ingreso") {    
+        const alert = localStorage.getItem("alert");
+        if (alert === "true") {  
+            localStorage.setItem("alert", false);  
             Alerta.fire({
                 icon: 'success',
                 title: 'Ingreso creado exitosamente',
             });
-            localStorage.setItem("alert", JSON.stringify({
-                show: false,
-                type: ""
-            }));
         }
     }, [getIngresos]);
 

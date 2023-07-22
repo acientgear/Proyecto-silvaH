@@ -27,10 +27,7 @@ function CrearEgreso() {
             let url = "http://"+urlweb+"/egresos";
             let response = await axios.post(url, egreso,config);
             if (response.status === 200) {   
-                localStorage.setItem("alert", JSON.stringify({
-                    show: true,
-                    type: "egreso"
-                }));             
+                localStorage.setItem("alert", true);             
                 window.location.href = "/egresos";
             }
         } catch (err) {

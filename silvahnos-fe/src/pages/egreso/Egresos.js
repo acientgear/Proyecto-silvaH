@@ -173,16 +173,13 @@ const Egresos = () => {
 
     useEffect(() => {
         getEgresos();
-        const alert = JSON.parse(localStorage.getItem("alert"));
-        if (alert !== null && alert.show && alert.type === "egreso") {
+        const alert = localStorage.getItem("alert");
+        if (alert === "true") {
+            localStorage.setItem("alert", false);
             Alerta.fire({
                 icon: 'success',
                 title: 'Egreso creado correctamente',
             });
-            localStorage.setItem("alert", JSON.stringify({
-                show: false,
-                type: ""
-            }));
         }    
     }, [getEgresos]);
 

@@ -7,6 +7,7 @@ import {BsBoxArrowRight} from "react-icons/bs";
 import FormEmpresa from '../../components/FormEmpresa';
 import { checkRut } from 'react-rut-formatter';
 import Cookies from 'js-cookie';
+import Alerta from '../../components/Alerta';
 
 const Empresas = () => {
     const config = {
@@ -47,14 +48,34 @@ const Empresas = () => {
         setShowEdit(true);
     };
 
-    const updateEmpresa = async (editedItem) => {
+    const createEmpresa = async (editedItem) => {
         try {
             let url = 'http://' + urlweb + '/empresas';
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
                 handleCloseCreate();
+                getEmpresas();
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Empresa creada exitosamente'
+                });
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    const updateEmpresa = async (editedItem) => {
+        try {
+            let url = 'http://' + urlweb + '/empresas';
+            const response = await axios.post(url, editedItem,config);
+            if (response.status === 200) {
                 handleCloseEdit();
                 getEmpresas();
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Empresa editada exitosamente'
+                });
             }
         } catch (err) {
             console.log(err.message);
@@ -73,6 +94,10 @@ const Empresas = () => {
             if (response.status === 200) {
                 handleCloseDelete();
                 getEmpresas();
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Empresa eliminada exitosamente'
+                });
             }
         } catch (err) {
             console.log(err.message);
@@ -188,7 +213,7 @@ const Empresas = () => {
                 <Modal.Body>
                     <FormEmpresa
                         empresa={editedItem}
-                        postEmpresa={updateEmpresa}
+                        postEmpresa={createEmpresa}
                         handleClose={handleCloseCreate}
                     />
                 </Modal.Body>
