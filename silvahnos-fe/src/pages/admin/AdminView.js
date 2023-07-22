@@ -18,7 +18,7 @@ const AdminView = () => {
     const [usuariosHTML, setUsuariosHTML] = useState(null);
     const [correosHTML, setCorreosHTML] = useState(null);
     const [reporteHTML, setReporteHTML] = useState(null);
-    const [seccion, setSeccion] = useState("motivos");
+    const [seccion, setSeccion] = useState("usuarios");
 
     const handleSeccion = (seccion) => {
         setSeccion(seccion);

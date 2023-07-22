@@ -4,6 +4,7 @@ import axios from "axios";
 import urlweb from '../../config/config';
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import Alerta from "../../components/Alerta";
 
 const Login = () => {
     const [seePassword, setSeePassword] = useState(false);
@@ -47,14 +48,10 @@ const Login = () => {
                 window.location.href = "/";
             }
         } catch (err) {
-            Swal.fire({
+            Alerta.fire({
                 icon: 'error',
                 title: 'Credenciales incorrectas',
-                showConfirmButton: false,
-                timer: 1500
-              })
-            // console.log("Credenciales incorrectas");
-            // console.error(err.message);
+            })
         }
     };
 
