@@ -4,6 +4,8 @@ import { startOfMonth, endOfMonth, format } from 'date-fns';
 import urlweb from "../../config/config";
 import FileSaver from "file-saver";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
+import Alerta from "../../components/Alerta";
 
 const Reporte = () => {
     const config = {
@@ -36,24 +38,45 @@ const Reporte = () => {
         });
     };
 
-    const handleReport = async (e, web, tipo, fi, ff) => {
-        e.preventDefault();
-        try{
+    const getReport = async (e, web, tipo, fi, ff) => {
+        try {
             const url = `http://${web}/${tipo}/export-pdf/${fi}/${ff}`;
             const response = await fetch(url, config);
             if (response.ok) {
                 const contentDisposition = response.headers.get('content-disposition');
                 const filenameMatch = contentDisposition && contentDisposition.match(/filename=(["'])(.*?)\1/);
                 const filename = filenameMatch && filenameMatch[2];
-                
+
                 const blob = await response.blob();
                 FileSaver.saveAs(blob, filename);
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Reporte generado exitosamente'
+                });
             } else {
                 console.log('Error al descargar el archivo');
             }
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
+    }
+
+    const handleReport = (e) => {
+        e.preventDefault();
+        Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            title: 'Generando reporte',
+            text: 'Por favor espere...',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: (toast) => {
+                Swal.showLoading();
+            }, 
+        });
+        getReport(e, urlweb, tipo, fechaI, fechaF);
+        //Swal.close();
     }
 
     return (
