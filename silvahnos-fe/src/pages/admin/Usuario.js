@@ -4,6 +4,7 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 import FormUsuario from '../../components/FormUsuario';
+import Alerta from '../../components/Alerta';
 
 const Usuario = () => {
     const config = {
@@ -41,6 +42,10 @@ const Usuario = () => {
             if (response.status === 200) {
                 handleClose();
                 getUsuarios();
+                Alerta.fire({
+                    icon: 'success',
+                    title: 'Usuario creado exitosamente'
+                });
             }
         } catch (err) {
             console.log(err.message);
