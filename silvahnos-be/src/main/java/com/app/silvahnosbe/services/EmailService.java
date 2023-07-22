@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,7 +52,6 @@ public class EmailService {
     private EmailConfigRepository emailConfigRepository;
 
     SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yy");
-    Date fecha = new Date();
 
     // arreglo que contiene los nombres de los meses del año
     String[] meses = { "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
@@ -117,22 +117,31 @@ public class EmailService {
             int mes = calendar.get(Calendar.MONTH) + 1;
             int anio = calendar.get(Calendar.YEAR);
 
-            int diaE = calendar.get(Calendar.DAY_OF_MONTH);
-            int mesE = calendar.get(Calendar.MONTH) + 1;
-            int anioE = calendar.get(Calendar.YEAR);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(facturas.get(i).getFecha_emision());
+            int diaE = calendar2.get(Calendar.DAY_OF_MONTH);
+            int mesE = calendar2.get(Calendar.MONTH) + 1;
+            int anioE = calendar2.get(Calendar.YEAR);
 
             mensaje = mensaje + "Factura N° " + facturas.get(i).getNumero_factura() + ", con fecha de vencimiento el "
-                    + dia + " del " + meses[mes - 1] + " del " + anio + " \nemitida el " + diaE + " del "
+                    + dia + " del " + meses[mes - 1] + " del " + anio + ". \nEmitida el " + diaE + " del "
                     + meses[mesE - 1] + " del " + anioE
                     + " a la empresa " + facturas.get(i).getEmpresa().getNombre() + " por un monto de "
-                    + formatearMonto(facturas.get(i).getMonto()) + "\n\n";
+                    + formatearMonto(facturas.get(i).getMonto()) + ".\n\n";
             i = i + 1;
         }
         EmailConfig emailConfig = emailConfigRepository.findById(1l).orElseThrow();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(emailConfig.getUsername());
-        message.setSubject("Facturas no cobradas que vencen en menos de " + diasS + " días" + ":  " + "  "
-                + formato.format(fecha));
+        Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaActual);
+        calendar.add(Calendar.HOUR_OF_DAY, -4);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes = calendar.get(Calendar.MONTH) + 1;
+        int anio = calendar.get(Calendar.YEAR);
+        message.setSubject("Facturas no cobradas que vencen en menos de " + diasS + " días" + ":  " + " " + dia 
+                +"-"+ mes +"-"+ anio);
         message.setTo(destino);
         message.setText(emailConfig.getTexto() + mensaje);
         mailSender.send(message);
