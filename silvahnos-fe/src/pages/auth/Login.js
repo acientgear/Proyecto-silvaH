@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import urlweb from '../../config/config';
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const [seePassword, setSeePassword] = useState(false);
@@ -46,8 +47,14 @@ const Login = () => {
                 window.location.href = "/";
             }
         } catch (err) {
-            console.log("Credenciales incorrectas");
-            console.error(err.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Credenciales incorrectas',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            // console.log("Credenciales incorrectas");
+            // console.error(err.message);
         }
     };
 
