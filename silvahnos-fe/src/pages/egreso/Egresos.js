@@ -7,6 +7,7 @@ import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Cookies from 'js-cookie';
+import { Tooltip } from 'react-tooltip';
 
 const Egresos = () => {
     const config = {
@@ -150,22 +151,6 @@ const Egresos = () => {
         return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
     };
 
-    const formatearObservacion = (observacion) => {
-        return (
-            <div 
-                style={{ 
-                    maxWidth: "100px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
-                    }}
-                title={observacion}
-                >
-                {observacion}
-            </div>
-        );
-    };
-
     let total = 0;
     egresos.forEach((egreso) => {
         total += egreso.monto;
@@ -217,7 +202,17 @@ const Egresos = () => {
                                 {paginatedData.map((egreso) => (
                                     <tr key={egreso.id}>
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
-                                        <td>{formatearObservacion(egreso.descripcion)}</td>
+                                        <td style={{width:"20%"}}>
+                                            <span
+                                                data-tooltip-id="tooltip-descrip"
+                                                data-tooltip-content={egreso.descripcion}
+                                                data-tooltip-variant='info'
+                                            >
+                                                {egreso.descripcion.length < 15 ?
+                                                    egreso.descripcion :
+                                                    egreso.descripcion.slice(0, 15) + "..."}
+                                            </span>
+                                        </td>
                                         <td>{egreso.motivo.nombre}</td>
                                         <td>{formatoMonto(egreso.monto)}</td>
                                         <td>
@@ -310,7 +305,9 @@ const Egresos = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal>
-
+            
+            {/*Tooltip para descripción*/}
+            <Tooltip id="tooltip-descrip" opacity={1} />
         </>
     );
 }

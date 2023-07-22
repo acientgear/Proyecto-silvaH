@@ -3,15 +3,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import {BsBoxArrowRight} from "react-icons/bs";
+import { BsBoxArrowRight } from "react-icons/bs";
 import FormMotivo from '../../components/FormMotivo';
 import Cookies from 'js-cookie';
 import Alerta from '../../components/Alerta';
+import { Tooltip } from 'react-tooltip';
 
 const MotivoE = () => {
     const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };  
+    };
     const [motivosE, setMotivosE] = useState([]);
     const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
@@ -50,7 +51,7 @@ const MotivoE = () => {
     const createMotivoE = async (editedItem) => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseCreate();
                 getMotivosE();
@@ -68,7 +69,7 @@ const MotivoE = () => {
     const updatemotivoE = async (editedItem) => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
                 getMotivosE();
@@ -90,7 +91,7 @@ const MotivoE = () => {
     const deleteMotivoE = async () => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
-            const response = await axios.post(url, editedItem,config);
+            const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
                 getMotivosE();
@@ -121,7 +122,7 @@ const MotivoE = () => {
     const getMotivosE = async () => {
         try {
             let url = 'http://' + urlweb + '/motivosE';
-            const response = await axios.get(url,config);
+            const response = await axios.get(url, config);
             if (response.status === 200) {
                 setMotivosE(response.data);
             }
@@ -130,58 +131,56 @@ const MotivoE = () => {
         }
     };
 
-    const formatearObservacion = (observacion) => {
-        return (
-            <div 
-                style={{ 
-                    maxWidth: "100px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
-                    }}
-                title={observacion}
-                >
-                {observacion}
-            </div>
-        );
-    };
-
     useEffect(() => {
         getMotivosE();
     });
 
     return (
-        <div style={{width: "100%"}}>
+        <div style={{ width: "100%" }}>
             <Card className="cardsH">
                 <Card.Body>
                     <Card.Title >Motivos de egresos registrados</Card.Title>
-                    <Table  responsive="sm" hover >
+                    <Table id="table-motivoe" responsive="sm" hover >
                         <thead>
                             <tr>
-                                <th style={{ width: '100px' }}>Nombre</th>
-                                <th style={{ width: '100px' }}>Descripción</th>
-                                <th style={{ width: '100px' }}>Acciones</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {motivosE.map((motivo, index) => (
                                 <tr key={motivo.id}>
-                                    <td >{motivo.nombre}</td>
-                                    <td >{formatearObservacion(motivo.descripcion)}</td>
-                                    <td>
+                                    <td>{motivo.nombre}</td>
+                                    <td style={{width: "33%"}}>
+                                        <span
+                                            data-tooltip-id='tooltip-descrip'
+                                            data-tooltip-content={motivo.descripcion}
+                                            data-tooltip-variant='info'
+                                        > 
+                                        {motivo.descripcion.length < 15 ? 
+                                            motivo.descripcion :
+                                            motivo.descripcion.slice(0, 15) + "..."}
+                                        </span>  
+                                    </td>
+                                    <td >
                                         <a href="#se"
-                                            onClick={() => handleShowEdit(motivo)} 
-                                            style={{ cursor: "pointer",
-                                                    marginRight: 2, 
-                                                    color: "#0d6efd" }} 
+                                            onClick={() => handleShowEdit(motivo)}
+                                            style={{
+                                                cursor: "pointer",
+                                                marginRight: 2,
+                                                color: "#0d6efd"
+                                            }}
                                         >
                                             <AiFillEdit />
                                         </a>
                                         <a href="#sd"
-                                            onClick={() => handleShowDelete(motivo)} 
-                                            style={{ cursor: "pointer", 
-                                                    marginRight: 2, 
-                                                    color: "#dc3545" }} 
+                                            onClick={() => handleShowDelete(motivo)}
+                                            style={{
+                                                cursor: "pointer",
+                                                marginRight: 2,
+                                                color: "#dc3545"
+                                            }}
                                         >
                                             <AiFillDelete />
                                         </a>
@@ -192,13 +191,13 @@ const MotivoE = () => {
                         </tbody>
                     </Table>
                     <div className="registrar" >
-                        <a className="registrar-anchor" 
+                        <a className="registrar-anchor"
                             href="#"
                             onClick={handleShowCreate}>
-                                Registrar motivo de egreso <BsBoxArrowRight/>
+                            Registrar motivo de egreso <BsBoxArrowRight />
                         </a>
                     </div>
-                    </Card.Body>
+                </Card.Body>
             </Card>
 
             {/*Modal para eliminar*/}
@@ -242,6 +241,9 @@ const MotivoE = () => {
                     />
                 </Modal.Body>
             </Modal>
+
+            {/*Tooltip para descripción*/}
+            <Tooltip id="tooltip-descrip" opacity={1} />
         </div >
     )
 }

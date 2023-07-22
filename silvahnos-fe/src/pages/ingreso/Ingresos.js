@@ -7,6 +7,7 @@ import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Cookies from 'js-cookie';
+import { Tooltip } from 'react-tooltip';
 
 const Ingresos = () => {
     const config = {
@@ -35,6 +36,7 @@ const Ingresos = () => {
     );
 
     const formatoMonto = (monto) => {
+        console.log(monto);
         const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
         return montoFormateado;
     };
@@ -150,22 +152,6 @@ const Ingresos = () => {
         return fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear();
     };
 
-    const formatearObservacion = (observacion) => {
-        return (
-            <div 
-                style={{ 
-                    maxWidth: "100px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
-                    }}
-                title={observacion}
-                >
-                {observacion}
-            </div>
-        );
-    };
-
     let total = 0;
     ingresos.forEach(ingreso => {
         total += ingreso.monto;
@@ -174,8 +160,8 @@ const Ingresos = () => {
     useEffect(() => {
         getIngresos();
         const alert = localStorage.getItem("alert");
-        if (alert === "true") {  
-            localStorage.setItem("alert", false);  
+        if (alert === "true") {
+            localStorage.setItem("alert", false);
             Alerta.fire({
                 icon: 'success',
                 title: 'Ingreso creado exitosamente',
@@ -218,7 +204,17 @@ const Ingresos = () => {
                                 {paginatedData.map((ingreso) => (
                                     <tr key={ingreso.id}>
                                         <td>{formatearFecha(ingreso.fecha_creacion)}</td>
-                                        <td>{formatearObservacion(ingreso.descripcion)}</td>
+                                        <td style={{maxWidth: 200}}>
+                                            <span
+                                                data-tooltip-id="tooltip-descrip"
+                                                data-tooltip-content={ingreso.descripcion}
+                                                data-tooltip-variant='info'
+                                            >
+                                                {ingreso.descripcion.length < 15 ?
+                                                    ingreso.descripcion :
+                                                    ingreso.descripcion.slice(0, 15) + "..."}
+                                            </span>
+                                        </td>
                                         <td>{ingreso.motivo.nombre}</td>
                                         <td>{ingreso.patente}</td>
                                         <td>{formatoMonto(ingreso.monto)}</td>
@@ -303,6 +299,9 @@ const Ingresos = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal>
+
+            {/*Tooltip para descripción*/}
+            <Tooltip id="tooltip-descrip" opacity={1} />
         </>
     );
 };

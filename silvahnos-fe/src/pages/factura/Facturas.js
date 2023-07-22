@@ -7,6 +7,7 @@ import FormFactura from '../../components/FormFactura';
 import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete, AiFillCheckCircle } from "react-icons/ai";
 import Cookies from 'js-cookie';
+import { Tooltip } from 'react-tooltip';
 
 const Facturas = () => {
     const config = {
@@ -180,22 +181,6 @@ const Facturas = () => {
         return montoFormateado;
     };
 
-    const formatearObservacion = (observacion) => {
-        return (
-            <div 
-                style={{ 
-                    maxWidth: "100px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
-                    }}
-                title={observacion}
-                >
-                {observacion}
-            </div>
-        );
-    };
-
     const [editedItem, setEditedItem] = useState({
         id: null,
         numero_factura: 0,
@@ -294,7 +279,17 @@ const Facturas = () => {
                                         <td>{formatearFecha(factura.fecha_vencimiento)}</td>
                                         <td>{factura.fecha_pago ? formatearFecha(factura.fecha_pago) : '---'}</td>
                                         <td>{factura.estado.nombre}</td>
-                                        <td>{formatearObservacion(factura.observaciones)}</td>
+                                        <td style={{maxWidth: 200}}>
+                                            <span
+                                                data-tooltip-id="tooltip-descrip"
+                                                data-tooltip-content={factura.observaciones}
+                                                data-tooltip-variant='info'
+                                            >
+                                                {factura.observaciones.length < 15 ?
+                                                    factura.observaciones :
+                                                    factura.observaciones.slice(0, 15) + "..."}
+                                            </span>
+                                        </td>
                                         <td>
                                             <a href="#sc" style={{ cursor: "pointer", marginRight: 2, color: "#198754" }} onClick={() => handleShowCheck(factura)}><AiFillCheckCircle /></a>
                                             <a href="#se" style={{ cursor: "pointer", marginRight: 2, color: "#0d6efd" }} onClick={() => handleShowEdit(factura)}><AiFillEdit /></a>
@@ -380,6 +375,9 @@ const Facturas = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal >
+
+            {/*Tooltip para descripción*/}
+            <Tooltip id="tooltip-descrip" opacity={1} />
         </>
     );
 };
