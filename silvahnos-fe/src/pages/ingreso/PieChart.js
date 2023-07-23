@@ -51,7 +51,7 @@ const PieChartIngreso = ({anio,mes}) => {
 
     return (
         <>
-        <div key="pie-chart-ingreso">
+        <div key="pie-chart-ingreso" style={{width:"75%"}}>
 
             <Pie data={data} options={options} />
         </div>

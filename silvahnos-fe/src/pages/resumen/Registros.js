@@ -16,13 +16,13 @@ const Registros = () => {
     let mes = fechaAcual.getMonth() + 1;
     const idMes = mes.toLocaleString('es-ES', { month: 'long' });
     const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
-    
+
     const formatearFecha = (fecha) => {
         let fechaC = fecha.split('T')[0];
         fechaC = fechaC.split('-');
         return fechaC[2] + '/' + fechaC[1] + '/' + fechaC[0];
     };
-    
+
     const [registros, setRegistros] = useState([]);
 
     const formatoMonto = (monto) => {
@@ -46,27 +46,29 @@ const Registros = () => {
         getRegistros();
     }, [getRegistros]);
 
+    console.log(registros);
+
     return (
-        <Card style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
-        <Card.Body>
-            <Card.Subtitle className="mb-2 text-muted">Registros de {nombreMes} del {anio}</Card.Subtitle>
-            <p></p>
-            {registros.map((registro, index) => (
-                <div key={index}>
-                    <ListGroup.Item key={`registro-${index}`} as="li" className="d-flex justify-content-between align-items-start">
-                        <div className="ms-2 me-auto">
-                            <div className="fw-bold">{formatearFecha(registro.fecha)}</div>
-                            {registro.descripcion}
-                        </div>
-                        <Badge bg={registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD'} pill style={{ color: "black", backgroundColor: registro.tipo === 'Egreso' ? '#FBE6DD' : '#E6F4DD' }}>
-                            {formatoMonto(registro.monto)}
-                        </Badge>
-                    </ListGroup.Item>
-                    <br></br>
-                </div>
-            ))}
-        </Card.Body>
-    </Card>
+        <Card className="cardsH" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
+            <Card.Body>
+                <Card.Subtitle className="mb-2 text-muted">Registros de {nombreMes} del {anio}</Card.Subtitle>
+                <p></p>
+                {registros.map((registro, index) => (
+                    <div key={index}>
+                        <ListGroup.Item key={`registro-${index}`} as="li" className="d-flex justify-content-between align-items-start">
+                            <div className="ms-2 me-auto">
+                                <div className="fw-bold">{formatearFecha(registro.fecha)}</div>
+                                {registro.descripcion}
+                            </div>
+                            <Badge bg={registro.tipo === 'egreso' ? '#FBE6DD' : '#E6F4DD'} pill style={{ color: "black", backgroundColor: registro.tipo === 'egreso' ? '#FBE6DD' : '#E6F4DD' }}>
+                                {formatoMonto(registro.monto)}
+                            </Badge>
+                        </ListGroup.Item>
+                        <p></p>
+                    </div>
+                ))}
+            </Card.Body>
+        </Card>
     )
 }
 

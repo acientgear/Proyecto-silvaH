@@ -29,6 +29,8 @@ public class RegistroService {
      */
 
     public List<Registro> obtenerRegistros(int anio, int mes){
-        return (List<Registro>) registroRepository.obtenerRegistros(anio, mes);
+        List<Registro> registros = registroRepository.obtenerRegistros(anio, mes);
+        System.out.println("registros en service: "+registros);
+        return registros;
     }
 }

@@ -96,7 +96,7 @@ class LineChart extends Component {
     render() {
         return (
             <>
-                <div key="grafico-flujo">
+                <div>
                     <canvas
                         id="myChart"
                         ref={this.chartRef}
