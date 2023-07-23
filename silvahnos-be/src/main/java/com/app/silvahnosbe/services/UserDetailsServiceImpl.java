@@ -40,7 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         
-        UsuarioEntity usuario = usuarioRepository.findByUsuario(username)
+        UsuarioEntity usuario = usuarioRepository.findByCorreo(username)
                                 .orElseThrow(()-> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
 
@@ -49,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
                 .map(role -> new SimpleGrantedAuthority("ROLE_".concat(role.getNombre().name())))
                 .collect(Collectors.toSet());
 
-        return new User(usuario.getUsuario(),usuario.getContrasenna(),true,true, true,true,authorities);
+        return new User(usuario.getCorreo(),usuario.getContrasenna(),true,true, true,true,authorities);
     }
     
 }
