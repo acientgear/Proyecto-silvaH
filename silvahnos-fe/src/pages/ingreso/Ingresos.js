@@ -36,7 +36,6 @@ const Ingresos = () => {
     );
 
     const formatoMonto = (monto) => {
-        console.log(monto);
         const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
         return montoFormateado;
     };

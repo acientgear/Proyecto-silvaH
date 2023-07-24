@@ -46,8 +46,6 @@ const Registros = () => {
         getRegistros();
     }, [getRegistros]);
 
-    console.log(registros);
-
     return (
         <Card  style={{ margin: "10px 0 10px 0", maxHeight: '469px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
             <Card.Body>
