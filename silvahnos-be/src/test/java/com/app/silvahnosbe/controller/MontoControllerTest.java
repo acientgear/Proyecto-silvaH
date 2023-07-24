@@ -33,13 +33,12 @@ public class MontoControllerTest {
     void testGetAllMontosIngreso_ExistenMontos_ReturnsList() {
         // Given
         int anio = 2023;
-        int mes = 5;
         List<Monto> montos = new ArrayList<>();
         montos.add(new Monto());
-        when(montoService.obtenerMontoIngreso(anio, mes)).thenReturn(montos);
+        when(montoService.obtenerMontoIngresoTotalMesAnual(anio)).thenReturn(montos);
 
         // When
-        ResponseEntity<List<Monto>> response = montoController.obtenerMontosIngreso(anio, mes);
+        ResponseEntity<List<Monto>> response = montoController.obtenerMontosIngresoTotalMesAnual(anio);
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -51,11 +50,10 @@ public class MontoControllerTest {
     void testGetAllMontosIngreso_NoExistenMontos_ReturnsNotFound() {
         // Given
         int anio = 2023;
-        int mes = 5;
-        when(montoService.obtenerMontoIngreso(anio, mes)).thenReturn(null);
+        when(montoService.obtenerMontoIngresoTotalMesAnual(anio)).thenReturn(null);
 
         // When
-        ResponseEntity<List<Monto>> response = montoController.obtenerMontosIngreso(anio, mes);
+        ResponseEntity<List<Monto>> response = montoController.obtenerMontosIngresoTotalMesAnual(anio);
 
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -66,13 +64,12 @@ public class MontoControllerTest {
     void testGetAllMontosEgreso_ExistenMontos_ReturnsList() {
         // Given
         int anio = 2023;
-        int mes = 5;
         List<Monto> montos = new ArrayList<>();
         montos.add(new Monto());
-        when(montoService.obtenerMontoEgreso(anio, mes)).thenReturn(montos);
+        when(montoService.obtenerMontoEgresoTotalMesAnual(anio)).thenReturn(montos);
 
         // When
-        ResponseEntity<List<Monto>> response = montoController.obtenerMontosEgreso(anio, mes);
+        ResponseEntity<List<Monto>> response = montoController.obtenerMontosEgresoTotalMesAnual(anio);
 
         // Then
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -84,11 +81,10 @@ public class MontoControllerTest {
     void testGetAllMontosEgreso_NoExistenMontos_ReturnsNotFound() {
         // Given
         int anio = 2023;
-        int mes = 5;
-        when(montoService.obtenerMontoEgreso(anio, mes)).thenReturn(null);
+        when(montoService.obtenerMontoEgresoTotalMesAnual(anio)).thenReturn(null);
 
         // When
-        ResponseEntity<List<Monto>> response = montoController.obtenerMontosEgreso(anio, mes);
+        ResponseEntity<List<Monto>> response = montoController.obtenerMontosEgresoTotalMesAnual(anio);
 
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());

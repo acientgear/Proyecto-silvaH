@@ -32,7 +32,6 @@ public class MontoServiceTest {
     @BeforeEach
     void setup(){
         monto= new Monto();
-        monto.setMotivo("Sueldos");
         monto.setMonto_total(150000);
     }
 
@@ -40,17 +39,15 @@ public class MontoServiceTest {
     @Test
     void testObtenerMontoIngreso (){
         Monto monto= new Monto();
-        monto.setMotivo("Sueldos");
         monto.setMonto_total(150000);
 
         Monto monto2= new Monto();
-        monto2.setMotivo("Arriendo");
         monto2.setMonto_total(150000);
 
         //given
-        given(montoRepository.obtenerMontoIngresoPorAnioAndMes(2021, 1)).willReturn(new ArrayList<>(List.of(monto, monto2)));
+        given(montoRepository.obtenerMontoIngresoTotalMesAnual(2021)).willReturn(new ArrayList<>(List.of(monto, monto2)));
         //when
-        List<Monto> montos=montoService.obtenerMontoIngreso(2021, 1);
+        List<Monto> montos=montoService.obtenerMontoIngresoTotalMesAnual(2021);
         //then
         assertThat(montos).isNotNull();
         assertThat(montos.size()).isEqualTo(2);
@@ -60,17 +57,15 @@ public class MontoServiceTest {
     @Test
     void testObtenerMontoEgreso (){
         Monto monto= new Monto();
-        monto.setMotivo("Arriendo");
         monto.setMonto_total(150000);
 
         Monto monto2= new Monto();
-        monto2.setMotivo("IVA");
         monto2.setMonto_total(150000);
 
         //given
-        given(montoRepository.obtenerMontoEgresoPorAnioAndMes(2023, 5)).willReturn(new ArrayList<>(List.of(monto, monto2)));
+        given(montoRepository.obtenerMontoEgresoTotalMesAnual(2023)).willReturn(new ArrayList<>(List.of(monto, monto2)));
         //when
-        List<Monto> montos=montoService.obtenerMontoEgreso(2023, 5);
+        List<Monto> montos=montoService.obtenerMontoEgresoTotalMesAnual(2023);
         //then
         assertThat(montos).isNotNull();
         assertThat(montos.size()).isEqualTo(2);

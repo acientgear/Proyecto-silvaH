@@ -5,19 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MontoModelTest {
-    
-    @Test
-    void testMotivo(){
-        // Given
-        Monto monto = new Monto();
-
-        // When
-        monto.setMotivo("Sueldos");
-        String motivo = monto.getMotivo();
-
-        // Then
-        assertEquals("Sueldos", motivo);   
-    }
 
     @Test
     void testMontoTotal(){
