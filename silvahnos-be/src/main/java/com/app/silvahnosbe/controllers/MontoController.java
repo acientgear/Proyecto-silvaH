@@ -54,5 +54,23 @@ public class MontoController {
         }
         return ResponseEntity.ok().body(montos);
     }
+
+    @GetMapping("/ingresos/totalMesAnual/{anio}")
+    public ResponseEntity<List<Monto>> obtenerMontosIngresoTotalMesAnual(@PathVariable("anio") Integer anio){
+        List<Monto> montos = montoService.obtenerMontoIngresoTotalMesAnual(anio);
+        if(montos == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(montos);
+    }
+
+    @GetMapping("/egresos/totalMesAnual/{anio}")
+    public ResponseEntity<List<Monto>> obtenerMontosEgresoTotalMesAnual(@PathVariable("anio") Integer anio){
+        List<Monto> montos = montoService.obtenerMontoEgresoTotalMesAnual(anio);
+        if(montos == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(montos);
+    }
     
 }

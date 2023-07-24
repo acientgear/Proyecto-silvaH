@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Monto {
+public class Meses {
     @Id
-    private Integer monto_total;
+    private Integer mes;
 }

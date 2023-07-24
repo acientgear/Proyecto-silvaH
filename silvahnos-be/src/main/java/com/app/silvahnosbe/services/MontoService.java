@@ -37,4 +37,13 @@ public class MontoService {
     public List<Monto> obtenerMontoEgreso(int anio, int mes){
         return (List<Monto>) montoRepository.obtenerMontoEgresoPorAnioAndMes(anio, mes);
     }
+
+    public List<Monto> obtenerMontoIngresoTotalMesAnual(int anio){
+        List<Monto> montos = (List<Monto>) montoRepository.obtenerMontoIngresoTotalMesAnual(anio);
+        return montos;
+    }
+
+    public List<Monto> obtenerMontoEgresoTotalMesAnual(int anio){
+        return (List<Monto>) montoRepository.obtenerMontoEgresoTotalMesAnual(anio);
+    }
 }
