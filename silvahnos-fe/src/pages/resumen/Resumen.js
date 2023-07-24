@@ -8,6 +8,8 @@ import GraficoAnual from './GraficoAnual';
 import TablaMensual from './TablaMensual';
 import TablaAnual from './TablaAnual';
 import Registros from './Registros';
+import InputYear from '../../components/InputYear';
+import InputMonth from '../../components/InputMonth';
 import { AiOutlineRise, AiOutlinePieChart } from 'react-icons/ai';
 
 const Resumen = () => {
@@ -16,9 +18,21 @@ const Resumen = () => {
 
     const [seccion, setSeccion] = useState("resumen_anual");
 
+    const [mes, setMes] = useState((new Date()).getMonth() + 1);
+    const [anio, setAnio] = useState((new Date()).getFullYear());
+
     const handleSeccion = (seccion) => {
         setSeccion(seccion);
     }
+    
+    const handleChangeAnio = (e) => {
+        console.log(e.target.value);
+        setAnio(e.target.value);
+    };
+
+    const handleChangeMes = (e) => {
+        setMes(e.target.value);
+    };
 
     const handleActive = (sec) => {
         if (sec === seccion) {
@@ -33,6 +47,16 @@ const Resumen = () => {
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen anual</h1>
                 <Row>
+                <Row>
+                    <Row className="justify-content-center align-items-center">
+                        <Col className='d-flex align-items-center'>
+                            <InputYear
+                                anio={anio}
+                                onChange={handleChangeAnio}
+                            />
+                        </Col>
+                    </Row>
+                </Row>
                     <Col md={12}>
                         <Card style={{ width: "100%" }}>
                             <Card.Body>
@@ -70,7 +94,7 @@ const Resumen = () => {
                 <h1>Resumen mensual</h1>
                 <Row>
                     <Col className="column-spacing" style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-                        <Card style={{width:"100%", margin: "10px 0 10px 0"}}>
+                        <Card style={{ width: "100%", margin: "10px 0 10px 0" }}>
                             <Card.Body>
                                 <Card.Title>Distribución motivos de ingresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
@@ -78,11 +102,11 @@ const Resumen = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="column-spacing"  style={{ justifyContent: "center", alignItems: "start" }}>
+                    <Col className="column-spacing" style={{ justifyContent: "center", alignItems: "start" }}>
                         <Registros />
                     </Col>
                     <Col className="column-spacing" style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-                        <Card style={{width:"100%", margin: "10px 0 10px 0"}}>
+                        <Card style={{ width: "100%", margin: "10px 0 10px 0" }}>
                             <Card.Body>
                                 <Card.Title>Distribución motivos de egresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
@@ -108,9 +132,6 @@ const Resumen = () => {
             </div >
         )
     }
-
-    const mes = new Date().getMonth() + 1;
-    const anio = new Date().getFullYear();
 
     return (
         <div className='contenedor'>

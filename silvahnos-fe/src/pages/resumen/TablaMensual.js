@@ -93,7 +93,7 @@ const TablaMensual = () => {
                             <tbody>
                                 <tr style={{ fontWeight: "bold" }}>
                                     <td style={{ width: "50%" }}>Ingresos totales</td>
-                                    <td style={{ width: "50%" }}>{formatoMonto(totalIngresos-1)}</td>
+                                    <td style={{ width: "50%" }}>{formatoMonto(totalIngresos)}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ fontWeight: "bold", width: "50%" }}>Egresos</td>
@@ -121,7 +121,7 @@ const TablaMensual = () => {
                                 </tr>
                                 <tr style={{ fontWeight: "bold" }}>
                                     <td style={{ width: "50%" }}>Diferencia mes</td>
-                                    <td style={{ width: "50%" }}>{formatoMonto(totalIngresos - totalEgresos-1)}</td>
+                                    <td style={{ width: "50%" }}>{formatoMonto(totalIngresos - totalEgresos)}</td>
                                 </tr>
                             </tbody>
                         </Table>

@@ -5,13 +5,14 @@ import Sem1 from '../../components/data/Sem1';
 import Sem2 from '../../components/data/Sem2';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
+import InputYear from '../../components/InputYear';
 
 const TablaAnual = () => {
     const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
 
-    const [anio] = useState((new Date()).getFullYear());
+    const [anio, setAnio] = useState((new Date()).getFullYear());
     const [montosIngresosSem1, setMontosIngresosSem1] = useState([]);
     const [montosEgresosSem1, setMontosEgresosSem1] = useState([]);
     const [montosIngresosSem2, setMontosIngresosSem2] = useState([]);
@@ -78,6 +79,7 @@ const TablaAnual = () => {
     return (
         <>
             <Row>
+
                 <Col xs="{12}">
                     <Table responsive hover>
                         <thead>
