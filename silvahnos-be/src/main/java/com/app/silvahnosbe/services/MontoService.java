@@ -18,26 +18,6 @@ public class MontoService {
     @Autowired
     MontoRepository montoRepository;
 
-    /**
-     * funcion que permite obtener el monto de los  ingresos por mes y año
-     * @param int mes anio
-     * @return devuelve una lista donde cada elemento es el monto correspondiente a un mes
-     */
-
-    public List<Monto> obtenerMontoIngreso(int anio, int mes){
-        return (List<Monto>) montoRepository.obtenerMontoIngresoPorAnioAndMes(anio, mes);
-    }
-
-    /**
-     * funcion que permite obtener el monto de los  egresos por mes y año
-     * @param int mes anio
-     * @return devuelve una lista donde cada elemento es el monto correspondiente a un mes
-     */
-
-    public List<Monto> obtenerMontoEgreso(int anio, int mes){
-        return (List<Monto>) montoRepository.obtenerMontoEgresoPorAnioAndMes(anio, mes);
-    }
-
     public List<Monto> obtenerMontoIngresoTotalMesAnual(int anio){
         List<Monto> montos = (List<Monto>) montoRepository.obtenerMontoIngresoTotalMesAnual(anio);
         return montos;

@@ -28,7 +28,7 @@ const TablaMensual = () => {
 
     const getMontosOrigenIngresos = useCallback(async () => {
         try {
-            let url = 'http://' + urlweb + '/montos/ingreso/' + anio + '/' + mes;
+            let url = 'http://' + urlweb + '/motivoMonto/ingreso/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {
                 setTotalIngresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
@@ -41,7 +41,7 @@ const TablaMensual = () => {
 
     const getMontosOrigenEgresos = useCallback(async () => {
         try {
-            let url = 'http://' + urlweb + '/montos/egreso/' + anio + '/' + mes;
+            let url = 'http://' + urlweb + '/motivoMonto/egreso/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {
                 setTotalEgresos(response.data.reduce((total, monto) => total + monto.monto_total, 0));
@@ -62,8 +62,8 @@ const TablaMensual = () => {
             <div key="tabla-mensual">
                 <Card className="cardsH">
                     <Card.Body>
-                        <Card.Title >Registros por categoria</Card.Title>
-                        <Table responsive="sm" hover>
+                        <Card.Title>Registros por categoria</Card.Title>
+                        <Table responsive="sm" hover style={{ boxShadow: "initial" }}>
                             <thead>
                                 <tr>
                                     <th></th>
@@ -72,37 +72,56 @@ const TablaMensual = () => {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style={{ fontWeight: "bold" }}>Ingresos</td>
-                                    <td></td>
+                                    <td style={{ fontWeight: "bold", width: "50%" }}>Ingresos</td>
+                                    <td style={{ width: "50%" }}></td>
                                 </tr>
-                                {montosOrigenIngresos.map((montoOrigenIngreso, index) => (
-                                    <tr key={index}>
-                                        <td style={{ textAlign: "center" }}>{montoOrigenIngreso.motivo}</td>
-                                        <td>{formatoMonto(montoOrigenIngreso.monto_total)}</td>
-                                    </tr>
-                                ))}
-
+                            </tbody>
+                        </Table>
+                        <div style={{ maxHeight: "162.16px", overflowY: "auto" }}>
+                            <Table responsive="sm" hover>
+                                <tbody>
+                                    {montosOrigenIngresos.map((montoOrigenIngreso, index) => (
+                                        <tr key={index}>
+                                            <td style={{ textAlign: "center", width: "50%" }}>{montoOrigenIngreso.motivo}</td>
+                                            <td style={{ width: "50%" }}>{formatoMonto(montoOrigenIngreso.monto_total)}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
+                        <Table responsive="sm" hover style={{ boxShadow: "initial" }}>
+                            <tbody>
                                 <tr style={{ fontWeight: "bold" }}>
-                                    <td >Ingresos totales</td>
-                                    <td>{formatoMonto(totalIngresos)}</td>
+                                    <td style={{ width: "50%" }}>Ingresos totales</td>
+                                    <td style={{ width: "50%" }}>{formatoMonto(totalIngresos-1)}</td>
                                 </tr>
                                 <tr>
-                                    <td style={{ fontWeight: "bold" }}>Egresos</td>
-                                    <td></td>
+                                    <td style={{ fontWeight: "bold", width: "50%" }}>Egresos</td>
+                                    <td style={{ width: "50%" }}></td>
                                 </tr>
-                                {montosOrigenEgresos.map((montoOrigenEgreso, index) => (
-                                    <tr key={index}>
-                                        <td style={{ textAlign: "center" }}>{montoOrigenEgreso.motivo}</td>
-                                        <td>{formatoMonto(montoOrigenEgreso.monto_total)}</td>
-                                    </tr>
-                                ))}
+                            </tbody>
+                        </Table>
+                        <div style={{ maxHeight: "162.16px", overflowY: "auto" }}>
+                            <Table responsive="sm" hover>
+                                <tbody>
+                                    {montosOrigenEgresos.map((montoOrigenEgreso, index) => (
+                                        <tr key={index}>
+                                            <td style={{ textAlign: "center", width: "50%" }}>{montoOrigenEgreso.motivo}</td>
+                                            <td style={{ width: "50%" }}>{formatoMonto(montoOrigenEgreso.monto_total)}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
+                        <Table responsive="sm" hover style={{ boxShadow: "initial" }}>
+                            <tbody>
                                 <tr style={{ fontWeight: "bold" }}>
-                                    <td>Egresos totales</td>
-                                    <td>{formatoMonto(totalEgresos)}</td>
+                                    <td style={{ width: "50%" }}>Egresos totales</td>
+                                    <td style={{ width: "50%" }}>{formatoMonto(totalEgresos)}</td>
                                 </tr>
                                 <tr style={{ fontWeight: "bold" }}>
-                                    <td>Diferencia mes</td>
-                                    <td>{formatoMonto(totalIngresos - totalEgresos)}</td>
+                                    <td style={{ width: "50%" }}>Diferencia mes</td>
+                                    <td style={{ width: "50%" }}>{formatoMonto(totalIngresos - totalEgresos-1)}</td>
                                 </tr>
                             </tbody>
                         </Table>
@@ -112,6 +131,7 @@ const TablaMensual = () => {
             </div>
         </>
     );
+
 }
 
 export default TablaMensual;

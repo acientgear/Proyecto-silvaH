@@ -49,10 +49,9 @@ const Registros = () => {
     console.log(registros);
 
     return (
-        <Card className="cardsH" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
+        <Card  style={{ margin: "10px 0 10px 0", maxHeight: '469px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
             <Card.Body>
-                <Card.Subtitle className="mb-2 text-muted">Registros de {nombreMes} del {anio}</Card.Subtitle>
-                <p></p>
+                <Card.Subtitle className="mb-2 text-muted" style={{textAlign:"center"}}>Registros de {nombreMes} del {anio}</Card.Subtitle>
                 {registros.map((registro, index) => (
                     <div key={index}>
                         <ListGroup.Item key={`registro-${index}`} as="li" className="d-flex justify-content-between align-items-start">

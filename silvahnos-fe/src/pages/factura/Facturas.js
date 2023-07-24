@@ -15,7 +15,7 @@ const Facturas = () => {
     };
     const [currentPage, setCurrentPage] = useState(1);
     const [iva, setIva] = useState(0);
-    const pageSize = 6;
+    const pageSize = 10;
 
     const [mes, setMes] = useState((new Date()).getMonth() + 1);
     const [anio, setAnio] = useState((new Date()).getFullYear());

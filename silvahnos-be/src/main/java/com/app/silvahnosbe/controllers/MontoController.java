@@ -26,35 +26,6 @@ public class MontoController {
     @Autowired
     MontoService montoService;
 
-    @Operation(summary = "obtiene los montos de los ingresos ",description = "retorna una lista con los montos de los ingresos por mes")
-    @ApiResponses(value={
-            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
-            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
-    })
-    @GetMapping("/ingreso/{anio}/{mes}")
-    public ResponseEntity<List<Monto>> obtenerMontosIngreso(@PathVariable("anio") Integer anio, @PathVariable("mes") Integer mes){
-        List<Monto> montos = montoService.obtenerMontoIngreso(anio, mes);
-        if(montos == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(montos);
-    }
-
-    @Operation(summary = "obtiene los montos de los egresos ",description = "retorna una lista con los montos de los egresos por mes")
-    @ApiResponses(value={
-            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
-            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
-    })
-
-    @GetMapping("/egreso/{anio}/{mes}")
-    public ResponseEntity<List<Monto>> obtenerMontosEgreso(@PathVariable("anio") Integer anio, @PathVariable("mes") Integer mes){
-        List<Monto> montos = montoService.obtenerMontoEgreso(anio, mes);
-        if(montos == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(montos);
-    }
-
     @GetMapping("/ingresos/totalMesAnual/{anio}")
     public ResponseEntity<List<Monto>> obtenerMontosIngresoTotalMesAnual(@PathVariable("anio") Integer anio){
         List<Monto> montos = montoService.obtenerMontoIngresoTotalMesAnual(anio);

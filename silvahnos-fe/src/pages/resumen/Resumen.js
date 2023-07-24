@@ -69,32 +69,8 @@ const Resumen = () => {
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen mensual</h1>
                 <Row>
-                    <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-                        <p></p>
-                        <Card >
-                            <Card.Body>
-                                <Card.Title>Distribución motivos de egresos</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                <PieChartEgreso anio={anio} mes={mes} />
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col xs={6} style={{ justifyContent: "center", alignItems: "start" }}>
-                        <p></p>
-                        <Card style={{ width: "100%" }}>
-                            <Card.Body>
-                                <Card.Title>Ingresos y egresos</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                <br></br>
-                                <div>
-                                    <GraficoMensual />
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
-                        <p></p>
-                        <Card>
+                    <Col className="column-spacing" style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
+                        <Card style={{width:"100%", margin: "10px 0 10px 0"}}>
                             <Card.Body>
                                 <Card.Title>Distribución motivos de ingresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
@@ -102,16 +78,32 @@ const Resumen = () => {
                             </Card.Body>
                         </Card>
                     </Col>
+                    <Col className="column-spacing"  style={{ justifyContent: "center", alignItems: "start" }}>
+                        <Registros />
+                    </Col>
+                    <Col className="column-spacing" style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
+                        <Card style={{width:"100%", margin: "10px 0 10px 0"}}>
+                            <Card.Body>
+                                <Card.Title>Distribución motivos de egresos</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
+                                <PieChartEgreso anio={anio} mes={mes} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
                 </Row>
-                <Row xs={1} lg={2}>
+                <Row>
                     <Col style={{ justifyContent: "center", alignItems: "start" }}>
                         <TablaMensual />
                     </Col>
                     <Col style={{ justifyContent: "center", alignItems: "start" }}>
-                        <Registros />
+                        <Card className="cardsH">
+                            <Card.Body>
+                                <Card.Title>Ingresos y egresos</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
+                                <GraficoMensual />
+                            </Card.Body>
+                        </Card>
                     </Col>
-
-
                 </Row >
             </div >
         )
