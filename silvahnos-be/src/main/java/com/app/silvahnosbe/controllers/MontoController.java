@@ -2,6 +2,9 @@ package com.app.silvahnosbe.controllers;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,12 @@ import com.app.silvahnosbe.services.MontoService;
 public class MontoController {
     @Autowired
     MontoService montoService;
+
+    @Operation(summary = "obtiene los montos",description = "retorna una lista de montos")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
+            @ApiResponse(responseCode = "404", description = "datos no encontrados ")
+    })
 
     @GetMapping("/ingresos/totalMesAnual/{anio}")
     public ResponseEntity<List<Monto>> obtenerMontosIngresoTotalMesAnual(@PathVariable("anio") Integer anio){
