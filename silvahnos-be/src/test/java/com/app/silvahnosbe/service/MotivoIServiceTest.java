@@ -81,8 +81,9 @@ class MotivoIServiceTest {
         List<MotivoIEntity> motivoI1 = motivoIService.obtenerMotivoI();
     
         // then
-        assertThat(motivoI1).isNotNull();
-        assertThat(motivoI1).isEqualTo(motivosI);
+        assertThat(motivoI1)
+            .isNotNull()
+            .isEqualTo(motivosI);
     }
 
     @DisplayName("test para obtener todos los motivosI cuando no existen")
@@ -93,10 +94,4 @@ class MotivoIServiceTest {
         // then
         assertThat(motivosI1).isEmpty();
     }
-
-
-
-
-
-
 }

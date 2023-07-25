@@ -70,8 +70,9 @@ class MotivoEServiceTest {
         List<MotivoEEntity> motivoE1 = motivoEService.obtenerMotivoE();
     
         // then
-        assertThat(motivoE1).isNotNull();
-        assertThat(motivoE1).isEqualTo(motivosE);
+        assertThat(motivoE1)
+            .isNotNull()
+            .isEqualTo(motivosE);
     }
 
     @DisplayName("test para obtener todos los motivosE cuando no existen")

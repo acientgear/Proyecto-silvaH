@@ -60,8 +60,9 @@ class MovimientoServiceTest {
         List<MovimientoEntity> resultado = movimientoService.obtenerMovimientos();
 
         // Then
-        assertThat(resultado).isNotNull();
-        assertThat(resultado).hasSize(1);
+        assertThat(resultado)
+            .isNotNull()
+            .hasSize(1);
         assertThat(resultado.get(0).getId()).isEqualTo(1l);
     }
 
@@ -77,8 +78,9 @@ class MovimientoServiceTest {
         List<MovimientoEntity> resultado = movimientoService.obtenerMovimientos();
 
         // Then
-        assertThat(resultado).isNotNull();
-        assertThat(resultado).hasSize(0);
+        assertThat(resultado)
+            .isNotNull()
+            .hasSize(0);
     }
 
     @DisplayName("Test para guardar un movimiento")

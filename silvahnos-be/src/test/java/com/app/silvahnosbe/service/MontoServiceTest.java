@@ -50,7 +50,7 @@ class MontoServiceTest {
         List<Monto> montos=montoService.obtenerMontoIngresoTotalMesAnual(2021);
         //then
         assertThat(montos).isNotNull();
-        assertThat(montos.size()).isEqualTo(2);
+        assertThat(montos).hasSize(2);
     }
 
     @DisplayName("test para obtener montos de egreso")
@@ -67,8 +67,9 @@ class MontoServiceTest {
         //when
         List<Monto> montos=montoService.obtenerMontoEgresoTotalMesAnual(2023);
         //then
-        assertThat(montos).isNotNull();
-        assertThat(montos.size()).isEqualTo(2);
+        assertThat(montos)
+            .isNotNull()
+            .hasSize(2);
     }
     
 }

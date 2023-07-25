@@ -128,8 +128,8 @@ public class IngresoService {
 
 
 
-    public static boolean esBisiesto(int año) {
-        return (año % 4 == 0 && año % 100 != 0) || (año % 400 == 0);
+    public static boolean esBisiesto(int anio) {
+        return (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
     }
 
 
@@ -140,10 +140,10 @@ public class IngresoService {
      * @return retorna un int representando la cantidad de dias del mes
      */
 
-    public static int obtenerDiasMes(int mes, int año) {
+    public static int obtenerDiasMes(int mes, int anio) {
         int[] diasPorMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-        if (mes == 2 && esBisiesto(año)) {
+        if (mes == 2 && esBisiesto(anio)) {
             return 29; // Febrero en un año bisiesto
         } else {
             return diasPorMes[mes - 1]; // Restamos 1 porque los meses se indexan desde 0 en el arreglo

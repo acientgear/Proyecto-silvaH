@@ -103,7 +103,7 @@ class EgresoServiceTest {
         // when
         List<EgresoEntity> egresos = egresoService.obtenerEgresoPorAnioAndMes(2023, 3);
         // then
-        assertThat(egresos.size()).isEqualTo(2);
+        assertThat(egresos).hasSize(2);
     }
 
     @DisplayName("test para lista vacia de egresos")
@@ -118,7 +118,7 @@ class EgresoServiceTest {
         // when
         List<EgresoEntity> egresos = egresoService.obtenerEgresoPorAnioAndMes(2023, 3);
         // then
-        assertThat(egresos.size()).isEqualTo(0);
+        assertThat(egresos.size()).isZero();
     }
 
     @DisplayName("test para obtener ultimos egresos")
@@ -139,7 +139,7 @@ class EgresoServiceTest {
         // when
         List<EgresoEntity> egresos = egresoService.obtenerUltimosEgresos();
         // then
-        assertThat(egresos.size()).isLessThan(4);
+        assertThat(egresos).hasSizeLessThan(4);
 
     }
 

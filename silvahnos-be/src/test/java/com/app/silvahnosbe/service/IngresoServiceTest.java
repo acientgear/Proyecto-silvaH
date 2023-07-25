@@ -95,7 +95,7 @@ class IngresoServiceTest {
         // when
         List<IngresoEntity> ingresos = ingresoService.obtenerIngresos(2023, 5);
         // then
-        assertThat(ingresos.size()).isEqualTo(2);
+        assertThat(ingresos).hasSize(2);
     }
 
     @DisplayName("test para obtener ingreso por id")
@@ -138,7 +138,7 @@ class IngresoServiceTest {
         // when
         List<IngresoEntity> ingresos = ingresoService.obtenerUltimosIngresos();
         // then
-        assertThat(ingresos.size()).isEqualTo(3);
+        assertThat(ingresos).hasSize(3);
     }
 
     @DisplayName("test para obtenerlos últimos ingresos - caso ingresos < 3")
@@ -156,7 +156,7 @@ class IngresoServiceTest {
         // when
         List<IngresoEntity> ingresos = ingresoService.obtenerUltimosIngresos();
         // then
-        assertThat(ingresos.size()).isEqualTo(2);
+        assertThat(ingresos).hasSize(2);
     }
 
     @DisplayName("test para obtener el total de los ingresos")
@@ -189,7 +189,7 @@ class IngresoServiceTest {
         // when
         int ingresos = ingresoService.obtenerTotalIngresosPorMes(2023, 5);
         // then
-        assertThat(ingresos).isEqualTo(0);
+        assertThat(ingresos).isZero();
     }
 
     @DisplayName("test para obtener el saldo de la cuenta")
@@ -212,7 +212,7 @@ class IngresoServiceTest {
         // when
         int saldo = ingresoService.obtenerSaldoCuenta(5);
         // then
-        assertThat(saldo).isEqualTo(0);
+        assertThat(saldo).isZero();
     }
 
     @Test

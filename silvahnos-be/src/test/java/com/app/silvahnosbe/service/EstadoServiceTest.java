@@ -52,8 +52,9 @@ class EstadoServiceTest {
         List<EstadoEntity> resultado = estadoService.obtenerEstado();
 
         // Then
-        assertThat(resultado).isNotNull();
-        assertThat(resultado).hasSize(1);
+        assertThat(resultado)
+            .isNotNull()
+            .hasSize(1);
         assertThat(resultado.get(0).getNombre()).isEqualTo("Estado 1");
     }
 
