@@ -7,9 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class UserInfoTest {
+class UserInfoTest {
     @Test
-    public void testGetUsuario() {
+    void testGetUsuario() {
         // Given
         String usuario = "testuser";
         UserInfo userInfo = new UserInfo();
@@ -23,7 +23,7 @@ public class UserInfoTest {
     }
 
     @Test
-    public void testSetUsuario() {
+    void testSetUsuario() {
         // Given
         String usuario = "testuser";
         UserInfo userInfo = new UserInfo();
@@ -36,7 +36,7 @@ public class UserInfoTest {
     }
 
     @Test
-    public void testGetPassword() {
+    void testGetPassword() {
         // Given
         String password = "testpassword";
         UserInfo userInfo = new UserInfo();
@@ -50,7 +50,7 @@ public class UserInfoTest {
     }
 
     @Test
-    public void testSetPassword() {
+    void testSetPassword() {
         // Given
         String password = "testpassword";
         UserInfo userInfo = new UserInfo();

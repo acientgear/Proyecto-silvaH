@@ -7,10 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class TokenInfoTest {
+class TokenInfoTest {
     
     @Test
-public void testTokenInfoConstructor_SetsJwtToken() {
+void testTokenInfoConstructor_SetsJwtToken() {
     // Given
     String jwtToken = "testToken";
 
@@ -22,7 +22,7 @@ public void testTokenInfoConstructor_SetsJwtToken() {
 }
 
 @Test
-public void testTokenInfoGetJwtToken_ReturnsJwtToken() {
+void testTokenInfoGetJwtToken_ReturnsJwtToken() {
     // Given
     String jwtToken = "testToken";
     TokenInfo tokenInfo = new TokenInfo(jwtToken);
