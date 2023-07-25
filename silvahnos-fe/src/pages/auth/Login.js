@@ -73,7 +73,7 @@ const Login = () => {
                 <h1>Iniciar Sesión</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formUsuario">
-                        <Form.Label>Usuario</Form.Label>
+                        <Form.Label>Correo</Form.Label>
                         <Form.Control type="text"
                             name="usuario"
                             onChange={handleInputChange}

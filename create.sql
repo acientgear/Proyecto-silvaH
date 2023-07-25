@@ -66,11 +66,9 @@ CREATE TABLE IF NOT EXISTS `meses` (
 -- Insert data
 INSERT INTO silvahnos.configuracion_email
 (id,
-auth,
 host,
 password,
 port,
-starttls,
 texto,
 username)
 VALUES
@@ -171,6 +169,11 @@ VALUES
 0,
 "Astara",
 "Astara");
+
+INSERT INTO `silvahnos`.`meses`
+(`mes`) 
+VALUES
+(1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12);
 
 
 
