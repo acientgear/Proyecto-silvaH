@@ -9,7 +9,6 @@ import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.repositories.ParametroRepository;
 import com.app.silvahnosbe.services.CorreoService;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

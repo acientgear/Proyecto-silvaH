@@ -93,14 +93,6 @@ public class IngresoService {
         return total;
     }
 
-    /*public Integer obtenerMontoPorDia(int anio, int mes, int dia){
-        Integer monto = ingresoRepository.obtenerMontoPorDia(anio, mes, dia);
-        if (monto == null){
-            return 0;
-        }
-        return monto;
-    }*/
-
     /**
      * funcion obtenerSaldoCuenta
      * obtiene  el saldo de la cuenta de un mes
