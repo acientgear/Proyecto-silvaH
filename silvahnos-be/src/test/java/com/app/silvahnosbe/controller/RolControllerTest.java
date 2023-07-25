@@ -21,7 +21,7 @@ import com.app.silvahnosbe.entities.RolEntity;
 import com.app.silvahnosbe.services.RolService;
 
 @ExtendWith(SpringExtension.class)
-public class RolControllerTest {
+class RolControllerTest {
 
     @InjectMocks
     private RolController rolController;
@@ -31,7 +31,7 @@ public class RolControllerTest {
 
     @DisplayName("Test para obtener todos los roles")
     @Test
-    public void testGetAllRoles_ExistenRoles_ReturnsList() {
+    void testGetAllRoles_ExistenRoles_ReturnsList() {
         // Given
         List<RolEntity> roles = new ArrayList<>();
         roles.add(new RolEntity());
@@ -47,7 +47,7 @@ public class RolControllerTest {
 
     @DisplayName("Test para obtener todos los roles cuando no existen roles")
     @Test
-    public void testGetAllRoles_NoExistenRoles_ReturnsNotFound() {
+    void testGetAllRoles_NoExistenRoles_ReturnsNotFound() {
         // Given
         when(rolService.obtenerRol()).thenReturn(null);
 
@@ -61,7 +61,7 @@ public class RolControllerTest {
 
     @DisplayName("Test para obtener un rol por id")
     @Test
-    public void testGetRolById_ExistenRol_ReturnsRol() {
+    void testGetRolById_ExistenRol_ReturnsRol() {
         // Given
         RolEntity rol = new RolEntity();
         rol.setId(1L);
@@ -77,7 +77,7 @@ public class RolControllerTest {
 
     @DisplayName("Test para obtener un rol por id cuando no existe")
     @Test
-    public void testGetRolById_NoExistenRol_ReturnsNotFound() {
+    void testGetRolById_NoExistenRol_ReturnsNotFound() {
         // Given
         when(rolService.obtenerRolPorId(1L)).thenReturn(null);
 

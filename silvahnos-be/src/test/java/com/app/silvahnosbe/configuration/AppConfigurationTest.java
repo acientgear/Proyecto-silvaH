@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class AppConfigurationTest {
+class AppConfigurationTest {
 
     @Test
-    public void testAppPasswordEncoderBean() {
+    void testAppPasswordEncoderBean() {
         // Given
         BCryptPasswordEncoder bCryptPasswordEncoder = Mockito.mock(BCryptPasswordEncoder.class);
         AppConfiguration appConfiguration = new AppConfiguration();

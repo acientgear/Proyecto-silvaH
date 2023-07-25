@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 import org.springframework.http.MediaType;
 
 @ExtendWith(MockitoExtension.class)
-public class EgresoControllerTest {
+class EgresoControllerTest {
     
     @InjectMocks
     private EgresoController egresoController;
@@ -77,7 +77,7 @@ public class EgresoControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-@DisplayName("Test para crear una Egreso con tipo creación")
+    @DisplayName("Test para crear una Egreso con tipo creación")
     @Test
     void testCreateEgreso_EgresoCreada_ReturnsEgreso_Creación() {
         // Given
@@ -281,7 +281,7 @@ public class EgresoControllerTest {
 
     @DisplayName("Test para método exportPdf")
     @Test
-    public void testExportPdf() throws Exception {
+    void testExportPdf() throws Exception {
         // Mock input parameters
         String fechaInicio = "2023-01-01";
         String fechaFin = "2023-01-31";

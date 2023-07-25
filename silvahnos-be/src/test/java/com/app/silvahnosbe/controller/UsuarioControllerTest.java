@@ -24,7 +24,7 @@ import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.services.UsuarioService;
 
 @ExtendWith(SpringExtension.class)
-public class UsuarioControllerTest {
+class UsuarioControllerTest {
     @InjectMocks
     private UsuarioController usuarioController;
 
@@ -46,7 +46,7 @@ public class UsuarioControllerTest {
 
     @DisplayName("Test para obtener todos los usuarios")
     @Test
-    public void testGetAllUsuarios_ExistenUsuarios_ReturnsList() {
+    void testGetAllUsuarios_ExistenUsuarios_ReturnsList() {
         // Given
         List<UsuarioEntity> usuarios = new ArrayList<>();
         usuarios.add(new UsuarioEntity());
@@ -63,7 +63,7 @@ public class UsuarioControllerTest {
     @DisplayName("Test para obtener todos los usuarios cuando no existen usuarios")
 
     @Test
-    public void testGetAllUsuarios_NoExistenUsuarios_ReturnsNotFound() {
+    void testGetAllUsuarios_NoExistenUsuarios_ReturnsNotFound() {
         // Given
         when(usuarioService.obtenerUsuarios()).thenReturn(null);
 
@@ -77,7 +77,7 @@ public class UsuarioControllerTest {
 
     @DisplayName("Test para crear usuario")
     @Test
-    public void testCreateUsuario_CreaUsuario_ReturnsUsuario() {
+    void testCreateUsuario_CreaUsuario_ReturnsUsuario() {
         // Given
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setUsuario("Nombre");

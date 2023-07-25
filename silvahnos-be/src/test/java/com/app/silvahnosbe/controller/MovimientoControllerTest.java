@@ -20,7 +20,7 @@ import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.services.MovimientoService;
 
 @ExtendWith(MockitoExtension.class)
-public class MovimientoControllerTest {
+class MovimientoControllerTest {
 
     @InjectMocks
     private MovimientoController movimientoController;
@@ -56,19 +56,4 @@ public class MovimientoControllerTest {
         // Then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
-
-    /*@DisplayName("Test prara crear movimiento")
-    @Test
-    void testCreateMovimiento_CrearMovimiento_ReturnsMovimiento() {
-        // Given
-        MovimientoEntity movimiento = new MovimientoEntity();
-        when(movimientoService.guardarMovimiento(movimiento)).thenReturn(movimiento);
-
-        // When
-        ResponseEntity<MovimientoEntity> response = movimientoController.createMovimiento(movimiento);
-
-        // Then
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(movimiento, response.getBody());
-    }*/
 }

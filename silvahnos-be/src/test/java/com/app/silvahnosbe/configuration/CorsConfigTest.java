@@ -1,13 +1,12 @@
 package com.app.silvahnosbe.configuration;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-public class CorsConfigTest {
+class CorsConfigTest {
     @Test
-    public void testCorsConfigure() {
+    void testCorsConfigure() {
         // Given
         CorsRegistry corsRegistry = new CorsRegistry();
         WebMvcConfigurer webMvcConfigurer = new CorsConfig().corsConfigure();

@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-public class ParametroControllerTest {
+class ParametroControllerTest {
 
     @InjectMocks
     private ParametroController parametroController;
@@ -84,7 +84,7 @@ public class ParametroControllerTest {
 
     @DisplayName("Test para actualizar Parametro")
     @Test
-    public void testActualizarParametro_ParametroActualizado_ReturnsParametroActualizado() {
+    void testActualizarParametro_ParametroActualizado_ReturnsParametroActualizado() {
         // Given
         String nuevoParametro = "nuevoParametro";
         ParametroEntity parametro = new ParametroEntity();

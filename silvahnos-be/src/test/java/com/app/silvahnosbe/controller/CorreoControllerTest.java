@@ -24,7 +24,7 @@ import com.app.silvahnosbe.services.CorreoService;
 import com.app.silvahnosbe.services.MovimientoService;
 
 @ExtendWith(MockitoExtension.class)
-public class CorreoControllerTest {
+class CorreoControllerTest {
 
     @Mock
     private MovimientoService movimientoService;
@@ -37,7 +37,7 @@ public class CorreoControllerTest {
 
     @DisplayName("Test para obtener todos los correos")
     @Test
-    public void testGetAllCorreos_ExistenCorreos_ReturnsList() {
+    void testGetAllCorreos_ExistenCorreos_ReturnsList() {
         // Given
         List<CorreoEntity> correos = new ArrayList<>();
         correos.add(new CorreoEntity());
@@ -53,7 +53,7 @@ public class CorreoControllerTest {
 
     @DisplayName("Test para obtener todos los correos cuando no existen rreos")
     @Test
-    public void testGetAllCorreos_NoExistenCorreos_ReturnsNotFound() {
+    void testGetAllCorreos_NoExistenCorreos_ReturnsNotFound() {
         // Given
         when(correoService.obtenerCorreos()).thenReturn(null);
 
@@ -66,7 +66,7 @@ public class CorreoControllerTest {
 
     @DisplayName("Test para actualizar correo")
     @Test
-    public void testActualizarCorreo_CorreoActualizado_ReturnsCorreoActualizado() {
+    void testActualizarCorreo_CorreoActualizado_ReturnsCorreoActualizado() {
         // Given
         String nuevoCorreo = "nuevoCorreo";
         CorreoEntity correo = new CorreoEntity();

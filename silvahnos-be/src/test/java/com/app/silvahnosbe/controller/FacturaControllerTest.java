@@ -30,7 +30,7 @@ import com.app.silvahnosbe.services.reports.FacturaInterface;
 import org.springframework.http.MediaType;
 
 @ExtendWith(MockitoExtension.class)
-public class FacturaControllerTest {
+class FacturaControllerTest {
 
     @Mock
     private FacturaService facturaService;
@@ -268,7 +268,7 @@ public class FacturaControllerTest {
 
     @DisplayName("Test para método exportPdf")
     @Test
-    public void testExportPdf() throws Exception {
+    void testExportPdf() throws Exception {
         // Mock input parameters
         String fechaInicio = "2023-01-01";
         String fechaFin = "2023-01-31";

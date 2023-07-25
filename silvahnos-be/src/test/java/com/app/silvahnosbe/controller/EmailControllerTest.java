@@ -15,7 +15,7 @@ import com.app.silvahnosbe.controllers.EmailController;
 import com.app.silvahnosbe.util.EmailService;
 
 @ExtendWith(SpringExtension.class)
-public class EmailControllerTest {
+class EmailControllerTest {
 
     @InjectMocks
     private EmailController emailController;
@@ -24,7 +24,7 @@ public class EmailControllerTest {
     private EmailService emailService;
 
     @Test
-    public void testSendEmail() {
+    void testSendEmail() {
         // Arrange
         Mockito.doNothing().when(emailService).sendEmail();
 
@@ -37,7 +37,7 @@ public class EmailControllerTest {
     }
 
     @Test
-    public void testSendCron() {
+    void testSendCron() {
         // Arrange
         Mockito.doNothing().when(emailService).cronEmail();
 

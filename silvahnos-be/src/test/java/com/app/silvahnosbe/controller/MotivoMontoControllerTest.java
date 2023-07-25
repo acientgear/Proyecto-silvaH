@@ -21,7 +21,7 @@ import com.app.silvahnosbe.models.MotivoMonto;
 import com.app.silvahnosbe.services.MotivoMontoService;
 
 @ExtendWith(SpringExtension.class)
-public class MotivoMontoControllerTest {
+class MotivoMontoControllerTest {
     @Mock
     private MotivoMontoService motivoMontoService;
 
@@ -29,7 +29,7 @@ public class MotivoMontoControllerTest {
     private MotivoMontoController motivoMontoController;
 
     @Test
-    public void testObtenerMontosIngreso_MontosExistentes() {
+    void testObtenerMontosIngreso_MontosExistentes() {
         // Given
         int anio = 2023;
         int mes = 7;
@@ -56,7 +56,7 @@ public class MotivoMontoControllerTest {
     }
 
     @Test
-    public void testObtenerMontosIngreso_MontosNoExistentes() {
+    void testObtenerMontosIngreso_MontosNoExistentes() {
         // Given
         int anio = 2023;
         int mes = 7;
@@ -77,7 +77,7 @@ public class MotivoMontoControllerTest {
 
 
     @Test
-    public void testObtenerMontosEgreso_MontosExistentes() {
+    void testObtenerMontosEgreso_MontosExistentes() {
         // Given
         int anio = 2023;
         int mes = 7;
@@ -104,7 +104,7 @@ public class MotivoMontoControllerTest {
     }
 
     @Test
-    public void testObtenerMontosEgreso_MontosNoExistentes() {
+    void testObtenerMontosEgreso_MontosNoExistentes() {
         // Given
         int anio = 2023;
         int mes = 7;

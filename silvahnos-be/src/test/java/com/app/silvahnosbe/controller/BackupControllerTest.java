@@ -19,7 +19,7 @@ import com.app.silvahnosbe.controllers.BackupController;
 import com.app.silvahnosbe.services.BackupService;
 
 @ExtendWith(SpringExtension.class)
-public class BackupControllerTest {
+class BackupControllerTest {
 
 
     @Mock
@@ -34,7 +34,7 @@ public class BackupControllerTest {
     }
 
     @Test
-    public void testDoBackup() throws ClassNotFoundException, IOException, SQLException {
+    void testDoBackup() throws ClassNotFoundException, IOException, SQLException {
         // Given
         // Stubbing the void method with doNothing()
         doNothing().when(backupServiceMock).makeBackup();
