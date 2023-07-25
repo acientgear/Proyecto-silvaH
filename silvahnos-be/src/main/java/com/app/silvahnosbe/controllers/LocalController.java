@@ -1,4 +1,4 @@
-package com.app.silvahnosbe.controllers;
+/*package com.app.silvahnosbe.controllers;
 
 import java.util.List;
 
@@ -53,4 +53,4 @@ public class LocalController {
         }
         return ResponseEntity.ok().body(locales);
     }
-}
+}*/
