@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.ParametroEntity;
 
-public class ParametroEntityTest {
+class ParametroEntityTest {
     
     @Test
     void testId(){

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.EmailConfig;
 
-public class EmailConfigTest {
+class EmailConfigTest {
     @Test
     void testId(){
         // Given

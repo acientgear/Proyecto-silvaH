@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import com.app.silvahnosbe.entities.RolEntity;
 import com.app.silvahnosbe.models.ERole;
 
-public class RolEntityTest {
+class RolEntityTest {
 
     @Test
     void testId(){

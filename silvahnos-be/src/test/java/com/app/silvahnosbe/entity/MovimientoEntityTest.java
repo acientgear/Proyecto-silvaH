@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.MovimientoEntity;
 
-public class MovimientoEntityTest {
+class MovimientoEntityTest {
     
     @Test
     void testId() {

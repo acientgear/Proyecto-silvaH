@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.entities.MotivoEEntity;
 
-public class EgresoEntityTest {
+class EgresoEntityTest {
 
 
     @Test

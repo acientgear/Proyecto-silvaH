@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.FacturaEntity;
 
-public class FacturaEntityTest {
+class FacturaEntityTest {
 
     @Test
     void testId(){

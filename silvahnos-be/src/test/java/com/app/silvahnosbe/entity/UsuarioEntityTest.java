@@ -6,7 +6,7 @@ import com.app.silvahnosbe.entities.UsuarioEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UsuarioEntityTest {
+class UsuarioEntityTest {
 
     @Test
     void testCorreo(){

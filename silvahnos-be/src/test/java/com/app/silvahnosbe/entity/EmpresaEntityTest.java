@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.EmpresaEntity;
 
-public class EmpresaEntityTest {
+class EmpresaEntityTest {
     
     @Test
-    public void testId() {
+    void testId() {
         // Given
         EmpresaEntity empresa = new EmpresaEntity();
 
@@ -22,7 +22,7 @@ public class EmpresaEntityTest {
     }
 
     @Test
-    public void testNombre() {
+    void testNombre() {
         // Given
         EmpresaEntity empresa = new EmpresaEntity();
 
@@ -35,7 +35,7 @@ public class EmpresaEntityTest {
     }
 
     @Test
-    public void testRut() {
+    void testRut() {
         // Given
         EmpresaEntity empresa = new EmpresaEntity();
 
@@ -48,7 +48,7 @@ public class EmpresaEntityTest {
     }
 
     @Test
-    public void testDireccion() {
+    void testDireccion() {
         // Given
         EmpresaEntity empresa = new EmpresaEntity();
 
@@ -61,7 +61,7 @@ public class EmpresaEntityTest {
     }
 
     @Test
-    public void testBorrado() {
+    void testBorrado() {
         // Given
         EmpresaEntity empresa = new EmpresaEntity();
 

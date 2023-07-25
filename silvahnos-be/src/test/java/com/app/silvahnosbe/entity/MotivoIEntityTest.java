@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.app.silvahnosbe.entities.MotivoIEntity;
 
-public class MotivoIEntityTest {
+class MotivoIEntityTest {
 
     @Test
     void testId(){

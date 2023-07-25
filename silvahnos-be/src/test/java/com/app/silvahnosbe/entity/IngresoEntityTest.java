@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.IngresoEntity;
 
-public class IngresoEntityTest {
+class IngresoEntityTest {
 
     @Test
     void testId() {

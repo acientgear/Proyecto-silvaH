@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.app.silvahnosbe.entities.EstadoEntity;
 
-public class EstadoEntityTest {
+class EstadoEntityTest {
     
     @Test
     void testId(){
