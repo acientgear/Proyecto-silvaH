@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Col, Row, Container, Card } from 'react-bootstrap';
+import { Col, Row, Container, Card, Form } from 'react-bootstrap';
 import PieChartIngreso from '../ingreso/PieChart';
 import PieChartEgreso from '../egreso/PieChart';
 import GraficoMensual from './GraficoMensual';
@@ -8,8 +8,7 @@ import GraficoAnual from './GraficoAnual';
 import TablaMensual from './TablaMensual';
 import TablaAnual from './TablaAnual';
 import Registros from './Registros';
-import InputYear from '../../components/InputYear';
-import InputMonth from '../../components/InputMonth';
+import FormYear from '../../components/FormYear';
 import { AiOutlineRise, AiOutlinePieChart } from 'react-icons/ai';
 
 const Resumen = () => {
@@ -24,10 +23,9 @@ const Resumen = () => {
     const handleSeccion = (seccion) => {
         setSeccion(seccion);
     }
-    
-    const handleChangeAnio = (e) => {
-        console.log(e.target.value);
-        setAnio(e.target.value);
+
+    const handleChangeAnio = (anio) => {
+        setAnio(anio);
     };
 
     const handleChangeMes = (e) => {
@@ -47,16 +45,9 @@ const Resumen = () => {
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen anual</h1>
                 <Row>
-                <Row>
-                    <Row className="justify-content-center align-items-center">
-                        <Col className='d-flex align-items-center'>
-                            <InputYear
-                                anio={anio}
-                                onChange={handleChangeAnio}
-                            />
-                        </Col>
-                    </Row>
+                    <FormYear anio={anio} handleAnio={handleChangeAnio}/>
                 </Row>
+                <Row>
                     <Col md={12}>
                         <Card style={{ width: "100%" }}>
                             <Card.Body>

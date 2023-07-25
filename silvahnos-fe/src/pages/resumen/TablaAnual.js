@@ -5,7 +5,6 @@ import Sem1 from '../../components/data/Sem1';
 import Sem2 from '../../components/data/Sem2';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
-import InputYear from '../../components/InputYear';
 
 const TablaAnual = () => {
     const config = {
