@@ -10,7 +10,7 @@ import com.app.silvahnosbe.repositories.CorreoRepository;
 import com.app.silvahnosbe.repositories.EmailConfigRepository;
 import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.repositories.ParametroRepository;
-import com.app.silvahnosbe.services.EmailService;
+import com.app.silvahnosbe.util.EmailService;
 
 @ExtendWith(MockitoExtension.class)
 public class EmailServiceTest {

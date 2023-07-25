@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.silvahnosbe.entities.EgresoEntity;
 import com.app.silvahnosbe.entities.FacturaEntity;
 import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.services.reports.FacturaInterface;

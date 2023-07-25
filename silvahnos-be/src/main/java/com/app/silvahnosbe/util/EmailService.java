@@ -1,4 +1,4 @@
-package com.app.silvahnosbe.services;
+package com.app.silvahnosbe.util;
 
 import com.app.silvahnosbe.entities.EmailConfig;
 import com.app.silvahnosbe.entities.EstadoEntity;
@@ -7,6 +7,7 @@ import com.app.silvahnosbe.repositories.CorreoRepository;
 import com.app.silvahnosbe.repositories.EmailConfigRepository;
 import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.repositories.ParametroRepository;
+import com.app.silvahnosbe.services.CorreoService;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 

@@ -20,8 +20,6 @@ import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.services.reports.impl.FacturaImpl;
 import com.app.silvahnosbe.util.FacturasReportGenerator;
 
-import jakarta.inject.Inject;
-
 @ExtendWith(MockitoExtension.class)
 public class FacturaImplTest {
     @Mock
