@@ -1,4 +1,4 @@
-package com.app.silvahnosbe.services;
+/*package com.app.silvahnosbe.services;
 
 import java.util.List;
 
@@ -51,4 +51,4 @@ public class LocalService {
     public LocalEntity guardarLocal(LocalEntity local){
         return localRepository.save((local));
     }
-}
+}*/

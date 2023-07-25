@@ -1,4 +1,4 @@
-package com.app.silvahnosbe.repositories;
+/*package com.app.silvahnosbe.repositories;
 
 import com.app.silvahnosbe.entities.LocalEntity;
 
@@ -7,4 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LocalRepository extends JpaRepository<LocalEntity,Long>{
-}
+}*/

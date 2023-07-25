@@ -1,12 +1,16 @@
 package com.app.silvahnosbe.service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.Date;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +29,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.app.silvahnosbe.entities.EmpresaEntity;
 import com.app.silvahnosbe.entities.EstadoEntity;
 import com.app.silvahnosbe.entities.FacturaEntity;
-import com.app.silvahnosbe.entities.LocalEntity;
 import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.FacturaRepository;
@@ -165,10 +168,6 @@ public class FacturaServiceTest {
     @Test
     void testCrearFactura(){
         // given
-        LocalEntity local = new LocalEntity();
-        local.setId(1l);
-        local.setNombre("local1");
-        local.setDireccion("direccion1");
         
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setCorreo("correo1@gmail.com");
@@ -287,8 +286,35 @@ public class FacturaServiceTest {
         verify(facturaRepository).save(factura);
     }*/
 
-       
+    /*@Test
+    public void testPagarFactura2() {
+        // Given
+        FacturaEntity factura = new FacturaEntity();
+        factura.setId(1L);
+        // Aquí puedes configurar los atributos de la factura según sea necesario para el test
 
+        // Simulamos la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+        when(facturaRepository.save(any())).thenAnswer(invocation -> {
+            FacturaEntity facturaGuardada = invocation.getArgument(0);
+            // Simulamos la acción de guardar la factura y devolvemos la factura guardada
+            return facturaGuardada;
+        });
 
+        // When
+        FacturaEntity facturaPagada = facturaService.pagarFactura(factura);
 
+        // Then
+        // Convertimos la fecha de pago a LocalDate
+        LocalDateTime fechaPagoLocal = facturaPagada.getFecha_pago().toLocalDateTime();
+        LocalDate fechaPago = fechaPagoLocal.toLocalDate();
+
+        // Comparamos solo el año, mes y día de la fecha de pago
+        assertEquals(fechaActual.getYear(), fechaPago.getYear());
+        assertEquals(fechaActual.getMonth(), fechaPago.getMonth());
+        assertEquals(fechaActual.getDayOfMonth(), fechaPago.getDayOfMonth());
+
+        // Verificamos que el método save del repositorio se haya llamado con la factura actualizada
+        verify(facturaRepository, times(1)).save(factura);
+    }*/
 }

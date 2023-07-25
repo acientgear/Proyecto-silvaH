@@ -1,4 +1,4 @@
-package com.app.silvahnosbe.entities;
+/*package com.app.silvahnosbe.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,4 +18,4 @@ public class LocalEntity {
 
     private String nombre;
     private String direccion;
-}
+}*/

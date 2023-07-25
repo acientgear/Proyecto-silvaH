@@ -30,7 +30,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.silvahnosbe.entities.IngresoEntity;
-import com.app.silvahnosbe.entities.LocalEntity;
 import com.app.silvahnosbe.entities.MotivoIEntity;
 import com.app.silvahnosbe.entities.MovimientoEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;
@@ -235,10 +234,6 @@ public class IngresoServiceTest {
     @DisplayName("test de integración creación de ingreso con motivo y movimiento")
     void testCrearIngreso() {
         // given
-        LocalEntity local = new LocalEntity();
-        local.setId(1l);
-        local.setNombre("local1");
-        local.setDireccion("direccion1");
         
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setCorreo("correo1@gmail.com");

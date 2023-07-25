@@ -1,4 +1,4 @@
-package com.app.silvahnosbe.entity;
+/*package com.app.silvahnosbe.entity;
 
 import org.junit.jupiter.api.Test;
 
@@ -47,3 +47,4 @@ public class LocalEntityTest {
         assertEquals("direccion", direccion);
     }    
 }
+*/

@@ -12,7 +12,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.app.silvahnosbe.entities.EgresoEntity;
-import com.app.silvahnosbe.entities.LocalEntity;
 import com.app.silvahnosbe.entities.MotivoEEntity;
 import com.app.silvahnosbe.entities.UsuarioEntity;
 import com.app.silvahnosbe.repositories.EgresoRepository;
@@ -193,10 +192,6 @@ public class EgresoServiceTest {
     @DisplayName("test de integración creación de egreso con motivo y movimiento")
     void testCrearEgreso() {
         // given
-        LocalEntity local = new LocalEntity();
-        local.setId(1l);
-        local.setNombre("local1");
-        local.setDireccion("direccion1");
         
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setCorreo("correo1@gmail.com");
