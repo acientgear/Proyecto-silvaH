@@ -82,30 +82,4 @@ public class UsuarioController {
         UsuarioEntity usuarioGuardado = usuarioService.guardarUsuario(usuario);
         return ResponseEntity.ok().body(usuarioGuardado);
     }
-
-
- /*
-     @Operation(summary = "busca un usuario por nombre ",description = "retorna un usuario")
-    @ApiResponses(value={
-        @ApiResponse(responseCode="200",description="datos obtenidos correctamente "),
-        @ApiResponse(responseCode = "404", description = "datos no encontrados ")
-    })
-    @Parameter
-    @GetMapping("/test")
-    public ResponseEntity<UsuarioEntity> getUsuario(){
-        UsuarioEntity usuarios = usuarioService.obtenerUsuarioPorUsuario("admin");
-        if(usuarios == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(usuarios);
-    } */
-
-    /*
-    @GetMapping("/test2")
-    public ResponseEntity<UsuarioEntity> hol(){
-        return ResponseEntity.ok().body(null);
-    }    
-
-    */
-
 }

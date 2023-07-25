@@ -71,7 +71,7 @@ public class FacturaController {
         if(factura.getId() == null){ 
             tipo = "Creación"; 
         }else{ 
-            if(factura.isBorrado() == true){ 
+            if(factura.isBorrado()){ 
                 tipo = "Eliminación"; 
             }else{ 
                 tipo = "Modificación"; 

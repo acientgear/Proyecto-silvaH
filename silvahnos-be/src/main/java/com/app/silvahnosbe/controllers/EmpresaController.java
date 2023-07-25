@@ -45,7 +45,7 @@ public class EmpresaController {
         if(empresa.getId() == null){ 
             tipo = "Creación"; 
         }else{ 
-            if(empresa.isBorrado() == true){ 
+            if(empresa.isBorrado()){ 
                 tipo = "Eliminación"; 
             }else{ 
                 tipo = "Modificación"; 

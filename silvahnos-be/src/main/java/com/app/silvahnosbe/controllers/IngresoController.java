@@ -70,7 +70,7 @@ public class IngresoController {
         if(ingreso.getId() == null){ 
             tipo = "Creación"; 
         }else{ 
-            if(ingreso.isBorrado() == true){ 
+            if(ingreso.isBorrado()){ 
                 tipo = "Eliminación"; 
             }else{ 
                 tipo = "Modificación"; 

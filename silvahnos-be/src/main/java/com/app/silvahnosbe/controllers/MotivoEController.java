@@ -44,7 +44,7 @@ public class MotivoEController {
         if(motivoE.getId() == null){ 
             tipo = "Creación"; 
         }else{ 
-            if(motivoE.isBorrado() == true){ 
+            if(motivoE.isBorrado()){ 
                 tipo = "Eliminación"; 
             }else{ 
                 tipo = "Modificación"; 

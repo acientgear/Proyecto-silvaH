@@ -73,7 +73,7 @@ public class EgresoController {
         if(egreso.getId() == null){
             tipo = "Creación";
         }else{
-            if(egreso.isBorrado() == true){
+            if(egreso.isBorrado()){
                 tipo = "Eliminación";
             }else{
                 tipo = "Modificación";
