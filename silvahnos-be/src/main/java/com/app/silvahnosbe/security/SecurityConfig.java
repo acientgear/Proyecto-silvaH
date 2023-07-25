@@ -51,18 +51,6 @@ public class SecurityConfig {
             .build();
     }
 
-    /* 
-    @Bean
-    UserDetailsService userDetailsService(){
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("admin")
-                .password(passwordEncoder().encode("pass"))
-                .roles()
-                .build());
-        return manager;
-    }
-*/
-
     @Bean
     PasswordEncoder passwordEncoder(){
 
