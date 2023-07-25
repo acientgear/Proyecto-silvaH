@@ -19,11 +19,9 @@ CREATE TABLE IF NOT EXISTS `estado` (
 
 CREATE TABLE IF NOT EXISTS `configuracion_email` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `auth` bit(1) NOT NULL,
   `host` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `port` int NOT NULL,
-  `starttls` bit(1) NOT NULL,
   `texto` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -52,6 +50,19 @@ CREATE TABLE IF NOT EXISTS `motivoE` (
    PRIMARY KEY (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS `motivoI`(
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `borrado` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `meses` (
+  `mes` int,
+  PRIMARY KEY (`mes`)
+);
+
 -- Insert data
 INSERT INTO silvahnos.configuracion_email
 (id,
@@ -64,13 +75,11 @@ texto,
 username)
 VALUES
 (1,
-1,
 "smtp.gmail.com",
-"dchpqzbthkuyszdv",
+"jkyrbwigkhucmpfa",
 587,
-1,
-"Los facturas por vencer son:",
-"javiertoroflores@gmail.com");
+"Las facturas por vencer son:",
+"silvahnos.notificacion@gmail.com");
 
 INSERT INTO silvahnos.estado
 (nombre)
@@ -81,12 +90,12 @@ VALUES('No pagada'),
 INSERT INTO `silvahnos`.`parametro`
 (`valor`)
 VALUES
-("5");
+("3");
 
 INSERT INTO `silvahnos`.`correo` 
 (`id`, `direccion`) 
 VALUES 
-('1', 'javiertoroflores@gmail.com');
+('1', 'silvahnos.notificacion@gmail.com');
 
 INSERT INTO `silvahnos`.`usuario`
 (`id`,
@@ -96,9 +105,9 @@ INSERT INTO `silvahnos`.`usuario`
 `usuario`)
 VALUES
 (1,
-"$2a$10$pru/P8Ryn1aaLDwW7d945up08gqyn0.jmnyKD/u31g66NYjxyYwYu",
-"luis@gmail.com",
-"luis",
+"$2a$10$eWwisV1InNyOuTNC6dLaXOt8p/0pmpKm3lk/toiPrso4G/sB/WJYa",
+"silvahnos.notificacion@gmail.com",
+"admin",
 "admin");
 
 INSERT INTO `silvahnos`.`motivoe`
@@ -146,8 +155,22 @@ VALUES
 (10,
 0,
 "Creditos",
-"Créditos");
+"Créditos"),
+(11,
+0,
+"Repuestos",
+"Repuestos");
 
+INSERT INTO `silvahnos`.`motivoi`
+(`id`,
+`borrado`,
+`descripcion`,
+`nombre`)
+VALUES
+(1,
+0,
+"Astara",
+"Astara");
 
 
 
