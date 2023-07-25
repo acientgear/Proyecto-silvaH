@@ -27,6 +27,4 @@ public class EmailConfig {
     private String username;
     private String password;
     private String texto;
-    private boolean auth;
-    private boolean starttls;
 }

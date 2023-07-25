@@ -86,33 +86,5 @@ public class EmailConfigTest {
         // Then
         assertEquals("texto", texto);
     }
-
-    @Test
-    void testAuth(){
-        // Given
-        EmailConfig emailConfig = new EmailConfig();
-
-        // When
-        emailConfig.setAuth(true);
-        boolean auth = emailConfig.isAuth();
-
-        // Then
-        assertEquals(true, auth);
-    }
-
-    @Test
-    void testStarttls(){
-        // Given
-        EmailConfig emailConfig = new EmailConfig();
-
-        // When
-        emailConfig.setStarttls(true);
-        boolean starttls = emailConfig.isStarttls();
-
-        // Then
-        assertEquals(true, starttls);
-    }
-
-
     
 }
