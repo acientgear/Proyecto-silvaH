@@ -21,7 +21,7 @@ import com.app.silvahnosbe.services.reports.impl.FacturaImpl;
 import com.app.silvahnosbe.util.FacturasReportGenerator;
 
 @ExtendWith(MockitoExtension.class)
-public class FacturaImplTest {
+class FacturaImplTest {
     @Mock
     private FacturaRepository facturaRepository;
 
@@ -38,7 +38,7 @@ public class FacturaImplTest {
     }
 
     @Test
-    public void testFacturaImplConstructor() {
+    void testFacturaImplConstructor() {
         // Given
         FacturaRepository mockFacturaRepository = facturaRepository;
         FacturasReportGenerator mockFacturasReportGenerator = facturasReportGenerator;
@@ -52,7 +52,7 @@ public class FacturaImplTest {
     }
 
     @Test
-    public void testExportPdf() throws Exception {
+    void testExportPdf() throws Exception {
         // Mock input parameters
         String fechaInicio = "2023-01-01";
         String fechaFin = "2023-01-31";

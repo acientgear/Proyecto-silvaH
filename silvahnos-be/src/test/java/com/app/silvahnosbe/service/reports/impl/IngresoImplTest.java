@@ -19,7 +19,7 @@ import com.app.silvahnosbe.services.reports.impl.IngresoImpl;
 import com.app.silvahnosbe.util.IngresosReportGenerator;
 
 @ExtendWith(MockitoExtension.class)
-public class IngresoImplTest {
+class IngresoImplTest {
     @Mock
     private IngresoRepository ingresoRepository;
 
@@ -35,7 +35,7 @@ public class IngresoImplTest {
     }
 
     @Test
-    public void testExportPdf() throws Exception {
+    void testExportPdf() throws Exception {
         // Mock input parameters
         String fechaInicio = "2023-01-01";
         String fechaFin = "2023-01-31";

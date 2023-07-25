@@ -19,7 +19,7 @@ import com.app.silvahnosbe.services.reports.impl.EgresoImpl;
 import com.app.silvahnosbe.util.EgresosReportGenerator;
 
 @ExtendWith(MockitoExtension.class)
-public class EgresoImplTest {
+class EgresoImplTest {
 
     @Mock
     private EgresoRepository egresoRepository;
@@ -36,7 +36,7 @@ public class EgresoImplTest {
     }
 
     @Test
-    public void testExportPdf() throws Exception {
+    void testExportPdf() throws Exception {
         // Mock input parameters
         String fechaInicio = "2023-01-01";
         String fechaFin = "2023-01-31";

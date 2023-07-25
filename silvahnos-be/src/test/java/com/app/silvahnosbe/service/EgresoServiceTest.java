@@ -200,7 +200,7 @@ class EgresoServiceTest {
     }
 
         @Test
-    public void testEsBisiesto_AnioNoBisiesto_ReturnsFalse() {
+    void testEsBisiesto_AnioNoBisiesto_ReturnsFalse() {
         // Given
         int anio = 2023;
 
@@ -212,7 +212,7 @@ class EgresoServiceTest {
     }
 
     @Test
-    public void testEsBisiesto_AnioBisiestoDivisiblePor4_ReturnsTrue() {
+    void testEsBisiesto_AnioBisiestoDivisiblePor4_ReturnsTrue() {
         // Given
         int anio = 2024;
 
@@ -224,7 +224,7 @@ class EgresoServiceTest {
     }
 
     @Test
-    public void testEsBisiesto_AnioBisiestoDivisiblePor100_ReturnsFalse() {
+    void testEsBisiesto_AnioBisiestoDivisiblePor100_ReturnsFalse() {
         // Given
         int anio = 1900;
 
@@ -236,7 +236,7 @@ class EgresoServiceTest {
     }
 
     @Test
-    public void testEsBisiesto_AnioBisiestoDivisiblePor400_ReturnsTrue() {
+    void testEsBisiesto_AnioBisiestoDivisiblePor400_ReturnsTrue() {
         // Given
         int anio = 2000;
 
@@ -248,7 +248,7 @@ class EgresoServiceTest {
     }
 
         @Test
-    public void testObtenerDiasMes_FebreroAnioBisiesto_Returns29() {
+    void testObtenerDiasMes_FebreroAnioBisiesto_Returns29() {
         // Given
         int mes = 2;
         int anio = 2024;
@@ -261,7 +261,7 @@ class EgresoServiceTest {
     }
 
     @Test
-    public void testObtenerDiasMes_MesesCon31Dias_Returns31() {
+    void testObtenerDiasMes_MesesCon31Dias_Returns31() {
         // Given
         int[] mesesCon31Dias = {1, 3, 5, 7, 8, 10, 12};
 
@@ -273,7 +273,7 @@ class EgresoServiceTest {
     }
 
     @Test
-    public void testObtenerDiasMes_MesesCon30Dias_Returns30() {
+    void testObtenerDiasMes_MesesCon30Dias_Returns30() {
         // Given
         int[] mesesCon30Dias = {4, 6, 9, 11};
 
@@ -290,7 +290,7 @@ class EgresoServiceTest {
     }
 
     @Test
-    public void testGetMontosPorDia() {
+    void testGetMontosPorDia() {
         // Given
         int anio = 2023;
         int mes = 7;
@@ -311,7 +311,7 @@ class EgresoServiceTest {
     }
 
     @Test
-    public void testGetMontosUltimos5Dias() {
+    void testGetMontosUltimos5Dias() {
         // Given
         List<Integer> expectedMontos = new ArrayList<>();
         expectedMontos.add(100); // Dummy data for the first day
