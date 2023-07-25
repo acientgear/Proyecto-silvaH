@@ -74,4 +74,52 @@ public class MotivoMontoControllerTest {
         // Verificamos que la respuesta sea 404 Not Found
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     }
+
+
+    @Test
+    public void testObtenerMontosEgreso_MontosExistentes() {
+        // Given
+        int anio = 2023;
+        int mes = 7;
+
+        // Creamos una lista de MotivoMonto de prueba
+        List<MotivoMonto> montosDePrueba = new ArrayList<>();
+        montosDePrueba.add(new MotivoMonto("Motivo 1", 100));
+        montosDePrueba.add(new MotivoMonto("Motivo 2", 200));
+        montosDePrueba.add(new MotivoMonto("Motivo 3", 300));
+
+        // Simulamos el comportamiento del servicio para devolver los montos de prueba
+        when(motivoMontoService.obtenerMontoEgreso(anio, mes)).thenReturn(montosDePrueba);
+
+        // When
+        ResponseEntity<List<MotivoMonto>> responseEntity = motivoMontoController.obtenerMontosEgreso(anio, mes);
+
+        // Then
+        // Verificamos que el servicio se haya llamado con los parámetros correctos
+        verify(motivoMontoService, times(1)).obtenerMontoEgreso(anio, mes);
+
+        // Verificamos que la respuesta sea 200 OK y contenga los montos de prueba
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(montosDePrueba, responseEntity.getBody());
+    }
+
+    @Test
+    public void testObtenerMontosEgreso_MontosNoExistentes() {
+        // Given
+        int anio = 2023;
+        int mes = 7;
+
+        // Simulamos el comportamiento del servicio para devolver una lista vacía (montos no encontrados)
+        when(motivoMontoService.obtenerMontoEgreso(anio, mes)).thenReturn(null);
+
+        // When
+        ResponseEntity<List<MotivoMonto>> responseEntity = motivoMontoController.obtenerMontosEgreso(anio, mes);
+
+        // Then
+        // Verificamos que el servicio se haya llamado con los parámetros correctos
+        verify(motivoMontoService, times(1)).obtenerMontoEgreso(anio, mes);
+
+        // Verificamos que la respuesta sea 404 Not Found
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    }
 }
