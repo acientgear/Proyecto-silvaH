@@ -16,7 +16,7 @@ import com.app.silvahnosbe.repositories.CorreoRepository;
 import com.app.silvahnosbe.services.CorreoService;
 
 @ExtendWith(MockitoExtension.class)
-public class CorreoServiceTest {
+class CorreoServiceTest {
 
     @InjectMocks
     private CorreoService correoService;

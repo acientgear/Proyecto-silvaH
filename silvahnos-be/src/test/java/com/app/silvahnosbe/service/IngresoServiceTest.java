@@ -6,15 +6,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -183,18 +180,6 @@ public class IngresoServiceTest {
         assertThat(Ingresos).isEqualTo(180000);
 
     }
-
-    /*@DisplayName("test para obtener el total de los ingresos por dia")
-    @Test
-    void testObtenerMontoPorDia() {
-        // given
-        given(ingresoRepository.obtenerMontoPorDia(2023, 5, 23)).willReturn(180000);
-        // when
-        int Ingresos = ingresoService.obtenerMontoPorDia(2023, 5, 23);
-        // then
-        assertThat(Ingresos).isEqualTo(180000);
-
-    }*/
 
     @DisplayName("test para obtener el total de los ingresos por mes cuando es nulo o 0")
     @Test
@@ -367,59 +352,6 @@ public class IngresoServiceTest {
         }
     }
 
-    /*@Test
-    public void testGetMontosPorDia_ValidParameters_ReturnsMontosList() {
-        // Given
-        int anio = 2023;
-        int mes = 5;
-        int numeroDias = 31;
-
-        IngresoRepository ingresoRepositoryMock = mock(IngresoRepository.class);
-
-        // Configurar el comportamiento del mock utilizando doAnswer
-        doAnswer(invocation -> {
-            int dia = invocation.getArgument(2);
-            // Devolver un monto diferente según el día
-            if (dia == 1) {
-                return 100;
-            } else if (dia == 2) {
-                return 200;
-            } else {
-                return 0; // Resto de los días devuelven 0
-            }
-        }).when(ingresoRepositoryMock).obtenerMontoPorDia(anyInt(), anyInt(), anyInt());
-
-        // When
-        List<Integer> result = ingresoService.getMontosPorDia(anio, mes);
-
-        // Then
-        assertEquals(numeroDias, result.size());
-        assertEquals(Arrays.asList(100, 200), result);
-        verify(ingresoRepositoryMock, times(numeroDias)).obtenerMontoPorDia(anio, mes, anyInt());
-    }*/
-
-    /*@Test
-    public void testGetMontosUltimos5Dias() {
-        // Given
-        List<Integer> montosEsperados = Arrays.asList(100, 200, 300, 400, 500);
-        IngresoRepository ingresoRepositoryMock = mock(IngresoRepository.class);
-
-        // Configurar el comportamiento del mock para devolver los montos esperados
-        when(ingresoRepositoryMock.obtenerMontoPorDia(anyInt(), anyInt(), anyInt()))
-                .thenReturn(100)
-                .thenReturn(200)
-                .thenReturn(300)
-                .thenReturn(400)
-                .thenReturn(500);
-
-        // When
-        List<Integer> result = ingresoService.getMontosUltimos5Dias();
-
-        // Then
-        assertEquals(montosEsperados, result);
-        verify(ingresoRepositoryMock, times(5)).obtenerMontoPorDia(anyInt(), anyInt(), anyInt());
-    }*/
-
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -465,7 +397,6 @@ public class IngresoServiceTest {
 
         // Then
         assertEquals(expectedMontos, actualMontos);
-        // You can add more specific assertions as per your requirements
     }
 
 }

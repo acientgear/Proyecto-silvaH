@@ -15,7 +15,7 @@ import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class ParametroServiceTest {
+class ParametroServiceTest {
     @Mock
     private ParametroRepository parametroRepository;
 
@@ -59,8 +59,5 @@ public class ParametroServiceTest {
         given(parametroRepository.save(parametro)).willReturn(parametro);
         assertThat(parametroService.actualizarParametro("nuevoValor")).isNotNull();
     }
-
-
-
     
 }

@@ -30,7 +30,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
-public class EgresoServiceTest {
+class EgresoServiceTest {
 
     @Mock
     private EgresoRepository egresoRepository;
@@ -164,29 +164,6 @@ public class EgresoServiceTest {
         assertThat(egresos).isEqualTo(45000);
 
     }
-
-    /*@DisplayName("test para obtener el total de los egresos del dia")
-    @Test
-    void TestTotalDiaEgreso() {
-        // given
-        EgresoEntity egreso2 = new EgresoEntity();
-        egreso2.setDescripcion("pintura");
-        egreso2.setId(2l);
-        egreso2.setMonto(15000);
-
-        EgresoEntity egreso1 = new EgresoEntity();
-        egreso1.setDescripcion("pintura");
-        egreso1.setId(3l);
-        egreso1.setMonto(15000);
-
-        given(egresoRepository.obtenerMontoPorDia(2023, 3, 1)).willReturn(30000);
-
-        // when
-        int egresos = egresoService.obtenerMontoPorDia(2023, 3);
-        // then
-        assertThat(egresos).isEqualTo(30000);
-
-    }*/
 
     @Test
     @DisplayName("test de integración creación de egreso con motivo y movimiento")

@@ -1,22 +1,11 @@
 package com.app.silvahnosbe.service;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.sql.Date;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +24,7 @@ import com.app.silvahnosbe.repositories.FacturaRepository;
 import com.app.silvahnosbe.services.FacturaService;
 
 @ExtendWith(MockitoExtension.class)
-public class FacturaServiceTest {
+class FacturaServiceTest {
     @Mock
     private FacturaRepository facturaRepository;
 
@@ -211,110 +200,4 @@ public class FacturaServiceTest {
      
 
     }
-
-    /*@Test
-    public void testPagarFacturaa() {
-        // Crear una factura de ejemplo con una fecha de pago
-        FacturaEntity factura = new FacturaEntity();
-        factura.setFecha_pago(new Date(System.currentTimeMillis()));
-
-        // Mock del repositorio
-        FacturaRepository facturaRepository = mock(FacturaRepository.class);
-
-        // Crear una instancia del servicio y establecer el repositorio mock
-        //FacturaService facturaService = new FacturaService();
-        //facturaService.setFacturaRepository(facturaRepository);
-
-        // Llamar al método que se está probando
-        FacturaEntity result = facturaService.pagarFactura(factura);
-
-        // Verificar que la fecha de pago se haya restado correctamente
-        Calendar expectedCalendar = Calendar.getInstance();
-        expectedCalendar.setTime(factura.getFecha_pago());
-        expectedCalendar.add(Calendar.DAY_OF_MONTH, -1);
-        Date expectedFecha = expectedCalendar.getTime();
-
-        // Convertir java.util.Date a java.sql.Date
-        java.sql.Date expectedSqlFecha = new java.sql.Date(expectedFecha.getTime());
-
-        // Convertir java.util.Date a java.sql.Date para el resultado
-        java.sql.Date resultSqlFecha = new java.sql.Date(result.getFecha_pago().getTime());
-
-        assertEquals(expectedSqlFecha, resultSqlFecha);
-
-        // Verificar que el método save del repositorio fue llamado
-        verify(facturaRepository).save(factura);
-    }*/
-
-
-    /*@Test
-    public void testPagarFactura_FechaPagoNotNull_ReturnsUpdatedFacturaEntity() {
-        // Given
-        FacturaEntity factura = new FacturaEntity();
-        java.sql.Timestamp fechaPago = new Timestamp(System.currentTimeMillis());
-        factura.setFecha_pago(fechaPago);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fechaPago);
-        calendar.add(Calendar.DAY_OF_MONTH, -1); // Restar un día
-        java.util.Date expectedFecha = calendar.getTime();
-
-        when(facturaRepository.save(factura)).thenReturn(factura);
-
-        // When
-        FacturaEntity result = facturaService.pagarFactura(factura);
-
-        // Then
-        assertNotNull(result);
-        assertEquals(expectedFecha, result.getFecha_pago());
-        verify(facturaRepository).save(factura);
-    }
-
-    @Test
-    public void testPagarFactura_FechaPagoNull_ReturnsSameFacturaEntity() {
-        // Given
-        FacturaEntity factura = new FacturaEntity();
-
-        when(facturaRepository.save(factura)).thenReturn(factura);
-
-        // When
-        FacturaEntity result = facturaService.pagarFactura(factura);
-
-        // Then
-        assertNotNull(result);
-        assertNull(result.getFecha_pago());
-        verify(facturaRepository).save(factura);
-    }*/
-
-    /*@Test
-    public void testPagarFactura2() {
-        // Given
-        FacturaEntity factura = new FacturaEntity();
-        factura.setId(1L);
-        // Aquí puedes configurar los atributos de la factura según sea necesario para el test
-
-        // Simulamos la fecha actual
-        LocalDate fechaActual = LocalDate.now();
-        when(facturaRepository.save(any())).thenAnswer(invocation -> {
-            FacturaEntity facturaGuardada = invocation.getArgument(0);
-            // Simulamos la acción de guardar la factura y devolvemos la factura guardada
-            return facturaGuardada;
-        });
-
-        // When
-        FacturaEntity facturaPagada = facturaService.pagarFactura(factura);
-
-        // Then
-        // Convertimos la fecha de pago a LocalDate
-        LocalDateTime fechaPagoLocal = facturaPagada.getFecha_pago().toLocalDateTime();
-        LocalDate fechaPago = fechaPagoLocal.toLocalDate();
-
-        // Comparamos solo el año, mes y día de la fecha de pago
-        assertEquals(fechaActual.getYear(), fechaPago.getYear());
-        assertEquals(fechaActual.getMonth(), fechaPago.getMonth());
-        assertEquals(fechaActual.getDayOfMonth(), fechaPago.getDayOfMonth());
-
-        // Verificamos que el método save del repositorio se haya llamado con la factura actualizada
-        verify(facturaRepository, times(1)).save(factura);
-    }*/
 }

@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class MotivoIServiceTest {
+class MotivoIServiceTest {
     
     @Mock
     private MotivoIRepository motivoIRepository;

@@ -20,7 +20,7 @@ import com.app.silvahnosbe.repositories.EstadoRepository;
 import com.app.silvahnosbe.services.EstadoService;
 
 @ExtendWith(SpringExtension.class)
-public class EstadoServiceTest {
+class EstadoServiceTest {
 
     @Mock
     private EstadoRepository estadoRepository;

@@ -20,7 +20,7 @@ import com.app.silvahnosbe.repositories.RegistroRepository;
 import com.app.silvahnosbe.services.RegistroService;
 
 @ExtendWith(MockitoExtension.class)
-public class RegistroServiceTest {
+class RegistroServiceTest {
 
     @Mock
     private RegistroRepository registroRepository;

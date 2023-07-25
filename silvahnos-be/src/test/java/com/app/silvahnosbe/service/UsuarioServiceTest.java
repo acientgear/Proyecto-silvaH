@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-public class UsuarioServiceTest {
+class UsuarioServiceTest {
     
     @Mock
     private UsuarioRepository usuarioRepository;
@@ -63,8 +63,8 @@ public class UsuarioServiceTest {
         assertThat(usuarioService.guardarUsuario(usuario)).isNotNull();
     }
 
-        @Test
-    public void testObtenerUsuarioPorUsuario_UsuarioExistente_ReturnsUsuarioEntity() {
+    @Test
+    void testObtenerUsuarioPorUsuario_UsuarioExistente_ReturnsUsuarioEntity() {
         // Given
         String usuario = "testuser";
         UsuarioEntity usuarioEntity = new UsuarioEntity();

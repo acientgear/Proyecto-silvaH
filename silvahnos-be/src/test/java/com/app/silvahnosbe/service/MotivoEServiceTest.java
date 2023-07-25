@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
-public class MotivoEServiceTest {
+class MotivoEServiceTest {
 
     @Mock
     private MotivoERepository motivoERepository;

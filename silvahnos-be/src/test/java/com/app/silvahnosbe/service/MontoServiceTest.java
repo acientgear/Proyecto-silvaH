@@ -20,7 +20,7 @@ import com.app.silvahnosbe.repositories.MontoRepository;
 import com.app.silvahnosbe.services.MontoService;
 
 @ExtendWith(MockitoExtension.class)
-public class MontoServiceTest {
+class MontoServiceTest {
 
     @Mock
     private MontoRepository montoRepository;

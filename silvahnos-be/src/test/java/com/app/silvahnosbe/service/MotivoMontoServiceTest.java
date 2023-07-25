@@ -19,7 +19,7 @@ import com.app.silvahnosbe.repositories.MotivoMontoRepository;
 import com.app.silvahnosbe.services.MotivoMontoService;
 
 @ExtendWith(SpringExtension.class)
-public class MotivoMontoServiceTest {
+class MotivoMontoServiceTest {
     @Mock
     private MotivoMontoRepository motivoMontoRepository;
 
@@ -27,7 +27,7 @@ public class MotivoMontoServiceTest {
     private MotivoMontoService motivoMontoService;
 
     @Test
-    public void testObtenerMontoIngreso() {
+    void testObtenerMontoIngreso() {
         // Given
         int anio = 2023;
         int mes = 7;
@@ -53,7 +53,7 @@ public class MotivoMontoServiceTest {
     }
 
     @Test
-    public void testObtenerMontoEgreso() {
+    void testObtenerMontoEgreso() {
         // Given
         int anio = 2023;
         int mes = 7;

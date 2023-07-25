@@ -20,7 +20,7 @@ import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-public class RolServiceTest {
+class RolServiceTest {
     
     @Mock
     private RolRepository rolRepository;

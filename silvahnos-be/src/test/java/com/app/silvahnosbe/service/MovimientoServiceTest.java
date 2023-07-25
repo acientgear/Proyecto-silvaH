@@ -26,7 +26,7 @@ import com.app.silvahnosbe.services.MovimientoService;
 import com.app.silvahnosbe.services.UsuarioService;
 
 @ExtendWith(SpringExtension.class)
-public class MovimientoServiceTest {
+class MovimientoServiceTest {
     
     @Mock
     private MovimientoRepository movimientoRepository;

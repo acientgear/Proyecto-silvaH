@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class EmpresaServiceTest {
+class EmpresaServiceTest {
     
     @Mock
     private EmpresaRepository empresaRepository;
