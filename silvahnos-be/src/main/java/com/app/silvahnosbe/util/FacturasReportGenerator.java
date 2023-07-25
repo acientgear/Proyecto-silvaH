@@ -32,9 +32,21 @@ public class FacturasReportGenerator {
         this.resourceLoader = resourceLoader;
     }
     
+    /**
+    *funcion que exporta a pdf una lista de facturas
+    * @param List<FacturaEntity> list, Integer total, Double iva_total
+    * @return retorna una lista de bytes que representan el pdf generado
+    */
+
     public byte[] exportToPdf(List<FacturaEntity> list, Integer total, Double iva_total) throws JRException, FileNotFoundException{
         return JasperExportManager.exportReportToPdf(getReport(list, total,iva_total));
     }
+
+    /**
+    *funcion que crea un jasperprint a partir de una lista de facturas
+    * @param List<FacturaEntity> list, Integer total, Double iva_total
+    * @return retorna un jasperprint
+    */
 
     private JasperPrint getReport(List<FacturaEntity> list, Integer total, Double iva_total) throws FileNotFoundException, JRException {
         Map<String, Object> params = new HashMap<String, Object>();

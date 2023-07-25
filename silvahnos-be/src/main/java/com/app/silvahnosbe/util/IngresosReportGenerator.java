@@ -32,9 +32,21 @@ public class IngresosReportGenerator {
         this.resourceLoader = resourceLoader;
     }
 
+    /**
+    *funcion que exporta a pdf una lista de ingresos
+    * @param List<IngresoEntity> list, Integer total
+    * @return retorna una lista de bytes que representan el pdf generado
+    */
+
     public byte[] exportToPdf(List<IngresoEntity> list, Integer total) throws JRException, FileNotFoundException{
         return JasperExportManager.exportReportToPdf(getReport(list, total));
     }
+
+    /**
+    *funcion que crea un jasperprint a partir de una lista de ingresos
+    * @param List<IngresoEntity> list, Integer total
+    * @return retorna un jasperprint
+    */
 
     private JasperPrint getReport(List<IngresoEntity> list, Integer total) throws FileNotFoundException, JRException {
         Map<String, Object> params = new HashMap<String, Object>();
