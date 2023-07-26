@@ -90,7 +90,7 @@ public class EmailService {
      * @return no tiene retorno,
      */
 
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 7 * * *")
     public void cronEmail() {
         EstadoEntity estado = new EstadoEntity();
         estado.setId(2l);
