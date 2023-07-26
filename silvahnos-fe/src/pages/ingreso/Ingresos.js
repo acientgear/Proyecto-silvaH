@@ -66,7 +66,7 @@ const Ingresos = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
-                getIngresos();
+                getIngresos(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     title: 'Ingreso editado exitosamente',
@@ -79,6 +79,7 @@ const Ingresos = () => {
 
     const handleDelete = () => {
         editedItem.borrado = true;
+        editedItem.fecha_borrado = new Date();
         deleteIngreso();
     };
 
@@ -88,7 +89,7 @@ const Ingresos = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
-                getIngresos();
+                getIngresos(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     width: '400px',

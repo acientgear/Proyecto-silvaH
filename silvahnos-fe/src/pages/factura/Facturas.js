@@ -80,6 +80,7 @@ const Facturas = () => {
 
     const handleDelete = () => {
         editedItem.borrado = true;
+        editedItem.fecha_borrado = new Date();
         deleteFactura();
     };
 
@@ -121,7 +122,7 @@ const Facturas = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
-                getFacturas();
+                getFacturas(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     title: 'Factura editada correctamente',
@@ -138,7 +139,7 @@ const Facturas = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseCheck();
-                getFacturas();
+                getFacturas(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     title: 'Factura pagada correctamente',
@@ -155,7 +156,7 @@ const Facturas = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
-                getFacturas();
+                getFacturas(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     width: '400px',

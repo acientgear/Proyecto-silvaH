@@ -66,7 +66,7 @@ const Egresos = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseEdit();
-                getEgresos();
+                getEgresos(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     title: 'Egreso editado correctamente',
@@ -79,6 +79,7 @@ const Egresos = () => {
 
     const handleDelete = () => {
         editedItem.borrado = true;
+        editedItem.fecha_borrado = new Date();
         deleteEgreso();
     };
 
@@ -88,7 +89,7 @@ const Egresos = () => {
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
                 handleCloseDelete();
-                getEgresos();
+                getEgresos(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     width: '400px',
