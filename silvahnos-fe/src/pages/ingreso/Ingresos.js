@@ -192,7 +192,8 @@ const Ingresos = () => {
                             style={{
                                     padding: 0, 
                                     position: "absolute",
-                                    top: 155,
+                                    top: 162,
+                                    zIndex: 999,
                                 }}
                             >
                             <Toast.Header>

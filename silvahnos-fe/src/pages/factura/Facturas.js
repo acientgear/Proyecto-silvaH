@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Col, Container, Modal, Pagination, Row, Table, ListGroup } from 'react-bootstrap';
+import { Button, Col, Container, Modal, Pagination, Row, Table, ListGroup, Toast } from 'react-bootstrap';
 import urlweb from '../../config/config';
 import FormMonth from '../../components/FormMonth';
 import FormFactura from '../../components/FormFactura';
 import Alerta from '../../components/Alerta';
-import { AiFillEdit, AiFillDelete, AiFillCheckCircle } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiFillCheckCircle, AiOutlineDown } from "react-icons/ai";
 import Cookies from 'js-cookie';
 import { Tooltip } from 'react-tooltip';
+import Sem1 from '../../components/data/Sem1';
+import Sem2 from '../../components/data/Sem2';
 
 const Facturas = () => {
     const config = {
@@ -20,10 +22,14 @@ const Facturas = () => {
     const [mes, setMes] = useState((new Date()).getMonth() + 1);
     const [anio, setAnio] = useState((new Date()).getFullYear());
     const [facturas, setFacturas] = useState([]);
+    const meses = Sem1.concat(Sem2);
 
     const [showCheck, setShowCheck] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+
+    const toogleToast = () => setShowToast(!showToast);
 
     const handlePageChange = (page) => {
         if (page < 1 || page > Math.ceil(facturas.length / pageSize))
@@ -84,15 +90,15 @@ const Facturas = () => {
         deleteFactura();
     };
 
-    const handleChangeMes = (e) => {
-        setMes(e.target.value);
+    const handleGetToast = (anio, mes) => {
+        setAnio(anio);
+        setMes(mes);
+        getFacturas(anio, mes);
+        getIva(anio, mes);
+        toogleToast();
     };
 
-    const handleChangeAnio = (e) => {
-        setAnio(e.target.value);
-    };
-
-    const getIva = useCallback(async () => {
+    const getIva = useCallback(async (anio, mes) => {
         try {
             let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
             const response = await axios.get(url, config);
@@ -102,7 +108,7 @@ const Facturas = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio, mes]);
+    }, []);
 
     const getFacturas = useCallback(async (anio, mes) => {
         try {
@@ -123,6 +129,7 @@ const Facturas = () => {
             if (response.status === 200) {
                 handleCloseEdit();
                 getFacturas(anio, mes);
+                getIva(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     title: 'Factura editada correctamente',
@@ -157,6 +164,7 @@ const Facturas = () => {
             if (response.status === 200) {
                 handleCloseDelete();
                 getFacturas(anio, mes);
+                getIva(anio, mes);
                 Alerta.fire({
                     icon: 'success',
                     width: '400px',
@@ -216,9 +224,9 @@ const Facturas = () => {
 
     useEffect(() => {
         getFacturas(anio, mes);
-        getIva();
+        getIva(anio, mes);
         const alert = localStorage.getItem("alert");
-        if (alert === "true"){
+        if (alert === "true") {
             localStorage.setItem("alert", false);
             Alerta.fire({
                 icon: 'success',
@@ -232,26 +240,41 @@ const Facturas = () => {
             <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
                 <Row>
                     <Col><h1>Facturas</h1></Col>
-                    <p></p>
-                    <Row className="justify-content-center align-items-center">
-                        <Col className='d-flex align-items-center'>
-                            <FormMonth
-                                mes={mes}
-                                anio={anio}
-                                get={getFacturas}
-                            />
-                        </Col>
-                    </Row>
-                    <p></p>
-                    <Row className="justify-content-center align-items-center">
-                        <Col className='d-flex align-items-center'>
-                            <ListGroup>
-                                <ListGroup.Item style={{ fontWeight: "bold" }}>IVA a pagar: {formatoMonto(iva)}</ListGroup.Item>
-                            </ListGroup>
-                        </Col>
-                    </Row>
                 </Row>
-                <p></p>
+                <Row className="justify-content-center align-items-center mb-2">
+                    <Col className='d-flex align-items-center gap-2 '>
+                        {`De ${meses[mes - 1]} de ${anio}`}
+                        <AiOutlineDown
+                            style={{ cursor: 'pointer' }}
+                            onClick={toogleToast} />
+                        <Toast 
+                            show={showToast} 
+                            onClose={toogleToast} 
+                            style={{
+                                    padding: 0, 
+                                    position: "absolute",
+                                    top: 164,
+                                    zIndex: 999
+                                }}
+                            >
+                            <Toast.Header>
+                                <strong className="me-auto">Filtrar fecha: </strong>
+                            </Toast.Header>
+                            <Toast.Body style={{backgroundColor: "white"}}>
+                                <FormMonth
+                                    mes={mes}
+                                    anio={anio}
+                                    get={handleGetToast}
+                                />
+                            </Toast.Body>
+                        </Toast>
+                    </Col>
+                    <Col className='d-flex justify-content-end'>
+                        <ListGroup>
+                            <ListGroup.Item style={{ fontWeight: "bold", padding: "2px 16px" }}>IVA a pagar: {formatoMonto(iva)}</ListGroup.Item>
+                        </ListGroup>
+                    </Col>
+                </Row>
                 <Row>
                     <Col>
                         <Table responsive="sm" striped hover>
@@ -278,7 +301,7 @@ const Facturas = () => {
                                         <td>{formatearFecha(factura.fecha_vencimiento)}</td>
                                         <td>{factura.fecha_pago ? formatearFecha(factura.fecha_pago) : '---'}</td>
                                         <td>{factura.estado.nombre}</td>
-                                        <td style={{maxWidth: 200}}>
+                                        <td style={{ maxWidth: 200 }}>
                                             <span
                                                 data-tooltip-id="tooltip-descrip"
                                                 data-tooltip-content={factura.observaciones}
