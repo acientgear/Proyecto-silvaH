@@ -100,8 +100,6 @@ const Home = () => {
     let diferencia = fechaVencimiento.getTime() - fechaActual.getTime();
     let dias = Math.round(diferencia / (1000 * 60 * 60 * 24));
     dias = dias + 1;
-    console.log("venc", fechaVencimiento)
-    console.log("act", fechaActual);
     if (dias === 0) {
       return "Vence hoy";
     } else if (dias < 0) {

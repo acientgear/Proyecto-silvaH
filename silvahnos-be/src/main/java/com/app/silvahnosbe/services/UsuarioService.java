@@ -3,6 +3,8 @@ package com.app.silvahnosbe.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.app.silvahnosbe.entities.UsuarioEntity;
@@ -49,6 +51,20 @@ public class UsuarioService {
     public UsuarioEntity obtenerUsuarioPorUsuario(String usuario){
         //revisar cuando no se encuentra el usuario
         return usuarioRepository.findByUsuario(usuario).orElse(null);
+    }
+
+    /**
+     * Función que permite obtener el usuario que está logueado.
+     *
+     * @return el usuario logueado o null si no hay un usuario autenticado.
+     */
+    public UsuarioEntity obtenerUsuarioLogueado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            return usuarioRepository.findByCorreo(username).orElse(null);
+        }
+        return null;
     }
 
 }

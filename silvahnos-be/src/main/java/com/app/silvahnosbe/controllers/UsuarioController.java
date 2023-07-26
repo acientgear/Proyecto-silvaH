@@ -82,4 +82,13 @@ public class UsuarioController {
         UsuarioEntity usuarioGuardado = usuarioService.guardarUsuario(usuario);
         return ResponseEntity.ok().body(usuarioGuardado);
     }
+
+    @GetMapping("/getUserLogueado")
+    public ResponseEntity<UsuarioEntity> getUserLogueado(){
+        UsuarioEntity usuario = usuarioService.obtenerUsuarioLogueado();
+        if(usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(usuario);
+    }
 }
