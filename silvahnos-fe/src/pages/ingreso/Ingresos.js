@@ -134,7 +134,7 @@ const Ingresos = () => {
         descripcion: '',
     }
 
-    const getIngresos = async (anio, mes) => {
+    const getIngresos = useCallback(async (anio, mes) => {
         try {
             let url = 'http://' + urlweb + '/ingresos/' + anio + '/' + mes;
             const response = await axios.get(url, config);
@@ -144,7 +144,7 @@ const Ingresos = () => {
         } catch (err) {
             console.log(err.message);
         }
-    };
+    }, []);
 
     const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);

@@ -134,7 +134,7 @@ const Egresos = () => {
         descripcion: '',
     }
 
-    const getEgresos = useCallback(async () => {
+    const getEgresos = useCallback(async (anio, mes) => {
         try {
             let url = 'http://' + urlweb + '/egresos/' + anio + '/' + mes;
             const response = await axios.get(url, config);
@@ -144,7 +144,7 @@ const Egresos = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio, mes]);
+    }, []);
 
     const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);
@@ -157,7 +157,7 @@ const Egresos = () => {
     });
 
     useEffect(() => {
-        getEgresos();
+        getEgresos(anio, mes);
         const alert = localStorage.getItem("alert");
         if (alert === "true") {
             localStorage.setItem("alert", false);
@@ -166,7 +166,7 @@ const Egresos = () => {
                 title: 'Egreso creado correctamente',
             });
         }    
-    }, [getEgresos]);
+    }, [getEgresos, anio, mes]);
 
     return (
         <>

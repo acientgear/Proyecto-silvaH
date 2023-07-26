@@ -15,6 +15,7 @@ const FormMonth = ({ mes, anio, get }) => {
         <Formik
             validationSchema={schema}
             onSubmit={(values) => {
+                //console.log(values);
                 get(values.anio, values.mes);
             }}
             initialValues={{
@@ -59,7 +60,7 @@ const FormMonth = ({ mes, anio, get }) => {
                             isInvalid={!!errors.anio}
                             />
                     </InputGroup>
-                    <Button variant='primary' size='sm'>
+                    <Button type="submit" size='sm'>
                         Buscar
                     </Button>
                 </Form>

@@ -103,7 +103,7 @@ const Facturas = () => {
         }
     }, [anio, mes]);
 
-    const getFacturas = useCallback(async () => {
+    const getFacturas = useCallback(async (anio, mes) => {
         try {
             let url = 'http://' + urlweb + '/facturas/' + anio + '/' + mes;
             const response = await axios.get(url, config);
@@ -113,7 +113,7 @@ const Facturas = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio, mes]);
+    }, []);
 
     const updateFactura = async (editedItem) => {
         try {
@@ -214,7 +214,7 @@ const Facturas = () => {
     }
 
     useEffect(() => {
-        getFacturas();
+        getFacturas(anio, mes);
         getIva();
         const alert = localStorage.getItem("alert");
         if (alert === "true"){
@@ -224,7 +224,7 @@ const Facturas = () => {
                 title: 'Factura creada correctamente',
             });
         }
-    }, [getFacturas, getIva]);
+    }, [getFacturas, getIva, anio, mes]);
 
     return (
         <>
