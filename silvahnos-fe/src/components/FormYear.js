@@ -13,7 +13,6 @@ const FormYear = ({ anio, handleAnio }) => {
         <Formik
             validationSchema={schema}
             onSubmit={(values) => {
-                console.log(values.anio);
                 handleAnio(values.anio);
             }}
             initialValues={{

@@ -325,7 +325,7 @@ const Facturas = () => {
                                     <Pagination.Last onClick={() => handlePageChange(Math.ceil(facturas.length / pageSize))} />
                                 </Pagination>
                             </Col>
-                            <Col className='d-flex align-items-center justify-content-md-end'><Button href="/crearFactura" style={{ backgroundColor: "rgb(165, 192, 221)", color: "black", border: "none", fontWeight: "bold" }}>Registrar una factura</Button></Col>
+                            <Col className='d-flex align-items-center justify-content-md-end'><Button href="/crearFactura" style={{ backgroundColor: "rgb(165, 192, 221)", color: "black", border: "none", fontWeight: "bold" }}>Registrar factura</Button></Col>
                         </Row>
 
                     </Col>

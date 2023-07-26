@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
-import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Modal, Pagination, Row, Table, Toast } from 'react-bootstrap';
 import FormMonth from '../../components/FormMonth';
 import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiOutlineDown } from "react-icons/ai";
 import Cookies from 'js-cookie';
 import { Tooltip } from 'react-tooltip';
+import Sem2 from '../../components/data/Sem2';
+import Sem1 from '../../components/data/Sem1';
 
 const Ingresos = () => {
     const config = {
@@ -15,6 +17,7 @@ const Ingresos = () => {
     };
 
     const [currentPage, setCurrentPage] = useState(1);
+    const meses = Sem1.concat(Sem2);
     const pageSize = 10;
 
     const [ingresos, setIngresos] = useState([]);
@@ -23,6 +26,9 @@ const Ingresos = () => {
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+
+    const toogleToast = () => setShowToast(!showToast);
 
     const handlePageChange = (page) => {
         if (page < 1 || page > Math.ceil(ingresos.length / pageSize))
@@ -101,12 +107,11 @@ const Ingresos = () => {
         }
     };
 
-    const handleChangeMes = (e) => {
-        setMes(e.target.value);
-    };
-
-    const handleChangeAnio = (e) => {
-        setAnio(e.target.value);
+    const handleGetToast = (anio, mes) => {
+        toogleToast();
+        setAnio(anio);
+        setMes(mes);
+        getIngresos(anio, mes);
     };
 
     const [editedItem, setEditedItem] = useState({
@@ -174,15 +179,34 @@ const Ingresos = () => {
             <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
                 <Row>
                     <Col><h1>Ingresos</h1></Col>
-                    <Row className="justify-content-center align-items-center">
-                        <Col className='d-flex align-items-center'>
-                            <FormMonth
-                                mes={mes}
-                                anio={anio}
-                                get={getIngresos}
-                            />
-                        </Col>
-                    </Row>
+                </Row>
+                <Row className="justify-content-center align-items-center">
+                    <Col className='d-flex align-items-center gap-2'>
+                        {`De ${meses[mes - 1]} de ${anio}`}
+                        <AiOutlineDown
+                            style={{ cursor: 'pointer' }}
+                            onClick={toogleToast} />
+                        <Toast 
+                            show={showToast} 
+                            onClose={toogleToast} 
+                            style={{
+                                    padding: 0, 
+                                    position: "absolute",
+                                    top: 155,
+                                }}
+                            >
+                            <Toast.Header>
+                                <strong className="me-auto">Filtrar fecha: </strong>
+                            </Toast.Header>
+                            <Toast.Body style={{backgroundColor: "white"}}>
+                                <FormMonth
+                                    mes={mes}
+                                    anio={anio}
+                                    get={handleGetToast}
+                                />
+                            </Toast.Body>
+                        </Toast>
+                    </Col>
                 </Row>
                 <p></p>
                 <Row>
@@ -202,7 +226,7 @@ const Ingresos = () => {
                                 {paginatedData.map((ingreso) => (
                                     <tr key={ingreso.id}>
                                         <td>{formatearFecha(ingreso.fecha_creacion)}</td>
-                                        <td style={{maxWidth: 200}}>
+                                        <td style={{ maxWidth: 200 }}>
                                             <span
                                                 data-tooltip-id="tooltip-descrip"
                                                 data-tooltip-content={ingreso.descripcion}

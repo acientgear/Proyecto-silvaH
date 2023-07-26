@@ -22,6 +22,15 @@ const Colores = () => {
         { id: 20, nombre: 'Amarillo fuerte', rgb: 'rgb(254, 255, 134)' },
         { id: 10, nombre: 'Café', rgb: 'rgb(122, 83, 43)' },
         { id: 21, nombre: 'Rojo2', rgb: 'rgb(235, 69, 95)' },
+        { id: 22, nombre: 'Verde2', rgb: 'rgb(69, 235, 95)' },
+        { id: 23, nombre: 'Azul2', rgb: 'rgb(69, 95, 235)' },
+        { id: 24, nombre: 'Naranjo2', rgb: 'rgb(235, 95, 69)' },
+        { id: 25, nombre: 'Amarillo2', rgb: 'rgb(235, 235, 69)' },
+        { id: 26, nombre: 'Violeta2', rgb: 'rgb(235, 69, 235)' },
+        { id: 27, nombre: 'Celeste2', rgb: 'rgb(69, 235, 235)' },
+        { id: 28, nombre: 'Gris2', rgb: 'rgb(235, 235, 235)' },
+        { id: 29, nombre: 'Verde claro2', rgb: 'rgb(95, 235, 95)' },
+        { id: 30, nombre: 'Verde oscuro2', rgb: 'rgb(95, 95, 235)' },
     ];
 
     return coloresrgb;

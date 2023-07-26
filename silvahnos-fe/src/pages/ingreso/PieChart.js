@@ -7,12 +7,15 @@ import CategoriasIngreso from '../../components/data/CategoriasIngreso';
 import Colores from '../../components/data/Colores';
 import Cookies from 'js-cookie';
 
-const PieChartIngreso = ({anio,mes}) => {
-    const config = {
+
+
+const PieChartIngreso = ({ anio, mes }) => {
+    const configUrl = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    }; 
+    };
 
     const [montosOrigen, setMontosOrigen] = useState([]);
+    const [total, setTotal] = useState(0);
     const motivos = CategoriasIngreso();
 
     const coloresrgb = Colores();
@@ -22,10 +25,11 @@ const PieChartIngreso = ({anio,mes}) => {
     useEffect(() => {
         const getMontoOrigen = async () => {
             try {
-                let url = 'http://'+urlweb+'/motivoMonto/ingreso/' + anio + '/' + mes;
-                const response = await axios.get(url,config);
+                let url = 'http://' + urlweb + '/motivoMonto/ingreso/' + anio + '/' + mes;
+                const response = await axios.get(url, configUrl);
                 if (response.status === 200) {
                     setMontosOrigen(response.data);
+                    setTotal(response.data.reduce((a, b) => a + b.monto_total, 0));
                 }
             } catch (err) {
                 console.log(err.message);
@@ -33,7 +37,7 @@ const PieChartIngreso = ({anio,mes}) => {
         };
 
         getMontoOrigen();
-    }, [anio,mes]);
+    }, [anio, mes]);
 
     const data = {
         labels: montosOrigen.map((item) => item.motivo),
@@ -49,15 +53,50 @@ const PieChartIngreso = ({anio,mes}) => {
     };
 
     const options = {
-        tooltips: {
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'right',
+                rtl: true,
+                labels: {
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        //Show value using custom number formatting.
+                        const label = 'Total: $' + context.formattedValue + ' (' + (context.parsed * 100 / total).toFixed(2) + '%)';
+                        return label;
+                    }
+                }
+            }
         },
-    };
+    }
+
+
 
     return (
         <>
-        <div key="pie-chart-ingreso" style={{width:"100%"}}>
-            <Pie data={data} options={options} />
-        </div>
+            <div key="pie-chart-ingreso" style={{ width: "100%" }}>
+                {montosOrigen.length === 0 ?
+                    <div
+                        width={392}
+                        height={392}
+                    >
+                        <h3>No hay datos para mostrar</h3>
+                    </div>
+                    :
+                    <Pie
+                        width={392}
+                        height={392}
+                        data={data}
+                        options={options}
+                    />}
+
+            </div>
         </>
     );
 };

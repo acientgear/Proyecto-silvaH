@@ -29,7 +29,7 @@ const FormMonth = ({ mes, anio, get }) => {
                 values,
                 errors,
             }) => (
-                <Form className='mb-2' noValidate onSubmit={handleSubmit}>
+                <Form className='d-flex gap-2 mb-2' noValidate onSubmit={handleSubmit}>
                     <InputGroup size='sm'>
                         <Form.Select
                             name="mes"
