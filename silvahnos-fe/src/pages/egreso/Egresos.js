@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import { Button, Col, Container, Modal, Row, Table, Pagination } from 'react-bootstrap';
-import InputMonth from '../../components/InputMonth';
+import FormMonth from '../../components/FormMonth';
 import FormEgreso from '../../components/FormEgreso';
 import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
@@ -175,11 +175,9 @@ const Egresos = () => {
                     <Col><h1>Egresos</h1></Col>
                     <Row className="justify-content-center align-items-center">
                         <Col className='d-flex align-items-center'>
-                            <InputMonth
+                            <FormMonth
                                 mes={mes}
                                 anio={anio}
-                                onChangeAnio={handleChangeAnio}
-                                onChangeMes={handleChangeMes}
                                 get={getEgresos}
                             />
                         </Col>

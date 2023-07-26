@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { Button, Col, Container, Modal, Pagination, Row, Table, ListGroup } from 'react-bootstrap';
 import urlweb from '../../config/config';
-import InputMonth from '../../components/InputMonth';
+import FormMonth from '../../components/FormMonth';
 import FormFactura from '../../components/FormFactura';
 import Alerta from '../../components/Alerta';
 import { AiFillEdit, AiFillDelete, AiFillCheckCircle } from "react-icons/ai";
@@ -234,11 +234,9 @@ const Facturas = () => {
                     <p></p>
                     <Row className="justify-content-center align-items-center">
                         <Col className='d-flex align-items-center'>
-                            <InputMonth
+                            <FormMonth
                                 mes={mes}
                                 anio={anio}
-                                onChangeAnio={handleChangeAnio}
-                                onChangeMes={handleChangeMes}
                                 get={getFacturas}
                             />
                         </Col>

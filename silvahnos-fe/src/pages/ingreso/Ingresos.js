@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import { Button, Col, Container, Modal, Pagination, Row, Table } from 'react-bootstrap';
-import InputMonth from '../../components/InputMonth';
+import FormMonth from '../../components/FormMonth';
 import FormIngreso from '../../components/FormIngreso';
 import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
@@ -134,7 +134,7 @@ const Ingresos = () => {
         descripcion: '',
     }
 
-    const getIngresos = useCallback(async () => {
+    const getIngresos = async (anio, mes) => {
         try {
             let url = 'http://' + urlweb + '/ingresos/' + anio + '/' + mes;
             const response = await axios.get(url, config);
@@ -144,7 +144,7 @@ const Ingresos = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio, mes]);
+    };
 
     const formatearFecha = (fecha) => {
         const fechaActual = new Date(fecha);
@@ -157,7 +157,7 @@ const Ingresos = () => {
     });
 
     useEffect(() => {
-        getIngresos();
+        getIngresos(anio, mes);
         const alert = localStorage.getItem("alert");
         if (alert === "true") {
             localStorage.setItem("alert", false);
@@ -166,7 +166,7 @@ const Ingresos = () => {
                 title: 'Ingreso creado exitosamente',
             });
         }
-    }, [getIngresos]);
+    }, [anio, mes, getIngresos]);
 
     return (
         <>
@@ -175,11 +175,9 @@ const Ingresos = () => {
                     <Col><h1>Ingresos</h1></Col>
                     <Row className="justify-content-center align-items-center">
                         <Col className='d-flex align-items-center'>
-                            <InputMonth
+                            <FormMonth
                                 mes={mes}
                                 anio={anio}
-                                onChangeAnio={handleChangeAnio}
-                                onChangeMes={handleChangeMes}
                                 get={getIngresos}
                             />
                         </Col>
