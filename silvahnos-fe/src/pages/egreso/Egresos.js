@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
-import { Button, Col, Container, Modal, Row, Table, Pagination } from 'react-bootstrap';
+import { Button, Col, Container, Modal, Row, Table, Pagination, Toast } from 'react-bootstrap';
 import FormMonth from '../../components/FormMonth';
 import FormEgreso from '../../components/FormEgreso';
 import urlweb from '../../config/config';
 import Alerta from '../../components/Alerta';
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiOutlineDown } from "react-icons/ai";
 import Cookies from 'js-cookie';
 import { Tooltip } from 'react-tooltip';
+import Sem1 from '../../components/data/Sem1'
+import Sem2 from '../../components/data/Sem2'
+
 
 const Egresos = () => {
     const config = {
@@ -20,9 +23,13 @@ const Egresos = () => {
     const [egresos, setEgresos] = useState([]);
     const [mes, setMes] = useState((new Date()).getMonth() + 1);
     const [anio, setAnio] = useState((new Date()).getFullYear());
+    const meses = Sem1.concat(Sem2);
 
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+
+    const toogleToast = () => setShowToast(!showToast);
 
     const handlePageChange = (page) => {
         if (page < 1 || page > Math.ceil(egresos.length / pageSize))
@@ -83,6 +90,13 @@ const Egresos = () => {
         deleteEgreso();
     };
 
+    const handleGetToast = (anio, mes) => {
+        setAnio(anio);
+        setMes(mes);
+        toogleToast();
+        getEgresos(anio, mes);
+    };
+
     const deleteEgreso = async () => {
         try {
             let url = 'http://' + urlweb + '/egresos';
@@ -99,14 +113,6 @@ const Egresos = () => {
         } catch (err) {
             console.log(err.message);
         }
-    };
-
-    const handleChangeMes = (e) => {
-        setMes(e.target.value);
-    };
-
-    const handleChangeAnio = (e) => {
-        setAnio(e.target.value);
     };
 
     const [editedItem, setEditedItem] = useState({
@@ -166,7 +172,7 @@ const Egresos = () => {
                 icon: 'success',
                 title: 'Egreso creado correctamente',
             });
-        }    
+        }
     }, [getEgresos, anio, mes]);
 
     return (
@@ -174,15 +180,35 @@ const Egresos = () => {
             <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
                 <Row>
                     <Col><h1>Egresos</h1></Col>
-                    <Row className="justify-content-center align-items-center">
-                        <Col className='d-flex align-items-center'>
-                            <FormMonth
-                                mes={mes}
-                                anio={anio}
-                                get={getEgresos}
-                            />
-                        </Col>
-                    </Row>
+                </Row>
+                <Row className="justify-content-center align-items-center">
+                    <Col className='d-flex align-items-center gap-2'>
+                        {`De ${meses[mes - 1]} de ${anio}`}
+                        <AiOutlineDown
+                            style={{ cursor: 'pointer' }}
+                            onClick={toogleToast} />
+                        <Toast
+                            show={showToast}
+                            onClose={toogleToast}
+                            style={{
+                                padding: 0,
+                                position: "absolute",
+                                top: 164,
+                                zIndex: 999
+                            }}
+                        >
+                            <Toast.Header>
+                                <strong className="me-auto">Filtrar fecha: </strong>
+                            </Toast.Header>
+                            <Toast.Body style={{ backgroundColor: "white" }}>
+                                <FormMonth
+                                    mes={mes}
+                                    anio={anio}
+                                    get={handleGetToast}
+                                />
+                            </Toast.Body>
+                        </Toast>
+                    </Col>
                 </Row>
                 <p></p>
                 <Row>
@@ -201,7 +227,7 @@ const Egresos = () => {
                                 {paginatedData.map((egreso) => (
                                     <tr key={egreso.id}>
                                         <td>{formatearFecha(egreso.fecha_creacion)}</td>
-                                        <td style={{width:"20%"}}>
+                                        <td style={{ width: "20%" }}>
                                             <span
                                                 data-tooltip-id="tooltip-descrip"
                                                 data-tooltip-content={egreso.descripcion}
@@ -304,7 +330,7 @@ const Egresos = () => {
                     <Button variant='danger' onClick={handleDelete}>Eliminar</Button>
                 </Modal.Footer>
             </Modal>
-            
+
             {/*Tooltip para descripción*/}
             <Tooltip id="tooltip-descrip" opacity={1} />
         </>
