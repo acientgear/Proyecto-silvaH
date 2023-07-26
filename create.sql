@@ -93,7 +93,7 @@ VALUES
 INSERT INTO `silvahnos`.`correo` 
 (`id`, `direccion`) 
 VALUES 
-('1', 'silvahnos.notificacion@gmail.com');
+('1', 'silvahnos.servicios@gmail.com');
 
 INSERT INTO `silvahnos`.`usuario`
 (`id`,
