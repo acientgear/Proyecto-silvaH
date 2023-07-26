@@ -9,6 +9,7 @@ import TablaMensual from './TablaMensual';
 import TablaAnual from './TablaAnual';
 import Registros from './Registros';
 import FormYear from '../../components/FormYear';
+import FormMonth from '../../components/FormMonth';
 import { AiOutlineRise, AiOutlinePieChart } from 'react-icons/ai';
 
 const Resumen = () => {
@@ -19,6 +20,7 @@ const Resumen = () => {
 
     const [mes, setMes] = useState((new Date()).getMonth() + 1);
     const [anio, setAnio] = useState((new Date()).getFullYear());
+    const [anio2, setAnio2] = useState((new Date()).getFullYear());
 
     const handleSeccion = (seccion) => {
         setSeccion(seccion);
@@ -26,10 +28,19 @@ const Resumen = () => {
 
     const handleChangeAnio = (anio) => {
         setAnio(anio);
+        getResumenAnual(anio);
+    };
+    
+    const handleChangeAnio2 = (anio2) => {
+        setAnio2(anio2);
+        console.log(anio2);
+        getResumenMensual(anio2,mes);
     };
 
     const handleChangeMes = (e) => {
         setMes(e.target.value);
+        console.log(e.target.value);
+        getResumenMensual(anio2,e.target.value);
     };
 
     const handleActive = (sec) => {
@@ -40,7 +51,7 @@ const Resumen = () => {
         }
     }
 
-    const getResumenAnual = () => {
+    const getResumenAnual = (anio) => {
         setResumenAnualHTML(
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen anual</h1>
@@ -54,7 +65,7 @@ const Resumen = () => {
                                 <Card.Title>Ingresos y egresos</Card.Title>
                                 <Col style={{ justifyContent: "center", alignItems: "start" }}>
                                     <Row>
-                                        <TablaAnual />
+                                        <TablaAnual anio={anio}/>
                                     </Row>
                                 </Col>
                             </Card.Body>
@@ -69,7 +80,7 @@ const Resumen = () => {
                                 <Card.Title>Ingresos y egresos anuales</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
                                 <div>
-                                    <GraficoAnual />
+                                    <GraficoAnual anio={anio}/>
                                 </div>
                             </Card.Body>
                         </Card>
@@ -79,43 +90,46 @@ const Resumen = () => {
         )
     }
 
-    const getResumenMensual = () => {
+    const getResumenMensual = (anio2,mes) => {
+        console.log("1",anio2,mes);
         setResumenMensualHTML(
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen mensual</h1>
                 <Row>
+                    <FormMonth mes={mes} anio={anio2} get={getResumenMensual}/>
                     <Col className="column-spacing" style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Card style={{ width: "100%", margin: "10px 0 10px 0" }}>
                             <Card.Body>
                                 <Card.Title>Distribución motivos de ingresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                <PieChartIngreso anio={anio} mes={mes} />
+                                {console.log("2",anio2,mes)}
+                                <PieChartIngreso anio={anio2} mes={mes} />
                             </Card.Body>
                         </Card>
                     </Col>
                     <Col className="column-spacing" style={{ justifyContent: "center", alignItems: "start" }}>
-                        <Registros />
+                        <Registros anio={anio2} mes={mes}/>
                     </Col>
                     <Col className="column-spacing" style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Card style={{ width: "100%", margin: "10px 0 10px 0" }}>
                             <Card.Body>
                                 <Card.Title>Distribución motivos de egresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                <PieChartEgreso anio={anio} mes={mes} />
+                                <PieChartEgreso anio={anio2} mes={mes} />
                             </Card.Body>
                         </Card>
                     </Col>
                 </Row>
                 <Row>
                     <Col style={{ justifyContent: "center", alignItems: "start" }}>
-                        <TablaMensual />
+                        <TablaMensual anio={anio2} mes={mes}/>
                     </Col>
                     <Col style={{ justifyContent: "center", alignItems: "start" }}>
                         <Card className="cardsH">
                             <Card.Body>
                                 <Card.Title>Ingresos y egresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                <GraficoMensual />
+                                <GraficoMensual anio={anio2} mes={mes}/>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -157,8 +171,8 @@ const Resumen = () => {
             </aside>
             <main className='contenido'>
                 <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
-                    {seccion === "resumen_anual" ? (resumenAnualHTML !== null ? resumenAnualHTML : getResumenAnual()) : null}
-                    {seccion === "resumen_mensual" ? (resumenMensualHTML !== null ? resumenMensualHTML : getResumenMensual()) : null}
+                    {seccion === "resumen_anual" ? (resumenAnualHTML !== null ? resumenAnualHTML : getResumenAnual(anio)) : null}
+                    {seccion === "resumen_mensual" ? (resumenMensualHTML !== null ? resumenMensualHTML : getResumenMensual(anio2,mes)) : null}
                 </Container>
             </main>
         </div>

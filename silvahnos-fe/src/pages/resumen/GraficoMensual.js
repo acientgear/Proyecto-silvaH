@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Chart } from 'chart.js';
 import 'chart.js/auto';
 import axios from 'axios';
@@ -6,105 +6,87 @@ import Dias from '../../components/data/Dias';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 
-const config = {
-    headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-}; 
+const LineChart = ({ anio, mes }) => {
+    const chartRef = useRef();
+    const myChartRef = useRef(null);
 
-const getMontoPorDia = async (tipo, anio, mes) => {
-    try {
-        let url = 'http://'+urlweb+'/' + tipo + '/monto/' + anio + '/' + mes;
-        const response = await axios.get(url,config);
-        if (response.status === 200) {
-            return response.data;
-        }
-    } catch (err) {
-        console.log(err.message);
-    }
-};
+    useEffect(() => {
+        const fetchData = async () => {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
 
-async function obtenerMontosMes(tipo) {
-    const montos = [];
-    const fecha = new Date();
-    const dias = Dias(fecha.getFullYear(), fecha.getMonth());
-
-    const monto = getMontoPorDia(tipo, fecha.getFullYear(), fecha.getMonth() + 1);
-    montos.push(monto);
-    
-    const datos = await Promise.all(montos);
-
-    return datos;
-}
-
-class LineChart extends Component {
-
-    chartRef = React.createRef();
-    myChart = null;
-
-    async componentDidMount() {
-
-        const year = new Date().getFullYear();
-        const month = new Date().getMonth();
-        const dias = Dias(year, month);
-
-        const myChartRef = this.chartRef.current.getContext('2d');
-
-        let tipo1 = 'ingresos';
-        let tipo2 = 'egresos';
-        const montosIngresos = await getMontoPorDia(tipo1,year,month+1);
-        const montosEgresos = await getMontoPorDia(tipo2,year,month+1);
-
-        //console.log(montosIngresos);
-        //console.log(montosEgresos);
-
-        if (this.myChart) {
-            this.myChart.destroy();
-        }
-
-        this.myChart = new Chart(myChartRef, {
-            type: 'line',
-            data: {
-                labels: dias,
-                datasets: [
-                    {
-                        label: 'Ingresos',
-                        data: montosIngresos,
-                        backgroundColor: 'rgba(184, 231, 225, 0.6)',
-                        borderColor: 'rgba(184, 231, 225, 1)',
-                        borderWidth: 1,
-                    },
-                    {
-                        label: 'Egresos',
-                        data: montosEgresos,
-                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1,
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
+            const getMontoPorDia = async (tipo, anio, mes) => {
+                try {
+                    let url = 'http://' + urlweb + '/' + tipo + '/monto/' + anio + '/' + mes;
+                    const response = await axios.get(url, config);
+                    if (response.status === 200) {
+                        return response.data;
                     }
+                } catch (err) {
+                    console.log(err.message);
                 }
-            },
-        });
-    }
+            };
 
-    render() {
-        return (
-            <>
-                <div>
-                    <canvas
-                        id="myChart"
-                        ref={this.chartRef}
-                    />
-                </div>
-            </>
-        );
-    }
-}
+            const dias = Dias(anio, mes);
+
+            let tipo1 = 'ingresos';
+            let tipo2 = 'egresos';
+            const montosIngresos = await getMontoPorDia(tipo1, anio, mes);
+            const montosEgresos = await getMontoPorDia(tipo2, anio, mes);
+
+            if (myChartRef.current) {
+                myChartRef.current.destroy();
+            }
+
+            const myChart = new Chart(chartRef.current, {
+                type: 'line',
+                data: {
+                    labels: dias,
+                    datasets: [
+                        {
+                            label: 'Ingresos',
+                            data: montosIngresos,
+                            backgroundColor: 'rgba(184, 231, 225, 0.6)',
+                            borderColor: 'rgba(184, 231, 225, 1)',
+                            borderWidth: 1,
+                        },
+                        {
+                            label: 'Egresos',
+                            data: montosEgresos,
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1,
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        }
+                    }
+                },
+            });
+
+            myChartRef.current = myChart;
+        };
+
+        fetchData();
+    }, [anio, mes]);
+
+    return (
+        <>
+            <div>
+                <canvas
+                    id="myChart"
+                    ref={chartRef}
+                />
+            </div>
+        </>
+    );
+};
 
 export default LineChart;

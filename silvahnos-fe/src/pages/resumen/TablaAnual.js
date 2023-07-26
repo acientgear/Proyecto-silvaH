@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState} from 'react';
 import axios from 'axios';
 import { Table, Row, Col } from 'react-bootstrap';
 import Sem1 from '../../components/data/Sem1';
@@ -6,12 +6,12 @@ import Sem2 from '../../components/data/Sem2';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 
-const TablaAnual = () => {
+const TablaAnual = ({anio}) => {
     const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
 
-    const [anio, setAnio] = useState((new Date()).getFullYear());
+    //const [anio, setAnio] = useState((new Date()).getFullYear());
     const [montosIngresosSem1, setMontosIngresosSem1] = useState([]);
     const [montosEgresosSem1, setMontosEgresosSem1] = useState([]);
     const [montosIngresosSem2, setMontosIngresosSem2] = useState([]);
@@ -24,7 +24,7 @@ const TablaAnual = () => {
         return montoFormateado;
     };
 
-    const getTotalPorMesAnualIngresos = useCallback(async () => {
+    const getTotalPorMesAnualIngresos = async (anio) => {
         try {
             let url = 'http://' + urlweb + '/montos/ingresos/totalMesAnual/' + anio;
             const response = await axios.get(url, config);
@@ -36,9 +36,9 @@ const TablaAnual = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio]);
+    };
 
-    const getTotalPorMesAnualEgresos = useCallback(async () => {
+    const getTotalPorMesAnualEgresos = async (anio) => {
         try {
             let url = 'http://' + urlweb + '/montos/egresos/totalMesAnual/' + anio;
             const response = await axios.get(url, config);
@@ -50,7 +50,7 @@ const TablaAnual = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio]);
+    };
 
     const calcularSaldoCuenta = (montosIngresos, montosEgresos, x) => {
         let saldoCue = 0;
@@ -71,9 +71,9 @@ const TablaAnual = () => {
     const saldoCueSem2 = calcularSaldoCuenta(montosIngresosSem2, montosEgresosSem2, 1);
 
     useEffect(() => {
-        getTotalPorMesAnualIngresos();
-        getTotalPorMesAnualEgresos();
-    }, [getTotalPorMesAnualIngresos, getTotalPorMesAnualEgresos]);
+        getTotalPorMesAnualIngresos(anio);
+        getTotalPorMesAnualEgresos(anio);
+    }, [anio]);
 
     return (
         <>

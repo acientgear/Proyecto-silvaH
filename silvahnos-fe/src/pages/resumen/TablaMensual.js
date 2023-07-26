@@ -7,11 +7,7 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 
-const mes = new Date().getMonth() + 1;
-const idMes = mes.toLocaleString('es-ES', { month: 'long' });
-const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
-
-const TablaMensual = () => {
+const TablaMensual = ({anio,mes}) => {
     const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
@@ -19,14 +15,17 @@ const TablaMensual = () => {
     const [montosOrigenEgresos, setMontosOrigenEgresos] = useState([]);
     const [totalIngresos, setTotalIngresos] = useState(0);
     const [totalEgresos, setTotalEgresos] = useState(0);
-    const [anio] = useState((new Date()).getFullYear());
+    //const [anio] = useState((new Date()).getFullYear());
+
+    const idMes = mes.toLocaleString('es-ES', { month: 'long' });
+    const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
 
     const formatoMonto = (monto) => {
         const montoFormateado = monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
         return montoFormateado;
     };
 
-    const getMontosOrigenIngresos = useCallback(async () => {
+    const getMontosOrigenIngresos = async (anio,mes) => {
         try {
             let url = 'http://' + urlweb + '/motivoMonto/ingreso/' + anio + '/' + mes;
             const response = await axios.get(url, config);
@@ -37,9 +36,9 @@ const TablaMensual = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio]);
+    };
 
-    const getMontosOrigenEgresos = useCallback(async () => {
+    const getMontosOrigenEgresos = async (anio,mes) => {
         try {
             let url = 'http://' + urlweb + '/motivoMonto/egreso/' + anio + '/' + mes;
             const response = await axios.get(url, config);
@@ -50,12 +49,12 @@ const TablaMensual = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio]);
+    };
 
     useEffect(() => {
-        getMontosOrigenIngresos();
-        getMontosOrigenEgresos();
-    }, [getMontosOrigenIngresos, getMontosOrigenEgresos]);
+        getMontosOrigenIngresos(anio,mes);
+        getMontosOrigenEgresos(anio,mes);
+    }, [anio,mes]);
 
     return (
         <>

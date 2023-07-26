@@ -7,38 +7,39 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 
-const config = {
-    headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-};
+const DoubleBarChart = ({anio}) => {
 
-const getTotalPorMes = async (tipo, anio, mes) => {
-    try {
-        let url = 'http://' + urlweb + '/' + tipo + '/total/' + anio + '/' + mes;
-        const response = await axios.get(url, config);
-        if (response.status === 200) {
-            return response.data;
+    const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+    };
+    
+    const getTotalPorMes = async (tipo, anio, mes) => {
+        try {
+            let url = 'http://' + urlweb + '/' + tipo + '/total/' + anio + '/' + mes;
+            const response = await axios.get(url, config);
+            if (response.status === 200) {
+                return response.data;
+            }
+        } catch (err) {
+            console.log(err.message);
         }
-    } catch (err) {
-        console.log(err.message);
     }
-}
-
-async function getTotalMontosPorMes(tipo) {
-    const montos = [];
-    const fecha = new Date();
-    const anio = fecha.getFullYear();
-
-    for (let i = 1; i <= 12; i++) {
-        const monto = getTotalPorMes(tipo, anio, i);
-        montos.push(monto);
+    
+    async function getTotalMontosPorMes(tipo,anio) {
+        const montos = [];
+        const fecha = new Date();
+        //const anio = fecha.getFullYear();
+    
+        for (let i = 1; i <= 12; i++) {
+            const monto = getTotalPorMes(tipo, anio, i);
+            montos.push(monto);
+        }
+    
+        const datos = await Promise.all(montos);
+    
+        return datos;
     }
 
-    const datos = await Promise.all(montos);
-
-    return datos;
-}
-
-const DoubleBarChart = () => {
     const [montosIngresos, setMontosIngresos] = useState([]);
     const [montosEgresos, setMontosEgresos] = useState([]);
 
@@ -47,15 +48,15 @@ const DoubleBarChart = () => {
             const tipo1 = 'ingresos';
             const tipo2 = 'egresos';
 
-            const montosIngresos = await getTotalMontosPorMes(tipo1);
-            const montosEgresos = await getTotalMontosPorMes(tipo2);
+            const montosIngresos = await getTotalMontosPorMes(tipo1,anio);
+            const montosEgresos = await getTotalMontosPorMes(tipo2,anio);
 
             setMontosIngresos(montosIngresos);
             setMontosEgresos(montosEgresos);
         };
 
         fetchMontos();
-    }, []);
+    }, [anio]);
 
     const data = {
         labels: Sem1.concat(Sem2),

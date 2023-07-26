@@ -6,14 +6,14 @@ import Sem1 from '../../components/data/Sem1';
 import Sem2 from '../../components/data/Sem2';
 import Cookies from 'js-cookie';
 
-const Registros = () => {
+const Registros = ({anio,mes}) => {
     const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` }
     };
 
     let fechaAcual = new Date();
-    let anio = fechaAcual.getFullYear();
-    let mes = fechaAcual.getMonth() + 1;
+    //let anio = fechaAcual.getFullYear();
+    //let mes = fechaAcual.getMonth() + 1;
     const idMes = mes.toLocaleString('es-ES', { month: 'long' });
     const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
 
@@ -30,7 +30,7 @@ const Registros = () => {
         return montoFormateado;
     };
 
-    const getRegistros = useCallback(async () => {
+    const getRegistros = async (anio,mes) => {
         try {
             let url = 'http://' + urlweb + '/registros/' + anio + '/' + mes;
             const response = await axios.get(url, config);
@@ -40,11 +40,11 @@ const Registros = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }, [anio, mes]);
+    };
 
     useEffect(() => {
-        getRegistros();
-    }, [getRegistros]);
+        getRegistros(anio,mes);
+    }, [anio,mes]);
 
     return (
         <Card  style={{ margin: "10px 0 10px 0", maxHeight: '469px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>
