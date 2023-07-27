@@ -134,7 +134,7 @@ const MotivoI = () => {
 
     useEffect(() => {
         getMotivosI();
-    });
+    },[]);
 
 
     return (

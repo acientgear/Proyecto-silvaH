@@ -133,7 +133,7 @@ const MotivoE = () => {
 
     useEffect(() => {
         getMotivosE();
-    });
+    }, []);
 
     return (
         <div style={{ width: "100%" }}>

@@ -134,7 +134,7 @@ const Empresas = () => {
 
     useEffect(() => {
         getEmpresas();
-    });
+    }, []);
 
     return (
         <div style={{width: "100%"}}>

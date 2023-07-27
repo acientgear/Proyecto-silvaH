@@ -27,20 +27,21 @@ const FormYear = ({ anio, handleAnio }) => {
             }) => (
                 <Form className='mb-2' noValidate onSubmit={handleSubmit}>
                     <Row>
-                        <Form.Label column>
+                        <Form.Label column xs="auto">
                             Año:
                         </Form.Label>
-                        <Col>
+                        <Col className='d-flex align-items-center'>
                             <Form.Control
                                 type='number'
                                 name='anio'
                                 value={values.anio}
+                                size='sm'
                                 onChange={handleChange}
                                 isInvalid={!!errors.anio}
                             />
                         </Col>
-                        <Col>
-                            <Button type='submit'>Buscar</Button>
+                        <Col className='d-flex justify-content-end align-items-center'>
+                            <Button size='sm' type='submit'>Buscar</Button>
                         </Col>
                     </Row>
                 </Form>
