@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `motivoE` (
+CREATE TABLE IF NOT EXISTS `motivoe` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `borrado` varchar(255) DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `motivoE` (
    PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `motivoI`(
+CREATE TABLE IF NOT EXISTS `motivoi`(
   `id` bigint NOT NULL AUTO_INCREMENT,
   `borrado` varchar(255) DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
