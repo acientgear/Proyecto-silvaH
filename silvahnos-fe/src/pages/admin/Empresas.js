@@ -5,14 +5,10 @@ import urlweb from '../../config/config';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import {BsBoxArrowRight} from "react-icons/bs";
 import FormEmpresa from '../../components/FormEmpresa';
-import { checkRut } from 'react-rut-formatter';
 import Cookies from 'js-cookie';
 import Alerta from '../../components/Alerta';
 
 const Empresas = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    }; 
     const [empresas, setempresas] = useState([]);
     const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
@@ -50,6 +46,9 @@ const Empresas = () => {
 
     const createEmpresa = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            }; 
             let url = 'http://' + urlweb + '/empresas';
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
@@ -67,6 +66,9 @@ const Empresas = () => {
 
     const updateEmpresa = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            }; 
             let url = 'http://' + urlweb + '/empresas';
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
@@ -89,6 +91,9 @@ const Empresas = () => {
 
     const deleteEmpresa = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            }; 
             let url = 'http://' + urlweb + '/empresas';
             const response = await axios.post(url, editedItem,config);
             if (response.status === 200) {
@@ -122,6 +127,9 @@ const Empresas = () => {
 
     const getEmpresas = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            }; 
             let url = 'http://' + urlweb + '/empresas';
             const response = await axios.get(url,config);
             if (response.status === 200) {

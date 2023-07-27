@@ -6,9 +6,6 @@ import Cookies from 'js-cookie';
 import Alerta from '../../components/Alerta';
 
 const Correo = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    }; 
     const [correo, setCorreo] = useState([]);
     const [correoActual, setCorreoActual] = useState('');
 
@@ -17,6 +14,9 @@ const Correo = () => {
 
     const getCorreo = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            }; 
             let url = 'http://' + urlweb + '/Correos';
             const response = await axios.get(url,config);
             if (response.status === 200) {
@@ -30,6 +30,9 @@ const Correo = () => {
 
     const handleSubmit = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            }; 
             let url = 'http://' + urlweb + '/Correos/'+nuevoCorreo;
             const response = await axios.post(url,null,config);
             if (response.status === 200) {

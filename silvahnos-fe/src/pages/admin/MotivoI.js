@@ -10,9 +10,6 @@ import Cookies from 'js-cookie';
 import Alerta from '../../components/Alerta';
 
 const MotivoI = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
     const [motivosI, setMotivosI] = useState([]);
     const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
@@ -51,6 +48,9 @@ const MotivoI = () => {
 
     const createMotivoI = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivosI';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -68,6 +68,9 @@ const MotivoI = () => {
 
     const updatemotivoI = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivosI';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -91,6 +94,9 @@ const MotivoI = () => {
 
     const deleteMotivoI = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivosI';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -122,6 +128,9 @@ const MotivoI = () => {
 
     const getMotivosI = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivosI';
             const response = await axios.get(url, config);
             if (response.status === 200) {

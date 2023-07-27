@@ -10,9 +10,6 @@ import Alerta from '../../components/Alerta';
 import { Tooltip } from 'react-tooltip';
 
 const MotivoE = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
     const [motivosE, setMotivosE] = useState([]);
     const [showCreate, setShowCreate] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
@@ -50,6 +47,9 @@ const MotivoE = () => {
 
     const createMotivoE = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivosE';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -68,6 +68,9 @@ const MotivoE = () => {
 
     const updatemotivoE = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivosE';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -90,6 +93,9 @@ const MotivoE = () => {
 
     const deleteMotivoE = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivosE';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -121,6 +127,9 @@ const MotivoE = () => {
 
     const getMotivosE = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivosE';
             const response = await axios.get(url, config);
             if (response.status === 200) {

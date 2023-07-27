@@ -8,10 +8,6 @@ import Swal from "sweetalert2";
 import Alerta from "../../components/Alerta";
 
 const Reporte = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
-
     const [tipo, setTipo] = useState("ingresos");
     const [fechaI, setFechaI] = useState(format(startOfMonth(new Date()), 'yyyy-MM-dd'));
     const [fechaF, setFechaF] = useState(format(endOfMonth(new Date()), 'yyyy-MM-dd'));
@@ -40,6 +36,9 @@ const Reporte = () => {
 
     const getReport = async (e, web, tipo, fi, ff) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             const url = `http://${web}/${tipo}/export-pdf/${fi}/${ff}`;
             const response = await fetch(url, config);
             if (response.ok) {
@@ -76,7 +75,6 @@ const Reporte = () => {
             }, 
         });
         getReport(e, urlweb, tipo, fechaI, fechaF);
-        //Swal.close();
     }
 
     return (

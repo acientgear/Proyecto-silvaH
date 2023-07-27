@@ -6,9 +6,6 @@ import Cookies from 'js-cookie';
 import Alerta from '../../components/Alerta';
 
 const Parametro = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    }; 
     const [parametro, setParametro] = useState([]);
     const [parametroActual, setParametroActual] = useState('');
 
@@ -17,6 +14,9 @@ const Parametro = () => {
 
     const getParametro = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            }; 
             let url = 'http://' + urlweb + '/Parametros';
             const response = await axios.get(url,config);
             if (response.status === 200) {
@@ -30,6 +30,9 @@ const Parametro = () => {
 
     const handleSubmit = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            }; 
             let url = 'http://' + urlweb + '/Parametros/'+nuevoValor;
             const response = await axios.post(url,null,config);
             if (response.status === 200) {
