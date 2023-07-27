@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 
 const FormUsuario = ({usuario, postUsuario, handleClose}) => {
   const { Formik } = formik;
-
+  
   const formSchema = yup.object().shape({
     correo: yup.string().required('Campo requerido').email('Correo inválido'),
     nombre: yup.string().required('Campo requerido').min(3, 'Mínimo 3 caracteres'),
@@ -17,7 +17,7 @@ const FormUsuario = ({usuario, postUsuario, handleClose}) => {
                                     .min(6, 'Mínimo 6 caracteres')
                                     .max(16, 'Máximo 16 caracteres'),
   });
-
+  
   return (
     <Formik
       validationSchema={formSchema}
@@ -35,11 +35,12 @@ const FormUsuario = ({usuario, postUsuario, handleClose}) => {
         usuario: usuario.usuario,
         correo: usuario.correo,
         nombre: usuario.nombre,
-        contrasenna: usuario.contrasenna,
+        contrasenna: "",
         repetirContrasenna: "",
       }}
     >
       {({ handleSubmit, handleChange, values, errors }) => (
+        
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group className='mb-3' controlId='formUsuario'>
             <Form.Label>Nombre de usuario</Form.Label>
