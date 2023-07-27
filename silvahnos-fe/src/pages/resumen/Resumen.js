@@ -22,22 +22,24 @@ const Resumen = () => {
     const [anio_rm, setAnio2] = useState((new Date()).getFullYear()); // para resumen mensual
     const meses = Sem1.concat(Sem2);
 
-    const [showToast, setShowToast] = useState(false);
-    const toogleToast = () => {
-        setShowToast(!showToast)
-    };
+    const [showToastRA, setShowToastRA] = useState(false);
+    const [showToastRM, setShowToastRM] = useState(false);
+
+    const toggleToastRA = () => setShowToastRA(!showToastRA);
+    const toggleToastRM = () => setShowToastRM(!showToastRM);
+
 
     const handleSeccion = (seccion) => {
         setSeccion(seccion);
     }
 
     const handleChangeRA = (anio) => {
-        toogleToast();
+        toggleToastRA();
         setAnio(anio);
     };
 
     const handleChangeRM = (anio, mes) => {
-        toogleToast();
+        toggleToastRM();
         setAnio2(anio);
         setMes(mes);
     };
@@ -59,14 +61,14 @@ const Resumen = () => {
                         {`Del año ${anio_ra}`}
                         <AiOutlineDown
                             style={{ cursor: 'pointer' }}
-                            onClick={toogleToast} />
+                            onClick={toggleToastRA} />
                         <Toast
-                            show={showToast}
-                            onClose={toogleToast}
+                            show={showToastRA}
+                            onClose={toggleToastRA}
                             style={{
                                 padding: 0,
                                 position: "absolute",
-                                top: 164,
+                                top: 171,
                                 zIndex: 999
                             }}
                         >
@@ -121,14 +123,14 @@ const Resumen = () => {
                         {`De ${meses[mes - 1]} del año ${anio_rm}`}
                         <AiOutlineDown
                             style={{ cursor: 'pointer' }}
-                            onClick={toogleToast} />
+                            onClick={toggleToastRM} />
                         <Toast
-                            show={showToast}
-                            onClose={toogleToast}
+                            show={showToastRM}
+                            onClose={toggleToastRM}
                             style={{
                                 padding: 0,
                                 position: "absolute",
-                                top: 164,
+                                top: 171,
                                 zIndex: 999
                             }}
                         >
