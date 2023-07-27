@@ -13,9 +13,7 @@ import Sem2 from '../../components/data/Sem2'
 
 
 const Egresos = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 10;
@@ -69,6 +67,9 @@ const Egresos = () => {
 
     const updateEgreso = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/egresos';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -99,6 +100,9 @@ const Egresos = () => {
 
     const deleteEgreso = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/egresos';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -143,6 +147,9 @@ const Egresos = () => {
 
     const getEgresos = useCallback(async (anio, mes) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/egresos/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {

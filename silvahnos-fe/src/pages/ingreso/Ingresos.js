@@ -12,10 +12,6 @@ import Sem2 from '../../components/data/Sem2';
 import Sem1 from '../../components/data/Sem1';
 
 const Ingresos = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
-
     const [currentPage, setCurrentPage] = useState(1);
     const meses = Sem1.concat(Sem2);
     const pageSize = 10;
@@ -68,6 +64,9 @@ const Ingresos = () => {
 
     const updateIngreso = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/ingresos';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -91,6 +90,9 @@ const Ingresos = () => {
 
     const deleteIngreso = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/ingresos';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -142,6 +144,9 @@ const Ingresos = () => {
 
     const getIngresos = useCallback(async (anio, mes) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/ingresos/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {

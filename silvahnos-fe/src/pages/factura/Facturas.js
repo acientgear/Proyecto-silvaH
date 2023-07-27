@@ -12,9 +12,6 @@ import Sem1 from '../../components/data/Sem1';
 import Sem2 from '../../components/data/Sem2';
 
 const Facturas = () => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
     const [currentPage, setCurrentPage] = useState(1);
     const [iva, setIva] = useState(0);
     const pageSize = 10;
@@ -100,6 +97,9 @@ const Facturas = () => {
 
     const getIva = useCallback(async (anio, mes) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {
@@ -112,6 +112,9 @@ const Facturas = () => {
 
     const getFacturas = useCallback(async (anio, mes) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/facturas/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {
@@ -124,6 +127,9 @@ const Facturas = () => {
 
     const updateFactura = async (editedItem) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/facturas';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -142,6 +148,9 @@ const Facturas = () => {
 
     const pagarFactura = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/facturas/pagar';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {
@@ -159,6 +168,9 @@ const Facturas = () => {
 
     const deleteFactura = async () => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/facturas';
             const response = await axios.post(url, editedItem, config);
             if (response.status === 200) {

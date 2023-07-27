@@ -7,9 +7,6 @@ import urlweb from '../config/config';
 import Cookies from 'js-cookie';
 
 const Home = () => {
-  const config = {
-    headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-  };
   const [ingresos, setIngresos] = useState([]);
   const [egresos, setEgresos] = useState([]);
   const [facturas, setFacturas] = useState([]);
@@ -25,6 +22,9 @@ const Home = () => {
 
   const getIgresos = async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+      };
       let url = 'http://' + urlweb + '/ingresos/ultimos';
       const response = await axios.get(url, config);
       if (response.status === 200) {
@@ -37,6 +37,9 @@ const Home = () => {
 
   const getEgresos = async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+      };
       let url = 'http://' + urlweb + '/egresos/ultimos';
       const response = await axios.get(url, config);
       if (response.status === 200) {
@@ -49,6 +52,9 @@ const Home = () => {
 
   const getSaldoCuenta = useCallback(async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+      };
       let url = 'http://' + urlweb + '/ingresos/total/' + mes;
       const response = await axios.get(url, config);
       if (response.status === 200) {
@@ -59,8 +65,11 @@ const Home = () => {
     }
   }, [mes]);
 
-  const getIva = async () => {
+  const getIva = useCallback(async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+      };
       let url = 'http://' + urlweb + '/facturas/iva/' + anio + '/' + mes;
       const response = await axios.get(url, config);
       if (response.status === 200) {
@@ -69,10 +78,13 @@ const Home = () => {
     } catch (err) {
       console.log(err.message);
     }
-  };
+  },[anio, mes]);
 
-  const getProximasFacturasVencer = async () => {
+  const getProximasFacturasVencer = useCallback(async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+      };
       let url = 'http://' + urlweb + '/facturas/proximasVencer/' + anio + '/' + mes;
       const response = await axios.get(url, config);
       if (response.status === 200) {
@@ -81,7 +93,7 @@ const Home = () => {
     } catch (err) {
       console.log(err.message);
     }
-  };
+  },[anio, mes]);
 
   const formatearFecha = (fecha) => {
     if (fecha === null) {
@@ -121,6 +133,9 @@ const Home = () => {
 
   const totalIngresosMes = useCallback(async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+      };
       let url = 'http://' + urlweb + '/ingresos/total/' + anio + '/' + mes;
       const response = await axios.get(url, config);
       if (response.status === 200) {
@@ -134,6 +149,9 @@ const Home = () => {
 
   const totalEgresosMes = useCallback(async () => {
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+      };
       let url = 'http://' + urlweb + '/egresos/total/' + anio + '/' + mes;
       const response = await axios.get(url, config);
       if (response.status === 200) {
@@ -167,7 +185,7 @@ const Home = () => {
     getSaldoCuenta();
     getIva();
     getProximasFacturasVencer();
-  }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes]);
+  }, [getSaldoCuenta, totalEgresosMes, totalIngresosMes, getIva, getProximasFacturasVencer]);
 
   return (
     <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
