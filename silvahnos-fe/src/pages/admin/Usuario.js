@@ -5,7 +5,7 @@ import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 import FormUsuario from '../../components/FormUsuario';
 import Alerta from '../../components/Alerta';
-import { BiUserCircle } from "react-icons/bi";
+import { AiOutlineUser } from "react-icons/ai";
 
 const Usuario = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -73,6 +73,7 @@ const Usuario = () => {
             if (response.status === 200) {
                 handleCloseUpdate();
                 getUsuarios();
+                getUsuarioLogged();
                 Alerta.fire({
                     icon: 'success',
                     title: 'Usuario actualizado exitosamente'
@@ -110,25 +111,30 @@ const Usuario = () => {
                     <Card.Title >Usuario logueado</Card.Title>
                     <Row>
                         <Col xs="auto">
-                            <BiUserCircle size={100} />
+                            <AiOutlineUser size={100} />
                         </Col>
                         <Col>
-                            <div >
-                                <p style={{ textAlign: "left" }}><strong>Nombre completo: </strong></p>
-                                <p style={{ textAlign: "left" }}>{usuarioLogged.nombre}</p>
-                            </div>
-                            <div>
-                                <p style={{ textAlign: "left" }}><strong>Nombre de usuario: </strong></p>
-                                <p style={{ textAlign: "left" }}>{usuarioLogged.usuario}</p>
+                            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                                <div>
+                                    <p style={{ textAlign: "left" }}><strong>Nombre completo: </strong></p>
+                                    <p style={{ textAlign: "left" }}>{usuarioLogged.nombre}</p>
+                                </div>
+                                <div>
+                                    <p style={{ textAlign: "left" }}><strong>Nombre de usuario: </strong></p>
+                                    <p style={{ textAlign: "left" }}>{usuarioLogged.usuario}</p>
+                                </div>
                             </div>
                         </Col>
                         <Col>
                             <div>
-                                <p style={{ textAlign: "left" }}><strong>Correo: </strong></p>
-                                <p style={{ textAlign: "left" }}>{usuarioLogged.correo}</p>
-                            </div>
-                            <div>
-                                <Button variant="primary" onClick={handleShowUpdate}>Editar</Button>
+                                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                                    <p style={{ textAlign: "left" }}><strong>Correo: </strong></p>
+                                    <p style={{ textAlign: "left" }}>{usuarioLogged.correo}</p>
+                                </div>
+                                <div style={{ alignItems: "center" }}>
+                                    <p></p>
+                                    <Button variant="primary" onClick={handleShowUpdate}>Editar</Button>
+                                </div>
                             </div>
                         </Col>
                     </Row>

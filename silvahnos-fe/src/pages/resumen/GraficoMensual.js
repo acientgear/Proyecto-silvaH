@@ -28,7 +28,7 @@ const LineChart = ({ anio, mes }) => {
                 }
             };
 
-            const dias = Dias(anio, mes);
+            const dias = Dias(anio, mes-1);
 
             let tipo1 = 'ingresos';
             let tipo2 = 'egresos';

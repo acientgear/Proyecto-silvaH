@@ -7,8 +7,6 @@ import CategoriasIngreso from '../../components/data/CategoriasIngreso';
 import Colores from '../../components/data/Colores';
 import Cookies from 'js-cookie';
 
-
-
 const PieChartIngreso = ({ anio, mes }) => {
     const configUrl = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` }
@@ -20,7 +18,6 @@ const PieChartIngreso = ({ anio, mes }) => {
 
     const coloresrgb = Colores();
     const getColor = (index) => coloresrgb[index % coloresrgb.length].rgb;
-
 
     useEffect(() => {
         const getMontoOrigen = async () => {
@@ -75,8 +72,6 @@ const PieChartIngreso = ({ anio, mes }) => {
             }
         },
     }
-
-
 
     return (
         <>
