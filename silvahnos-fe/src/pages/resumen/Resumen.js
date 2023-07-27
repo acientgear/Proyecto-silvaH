@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Col, Row, Container, Card, Form } from 'react-bootstrap';
+import { Col, Row, Container, Card, Toast } from 'react-bootstrap';
 import PieChartIngreso from '../ingreso/PieChart';
 import PieChartEgreso from '../egreso/PieChart';
 import GraficoMensual from './GraficoMensual';
@@ -10,37 +10,36 @@ import TablaAnual from './TablaAnual';
 import Registros from './Registros';
 import FormYear from '../../components/FormYear';
 import FormMonth from '../../components/FormMonth';
-import { AiOutlineRise, AiOutlinePieChart } from 'react-icons/ai';
+import { AiOutlineRise, AiOutlinePieChart, AiOutlineDown } from 'react-icons/ai';
+import Sem1 from '../../components/data/Sem1';
+import Sem2 from '../../components/data/Sem2';
 
 const Resumen = () => {
-    const [resumenAnualHTML, setResumenAnualHTML] = useState(null);
-    const [resumenMensualHTML, setResumenMensualHTML] = useState(null);
-
     const [seccion, setSeccion] = useState("resumen_anual");
 
     const [mes, setMes] = useState((new Date()).getMonth() + 1);
-    const [anio, setAnio] = useState((new Date()).getFullYear());
-    const [anio2, setAnio2] = useState((new Date()).getFullYear());
+    const [anio_ra, setAnio] = useState((new Date()).getFullYear()); // para resumen anual
+    const [anio_rm, setAnio2] = useState((new Date()).getFullYear()); // para resumen mensual
+    const meses = Sem1.concat(Sem2);
+
+    const [showToast, setShowToast] = useState(false);
+    const toogleToast = () => {
+        setShowToast(!showToast)
+    };
 
     const handleSeccion = (seccion) => {
         setSeccion(seccion);
     }
 
-    const handleChangeAnio = (anio) => {
+    const handleChangeRA = (anio) => {
+        toogleToast();
         setAnio(anio);
-        getResumenAnual(anio);
-    };
-    
-    const handleChangeAnio2 = (anio2) => {
-        setAnio2(anio2);
-        console.log(anio2);
-        getResumenMensual(anio2,mes);
     };
 
-    const handleChangeMes = (e) => {
-        setMes(e.target.value);
-        console.log(e.target.value);
-        getResumenMensual(anio2,e.target.value);
+    const handleChangeRM = (anio, mes) => {
+        toogleToast();
+        setAnio2(anio);
+        setMes(mes);
     };
 
     const handleActive = (sec) => {
@@ -51,13 +50,36 @@ const Resumen = () => {
         }
     }
 
-    const getResumenAnual = (anio) => {
-        setResumenAnualHTML(
+    const resumenAnual = () => {
+        return (
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen anual</h1>
                 <Row>
-                    <FormYear anio={anio} handleAnio={handleChangeAnio}/>
+                    <Col className='d-flex align-items-center gap-2'>
+                        {`Del año ${anio_ra}`}
+                        <AiOutlineDown
+                            style={{ cursor: 'pointer' }}
+                            onClick={toogleToast} />
+                        <Toast
+                            show={showToast}
+                            onClose={toogleToast}
+                            style={{
+                                padding: 0,
+                                position: "absolute",
+                                top: 164,
+                                zIndex: 999
+                            }}
+                        >
+                            <Toast.Header>
+                                <strong className="me-auto">Filtrar fecha: </strong>
+                            </Toast.Header>
+                            <Toast.Body style={{ backgroundColor: "white" }}>
+                                <FormYear anio={anio_ra} handleAnio={handleChangeRA}/>
+                            </Toast.Body>
+                        </Toast>
+                    </Col>
                 </Row>
+                <p></p>
                 <Row>
                     <Col md={12}>
                         <Card style={{ width: "100%" }}>
@@ -65,7 +87,7 @@ const Resumen = () => {
                                 <Card.Title>Ingresos y egresos</Card.Title>
                                 <Col style={{ justifyContent: "center", alignItems: "start" }}>
                                     <Row>
-                                        <TablaAnual anio={anio}/>
+                                        <TablaAnual anio={anio_ra}/>
                                     </Row>
                                 </Col>
                             </Card.Body>
@@ -80,7 +102,7 @@ const Resumen = () => {
                                 <Card.Title>Ingresos y egresos anuales</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
                                 <div>
-                                    <GraficoAnual anio={anio}/>
+                                    <GraficoAnual anio={anio_ra}/>
                                 </div>
                             </Card.Body>
                         </Card>
@@ -88,55 +110,77 @@ const Resumen = () => {
                 </Row>
             </div>
         )
-    }
-
-    const getResumenMensual = (anio2,mes) => {
-        console.log("1",anio2,mes);
-        setResumenMensualHTML(
+    };
+                            
+    const resumenMensual = () => {
+        return (
             <div style={{ marginTop: "10px" }}>
                 <h1>Resumen mensual</h1>
                 <Row>
-                    <FormMonth mes={mes} anio={anio2} get={getResumenMensual}/>
+                    <Col className='d-flex align-items-center gap-2'>
+                        {`De ${meses[mes - 1]} del año ${anio_rm}`}
+                        <AiOutlineDown
+                            style={{ cursor: 'pointer' }}
+                            onClick={toogleToast} />
+                        <Toast
+                            show={showToast}
+                            onClose={toogleToast}
+                            style={{
+                                padding: 0,
+                                position: "absolute",
+                                top: 164,
+                                zIndex: 999
+                            }}
+                        >
+                            <Toast.Header>
+                                <strong className="me-auto">Filtrar fecha: </strong>
+                            </Toast.Header>
+                            <Toast.Body style={{ backgroundColor: "white" }}>
+                                <FormMonth mes={mes} anio={anio_rm} get={handleChangeRM}/>
+                            </Toast.Body>
+                        </Toast>
+                    </Col>
+                </Row>
+                <Row>
                     <Col className="column-spacing" style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Card style={{ width: "100%", margin: "10px 0 10px 0" }}>
                             <Card.Body>
                                 <Card.Title>Distribución motivos de ingresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                {console.log("2",anio2,mes)}
-                                <PieChartIngreso anio={anio2} mes={mes} />
+                                <PieChartIngreso anio={anio_rm} mes={mes} />
                             </Card.Body>
                         </Card>
                     </Col>
                     <Col className="column-spacing" style={{ justifyContent: "center", alignItems: "start" }}>
-                        <Registros anio={anio2} mes={mes}/>
+                        <Registros anio={anio_rm} mes={mes}/>
                     </Col>
                     <Col className="column-spacing" style={{ display: "flex", justifyContent: "center", alignItems: "start" }}>
                         <Card style={{ width: "100%", margin: "10px 0 10px 0" }}>
                             <Card.Body>
                                 <Card.Title>Distribución motivos de egresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                <PieChartEgreso anio={anio2} mes={mes} />
+                                <PieChartEgreso anio={anio_rm} mes={mes} />
                             </Card.Body>
                         </Card>
                     </Col>
                 </Row>
                 <Row>
                     <Col style={{ justifyContent: "center", alignItems: "start" }}>
-                        <TablaMensual anio={anio2} mes={mes}/>
+                        <TablaMensual anio={anio_rm} mes={mes}/>
                     </Col>
                     <Col style={{ justifyContent: "center", alignItems: "start" }}>
                         <Card className="cardsH">
                             <Card.Body>
                                 <Card.Title>Ingresos y egresos</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">Mensual</Card.Subtitle>
-                                <GraficoMensual anio={anio2} mes={mes}/>
+                                <GraficoMensual anio={anio_rm} mes={mes}/>
                             </Card.Body>
                         </Card>
                     </Col>
                 </Row >
             </div >
-        )
-    }
+        );
+    };
 
     return (
         <div className='contenedor'>
@@ -171,8 +215,8 @@ const Resumen = () => {
             </aside>
             <main className='contenido'>
                 <Container style={{ paddingTop: 10, paddingBottom: 10 }}>
-                    {seccion === "resumen_anual" ? (resumenAnualHTML !== null ? resumenAnualHTML : getResumenAnual(anio)) : null}
-                    {seccion === "resumen_mensual" ? (resumenMensualHTML !== null ? resumenMensualHTML : getResumenMensual(anio2,mes)) : null}
+                    {seccion === "resumen_anual" ? resumenAnual() : null}
+                    {seccion === "resumen_mensual" ? resumenMensual() : null}
                 </Container>
             </main>
         </div>

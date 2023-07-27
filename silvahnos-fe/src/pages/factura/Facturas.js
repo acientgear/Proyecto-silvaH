@@ -243,7 +243,7 @@ const Facturas = () => {
                 </Row>
                 <Row className="justify-content-center align-items-center mb-2">
                     <Col className='d-flex align-items-center gap-2 '>
-                        {`De ${meses[mes - 1]} de ${anio}`}
+                        {`De ${meses[mes - 1]} del año ${anio}`}
                         <AiOutlineDown
                             style={{ cursor: 'pointer' }}
                             onClick={toogleToast} />

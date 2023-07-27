@@ -27,10 +27,10 @@ const FormYear = ({ anio, handleAnio }) => {
             }) => (
                 <Form className='mb-2' noValidate onSubmit={handleSubmit}>
                     <Row>
-                        <Form.Label column xs={1}>
+                        <Form.Label column>
                             Año:
                         </Form.Label>
-                        <Col xs={1}>
+                        <Col>
                             <Form.Control
                                 type='number'
                                 name='anio'
@@ -39,7 +39,7 @@ const FormYear = ({ anio, handleAnio }) => {
                                 isInvalid={!!errors.anio}
                             />
                         </Col>
-                        <Col xs={2}>
+                        <Col>
                             <Button type='submit'>Buscar</Button>
                         </Col>
                     </Row>
