@@ -7,13 +7,6 @@ import Sem2 from '../../components/data/Sem2';
 import Cookies from 'js-cookie';
 
 const Registros = ({anio,mes}) => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
-
-    let fechaAcual = new Date();
-    //let anio = fechaAcual.getFullYear();
-    //let mes = fechaAcual.getMonth() + 1;
     const idMes = mes.toLocaleString('es-ES', { month: 'long' });
     const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
 
@@ -30,8 +23,11 @@ const Registros = ({anio,mes}) => {
         return montoFormateado;
     };
 
-    const getRegistros = async (anio,mes) => {
+    const getRegistros = useCallback(async (anio,mes) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/registros/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {
@@ -40,11 +36,11 @@ const Registros = ({anio,mes}) => {
         } catch (err) {
             console.log(err.message);
         }
-    };
+    },[]);
 
     useEffect(() => {
         getRegistros(anio,mes);
-    }, [anio,mes]);
+    }, [anio,mes,getRegistros]);
 
     return (
         <Card  style={{ margin: "10px 0 10px 0", maxHeight: '469px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: 'gray lightgray' }}>

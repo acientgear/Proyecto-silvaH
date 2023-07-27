@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Container } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import Sem1 from '../../components/data/Sem1';
@@ -7,14 +7,13 @@ import axios from 'axios';
 import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 
-const DoubleBarChart = ({anio}) => {
-
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
-    
-    const getTotalPorMes = async (tipo, anio, mes) => {
+const DoubleBarChart = ({ anio }) => {
+    const getTotalPorMes = useCallback(async (tipo, anio, mes) => {
         try {
+
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/' + tipo + '/total/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {
@@ -23,40 +22,38 @@ const DoubleBarChart = ({anio}) => {
         } catch (err) {
             console.log(err.message);
         }
-    }
-    
-    async function getTotalMontosPorMes(tipo,anio) {
-        const montos = [];
-        const fecha = new Date();
-        //const anio = fecha.getFullYear();
-    
-        for (let i = 1; i <= 12; i++) {
-            const monto = getTotalPorMes(tipo, anio, i);
-            montos.push(monto);
-        }
-    
-        const datos = await Promise.all(montos);
-    
-        return datos;
-    }
+    }, []);
 
     const [montosIngresos, setMontosIngresos] = useState([]);
     const [montosEgresos, setMontosEgresos] = useState([]);
 
     useEffect(() => {
+        const getTotalMontosPorMes = async (tipo, anio) => {
+            const montos = [];
+            // const fecha = new Date();
+            // const anio = fecha.getFullYear();
+
+            for (let i = 1; i <= 12; i++) {
+                const monto = await getTotalPorMes(tipo, anio, i);
+                montos.push(monto);
+            }
+
+            return montos;
+        };
+
         const fetchMontos = async () => {
             const tipo1 = 'ingresos';
             const tipo2 = 'egresos';
 
-            const montosIngresos = await getTotalMontosPorMes(tipo1,anio);
-            const montosEgresos = await getTotalMontosPorMes(tipo2,anio);
+            const montosIngresos = await getTotalMontosPorMes(tipo1, anio);
+            const montosEgresos = await getTotalMontosPorMes(tipo2, anio);
 
             setMontosIngresos(montosIngresos);
             setMontosEgresos(montosEgresos);
         };
 
         fetchMontos();
-    }, [anio]);
+    }, [anio, getTotalPorMes]);
 
     const data = {
         labels: Sem1.concat(Sem2),

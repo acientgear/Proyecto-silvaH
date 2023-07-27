@@ -1,4 +1,4 @@
-import { useEffect, useState} from 'react';
+import { useEffect, useState, useCallback} from 'react';
 import axios from 'axios';
 import { Table, Row, Col } from 'react-bootstrap';
 import Sem1 from '../../components/data/Sem1';
@@ -7,11 +7,6 @@ import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 
 const TablaAnual = ({anio}) => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
-
-    //const [anio, setAnio] = useState((new Date()).getFullYear());
     const [montosIngresosSem1, setMontosIngresosSem1] = useState([]);
     const [montosEgresosSem1, setMontosEgresosSem1] = useState([]);
     const [montosIngresosSem2, setMontosIngresosSem2] = useState([]);
@@ -24,22 +19,28 @@ const TablaAnual = ({anio}) => {
         return montoFormateado;
     };
 
-    const getTotalPorMesAnualIngresos = async (anio) => {
+    const getTotalPorMesAnualIngresos = useCallback(async (anio) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/montos/ingresos/totalMesAnual/' + anio;
             const response = await axios.get(url, config);
             if (response.status === 200) {
-                setIngresosMensualesAnio(response.data);
+                setIngresosMensualesAnio(ingresosMensualesAnio);
                 setMontosIngresosSem1(response.data.slice(0, 6));
                 setMontosIngresosSem2(response.data.slice(6, 12));
             }
         } catch (err) {
             console.log(err.message);
         }
-    };
+    },[ingresosMensualesAnio]);
 
-    const getTotalPorMesAnualEgresos = async (anio) => {
+    const getTotalPorMesAnualEgresos = useCallback(async (anio) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/montos/egresos/totalMesAnual/' + anio;
             const response = await axios.get(url, config);
             if (response.status === 200) {
@@ -50,7 +51,7 @@ const TablaAnual = ({anio}) => {
         } catch (err) {
             console.log(err.message);
         }
-    };
+    },[egresosMensualesAnio]);
 
     const calcularSaldoCuenta = (montosIngresos, montosEgresos, x) => {
         let saldoCue = 0;
@@ -73,7 +74,7 @@ const TablaAnual = ({anio}) => {
     useEffect(() => {
         getTotalPorMesAnualIngresos(anio);
         getTotalPorMesAnualEgresos(anio);
-    }, [anio]);
+    }, [anio,getTotalPorMesAnualIngresos,getTotalPorMesAnualEgresos]);
 
     return (
         <>

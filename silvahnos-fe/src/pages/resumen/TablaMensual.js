@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect} from 'react';
 import { Table, Card } from 'react-bootstrap';
 import Sem1 from '../../components/data/Sem1';
 import Sem2 from '../../components/data/Sem2';
@@ -8,14 +8,10 @@ import urlweb from '../../config/config';
 import Cookies from 'js-cookie';
 
 const TablaMensual = ({anio,mes}) => {
-    const config = {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` }
-    };
     const [montosOrigenIngresos, setMontosOrigenIngresos] = useState([]);
     const [montosOrigenEgresos, setMontosOrigenEgresos] = useState([]);
     const [totalIngresos, setTotalIngresos] = useState(0);
     const [totalEgresos, setTotalEgresos] = useState(0);
-    //const [anio] = useState((new Date()).getFullYear());
 
     const idMes = mes.toLocaleString('es-ES', { month: 'long' });
     const nombreMes = (Sem1.concat(Sem2))[idMes - 1];
@@ -27,6 +23,9 @@ const TablaMensual = ({anio,mes}) => {
 
     const getMontosOrigenIngresos = async (anio,mes) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivoMonto/ingreso/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {
@@ -40,6 +39,9 @@ const TablaMensual = ({anio,mes}) => {
 
     const getMontosOrigenEgresos = async (anio,mes) => {
         try {
+            const config = {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` }
+            };
             let url = 'http://' + urlweb + '/motivoMonto/egreso/' + anio + '/' + mes;
             const response = await axios.get(url, config);
             if (response.status === 200) {
